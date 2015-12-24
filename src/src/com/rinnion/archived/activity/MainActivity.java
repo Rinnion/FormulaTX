@@ -53,14 +53,14 @@ public class MainActivity extends Activity
         findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMainTournmentFragment("LadiesTrophy");
+                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_LADIES_TROPHY);
                 mDrawerLayout.closeDrawers();
             }
         });
         findViewById(R.id.nav_StPetersburgOpen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMainTournmentFragment("Open");
+                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_OPEN);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -175,9 +175,14 @@ public class MainActivity extends Activity
 
     public void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_COMPANY);
+        bundle.putString(AboutFragment.ENTITY, null);
+        mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -197,6 +202,7 @@ public class MainActivity extends Activity
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
                 .commit();
     }
 

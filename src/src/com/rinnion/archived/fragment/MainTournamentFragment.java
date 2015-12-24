@@ -2,21 +2,12 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.MessageCursor;
-import com.rinnion.archived.database.model.Message;
-import com.rinnion.archived.fragment.adapter.MessageAdapter;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,13 +16,12 @@ import com.rinnion.archived.network.loaders.MessageAsyncLoader;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class MainTournamentFragment extends Fragment implements LoaderManager.LoaderCallbacks<MessageCursor> {
+public class MainTournamentFragment extends Fragment{
 
     public static final String TYPE = "TYPE";
+    public static final String TOURNAMENT_LADIES_TROPHY = "TOURNAMENT_LADIES_TROPHY";
+    public static final String TOURNAMENT_OPEN = "TOURNAMENT_OPEN";
     private String TAG = getClass().getCanonicalName();
-    private ResourceCursorAdapter mAdapter;
-    private ListView mListView;
-    private TextView mTextView;
     private AdapterView.OnItemClickListener mListener;
     private View mEmpty;
 
@@ -52,64 +42,45 @@ public class MainTournamentFragment extends Fragment implements LoaderManager.Lo
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
-            @Override
-            public void Share(Message message) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, message.content);
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
-
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_tournment_layout, container, false);
-        mListView = (ListView) view.findViewById(R.id.ml_lv_list);
         mEmpty = view.findViewById(R.id.ml_tv_empty);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mListener != null) mListener.onItemClick(parent, view, position, id);
-            }
-        });
-
-        mListView.setEmptyView(mEmpty);
 
         Bundle bundle = getArguments();
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("St.Petersburg" + bundle.getString(TYPE));
 
-        mListView.setAdapter(mAdapter);
+        view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+
 
         return view;
+    }
+
+    private void showAboutFragment() {
+        AboutFragment mlf = new AboutFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_TOURNAMENT_MAIN);
+        bundle.putString(AboutFragment.ENTITY, getArguments().getString("TYPE"));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mListener = listener;
     }
-
-    @Override
-    public Loader<MessageCursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader");
-        return new MessageAsyncLoader(getActivity());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<MessageCursor> loader, MessageCursor data) {
-        Log.d(TAG, "onLoadFinished");
-        mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<MessageCursor> loader) {
-        Log.d(TAG, "onLoaderReset");
-    }
-
 
 }
 
