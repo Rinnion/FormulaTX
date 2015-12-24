@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sqlsCreate">
+        <item>"CREATE TABLE settings (_id INTEGER PRIMARY KEY, parameter TEXT, value TEXT );"</item>
+        <item>"CREATE TABLE messages (_id INTEGER, content TEXT, background TEXT, date_post INTEGER, like INTEGER, likes
+            INTEGER, comments INTEGER, tags TEXT, link_comment TEXT, link_like TEXT, date_receive INTEGER);"
+        </item>
+        <item>"CREATE TABLE comments (_id INTEGER, content TEXT, date_post INTEGER, user_id INTEGER, user_name TEXT,
+            user_avatar TEXT, date_receive INTEGER, message_id INTEGER);"
+        </item>
+        <item>"CREATE TABLE users (_id INTEGER, name TEXT, avatar TEXT, date_receive INTEGER);"</item>
+    </string-array>
+    <string-array name="sqlsUpgrade">
+        <item>"DROP TABLE IF EXISTS settings;"</item>
+        <item>"DROP TABLE IF EXISTS messages;"</item>
+        <item>"DROP TABLE IF EXISTS comments;"</item>
+        <item>"DROP TABLE IF EXISTS users;"</item>
+    </string-array>
+</resources>

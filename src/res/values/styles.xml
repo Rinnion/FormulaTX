@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="left_menu_row">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="left_menu_item_image">
+        <item name="android:layout_width">@android:dimen/app_icon_size</item>
+        <item name="android:layout_height">@android:dimen/app_icon_size</item>
+    </style>
+</resources>

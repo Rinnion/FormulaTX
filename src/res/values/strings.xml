@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Archived</string>
+    <string name="title_photography">Фотография</string>
+    <string name="message_cannot_take_photo">"Не возможно сфотографировать: "</string>
+    <string name="intro_text">Правила пользования!\n Пока их нет.</string>
+    <string name="string_view">Просмотр</string>
+    <string name="string_feed">Лента</string>
+    <string name="string_heap">Куча</string>
+    <string name="string_tags">Тэги</string>
+    <string name="string_profile">Профиль</string>
+</resources>

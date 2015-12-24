@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <TableLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_today">
+            <ImageView
+                    android:id="@+id/imageView" android:layout_column="0"
+                    android:layout_width="@android:dimen/app_icon_size"
+                    android:layout_height="@android:dimen/app_icon_size" android:src="@drawable/ic_action_view_as_list"
+                    android:contentDescription="@string/string_view"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Сегодня"
+                    android:id="@+id/textView" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_about">
+            <ImageView
+                    android:layout_width="@android:dimen/app_icon_size"
+                    android:layout_height="@android:dimen/app_icon_size"
+                    android:id="@+id/imageView2" android:contentDescription="@string/string_feed"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="О компании"
+                    android:id="@+id/textView2" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_StPetersburgLadiesTrophy">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:id="@+id/imageView3" android:contentDescription="@string/string_heap"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="St.Peterburg Ladies Trophy"
+                      android:id="@+id/textView3" android:layout_column="2"/>
+        </TableRow>
+        <TableRow android:visibility="gone"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_StPetersburgOpen">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView4"
+                       android:layout_column="0" android:src="@drawable/ic_action_labels"
+                       android:contentDescription="@string/string_tags"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tags"
+                    android:id="@+id/textView4" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_other_tournaments">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView5"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="St.Peterburg Open"
+                    android:id="@+id/textView5" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_photogallery">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView6"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Фотогалерея"
+                    android:id="@+id/textView6" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_social_networks">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView7"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Социальные сети"
+                    android:id="@+id/textView7" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_contacts">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView8"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Контакты"
+                    android:id="@+id/textView8" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_feedback">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView9"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Ваш отзыв"
+                    android:id="@+id/textView9" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_tickets">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView10"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Билеты"
+                    android:id="@+id/textView10" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_shop">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView11"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Магазин"
+                    android:id="@+id/textView11" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_volvo">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView12"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Volvo Fun"
+                    android:id="@+id/textView12" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_event_guide">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView13"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Event Guide"
+                    android:id="@+id/textView13" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_radio">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView14"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Радио подскасты"
+                    android:id="@+id/textView14" android:layout_column="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_catalog">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size" android:id="@+id/imageView15"
+                       android:layout_column="0" android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Каталог"
+                    android:id="@+id/textView15" android:layout_column="2"/>
+        </TableRow>
+
+    </TableLayout>
+</ScrollView>
