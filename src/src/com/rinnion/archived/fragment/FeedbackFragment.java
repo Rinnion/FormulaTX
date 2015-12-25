@@ -35,7 +35,7 @@ public class FeedbackFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_message_layout, container, false);
+        View view = inflater.inflate(R.layout.feedback_layout, container, false);
         mContent = (EditText) view.findViewById(R.id.nml_ed_content);
         mSend = (Button) view.findViewById(R.id.nml_bt_send);
         mSend.setOnClickListener(new View.OnClickListener() {

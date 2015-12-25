@@ -13,8 +13,6 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.MessageCursor;
-import com.rinnion.archived.database.model.Message;
-import com.rinnion.archived.fragment.adapter.MessageAdapter;
 import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
@@ -49,7 +47,7 @@ public class EventGuideFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
+                        /*
         mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
             @Override
             public void Share(Message message) {
@@ -62,27 +60,13 @@ public class EventGuideFragment extends Fragment implements LoaderManager.Loader
         });
 
         getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
-
+                          */
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_list_layout, container, false);
-        mListView = (ListView) view.findViewById(R.id.ml_lv_list);
-        mEmpty = view.findViewById(R.id.ml_tv_empty);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mListener != null) mListener.onItemClick(parent, view, position, id);
-            }
-        });
-
-        mListView.setEmptyView(mEmpty);
-
-
-        mListView.setAdapter(mAdapter);
-
+        View view = inflater.inflate(R.layout.about_layout, container, false);
         return view;
     }
 

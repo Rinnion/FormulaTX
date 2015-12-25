@@ -1,6 +1,5 @@
 package com.rinnion.archived.fragment;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -11,11 +10,8 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.MessageCursor;
-import com.rinnion.archived.database.model.Message;
-import com.rinnion.archived.fragment.adapter.MessageAdapter;
 import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
@@ -49,26 +45,32 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
-        mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
-            @Override
-            public void Share(Message message) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, message.content);
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
-
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+//
+//        mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
+//            @Override
+//            public void Share(Message message) {
+//                Intent sendIntent = new Intent();
+//                sendIntent.setAction(Intent.ACTION_SEND);
+//                sendIntent.putExtra(Intent.EXTRA_TEXT, message.content);
+//                sendIntent.setType("text/plain");
+//                startActivity(sendIntent);
+//            }
+//        });
+//
+//        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_list_layout, container, false);
+        View view = inflater.inflate(R.layout.today_layout, container, false);
+
+        getActivity().getActionBar().setTitle("Сегодня");
+        getActivity().getActionBar().setIcon(R.drawable.ic_drawer);
+
+        return view;
+/*        View view = inflater.inflate(R.layout.message_list_layout, container, false);
         mListView = (ListView) view.findViewById(R.id.ml_lv_list);
         mEmpty = view.findViewById(R.id.ml_tv_empty);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,8 +88,32 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         ab.setTitle("Сегодня");
 
         return view;
+*/
     }
 
+
+    public void showNavigationFragment() {
+        NavigationFragment mlf = new NavigationFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                showNavigationFragment();
+                return super.onOptionsItemSelected(item);
+            default:
+                Log.d(TAG, "onOptionsItemSelected: default section");
+                return super.onOptionsItemSelected(item);
+        }
+    }
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mListener = listener;
     }

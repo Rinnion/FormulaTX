@@ -25,7 +25,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../android/android-support-v4_lib/android-support-v4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/android-support-v4_lib/android-support-v4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

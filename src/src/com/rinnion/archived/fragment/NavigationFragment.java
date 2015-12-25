@@ -1,0 +1,197 @@
+package com.rinnion.archived.fragment;
+
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.*;
+import android.widget.TextView;
+import com.rinnion.archived.R;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: Lenovo
+ * Date: 15.02.14
+ * Time: 22:46
+ * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
+ */
+public class NavigationFragment extends Fragment {
+
+    private String TAG = getClass().getCanonicalName();
+    private TextView mTextViewAbout;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
+        Log.d(TAG, "onCreateOptionsMenu");
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_message, menu);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                getActivity().getFragmentManager().popBackStack();
+                return true;
+            default:
+                Log.d(TAG, "onOptionsItemSelected: default section");
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.left_menu, container, false);
+        mTextViewAbout = (TextView) view.findViewById(R.id.tv_about);
+
+        ActionBar ab = getActivity().getActionBar();
+        ab.setTitle("Навигация");
+        ab.setIcon(R.drawable.ic_action_cancel);
+
+        view.findViewById(R.id.nav_today).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTodayFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_LADIES_TROPHY);
+            }
+        });
+        view.findViewById(R.id.nav_StPetersburgOpen).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_OPEN);
+            }
+        });
+        view.findViewById(R.id.nav_other_tournaments).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_photogallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_social_networks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_contacts).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_tickets).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_shop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_volvo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_event_guide).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_radio).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+        view.findViewById(R.id.nav_catalog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+
+
+        return view;
+    }
+
+    public void showAboutFragment() {
+        AboutFragment mlf = new AboutFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_COMPANY);
+        bundle.putString(AboutFragment.ENTITY, null);
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showTodayFragment() {
+        TodayFragment mlf = new TodayFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .commit();
+    }
+
+    public void showMainTournmentFragment(String type) {
+        MainTournamentFragment mlf = new MainTournamentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(MainTournamentFragment.TYPE, type);
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+}
+
