@@ -2,26 +2,21 @@ package com.rinnion.archived.database.model;
 
 public class Message {
 
+    public final long id;
+    public final String caption;
+    public final String type;
+    public final String date;
+    public final String name;
     public final String content;
-    public final String background;
-    public final long date_post;
-    public final String tags;
-    public final long date_receive;
-    public final Long comments;
-    private final String TAG = getClass().getSimpleName();
-    public long id;
-    public long likes;
-    public boolean like;
+    public final String thumb;
 
-    public Message(long id, String content, String background, long date_post, long likes, boolean vote, Long comments, String tags, long date_receive) {
+    public Message(long id, String caption, String type, String date, String name, String content, String thumb) {
         this.id = id;
+        this.caption = caption;
+        this.type = type;
+        this.date = date;
+        this.name = name;
         this.content = content;
-        this.background = background;
-        this.date_post = date_post;
-        this.likes = likes;
-        this.like = vote;
-        this.comments = comments;
-        this.tags = tags;
-        this.date_receive = date_receive;
+        this.thumb = thumb;
     }
 }

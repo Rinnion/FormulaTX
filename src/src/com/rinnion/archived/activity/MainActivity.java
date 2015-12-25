@@ -7,12 +7,12 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.MessageCursor;
+import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.TodayFragment;
 import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 public class MainActivity extends Activity
-        implements LoaderManager.LoaderCallbacks<MessageCursor> {
+        implements LoaderManager.LoaderCallbacks<NewsCursor> {
 
 
     private static final String TAG = "MainActivity";
@@ -43,17 +43,17 @@ public class MainActivity extends Activity
 
 
     @Override
-    public Loader<MessageCursor> onCreateLoader(int id, Bundle args) {
+    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         return new MessageAsyncLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<MessageCursor> loader, MessageCursor data) {
+    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
 
     }
 
     @Override
-    public void onLoaderReset(Loader<MessageCursor> loader) {
+    public void onLoaderReset(Loader<NewsCursor> loader) {
 
     }
 }

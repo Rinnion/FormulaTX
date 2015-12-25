@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -11,7 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.MessageCursor;
+import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
@@ -21,7 +23,7 @@ import com.rinnion.archived.network.loaders.MessageAsyncLoader;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class TodayFragment extends Fragment implements LoaderManager.LoaderCallbacks<MessageCursor> {
+public class TodayFragment extends Fragment implements LoaderManager.LoaderCallbacks<NewsCursor> {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -45,19 +47,10 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-//
-//        mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
-//            @Override
-//            public void Share(Message message) {
-//                Intent sendIntent = new Intent();
-//                sendIntent.setAction(Intent.ACTION_SEND);
-//                sendIntent.putExtra(Intent.EXTRA_TEXT, message.content);
-//                sendIntent.setType("text/plain");
-//                startActivity(sendIntent);
-//            }
-//        });
-//
-//        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+
+        mAdapter = new NewsAdapter(getActivity(), null);
+
+        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
@@ -68,6 +61,15 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
         getActivity().getActionBar().setTitle("Сегодня");
         getActivity().getActionBar().setIcon(R.drawable.ic_drawer);
+
+        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
+        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
+        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
+
+        mListView = (ListView) view.findViewById(R.id.tl_lv_news);
+        mListView.setAdapter(mAdapter);
+
+        mAdapter.swapCursor(mc);
 
         return view;
 /*        View view = inflater.inflate(R.layout.message_list_layout, container, false);
@@ -119,22 +121,21 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public Loader<MessageCursor> onCreateLoader(int id, Bundle args) {
+    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
         return new MessageAsyncLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<MessageCursor> loader, MessageCursor data) {
+    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
         Log.d(TAG, "onLoadFinished");
-        mAdapter.swapCursor(data);
+        //mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<MessageCursor> loader) {
+    public void onLoaderReset(Loader<NewsCursor> loader) {
         Log.d(TAG, "onLoaderReset");
     }
 
 
 }
-

@@ -62,5 +62,5 @@
     <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listView" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/tl_lv_news" android:layout_gravity="center_horizontal"/>
 </LinearLayout>

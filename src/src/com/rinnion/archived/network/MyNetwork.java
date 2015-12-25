@@ -7,7 +7,7 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.CommentHelper;
-import com.rinnion.archived.database.helper.MessageHelper;
+import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.model.Profile;
 import com.rinnion.archived.database.model.User;
 import com.rinnion.archived.network.handlers.*;
@@ -34,7 +34,7 @@ public final class MyNetwork {
                 .setHandler(new JSONArrayHandler(new MessageHandler()) {
                     @Override
                     public void beforeArrayHandle() {
-                        MessageHelper mh = new MessageHelper(doh);
+                        NewsHelper mh = new NewsHelper(doh);
                         mh.clear();
                     }
                 })
@@ -56,7 +56,7 @@ public final class MyNetwork {
                 .setHandler(new JSONArrayHandler(new MessageHandler()) {
                     @Override
                     public void beforeArrayHandle() {
-                        MessageHelper mh = new MessageHelper(doh);
+                        NewsHelper mh = new NewsHelper(doh);
                         mh.clear();
                     }
                 })

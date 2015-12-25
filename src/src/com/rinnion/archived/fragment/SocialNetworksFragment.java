@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.MessageCursor;
+import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
@@ -22,7 +22,7 @@ import com.rinnion.archived.network.loaders.MessageAsyncLoader;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class SocialNetworksFragment extends Fragment implements LoaderManager.LoaderCallbacks<MessageCursor> {
+public class SocialNetworksFragment extends Fragment implements LoaderManager.LoaderCallbacks<NewsCursor> {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -75,19 +75,19 @@ public class SocialNetworksFragment extends Fragment implements LoaderManager.Lo
     }
 
     @Override
-    public Loader<MessageCursor> onCreateLoader(int id, Bundle args) {
+    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
         return new MessageAsyncLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<MessageCursor> loader, MessageCursor data) {
+    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
         Log.d(TAG, "onLoadFinished");
         mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<MessageCursor> loader) {
+    public void onLoaderReset(Loader<NewsCursor> loader) {
         Log.d(TAG, "onLoaderReset");
     }
 

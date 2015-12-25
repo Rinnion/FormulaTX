@@ -3,8 +3,7 @@ package com.rinnion.archived.network.handlers;
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Utils;
-import com.rinnion.archived.database.helper.MessageHelper;
-import com.rinnion.archived.database.model.Message;
+import com.rinnion.archived.database.helper.NewsHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +32,9 @@ public class MessageHandler extends JSONObjectHandler {
             sb.append(name);
         }
         long date_receive = Calendar.getInstance().getTimeInMillis();
-        MessageHelper mh = new MessageHelper(ArchivedApplication.getDatabaseOpenHelper());
-        Message message = new Message(id, content, background, date_post, likes, like, comments, sb.toString(), date_receive);
-        mh.add(message);
+        NewsHelper mh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
+        //Message message = new Message(id, content, background, date_post, likes, like, comments, sb.toString(), date_receive);
+        //mh.add(message);
         return Bundle.EMPTY;
     }
 

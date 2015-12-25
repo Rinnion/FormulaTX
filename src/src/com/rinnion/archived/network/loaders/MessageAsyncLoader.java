@@ -5,14 +5,14 @@ import android.content.Context;
 import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.MessageCursor;
-import com.rinnion.archived.database.helper.MessageHelper;
+import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.network.MyNetwork;
 
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class MessageAsyncLoader extends AsyncTaskLoader<MessageCursor> {
+public class MessageAsyncLoader extends AsyncTaskLoader<NewsCursor> {
 
     private String TAG = getClass().getSimpleName();
 
@@ -31,16 +31,18 @@ public class MessageAsyncLoader extends AsyncTaskLoader<MessageCursor> {
     protected void onForceLoad() {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        MessageHelper mh = new MessageHelper(doh);
+        NewsHelper mh = new NewsHelper(doh);
         deliverResult(mh.getAll());
     }
 
     @Override
-    public MessageCursor loadInBackground() {
+    public NewsCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
+
+
         MyNetwork.queryMessages();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        MessageHelper mh = new MessageHelper(doh);
+        NewsHelper mh = new NewsHelper(doh);
         return mh.getAll();
     }
 }

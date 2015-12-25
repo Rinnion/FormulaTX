@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.MessageCursor;
+import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.model.Message;
 
 /**
@@ -17,30 +17,26 @@ import com.rinnion.archived.database.model.Message;
  * Time: 16:13
  * To change this template use File | Settings | File Templates.
  */
-public class MessageHelper implements BaseColumns {
+public class NewsHelper implements BaseColumns {
+    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_CAPTION = "caption";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_THUMBS = "thumbs";
+    public static final String COLUMN_DATE = "date";
     public static final String COLUMN_CONTENT = "content";
-    public static final String COLUMN_BACKGROUND = "background";
-    public static final String COLUMN_DATE_POST = "date_post";
-    public static final String COLUMN_TAGS = "tags";
-    public static final String COLUMN_LIKES = "likes";
-    public static final String COLUMN_LIKE = "like";
-    public static final String COLUMN_DATE_RECEIVE = "date_receive";
-    public static final String COLUMN_COMMENTS = "comments";
-    public static String DATABASE_TABLE = "messages";
+    public static String DATABASE_TABLE = "news";
     public static String[] COLS;
     public static String ALL_COLUMNS;
 
     static {
         COLS = new String[]{
                 _ID,
+                COLUMN_TYPE,
+                COLUMN_CAPTION,
+                COLUMN_NAME,
+                COLUMN_THUMBS,
+                COLUMN_DATE,
                 COLUMN_CONTENT,
-                COLUMN_BACKGROUND,
-                COLUMN_DATE_POST,
-                COLUMN_TAGS,
-                COLUMN_LIKES,
-                COLUMN_LIKE,
-                COLUMN_COMMENTS,
-                COLUMN_DATE_RECEIVE
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
@@ -49,18 +45,18 @@ public class MessageHelper implements BaseColumns {
 
     private DatabaseOpenHelper doh;
 
-    public MessageHelper(DatabaseOpenHelper doh) {
+    public NewsHelper(DatabaseOpenHelper doh) {
         this.doh = doh;
     }
 
-    public MessageCursor getAll() {
+    public NewsCursor getAll() {
         Log.v(TAG, "getAll ()");
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " ORDER BY " + COLUMN_DATE_POST + " DESC";
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " ORDER BY " + COLUMN_DATE + " DESC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        MessageCursor c = (MessageCursor) d.rawQueryWithFactory(
-                new MessageCursor.Factory(),
+        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
+                new NewsCursor.Factory(),
                 sql,
                 null,
                 null);
@@ -73,8 +69,8 @@ public class MessageHelper implements BaseColumns {
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
         SQLiteDatabase d = doh.getReadableDatabase();
-        MessageCursor c = (MessageCursor) d.rawQueryWithFactory(
-                new MessageCursor.Factory(),
+        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
+                new NewsCursor.Factory(),
                 sql,
                 new String[]{Integer.toString(id)},
                 null);
@@ -103,13 +99,12 @@ public class MessageHelper implements BaseColumns {
         map = new ContentValues();
         map.put(_ID, message.id);
         map.put(COLUMN_CONTENT, message.content);
-        map.put(COLUMN_BACKGROUND, message.background);
-        map.put(COLUMN_DATE_POST, message.date_post);
-        map.put(COLUMN_LIKES, message.likes);
-        map.put(COLUMN_LIKE, message.like);
-        map.put(COLUMN_COMMENTS, message.comments);
-        map.put(COLUMN_TAGS, message.tags);
-        map.put(COLUMN_DATE_RECEIVE, message.date_receive);
+        map.put(COLUMN_CAPTION, message.caption);
+        map.put(COLUMN_TYPE, message.type);
+        map.put(COLUMN_DATE, message.date);
+        map.put(COLUMN_NAME, message.name);
+        map.put(COLUMN_CONTENT, message.content);
+        map.put(COLUMN_THUMBS, message.thumb);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);

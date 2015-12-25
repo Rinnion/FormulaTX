@@ -40,78 +40,30 @@
     <bookmark url="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7a7e116-d9cc-4fe6-91da-fb47ce5a93c6" name="Default" comment="upodate?">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/today_layout.xml" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$10.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$11.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$12.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$13.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$14.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$15.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$3.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$4.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$5.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$6.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$7.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$8.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\activity\MainActivity$9.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\CatalogFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\CatalogFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\ContactsFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\ContactsFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\EventGuideFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\EventGuideFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\OtherTournamentFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\OtherTournamentFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\OtherTournamentListFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\OtherTournamentListFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\PhotoGalleryFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\PhotoGalleryFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\RadioFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\RadioFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\ShopFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\ShopFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\SocialNetworksFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\SocialNetworksFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\TicketsFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\TicketsFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\TodayFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\TodayFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\VolvoFunFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\VolvoFunFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\DraftAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\DraftAdapter$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\DraftAdapter$IMessageClickListener.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\DraftAdapter$SendLikeAsyncHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\DraftAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\MessageAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\MessageAdapter$2.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\MessageAdapter$IMessageClickListener.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\MessageAdapter$SendLikeAsyncHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\fragment\adapter\MessageAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\comment_item_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\comment_list_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\draft_item_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\message_item_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\message_list_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\profile_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\fragment\adapter\DraftAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\fragment\adapter\MessageAdapter.java" afterPath="" />
+    <list default="true" id="d7a7e116-d9cc-4fe6-91da-fb47ce5a93c6" name="Default" comment="-- add news adapter">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/item_news_layout.xml" />
+      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\database\cursor\MessageCursor$Factory.class" afterPath="" />
+      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\database\cursor\MessageCursor.class" afterPath="" />
+      <change type="DELETED" beforePath="D:\workspace\FormulaTX\Client\src\out\production\Archived\com\rinnion\archived\database\helper\MessageHelper.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/AboutFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/AboutFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/Archived.apk" afterPath="$PROJECT_DIR$/out/production/Archived/Archived.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/Archived.unaligned.apk" afterPath="$PROJECT_DIR$/out/production/Archived/Archived.unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/CatalogFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/CatalogFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/ContactsFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/ContactsFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/DatabaseOpenHelper.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/DatabaseOpenHelper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/loaders/DraftsAsyncLoader.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/loaders/DraftsAsyncLoader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/EventGuideFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/EventGuideFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/FeedbackFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/FeedbackFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/activity/MainActivity.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/activity/MainActivity.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/model/Message.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/model/Message.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/loaders/MessageAsyncLoader.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/loaders/MessageAsyncLoader.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/handlers/MessageHandler.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/handlers/MessageHandler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/MyNetwork$1.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/MyNetwork$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/MyNetwork$2.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/network/MyNetwork$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentListFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentListFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/PhotoGalleryFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/PhotoGalleryFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$drawable.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$drawable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$id.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$id.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$layout.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$layout.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$menu.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$menu.class" />
@@ -123,27 +75,36 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/SocialNetworksFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/SocialNetworksFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TicketsFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TicketsFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TodayFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TodayFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/helper/UserHelper.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/database/helper/UserHelper.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/VolvoFunFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/VolvoFunFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Archived.iml" afterPath="$PROJECT_DIR$/Archived.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/CatalogFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/CatalogFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ContactsFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ContactsFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/DraftsAsyncLoader.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/DraftsAsyncLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/EventGuideFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/EventGuideFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/FeedbackFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/FeedbackFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/network/handlers/MessageHandler.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/network/handlers/MessageHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetwork.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetwork.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/PhotoGalleryFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/PhotoGalleryFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/RadioFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/RadioFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/SettingCursor.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/SettingCursor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ShopFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ShopFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/SocialNetworksFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/SocialNetworksFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TicketsFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TicketsFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/database/helper/UserHelper.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/helper/UserHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/VolvoFunFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/VolvoFunFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main_layout.xml" afterPath="$PROJECT_DIR$/res/layout/main_layout.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/sqls.xml" afterPath="$PROJECT_DIR$/res/values/sqls.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/today_layout.xml" afterPath="$PROJECT_DIR$/res/layout/today_layout.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\new_message_layout.xml" afterPath="$PROJECT_DIR$/res/layout/feedback_layout.xml" />
+      <change type="MOVED" beforePath="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\database\cursor\MessageCursor.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/NewsCursor.java" />
+      <change type="MOVED" beforePath="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\database\helper\MessageHelper.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/database/helper/NewsHelper.java" />
     </list>
     <ignored path="Archived.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -168,14 +129,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TodayFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java">
+      <file leaf-file-name="NewsAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1153" max-vertical-offset="2431">
-              <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="1581">
+              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/handlers/MessageHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="663">
+              <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="imports" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsCursor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/NewsCursor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1003">
+              <caret line="49" column="63" selection-start-line="49" selection-start-column="63" selection-end-line="49" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/helper/NewsHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="2125">
+              <caret line="25" column="56" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseOpenHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="986">
+              <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="item_news_layout.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/item_news_layout.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -186,8 +200,28 @@
             <state />
           </provider>
           <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1207">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sqls.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/sqls.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="306">
+              <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="476">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="10" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -196,93 +230,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7866109" vertical-offset="150" max-vertical-offset="935">
-              <caret line="59" column="49" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ActivityThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://E:/work/adt/sdk/sources/android-19/android/app/ActivityThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="33438" max-vertical-offset="82195">
-              <caret line="2179" column="0" selection-start-line="2179" selection-start-column="0" selection-end-line="2179" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NavigationFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="2380">
-              <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
-              <folding>
-                <element signature="e#2255#2408#0" expanded="true" />
-                <element signature="e#2407#2408#0" expanded="true" />
-                <element signature="e#3268#3421#0" expanded="true" />
-                <element signature="e#3420#3421#0" expanded="true" />
-                <element signature="e#3719#3872#0" expanded="true" />
-                <element signature="e#3871#3872#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/main_layout.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.857143" vertical-offset="0" max-vertical-offset="272">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="306">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OtherTournamentListFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="44" max-vertical-offset="1666">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-              <caret line="26" column="1" selection-start-line="2" selection-start-column="13" selection-end-line="26" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.6554744" vertical-offset="180" max-vertical-offset="935">
+              <caret line="48" column="31" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -302,20 +251,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/tasks/SendUpdateProfileTask.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/ArchivedApplication.java" />
-        <option value="$PROJECT_DIR$/res/layout/profile_layout.xml" />
-        <option value="$PROJECT_DIR$/res/menu/update_comments.xml" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ProfileFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/SettingAccessor.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/DraftAsyncLoader.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/DraftsAsyncLoader.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/DraftListFragment.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/DraftAdapter.java" />
         <option value="$PROJECT_DIR$/res/layout/draft_item_layout.xml" />
         <option value="$PROJECT_DIR$/res/layout/message_item_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/MessageAdapter.java" />
         <option value="$PROJECT_DIR$/res/menu/add_message.xml" />
         <option value="$PROJECT_DIR$/res/layout/empty_message_layout.xml" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/Settings.java" />
@@ -323,7 +261,6 @@
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetworkContentContract.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetwork.java" />
         <option value="$PROJECT_DIR$/res/layout/message_list_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/HttpRequester.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/CommentListFragment.java" />
         <option value="$PROJECT_DIR$/res/layout/comment_list_layout.xml" />
@@ -348,10 +285,22 @@
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/VolvoFunFragment.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/ShopFragment.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/res/layout/today_layout.xml" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/res/layout/item_news.xml" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/MessageAdapter.java" />
+        <option value="$PROJECT_DIR$/res/layout/item_news_layout.xml" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java" />
+        <option value="$PROJECT_DIR$/res/layout/today_layout.xml" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/MessageCursor.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/handlers/MessageHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/NewsCursor.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java" />
+        <option value="$PROJECT_DIR$/res/values/sqls.xml" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/database/helper/NewsHelper.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java" />
       </list>
     </option>
@@ -491,6 +440,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="fragment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adapter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Archived" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rinnion" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="archived" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="database" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -522,6 +501,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Archived" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rinnion" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="archived" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cursor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -676,17 +685,18 @@
       <recent name="com.rinnion.archived.network.handlers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\fragment\adapter" />
       <recent name="D:\workspace\Archived\Client\src\res\layout" />
       <recent name="D:\workspace\Archived\Client\src\res\menu" />
       <recent name="C:\Workspace\Archived\Client\src\res\layout" />
       <recent name="D:\workspace\Archived\Client\src\res" />
-      <recent name="D:\workspace\Archived\Client\src\res\values" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="com.rinnion.archived.fragment.MainTournamentFragment" />
       <recent name="com.rinnion.archived.network.MyNetwork" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\FormulaTX\Client\src\src\com\rinnion\archived\fragment" />
       <recent name="D:\workspace\Archived\Client\src\res\drawable" />
       <recent name="D:\workspace\Archived\Client\src\res" />
     </key>
@@ -973,7 +983,13 @@
       <option name="project" value="LOCAL" />
       <updated>1441867986011</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="-- remove drawer&#10;-- add navigation over fragments">
+      <created>1451027023704</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1451027023704</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -983,22 +999,22 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3562387" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35444236" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.21104388" sideWeight="0.36607143" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3381555" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328877" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32368898" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32325143" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32820976" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32797733" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21104388" sideWeight="0.6339286" order="5" side_tool="false" content_ui="tabs" x="961" y="52" width="287" height="1104" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18690096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18770054" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3381555" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.301085" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3147448" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1069,7 +1085,9 @@
     <MESSAGE value="-- switch to feed and drafts" />
     <MESSAGE value="-- add baloon around items" />
     <MESSAGE value="-- add no content views for message and comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="-- add no content views for message and comments" />
+    <MESSAGE value="-- remove drawer&#10;-- add navigation over fragments" />
+    <MESSAGE value="-- add news adapter" />
+    <option name="LAST_COMMIT_MESSAGE" value="-- add news adapter" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1097,7 +1115,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java</url>
-          <line>61</line>
+          <line>55</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
@@ -1180,55 +1198,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://E:/work/adt/sdk/sources/android-19/com/android/internal/os/ZygoteInit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="12195" max-vertical-offset="12835">
-          <caret line="793" column="0" selection-start-line="793" selection-start-column="0" selection-end-line="793" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
-          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/SettingAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="365" max-vertical-offset="1190">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding>
-            <element signature="e#832#833#0" expanded="false" />
-            <element signature="e#880#881#0" expanded="false" />
-            <element signature="e#1198#1199#0" expanded="false" />
-            <element signature="e#1263#1264#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/tasks/SendCommentTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/DraftsAsyncLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/bkg_red.9.png">
-      <provider selected="true" editor-type-id="ninepatcheditor">
-        <state />
-      </provider>
-      <provider editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ant.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1080">
@@ -1320,15 +1289,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="226" max-vertical-offset="1258">
           <caret line="60" column="74" selection-start-line="60" selection-start-column="74" selection-end-line="60" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#897#898#0" expanded="false" />
+            <element signature="e#960#961#0" expanded="false" />
+            <element signature="e#1019#1020#0" expanded="false" />
+            <element signature="e#1093#1094#0" expanded="false" />
+            <element signature="e#1470#1471#0" expanded="false" />
+            <element signature="e#1530#1531#0" expanded="false" />
+            <element signature="e#1589#1590#0" expanded="false" />
+            <element signature="e#1660#1661#0" expanded="false" />
+            <element signature="e#1816#1817#0" expanded="false" />
+            <element signature="e#1874#1875#0" expanded="false" />
+            <element signature="e#2268#2269#0" expanded="false" />
+            <element signature="e#2328#2329#0" expanded="false" />
+            <element signature="e#2383#2384#0" expanded="false" />
+            <element signature="e#2445#2446#0" expanded="false" />
+            <element signature="e#2498#2499#0" expanded="false" />
+            <element signature="e#2576#2577#0" expanded="false" />
+            <element signature="e#2622#2623#0" expanded="false" />
+            <element signature="e#2668#2669#0" expanded="false" />
+            <element signature="e#2717#2718#0" expanded="false" />
+            <element signature="e#2778#2779#0" expanded="false" />
+            <element signature="e#2827#2828#0" expanded="false" />
+            <element signature="e#2889#2890#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1347,6 +1330,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="2397">
           <caret line="72" column="31" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1524,14 +1510,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-          <caret line="26" column="1" selection-start-line="2" selection-start-column="13" selection-end-line="26" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="44" max-vertical-offset="1666">
@@ -1550,42 +1528,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="306">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.857143" vertical-offset="0" max-vertical-offset="272">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/today_layout.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="689">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1606,20 +1554,127 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.857143" vertical-offset="0" max-vertical-offset="272">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/loaders/MessageAsyncLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="114" max-vertical-offset="799">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1153" max-vertical-offset="2431">
-          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1729" max-vertical-offset="2414">
+          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/handlers/MessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="663">
+          <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/model/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="10" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/cursor/NewsCursor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1003">
+          <caret line="49" column="63" selection-start-line="49" selection-start-column="63" selection-end-line="49" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/DatabaseOpenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
+          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/item_news_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/today_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="689">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/sqls.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="306">
+          <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/database/helper/NewsHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="112" max-vertical-offset="2125">
+          <caret line="25" column="56" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1581">
+          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7866109" vertical-offset="150" max-vertical-offset="935">
-          <caret line="59" column="49" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6554744" vertical-offset="180" max-vertical-offset="935">
+          <caret line="48" column="31" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
         </state>
       </provider>

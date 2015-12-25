@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
-import com.rinnion.archived.database.helper.MessageHelper;
+import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.model.Message;
 
 /**
@@ -15,67 +15,58 @@ import com.rinnion.archived.database.model.Message;
  * Time: 14:31
  * To change this template use File | Settings | File Templates.
  */
-public class MessageCursor extends SQLiteCursor {
+public class NewsCursor extends SQLiteCursor {
 
-    public MessageCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+    public NewsCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
         super(db, driver, editTable, query);
     }
 
     public Message getItem() {
         long id = getColId();
-        String content = getColContent();
-        String background = getColBackground();
         long date_post = getColDatePost();
         long likes = getColLikes();
         String tags = getColTags();
         long date_receive = getColDateReceive();
         boolean like = getColVote();
         Long comments = getColComments();
-        Message message = new Message(id, content, background, date_post, likes, like, comments, tags, date_receive);
-        return message;
+        //Message message = new Message(id, content, background, date_post, likes, like, comments, tags, date_receive);
+        //return message;
+        return null;
     }
 
     private boolean getColVote() {
-        return getLong(getColumnIndexOrThrow(MessageHelper.COLUMN_LIKE)) == 1;
+        return getLong(getColumnIndexOrThrow(NewsHelper.COLUMN_NAME)) == 1;
     }
 
     private long getColComments() {
-        return getLong(getColumnIndexOrThrow(MessageHelper.COLUMN_COMMENTS));
+        return getLong(getColumnIndexOrThrow(NewsHelper.COLUMN_CAPTION));
     }
 
     private long getColDateReceive() {
-        return getLong(getColumnIndexOrThrow(MessageHelper.COLUMN_CONTENT));
+        return getLong(getColumnIndexOrThrow(NewsHelper.COLUMN_CONTENT));
     }
 
     private String getColTags() {
-        return getString(getColumnIndexOrThrow(MessageHelper.COLUMN_TAGS));
+        return getString(getColumnIndexOrThrow(NewsHelper.COLUMN_DATE));
     }
 
     private long getColLikes() {
-        return getLong(getColumnIndexOrThrow(MessageHelper.COLUMN_LIKES));
+        return getLong(getColumnIndexOrThrow(NewsHelper.COLUMN_THUMBS));
     }
 
     private long getColDatePost() {
-        return getLong(getColumnIndexOrThrow(MessageHelper.COLUMN_DATE_POST));
+        return getLong(getColumnIndexOrThrow(NewsHelper.COLUMN_TYPE));
     }
 
-    private String getColBackground() {
-        return getString(getColumnIndexOrThrow(MessageHelper.COLUMN_BACKGROUND));
-    }
-
-    private String getColContent() {
-        return getString(getColumnIndexOrThrow(MessageHelper.COLUMN_CONTENT));
-    }
-
-    public int getColId() {
-        return getInt(getColumnIndexOrThrow(MessageHelper._ID));
+    private long getColId() {
+        return getLong(getColumnIndexOrThrow(NewsHelper._ID));
     }
 
     public static class Factory implements SQLiteDatabase.CursorFactory {
 
         @Override
         public Cursor newCursor(SQLiteDatabase sqLiteDatabase, SQLiteCursorDriver sqLiteCursorDriver, String s, SQLiteQuery sqLiteQuery) {
-            MessageCursor c = new MessageCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
+            NewsCursor c = new NewsCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
             return c;
         }
     }

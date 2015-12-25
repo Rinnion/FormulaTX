@@ -2,21 +2,12 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.MessageCursor;
-import com.rinnion.archived.database.model.Message;
-import com.rinnion.archived.fragment.adapter.MessageAdapter;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
 
 /**
  * Created with IntelliJ IDEA.

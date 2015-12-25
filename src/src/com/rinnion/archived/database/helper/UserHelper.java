@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.MessageCursor;
+import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.model.Message;
 import com.rinnion.archived.database.model.User;
 
@@ -43,14 +43,14 @@ public class UserHelper implements BaseColumns {
         this.doh = doh;
     }
 
-    public MessageCursor getAll() {
+    public NewsCursor getAll() {
         Log.v(TAG, "getAll ()");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " ORDER BY " + COLUMN_NAME + " DESC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        MessageCursor c = (MessageCursor) d.rawQueryWithFactory(
-                new MessageCursor.Factory(),
+        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
+                new NewsCursor.Factory(),
                 sql,
                 null,
                 null);
@@ -63,8 +63,8 @@ public class UserHelper implements BaseColumns {
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
         SQLiteDatabase d = doh.getReadableDatabase();
-        MessageCursor c = (MessageCursor) d.rawQueryWithFactory(
-                new MessageCursor.Factory(),
+        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
+                new NewsCursor.Factory(),
                 sql,
                 new String[]{Integer.toString(id)},
                 null);
