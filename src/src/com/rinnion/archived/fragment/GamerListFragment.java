@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
+import com.rinnion.archived.fragment.adapter.GamerAdapter;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 
 /**
@@ -41,27 +42,22 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new NewsAdapter(getActivity(), null);
-        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
+        mAdapter = new GamerAdapter(getActivity(), null);
+        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
+        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
+        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
+        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
         mAdapter.swapCursor(mc);
-
 
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle(R.string.string_news);
+        ab.setTitle(R.string.string_gamers);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        showOtherTournamentFragment(id);
     }
 
     @Override
@@ -104,9 +100,10 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
-        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
+        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
+        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
+        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
+        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
 
         mAdapter.swapCursor(mc);
     }

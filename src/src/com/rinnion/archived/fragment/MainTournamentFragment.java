@@ -82,7 +82,7 @@ public class MainTournamentFragment extends Fragment{
         view.findViewById(R.id.nav_mt_gamers).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showGamersFragment();
             }
         });
 
@@ -141,10 +141,22 @@ public class MainTournamentFragment extends Fragment{
                 .commit();
     }
 
+    private void showGamersFragment() {
+        GamerListFragment mlf = new GamerListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragment_container, mlf)
+            .addToBackStack(null)
+            .commit();
+    }
+
     private void showNewsFragment() {
         NewsListFragment mlf = new NewsListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, "st_petersburg_ladies_trophy");
+        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

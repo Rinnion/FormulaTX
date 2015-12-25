@@ -14,8 +14,10 @@ public class GamerAdapter extends SimpleCursorAdapter {
     public static String[] fromSpinner = {
             "_id",
             "THUMB",
-            "CAPTION",
-            "DATA"
+            "NAME",
+            "COUNTRY",
+            "COUNTRY-CODE",
+            "RATING"
     };
     private static int[] toSpinner = {
             R.id.inl_iv_thumb,
@@ -24,23 +26,26 @@ public class GamerAdapter extends SimpleCursorAdapter {
     };
 
     public GamerAdapter(Context context, NewsCursor mc) {
-        super(context, R.layout.item_news_layout, mc, fromSpinner, toSpinner, 0);
+        super(context, R.layout.item_gamer_layout, mc, fromSpinner, toSpinner, 0);
     }
 
     @Override
     public void bindView(View view, Context context, final Cursor cursor) {
         super.bindView(view, context, cursor);
 
-        final ImageView imlThumb = (ImageView) view.findViewById(R.id.inl_iv_thumb);
-        final TextView tvCaption = (TextView) view.findViewById(R.id.inl_tv_caption);
-        final TextView tvData = (TextView) view.findViewById(R.id.inl_tv_data);
+        final ImageView imlThumb = (ImageView) view.findViewById(R.id.igl_iv_thumb);
+        final TextView tvName = (TextView) view.findViewById(R.id.igl_tv_name);
+        final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
+        final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
 
-        String thumb = cursor.getString(cursor.getColumnIndex(fromSpinner[0]));
-        String caption = cursor.getString(cursor.getColumnIndex(fromSpinner[1]));
-        String data = cursor.getString(cursor.getColumnIndex(fromSpinner[2]));
+        String thumb = cursor.getString(cursor.getColumnIndex(fromSpinner[1]));
+        String name = cursor.getString(cursor.getColumnIndex(fromSpinner[2]));
+        String country = cursor.getString(cursor.getColumnIndex(fromSpinner[3]));
+        String rating = cursor.getString(cursor.getColumnIndex(fromSpinner[5]));
 
         imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
-        tvCaption.setText(caption);
-        tvData.setText(data);
+        tvName.setText(name);
+        tvCountry.setText(country);
+        tvRating.setText(rating);
     }
 }

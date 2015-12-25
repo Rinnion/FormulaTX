@@ -3,27 +3,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content" android:gravity="center_vertical">
 
-    <ImageView
+    <RelativeLayout
             android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="@android:dimen/thumbnail_height"
-            android:id="@+id/inl_iv_thumb"/>
+            android:layout_height="@android:dimen/thumbnail_height">
+        <ImageView
+                android:layout_width="@android:dimen/thumbnail_width"
+                android:layout_height="@android:dimen/thumbnail_height"
+                android:id="@+id/igl_iv_thumb" android:src="@drawable/ic_launcher"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/igl_iv_flag"
+                android:src="@android:drawable/sym_contact_card"
+                android:layout_marginRight="37dp"
+                android:layout_marginBottom="25dp" android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Заголовок новости"
-                android:id="@+id/inl_tv_caption"/>
+                android:text="Имя игрока"
+                android:id="@+id/igl_tv_name"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="01.01.2015"
-                android:id="@+id/inl_tv_data"/>
+                android:text="Страна"
+                android:id="@+id/igl_tv_country"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Рейтинг: "
+                      android:id="@+id/textView"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="90"
+                      android:id="@+id/igl_tv_rating" android:textColor="#ffffd08d"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
