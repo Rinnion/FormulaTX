@@ -59,7 +59,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.today_layout, container, false);
 
-        getActivity().getActionBar().setTitle("Сегодня");
+        getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.ic_drawer);
 
         MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);

@@ -40,6 +40,20 @@ public class AboutFragment extends Fragment  {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                getActivity().getFragmentManager().popBackStack();
+                return true;
+            default:
+                Log.d(TAG, "onOptionsItemSelected: default section");
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
@@ -52,6 +66,7 @@ public class AboutFragment extends Fragment  {
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("О компании");
+        ab.setIcon(R.drawable.ic_action_previous_item);
 
         Bundle args = getArguments();
         String type = args.getString(TYPE);

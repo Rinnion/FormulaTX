@@ -2,6 +2,7 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,11 +57,11 @@ public class NavigationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.left_menu, container, false);
+        View view = inflater.inflate(R.layout.navigation_layout, container, false);
         mTextViewAbout = (TextView) view.findViewById(R.id.tv_about);
 
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle("Навигация");
+        ab.setTitle(R.string.string_navigation);
         ab.setIcon(R.drawable.ic_action_cancel);
 
         view.findViewById(R.id.nav_today).setOnClickListener(new View.OnClickListener() {
@@ -191,6 +192,7 @@ public class NavigationFragment extends Fragment {
 
     public void showTodayFragment() {
         TodayFragment mlf = new TodayFragment();
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)

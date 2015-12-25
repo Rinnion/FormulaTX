@@ -8,14 +8,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_today">
             <ImageView
                     android:id="@+id/imageView" android:layout_column="0"
                     android:layout_width="@android:dimen/app_icon_size"
-                    android:layout_height="@android:dimen/app_icon_size" android:src="@drawable/ic_action_view_as_list"
+                    android:layout_height="@android:dimen/app_icon_size"
+                    android:src="@drawable/ic_action_view_as_list"
                     android:contentDescription="@string/string_view"/>
             <TextView
                     android:layout_width="wrap_content"
@@ -30,6 +30,7 @@
             <ImageView
                     android:layout_width="@android:dimen/app_icon_size"
                     android:layout_height="@android:dimen/app_icon_size"
+                    android:src="@drawable/ic_action_view_as_list"
                     android:id="@+id/imageView2" android:contentDescription="@string/string_feed"/>
             <TextView
                     android:layout_width="wrap_content"
@@ -43,6 +44,7 @@
                 android:layout_height="fill_parent" style="@style/left_menu_row" android:id="@+id/nav_StPetersburgLadiesTrophy">
             <ImageView android:layout_width="@android:dimen/app_icon_size"
                        android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_view_as_list"
                        android:id="@+id/imageView3" android:contentDescription="@string/string_heap"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="St.Peterburg Ladies Trophy"

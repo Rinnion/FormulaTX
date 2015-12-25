@@ -21,4 +21,6 @@
     <string name="string_tournament_findPath">Как добраться</string>
     <string name="string_tournament_news">Новости</string>
     <string name="string_tournament_contacts">Контакты</string>
+    <string name="string_today">Сегодня</string>
+    <string name="string_navigation">Навигация</string>
 </resources>

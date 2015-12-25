@@ -39,6 +39,20 @@ public class MainTournamentFragment extends Fragment{
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                getActivity().getFragmentManager().popBackStack();
+                return true;
+            default:
+                Log.d(TAG, "onOptionsItemSelected: default section");
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
@@ -53,6 +67,7 @@ public class MainTournamentFragment extends Fragment{
         Bundle bundle = getArguments();
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("St.Petersburg" + bundle.getString(TYPE));
+        ab.setIcon(R.drawable.ic_action_previous_item);
 
         view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
             @Override
