@@ -30,25 +30,26 @@
     <bookmark url="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7a7e116-d9cc-4fe6-91da-fb47ce5a93c6" name="Default" comment="-- add other tournaments fragment&#10;-- add other tournament menu&#10;-- fix layout of main tournament ment">
+    <list default="true" id="d7a7e116-d9cc-4fe6-91da-fb47ce5a93c6" name="Default" comment="-- add nav to news list&#10;-- add news view&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsListFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/news_layout.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/AboutFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/AboutFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/Archived.apk" afterPath="$PROJECT_DIR$/out/production/Archived/Archived.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/Archived.unaligned.apk" afterPath="$PROJECT_DIR$/out/production/Archived/Archived.unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/activity/MainActivity.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/activity/MainActivity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment$1.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/MainTournamentFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentListFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentListFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$id.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$id.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/OtherTournamentFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$layout.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$layout.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$menu.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$menu.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$string.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$string.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$style.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R$style.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/R.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TodayFragment.class" afterPath="$PROJECT_DIR$/out/production/Archived/com/rinnion/archived/fragment/TodayFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" afterPath="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\workspace\FormulaTX\Client\src\res\layout\left_menu.xml" afterPath="$PROJECT_DIR$/res/layout/navigation_layout.xml" />
     </list>
     <ignored path="Archived.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,8 +77,8 @@
       <file leaf-file-name="OtherTournamentListFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="2091">
-              <caret line="94" column="20" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2091">
+              <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
               <folding>
                 <element signature="e#2342#2374#0" expanded="true" />
               </folding>
@@ -85,46 +86,105 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NavigationFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NewsListFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsListFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="2091">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+              <folding>
+                <element signature="e#1870#1890#0" expanded="true" />
+                <element signature="e#2090#2091#0" expanded="true" />
+                <element signature="e#2137#2138#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmptyFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/EmptyFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1207">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="1139">
+              <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#1987#2007#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="news_layout.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/news_layout.xml">
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NavigationFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="321" max-vertical-offset="2448">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="55" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.76598835" vertical-offset="0" max-vertical-offset="2601">
+              <caret line="31" column="143" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
               <folding>
-                <element signature="e#2174#2200#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2035#2061#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AboutFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="491" max-vertical-offset="1428">
-              <caret line="66" column="1" selection-start-line="66" selection-start-column="1" selection-end-line="68" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainTournamentFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainTournamentFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65211457" vertical-offset="508" max-vertical-offset="1581">
-              <caret line="65" column="66" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2737" max-vertical-offset="2907">
+              <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2412#2565#0" expanded="true" />
+                <element signature="e#2564#2565#0" expanded="true" />
+                <element signature="e#2632#2784#0" expanded="true" />
+                <element signature="e#2783#2784#0" expanded="true" />
+                <element signature="e#2853#3006#0" expanded="true" />
+                <element signature="e#3005#3006#0" expanded="true" />
+                <element signature="e#3076#3229#0" expanded="true" />
+                <element signature="e#3228#3229#0" expanded="true" />
+                <element signature="e#3300#3453#0" expanded="true" />
+                <element signature="e#3452#3453#0" expanded="true" />
+                <element signature="e#3521#3674#0" expanded="true" />
+                <element signature="e#3673#3674#0" expanded="true" />
+                <element signature="e#3746#3899#0" expanded="true" />
+                <element signature="e#3898#3899#0" expanded="true" />
+                <element signature="e#3967#4120#0" expanded="true" />
+                <element signature="e#4119#4120#0" expanded="true" />
+                <element signature="e#4191#4344#0" expanded="true" />
+                <element signature="e#4343#4344#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navigation_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/navigation_layout.xml">
+      <file leaf-file-name="main_tournament_layout.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/main_tournament_layout.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.535714" vertical-offset="0" max-vertical-offset="3842">
-              <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-              <folding>
-                <element signature="e#4411#4435#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.8214285" vertical-offset="0" max-vertical-offset="2465">
+              <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -132,21 +192,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="202" max-vertical-offset="935">
-              <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TodayFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="2414">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="610" max-vertical-offset="2414">
+              <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2153#2174#0" expanded="true" />
@@ -155,34 +205,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="other_tournament_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/other_tournament_layout.xml">
+      <file leaf-file-name="NewsAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1836">
-              <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="544">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OtherTournamentFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="1190">
-              <caret line="29" column="1" selection-start-line="29" selection-start-column="0" selection-end-line="42" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581">
+              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -202,9 +229,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetworkContentContract.java" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetwork.java" />
-        <option value="$PROJECT_DIR$/res/layout/message_list_layout.xml" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/network/HttpRequester.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/CommentListFragment.java" />
         <option value="$PROJECT_DIR$/res/layout/comment_list_layout.xml" />
@@ -250,9 +274,12 @@
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java" />
         <option value="$PROJECT_DIR$/res/layout/navigation_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsFragment.java" />
+        <option value="$PROJECT_DIR$/res/layout/news_layout.xml" />
         <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsListFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java" />
       </list>
     </option>
   </component>
@@ -833,17 +860,23 @@
       <option name="project" value="LOCAL" />
       <updated>1451039220339</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="--fix up level navigation">
+      <created>1451040752464</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1451040752465</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35443038" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35443038" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.21104388" sideWeight="0.36607143" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -854,9 +887,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227848" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31374323" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31374323" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21104388" sideWeight="0.6339286" order="5" side_tool="false" content_ui="tabs" x="961" y="52" width="287" height="1104" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18690096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18690096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3381555" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31464738" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -932,7 +965,9 @@
     <MESSAGE value="-- remove drawer&#10;-- add navigation over fragments" />
     <MESSAGE value="-- add news adapter" />
     <MESSAGE value="-- add other tournaments fragment&#10;-- add other tournament menu&#10;-- fix layout of main tournament ment" />
-    <option name="LAST_COMMIT_MESSAGE" value="-- add other tournaments fragment&#10;-- add other tournament menu&#10;-- fix layout of main tournament ment" />
+    <MESSAGE value="--fix up level navigation" />
+    <MESSAGE value="-- add nav to news list&#10;-- add news view&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="-- add nav to news list&#10;-- add news view&#10;" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1020,13 +1055,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java</url>
-          <line>46</line>
+          <line>44</line>
           <properties />
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java</url>
-          <line>49</line>
+          <line>47</line>
           <properties />
           <option name="timeStamp" value="74" />
         </line-breakpoint>
@@ -1049,29 +1084,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://E:/work/adt/sdk/sources/android-19/java/lang/Exception.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="986">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/menu_comments.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="6" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/menu_message.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-          <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/network/MyNetworkContentContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="226" max-vertical-offset="1258">
@@ -1291,13 +1303,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1581">
-          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/FeedbackFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="986">
@@ -1345,14 +1350,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/EmptyFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1207">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/include_next_item.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
@@ -1375,17 +1372,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main_tournament_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="2465">
-          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/other_tournament_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1836">
@@ -1397,32 +1383,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="2091">
-          <caret line="94" column="20" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
-          <folding>
-            <element signature="e#2342#2374#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/activity/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="202" max-vertical-offset="935">
           <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="2414">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2153#2174#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1434,10 +1399,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="491" max-vertical-offset="1428">
+          <caret line="66" column="1" selection-start-line="66" selection-start-column="1" selection-end-line="68" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/navigation_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.535714" vertical-offset="0" max-vertical-offset="3842">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        <state vertical-scroll-proportion="-1.2142857" vertical-offset="0" max-vertical-offset="3842">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
           <folding>
             <element signature="e#4411#4435#0" expanded="true" />
           </folding>
@@ -1447,37 +1420,132 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="321" max-vertical-offset="2448">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="55" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="1190">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="42" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main_tournament_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8214285" vertical-offset="0" max-vertical-offset="2465">
+          <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2091">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
           <folding>
-            <element signature="e#2174#2200#0" expanded="true" />
+            <element signature="e#2342#2374#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/AboutFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/TodayFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="491" max-vertical-offset="1428">
-          <caret line="66" column="1" selection-start-line="66" selection-start-column="1" selection-end-line="68" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="610" max-vertical-offset="2414">
+          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2153#2174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/adapter/NewsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/OtherTournamentFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/EmptyFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="1190">
-          <caret line="29" column="1" selection-start-line="29" selection-start-column="0" selection-end-line="42" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1207">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="1139">
+          <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1987#2007#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/news_layout.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/MainTournamentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65211457" vertical-offset="508" max-vertical-offset="1581">
-          <caret line="65" column="66" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2737" max-vertical-offset="2907">
+          <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2412#2565#0" expanded="true" />
+            <element signature="e#2564#2565#0" expanded="true" />
+            <element signature="e#2632#2784#0" expanded="true" />
+            <element signature="e#2783#2784#0" expanded="true" />
+            <element signature="e#2853#3006#0" expanded="true" />
+            <element signature="e#3005#3006#0" expanded="true" />
+            <element signature="e#3076#3229#0" expanded="true" />
+            <element signature="e#3228#3229#0" expanded="true" />
+            <element signature="e#3300#3453#0" expanded="true" />
+            <element signature="e#3452#3453#0" expanded="true" />
+            <element signature="e#3521#3674#0" expanded="true" />
+            <element signature="e#3673#3674#0" expanded="true" />
+            <element signature="e#3746#3899#0" expanded="true" />
+            <element signature="e#3898#3899#0" expanded="true" />
+            <element signature="e#3967#4120#0" expanded="true" />
+            <element signature="e#4119#4120#0" expanded="true" />
+            <element signature="e#4191#4344#0" expanded="true" />
+            <element signature="e#4343#4344#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NewsListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="2091">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <element signature="e#1870#1890#0" expanded="true" />
+            <element signature="e#2090#2091#0" expanded="true" />
+            <element signature="e#2137#2138#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rinnion/archived/fragment/NavigationFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.76598835" vertical-offset="0" max-vertical-offset="2601">
+          <caret line="31" column="143" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2035#2061#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

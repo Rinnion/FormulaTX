@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.TextView;
 import com.rinnion.archived.R;
 
 /**
@@ -20,7 +19,6 @@ import com.rinnion.archived.R;
 public class NavigationFragment extends Fragment {
 
     private String TAG = getClass().getCanonicalName();
-    private TextView mTextViewAbout;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -58,7 +56,6 @@ public class NavigationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.navigation_layout, container, false);
-        mTextViewAbout = (TextView) view.findViewById(R.id.tv_about);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_navigation);
@@ -173,6 +170,7 @@ public class NavigationFragment extends Fragment {
         bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_COMPANY);
         bundle.putString(AboutFragment.ENTITY, null);
         mlf.setArguments(bundle);
+        getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)
@@ -183,6 +181,7 @@ public class NavigationFragment extends Fragment {
 
     public void showOtherTournmentFragment() {
         OtherTournamentListFragment mlf = new OtherTournamentListFragment();
+        getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)
@@ -193,6 +192,7 @@ public class NavigationFragment extends Fragment {
     public void showTodayFragment() {
         TodayFragment mlf = new TodayFragment();
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)
@@ -204,6 +204,7 @@ public class NavigationFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(MainTournamentFragment.TYPE, type);
         mlf.setArguments(bundle);
+        getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)

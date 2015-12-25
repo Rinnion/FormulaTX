@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.AdapterView;
 import com.rinnion.archived.R;
 
 /**
@@ -22,8 +21,6 @@ public class MainTournamentFragment extends Fragment{
     public static final String TOURNAMENT_LADIES_TROPHY = "TOURNAMENT_LADIES_TROPHY";
     public static final String TOURNAMENT_OPEN = "TOURNAMENT_OPEN";
     private String TAG = getClass().getCanonicalName();
-    private AdapterView.OnItemClickListener mListener;
-    private View mEmpty;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -62,7 +59,6 @@ public class MainTournamentFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_tournament_layout, container, false);
-        //mEmpty = view.findViewById(R.id.ml_tv_empty);
 
         Bundle bundle = getArguments();
         ActionBar ab = getActivity().getActionBar();
@@ -76,8 +72,85 @@ public class MainTournamentFragment extends Fragment{
             }
         });
 
+        view.findViewById(R.id.nav_mt_news).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNewsFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_gamers).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_program).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_schedule).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_grids).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_livescore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_findpath).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
 
         return view;
+    }
+
+    public void showEmptyFragment() {
+        EmptyFragment mlf = new EmptyFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void showNewsFragment() {
+        NewsListFragment mlf = new NewsListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, "st_petersburg_ladies_trophy");
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void showAboutFragment() {
@@ -92,10 +165,7 @@ public class MainTournamentFragment extends Fragment{
                 .addToBackStack(null)
                 .commit();
     }
-
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mListener = listener;
-    }
-
 }
+
+
 
