@@ -7,4 +7,9 @@
         <item name="android:layout_width">@android:dimen/app_icon_size</item>
         <item name="android:layout_height">@android:dimen/app_icon_size</item>
     </style>
+    <style name="menu_item_row">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

@@ -9,4 +9,16 @@
     <string name="string_heap">Куча</string>
     <string name="string_tags">Тэги</string>
     <string name="string_profile">Профиль</string>
+    <string name="string_stub">Заглушка</string>
+    <string name="string_other_tounaments">Другие турниры</string>
+    <string name="string_tournament_about">О турнире</string>
+    <string name="string_tournament_gamers">Игроки</string>
+    <string name="string_tournament_program">Программа</string>
+    <string name="string_tournament_schedule">Рассписание</string>
+    <string name="string_tournament_grids">Сетки</string>
+    <string name="string_tournament_liveScore">Livescore</string>
+    <string name="string_tournament_photoGallery">Видео и фото</string>
+    <string name="string_tournament_findPath">Как добраться</string>
+    <string name="string_tournament_news">Новости</string>
+    <string name="string_tournament_contacts">Контакты</string>
 </resources>

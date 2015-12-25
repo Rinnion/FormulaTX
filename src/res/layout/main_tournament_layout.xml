@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="150sp" android:layout_gravity="center_horizontal">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150sp" android:layout_gravity="center_horizontal">
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_about" style="@style/menu_item_row">
+            <include layout="@layout/include_image_tournament_about"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_about" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_news" style="@style/menu_item_row">
+            <include layout="@layout/include_image_tournament_about"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_news" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_gamers"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_gamers" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_program"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_program" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_schedule"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_schedule" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_grids"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_grids" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_livescore"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_liveScore" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_video"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_photoGallery" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_mt_findpath"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical">
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tournament_findPath" android:layout_weight="1"/>
+            <include layout="@layout/include_next_item"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

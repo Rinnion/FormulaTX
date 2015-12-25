@@ -69,14 +69,12 @@ public class NavigationFragment extends Fragment {
                 showTodayFragment();
             }
         });
-
         view.findViewById(R.id.nav_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAboutFragment();
             }
         });
-
         view.findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,67 +90,67 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_other_tournaments).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showOtherTournmentFragment();
             }
         });
         view.findViewById(R.id.nav_photogallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_social_networks).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_contacts).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_tickets).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_shop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_volvo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_event_guide).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_radio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_catalog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
 
@@ -160,12 +158,30 @@ public class NavigationFragment extends Fragment {
         return view;
     }
 
+    public void showEmptyFragment() {
+        EmptyFragment mlf = new EmptyFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
     public void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
         bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_COMPANY);
         bundle.putString(AboutFragment.ENTITY, null);
         mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    public void showOtherTournmentFragment() {
+        OtherTournamentListFragment mlf = new OtherTournamentListFragment();
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)

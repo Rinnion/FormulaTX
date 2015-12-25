@@ -1,28 +1,29 @@
 package com.rinnion.archived.fragment;
 
-import android.app.Fragment;
+import android.app.ActionBar;
+import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.*;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
+import com.rinnion.archived.database.cursor.TournamentCursor;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Lenovo
  * Date: 15.02.14
  * Time: 22:46
- * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
+ * To change this template use File | Settings | File Templates.
  */
-public class OtherTournamentListFragment extends Fragment implements LoaderManager.LoaderCallbacks<NewsCursor> {
+public class OtherTournamentListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -37,6 +38,78 @@ public class OtherTournamentListFragment extends Fragment implements LoaderManag
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
+        String[] from = new String[]{
+                "_id",
+                "thumbs",
+                "caption"
+        };
+
+        int[] to = new int[]{
+                R.id.itl_tv_caption,
+                R.id.itl_iv_thumbs,
+                R.id.itl_tv_caption
+        };
+
+        MatrixCursor cursor = new MatrixCursor(from);
+        cursor.addRow(new Object[]{1, null, "ФОРМУЛА ТХ"});
+        cursor.addRow(new Object[]{2, null, "ST.PETERSBURG HEAD JUNIOR"});
+        cursor.addRow(new Object[]{3, null, "WINTER MOSCOW"});
+
+        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_layout, cursor, from, to, 0) {
+            @Override
+            public void setViewImage(ImageView v, String value) {
+                super.setViewImage(v, "");
+            }
+        };
+
+        setListAdapter(mAdapter);
+
+        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+
+        ActionBar ab = getActivity().getActionBar();
+        ab.setTitle(R.string.string_other_tounaments);
+        ab.setIcon(R.drawable.ic_action_previous_item);
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        showOtherTournamentFragment(id);
+        //super.onListItemClick(l, v, position, id);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                getActivity().getFragmentManager().popBackStack();
+                return true;
+            default:
+                Log.d(TAG, "onOptionsItemSelected: default section");
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showOtherTournamentFragment(long id) {
+        OtherTournamentFragment mlf = new OtherTournamentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(OtherTournamentFragment.TYPE, id);
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
         Log.d(TAG, "onCreateOptionsMenu");
@@ -45,52 +118,18 @@ public class OtherTournamentListFragment extends Fragment implements LoaderManag
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-//
-//        mAdapter = new MessageAdapter(getActivity(), null, new MessageAdapter.IMessageClickListener() {
-//            @Override
-//            public void Share(Message message) {
-//                Intent sendIntent = new Intent();
-//                sendIntent.setAction(Intent.ACTION_SEND);
-//                sendIntent.putExtra(Intent.EXTRA_TEXT, message.content);
-//                sendIntent.setType("text/plain");
-//                startActivity(sendIntent);
-//            }
-//        });
-//
-//        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
-
-        super.onCreate(savedInstanceState);
+    public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
+        return null;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.about_layout, container, false);
-        return view;
-    }
+    public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mListener = listener;
     }
 
     @Override
-    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader");
-        return new MessageAsyncLoader(getActivity());
+    public void onLoaderReset(Loader<TournamentCursor> loader) {
+
     }
-
-    @Override
-    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
-        Log.d(TAG, "onLoadFinished");
-        mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<NewsCursor> loader) {
-        Log.d(TAG, "onLoaderReset");
-    }
-
-
 }
 

@@ -16,9 +16,8 @@ import com.rinnion.archived.R;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class OtherTournamentFragment extends Fragment {
+public class EmptyFragment extends Fragment {
 
-    public static final String TYPE = "TYPE";
     private String TAG = getClass().getCanonicalName();
     private TextView mTextViewAbout;
 
@@ -57,12 +56,14 @@ public class OtherTournamentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.other_tournament_layout, container, false);
+        View view = inflater.inflate(R.layout.about_layout, container, false);
+        mTextViewAbout = (TextView) view.findViewById(R.id.tv_about);
 
         ActionBar ab = getActivity().getActionBar();
-
-        ab.setTitle(String.valueOf(getArguments().getLong(TYPE)));
+        ab.setTitle(R.string.string_stub);
         ab.setIcon(R.drawable.ic_action_previous_item);
+
+        mTextViewAbout.setText("Здесь пока ничего нет");
 
         return view;
     }
