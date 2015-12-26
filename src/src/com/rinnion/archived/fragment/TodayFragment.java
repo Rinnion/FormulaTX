@@ -16,8 +16,7 @@ import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
-import org.apache.http.util.ExceptionUtils;
+import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +58,7 @@ public class TodayFragment extends Fragment implements
         mAdapter = new NewsAdapter(getActivity(), null);
 
         getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
-        getLoaderManager().initLoader(R.id.weather_loader, Bundle.EMPTY, this);
+        //getLoaderManager().initLoader(R.id.weather_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
@@ -160,7 +159,7 @@ public class TodayFragment extends Fragment implements
     public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
         //Создаем асинхронный загрузчик
-        return new MessageAsyncLoader(getActivity());
+        return new NewsAsyncLoader(getActivity());
     }
 
     @Override

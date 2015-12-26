@@ -12,11 +12,11 @@ import com.rinnion.archived.network.MyNetwork;
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class MessageAsyncLoader extends AsyncTaskLoader<NewsCursor> {
+public class NewsAsyncLoader extends AsyncTaskLoader<NewsCursor> {
 
     private String TAG = getClass().getSimpleName();
 
-    public MessageAsyncLoader(Context context) {
+    public NewsAsyncLoader(Context context) {
         super(context);
         Log.d(TAG, ".ctor");
     }

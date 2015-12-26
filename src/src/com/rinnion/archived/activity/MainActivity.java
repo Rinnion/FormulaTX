@@ -9,7 +9,7 @@ import android.util.Log;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.TodayFragment;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
+import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 
 public class MainActivity extends Activity
         implements LoaderManager.LoaderCallbacks<NewsCursor> {
@@ -44,7 +44,7 @@ public class MainActivity extends Activity
 
     @Override
     public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
-        return new MessageAsyncLoader(this);
+        return new NewsAsyncLoader(this);
     }
 
     @Override

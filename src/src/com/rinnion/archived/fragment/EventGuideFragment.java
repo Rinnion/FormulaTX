@@ -13,7 +13,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.network.loaders.MessageAsyncLoader;
+import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 
 /**
  * Created with IntelliJ IDEA.
@@ -77,7 +77,7 @@ public class EventGuideFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
-        return new MessageAsyncLoader(getActivity());
+        return new NewsAsyncLoader(getActivity());
     }
 
     @Override
