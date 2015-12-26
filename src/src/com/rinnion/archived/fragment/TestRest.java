@@ -45,5 +45,6 @@ public class TestRest extends AsyncTask<String,Void,Void>{
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
