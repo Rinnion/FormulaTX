@@ -18,7 +18,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="4"
-                    android:id="@+id/textView"/>
+                    android:id="@+id/tl_tv_peter_temp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -30,27 +30,27 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Облачно"
-                    android:id="@+id/textView3"/>
+                    android:id="@+id/tl_tv_peter_main"/>
             <ImageView
                     android:layout_width="@android:dimen/app_icon_size"
                     android:layout_height="@android:dimen/app_icon_size"
-                    android:id="@+id/imageView"/>
+                    android:id="@+id/tl_iv_peter"/>
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:id="@+id/linearLayout" android:layout_weight="1"
                       android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5"
-                      android:id="@+id/textView4"/>
+                      android:id="@+id/tl_tv_moscow_temp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceMedium" android:text="Москва"
                       android:id="@+id/textView5"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceMedium" android:text="Снег с наледью"
-                      android:id="@+id/textView6"/>
+                      android:id="@+id/tl_tv_moscow_main"/>
             <ImageView android:layout_width="@android:dimen/app_icon_size"
                        android:layout_height="@android:dimen/app_icon_size"
-                       android:id="@+id/imageView2"/>
+                       android:id="@+id/tl_iv_moscow"/>
         </LinearLayout>
     </LinearLayout>
     <TextView

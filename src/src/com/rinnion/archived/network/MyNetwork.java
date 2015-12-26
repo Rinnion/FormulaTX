@@ -8,6 +8,7 @@ import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.CommentHelper;
 import com.rinnion.archived.database.helper.NewsHelper;
+import com.rinnion.archived.network.handlers.WeatherHandler;
 import com.rinnion.archived.database.model.Profile;
 import com.rinnion.archived.database.model.User;
 import com.rinnion.archived.network.handlers.*;
@@ -39,6 +40,21 @@ public final class MyNetwork {
                         mh.clear();
                     }
                 })
+                .create();
+
+        return fetcher.execute();
+    }
+
+    //Загрузка данных с сервера
+    public static Bundle queryWeather(String country) {
+        Log.d(TAG, String.format("query wheather: %s", country));
+        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        String credentials = ArchivedApplication.getParameter(Settings.CREDENTIALS);
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher = builder.setName("queryMessages")
+                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q="+country+",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d")
+                .setHandler(new WeatherHandler(country))
                 .create();
 
         return fetcher.execute();
