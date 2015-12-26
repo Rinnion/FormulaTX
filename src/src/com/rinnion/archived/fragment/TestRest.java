@@ -1,6 +1,7 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import com.rinnion.archived.activity.MainActivity;
 import org.apache.http.client.HttpClient;
@@ -18,8 +19,13 @@ public class TestRest extends AsyncTask<String,Void,Void>{
     String content;
     String error;
 
-    ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
+    ProgressDialog progressDialog;
     String data;
+
+    public TestRest(Context context) {
+        //progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(context);
+    }
 
     @Override
     protected void onPostExecute(Void aVoid) {
