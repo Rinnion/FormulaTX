@@ -21,6 +21,7 @@ public final class MyNetwork {
 
     private static final String TAG = "MyNetwork";
 
+    //Загрузка данных с сервера
     public static Bundle queryMessages() {
         Log.d(TAG, "queryMessages");
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
@@ -31,7 +32,7 @@ public final class MyNetwork {
         HttpRequester fetcher = builder.setName("queryMessages")
                 .setGetRequest(MyNetworkContentContract.Messages.getUrlList())
                 .setCredentials(credentials)
-                .setHandler(new JSONArrayHandler(new MessageHandler()) {
+                .setHandler(new JSONArrayHandler(new NewsHandler()) {
                     @Override
                     public void beforeArrayHandle() {
                         NewsHelper mh = new NewsHelper(doh);
@@ -53,7 +54,7 @@ public final class MyNetwork {
         HttpRequester fetcher = builder.setName("queryDrafts")
                 .setGetRequest(MyNetworkContentContract.Drafts.getUrlList())
                 .setCredentials(credentials)
-                .setHandler(new JSONArrayHandler(new MessageHandler()) {
+                .setHandler(new JSONArrayHandler(new NewsHandler()) {
                     @Override
                     public void beforeArrayHandle() {
                         NewsHelper mh = new NewsHelper(doh);

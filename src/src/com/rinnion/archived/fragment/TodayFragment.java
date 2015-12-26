@@ -94,6 +94,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
 
+
     public void showNavigationFragment() {
         NavigationFragment mlf = new NavigationFragment();
         getFragmentManager()
@@ -116,19 +117,18 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mListener = listener;
-    }
 
     @Override
     public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
+        //Создаем асинхронный загрузчик
         return new MessageAsyncLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
         Log.d(TAG, "onLoadFinished");
+        //Присваиваем результат в адаптер для отображения
         //mAdapter.swapCursor(data);
     }
 

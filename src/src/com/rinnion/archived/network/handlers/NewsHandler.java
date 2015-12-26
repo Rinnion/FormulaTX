@@ -11,9 +11,9 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 /**
- * Created by tretyakov on 07.07.2015.
+ * Parse News from server
  */
-public class MessageHandler extends JSONObjectHandler {
+public class NewsHandler extends JSONObjectHandler {
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
         long id = object.getLong("MessageId");
@@ -33,6 +33,7 @@ public class MessageHandler extends JSONObjectHandler {
         }
         long date_receive = Calendar.getInstance().getTimeInMillis();
         NewsHelper mh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
+//Здусь должно бвыть сохрание в БД.
         //Message message = new Message(id, content, background, date_post, likes, like, comments, sb.toString(), date_receive);
         //mh.add(message);
         return Bundle.EMPTY;

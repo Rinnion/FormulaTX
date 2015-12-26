@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.database.model.Message;
+import com.rinnion.archived.database.model.News;
 import com.rinnion.archived.database.model.User;
 
 /**
@@ -58,7 +58,7 @@ public class UserHelper implements BaseColumns {
         return c;
     }
 
-    public Message get(int id) {
+    public News get(int id) {
         Log.d(TAG, "getLocation (" + id + ")");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";

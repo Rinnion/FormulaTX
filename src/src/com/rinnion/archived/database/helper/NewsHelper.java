@@ -8,14 +8,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.database.model.Message;
+import com.rinnion.archived.database.model.News;
 
 /**
- * Created with IntelliJ IDEA.
- * User: tretyakov
- * Date: 19.02.14
- * Time: 16:13
- * To change this template use File | Settings | File Templates.
+ * Helper for working with News repository
  */
 public class NewsHelper implements BaseColumns {
     public static final String COLUMN_TYPE = "type";
@@ -64,7 +60,7 @@ public class NewsHelper implements BaseColumns {
         return c;
     }
 
-    public Message get(int id) {
+    public News get(int id) {
         Log.d(TAG, "getLocation (" + id + ")");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
@@ -92,19 +88,19 @@ public class NewsHelper implements BaseColumns {
         }
     }
 
-    public boolean add(Message message) {
-        Log.d(TAG, "addLocation(" + message.toString() + ")");
+    public boolean add(News news) {
+        Log.d(TAG, "addLocation(" + news.toString() + ")");
 
         ContentValues map;
         map = new ContentValues();
-        map.put(_ID, message.id);
-        map.put(COLUMN_CONTENT, message.content);
-        map.put(COLUMN_CAPTION, message.caption);
-        map.put(COLUMN_TYPE, message.type);
-        map.put(COLUMN_DATE, message.date);
-        map.put(COLUMN_NAME, message.name);
-        map.put(COLUMN_CONTENT, message.content);
-        map.put(COLUMN_THUMBS, message.thumb);
+        map.put(_ID, news.id);
+        map.put(COLUMN_CONTENT, news.content);
+        map.put(COLUMN_CAPTION, news.caption);
+        map.put(COLUMN_TYPE, news.type);
+        map.put(COLUMN_DATE, news.date);
+        map.put(COLUMN_NAME, news.name);
+        map.put(COLUMN_CONTENT, news.content);
+        map.put(COLUMN_THUMBS, news.thumb);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);

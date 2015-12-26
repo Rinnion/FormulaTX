@@ -1,6 +1,6 @@
 package com.rinnion.archived.database.model;
 
-public class Message {
+public class News {
 
     public final long id;
     public final String caption;
@@ -10,7 +10,7 @@ public class Message {
     public final String content;
     public final String thumb;
 
-    public Message(long id, String caption, String type, String date, String name, String content, String thumb) {
+    public News(long id, String caption, String type, String date, String name, String content, String thumb) {
         this.id = id;
         this.caption = caption;
         this.type = type;

@@ -38,8 +38,6 @@ public class MessageAsyncLoader extends AsyncTaskLoader<NewsCursor> {
     @Override
     public NewsCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-
-
         MyNetwork.queryMessages();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         NewsHelper mh = new NewsHelper(doh);
