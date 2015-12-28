@@ -11,13 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.fragment.adapter.GamerAdapter;
-import com.rinnion.archived.fragment.adapter.NewsAdapter;
 
 /**
  * Created with IntelliJ IDEA.
