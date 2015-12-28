@@ -42,21 +42,22 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
         setHasOptionsMenu(true);
 
         mAdapter = new NewsAdapter(getActivity(), null);
-        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
-        mAdapter.swapCursor(mc);
-
 
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
-        ActionBar ab = getActivity().getActionBar();
-        ab.setTitle(R.string.string_news);
-        ab.setIcon(R.drawable.ic_action_previous_item);
-
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        ActionBar ab = getActivity().getActionBar();
+        if (ab != null) {
+            ab.setTitle(R.string.string_news);
+            ab.setIcon(R.drawable.ic_action_previous_item);
+        }
+        super.onResume();
     }
 
     @Override
@@ -99,6 +100,7 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
+
         return null;
     }
 

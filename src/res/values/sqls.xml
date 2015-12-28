@@ -2,8 +2,37 @@
 <resources>
     <string-array name="sqlsCreate">
         <item>"CREATE TABLE settings (_id INTEGER PRIMARY KEY, parameter TEXT, value TEXT );"</item>
-        <item>"CREATE TABLE news (_id INTEGER, caption TEXT, type TEXT, thumbs TEXT, date TEXT, name TEXT, content TEXT,
-            thumb TEXT );"
+        <item>"CREATE TABLE tournament (_id INTEGER PRIMARY KEY, post_name TEXT);"</item>
+        <item>"CREATE TABLE news (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
+        <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
+        <item>"CREATE TABLE object (id INTEGER,
+            user TEXT,
+            date TEXT,
+            modified TEXT,
+            content BLOB,
+            title TEXT,
+            status TEXT,
+            comment_status TEXT,
+            password TEXT,
+            post_name TEXT,
+            link TEXT,
+            type TEXT,
+            parent TEXT,
+            meta_title TEXT,
+            meta_description TEXT,
+            meta_keywords TEXT,
+            display_method TEXT,
+            rss TEXT,
+            files TEXT,
+            thumb TEXT,
+            lang TEXT,
+            lang_id TEXT,
+            references_include TEXT,
+            gallery_include TEXT,
+            tables TEXT,
+            parsers_include TEXT,
+            login TEXT,
+            update_time NUMBER);"
         </item>
     </string-array>
     <string-array name="sqlsUpgrade">

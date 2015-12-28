@@ -17,6 +17,7 @@ public class NewsHelper implements BaseColumns {
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_CAPTION = "caption";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_PARENT = "parent";
     public static final String COLUMN_THUMBS = "thumbs";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_CONTENT = "content";
@@ -60,6 +61,7 @@ public class NewsHelper implements BaseColumns {
         return c;
     }
 
+
     public News get(int id) {
         Log.d(TAG, "getLocation (" + id + ")");
 
@@ -95,12 +97,10 @@ public class NewsHelper implements BaseColumns {
         map = new ContentValues();
         map.put(_ID, news.id);
         map.put(COLUMN_CONTENT, news.content);
-        map.put(COLUMN_CAPTION, news.caption);
-        map.put(COLUMN_TYPE, news.type);
         map.put(COLUMN_DATE, news.date);
         map.put(COLUMN_NAME, news.name);
-        map.put(COLUMN_CONTENT, news.content);
-        map.put(COLUMN_THUMBS, news.thumb);
+        map.put(COLUMN_PARENT, news.parent);
+        map.put(COLUMN_THUMBS, news.thumbs);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);

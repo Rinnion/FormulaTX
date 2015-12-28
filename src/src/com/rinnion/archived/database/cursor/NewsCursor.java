@@ -23,19 +23,12 @@ public class NewsCursor extends SQLiteCursor {
 
     public News getItem() {
         long id = getColId();
-//        long date_post = getColDatePost();
-//        long likes = getColLikes();
-//        String tags = getColTags();
-//        long date_receive = getColDateReceive();
-//        boolean like = getColVote();
-//        Long comments = getColComments();
-        String thumbs = "thumbs";
-        String content = "content";
-        String name = "name";
-        String date = "date";
-        String type = "type";
-        String caption = "caption";
-        News news = new News(id, caption, type, date, name, content, thumbs);
+        String parent = "thumbs";
+        String name = "content";
+        String content = "name";
+        String thumbs = "date";
+        String date = "type";
+        News news = new News(id, parent, name, content, thumbs, date);
         return news;
     }
 
