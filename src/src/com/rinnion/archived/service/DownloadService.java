@@ -22,10 +22,10 @@ public class DownloadService extends IntentService {
         try {
             publishResults(10);
             //ask for weather
-            Thread.sleep(2000);
+            MyNetwork.queryTournaments();
             publishResults(20);
             //list of tournaments
-            MyNetwork.queryTournaments();
+            Thread.sleep(2000);
             publishResults(50);
             //list of objects
             Thread.sleep(2000);
