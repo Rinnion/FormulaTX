@@ -20,7 +20,12 @@
                     android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_about" style="@style/menu_item_row">
-            <include layout="@layout/include_image_tournament_about"/>
+            <ImageView xmlns:tools="http://schemas.android.com/tools"
+                       android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:src="@drawable/ic_action_person"
+                       android:contentDescription="@string/string_profile"
+                       tools:showIn="@layout/main_tournment_layout"/>
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

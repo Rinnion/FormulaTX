@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.TextView;
 import com.rinnion.archived.R;
 
 /**
@@ -18,8 +19,8 @@ import com.rinnion.archived.R;
 public class MainTournamentFragment extends Fragment{
 
     public static final String TYPE = "TYPE";
-    public static final String TOURNAMENT_LADIES_TROPHY = "TOURNAMENT_LADIES_TROPHY";
-    public static final String TOURNAMENT_OPEN = "TOURNAMENT_OPEN";
+    public static final String TOURNAMENT_LADIES_TROPHY = "LADIES TROPHY";
+    public static final String TOURNAMENT_OPEN = "OPEN";
     private String TAG = getClass().getCanonicalName();
 
     @Override
@@ -61,6 +62,10 @@ public class MainTournamentFragment extends Fragment{
         View view = inflater.inflate(R.layout.main_tournament_layout, container, false);
 
         Bundle bundle = getArguments();
+
+        TextView tv = (TextView) view.findViewById(R.id.mtl_tv_name);
+        tv.setText("ST.PETERBURG " + bundle.getString(TYPE));
+
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("St.Petersburg" + bundle.getString(TYPE));
         ab.setIcon(R.drawable.ic_action_previous_item);

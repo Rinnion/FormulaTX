@@ -7,8 +7,8 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="150sp" android:layout_gravity="center_horizontal" android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:layout_height="150sp" android:layout_gravity="center_horizontal"
+            >
         <LinearLayout android:id="@+id/nav_today" style="@style/menu_item_row">
             <ImageView xmlns:tools="http://schemas.android.com/tools"
                        android:src="@drawable/menu_today_icon"
