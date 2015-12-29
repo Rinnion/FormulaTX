@@ -25,12 +25,11 @@ import java.util.Calendar;
  * To change this template use File | Settings | File Templates.
  */
 public class HttpRequester {
-    public static final String RESULT_CODE = "RESULT_CODE";
     public static final String STATUS_CODE = "STATUS_CODE";
-    public static final String RESULT_MESSAGE = "MESSAGE";
+    public static final String RESULT = "RESULT";
+    public static final String RESULT_HTTP = "HTTP";
+    public static final String RESULT_HTTP_PARSE = "HTTP_PARSE";
     public static final String RESULT_EXCEPTION = "EXCEPTION";
-    public static final int RESULT_CODE_OK = 0;
-    public static final int RESULT_CODE_FAIL = -1;
     private String mIdentity;
     private HttpUriRequest mRequest;
     private IResponseHandler mHandler;
@@ -62,20 +61,19 @@ public class HttpRequester {
 
             int statusCode = response.getStatusLine().getStatusCode();
             Log.d(TAG, mIdentity + ": " + Integer.toString(statusCode) + " in " + sec + " ms");
-            result.putInt(STATUS_CODE, statusCode);
+            Bundle bundle = new Bundle();
+            bundle.putInt(STATUS_CODE, statusCode);
 
-            result.putAll(mHandler.Handle(response));
-
-            result.putInt(RESULT_CODE, RESULT_CODE_OK);
-            result.putString(RESULT_MESSAGE, "Все хорошо");
+            result.putSerializable(RESULT, RESULT_HTTP);
+            result.putBundle(RESULT_HTTP, bundle);
+            bundle.putBundle(RESULT_HTTP_PARSE, mHandler.Handle(response));
 
             Log.d(TAG, mIdentity + ": success");
         } catch (Exception e) {
             Log.w(TAG, mIdentity + ": Exception: " + e.getMessage());
             Log.d(TAG, mIdentity, e);
+            result.putSerializable(RESULT, RESULT_EXCEPTION);
             result.putSerializable(RESULT_EXCEPTION, e);
-            result.putInt(RESULT_CODE, RESULT_CODE_FAIL);
-            result.putString(RESULT_MESSAGE, "Что-то пошло не так");
         }
 
         return result;
@@ -116,6 +114,11 @@ public class HttpRequester {
         public Builder setContent(JSONObject content) throws UnsupportedEncodingException {
             String entity = content.toString();
             this.mEntity = new StringEntity(entity, "UTF-8");
+            return this;
+        }
+
+        public Builder setContent(String content) throws UnsupportedEncodingException {
+            this.mEntity = new StringEntity(content, "UTF-8");
             return this;
         }
 

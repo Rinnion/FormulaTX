@@ -39,7 +39,12 @@ public class NewsAdapter extends SimpleCursorAdapter {
         String caption = cursor.getString(cursor.getColumnIndex(fromSpinner[2]));
         String data = cursor.getString(cursor.getColumnIndex(fromSpinner[3]));
 
-        imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
+        if (thumb != null) {
+            imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
+        } else {
+            imlThumb.setImageResource(R.drawable.logo_splash_screen);
+        }
+
         tvCaption.setText(caption);
         tvData.setText(data);
     }

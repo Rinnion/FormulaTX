@@ -12,10 +12,19 @@ import com.rinnion.archived.Settings;
 public class MyNetworkContentContract {
 
 
-    public static final String URL_LOCAL = "http://10.0.3.2:11000/";
+    public static final String URL_LOCAL = "http://192.168.56.1:3000/";
     public static final String URL_OUTSIDE = "http://archived-001-site1.smarterasp.net/";
     public static final String URL = (Settings.NETDEBUG) ? URL_LOCAL : URL_OUTSIDE;
     public static final String URL_API = URL + "api/";
+
+    public static class FormulaTXApi {
+        public static class StaticPage {
+            public static final String URL = URL_API + "static_page";
+            public static final String URL_METHOD = URL + "?method=getallstaticpagebydisplaymethod";
+            public static final String URL_ACTION_OBJECT = "display_method=object";
+            public static final String URL_ACTION_PARTNER = "display_method=partner";
+        }
+    }
 
     public static class Messages {
         public static final String URL_MESSAGES_LIST = URL_API + "feed/";
