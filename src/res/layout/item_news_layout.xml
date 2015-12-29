@@ -3,27 +3,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content" android:paddingBottom="10dp"
+              android:divider="@android:drawable/checkbox_on_background" android:paddingRight="20dp"
+              android:paddingLeft="20dp">
 
     <ImageView
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="@android:dimen/thumbnail_height"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:id="@+id/inl_iv_thumb"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent" android:paddingLeft="20dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Заголовок новости"
-                android:id="@+id/inl_tv_caption"/>
+                android:id="@+id/inl_tv_caption" android:textSize="14sp" android:fontFamily="Roboto-Regular"
+                android:textColor="#ECECEC"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="01.01.2015"
-                android:id="@+id/inl_tv_data"/>
+                android:id="@+id/inl_tv_data" android:textSize="11sp" android:textColor="#929292"
+                android:paddingTop="8dp"/>
     </LinearLayout>
 </LinearLayout>

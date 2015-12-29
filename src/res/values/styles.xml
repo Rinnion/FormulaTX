@@ -12,4 +12,22 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+    <style name="weather_temperature">
+        <item name="android:textSize">60sp</item>
+        <item name="android:fontFamily">Roboto-Light</item>
+    </style>
+    <style name="weather_country">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">Roboto-Regular</item>
+    </style>
+    <style name="weather_main">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">Roboto-Light</item>
+    </style>
+    <style name="weather_image">
+        <item name="android:layout_width">@android:dimen/app_icon_size</item>
+        <item name="android:layout_height">@android:dimen/app_icon_size</item>
+    </style>
+    <style name="news_list">
+    </style>
 </resources>
