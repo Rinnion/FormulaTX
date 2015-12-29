@@ -25,4 +25,16 @@
     <string name="string_navigation">Навигация</string>
     <string name="string_news">Новости</string>
     <string name="string_gamers">Игроки</string>
+    <string name="string_about_company">О компании</string>
+    <string name="string_st_petersburg_ladies_trophy">St. Peterburg Ladies Trophy</string>
+    <string name="string_st_petersburg_open">St.Peterburg Open</string>
+    <string name="string_other_tournament">Другие турниры</string>
+    <string name="string_photogallery">Фотогалерея</string>
+    <string name="string_social_networks">Социальные сети</string>
+    <string name="string_gazprom_export">Газпром экспорт</string>
+    <string name="string_radio">Радио подкасты</string>
+    <string name="string_tickets">Билеты</string>
+    <string name="string_shop">Магазин</string>
+    <string name="string_contacts">Контакты и ваш отзыв</string>
+    <string name="string_snap">Формула Snap</string>
 </resources>

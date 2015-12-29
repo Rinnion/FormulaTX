@@ -24,8 +24,7 @@
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_about" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_about" android:layout_weight="1" style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_news" style="@style/menu_item_row">
@@ -34,7 +33,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_news" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_news" android:layout_weight="1" style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_gamers"
@@ -48,7 +47,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_gamers" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_gamers" android:layout_weight="1" style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_program"
@@ -62,7 +61,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_program" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_program" android:layout_weight="1"
+                    style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_schedule"
@@ -76,7 +76,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_schedule" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_schedule" android:layout_weight="1"
+                    style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_grids"
@@ -90,7 +91,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_grids" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_grids" android:layout_weight="1" style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_livescore"
@@ -104,7 +105,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_liveScore" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_liveScore" android:layout_weight="1"
+                    style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_video"
@@ -118,7 +120,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_photoGallery" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_photoGallery" android:layout_weight="1"
+                    style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
         <LinearLayout android:id="@+id/nav_mt_findpath"
@@ -132,7 +135,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_findPath" android:layout_weight="1"/>
+                    android:text="@string/string_tournament_findPath" android:layout_weight="1"
+                    style="@style/main_text"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
     </LinearLayout>

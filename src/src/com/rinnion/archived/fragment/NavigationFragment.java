@@ -109,12 +109,6 @@ public class NavigationFragment extends Fragment {
                 showEmptyFragment();
             }
         });
-        view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
         view.findViewById(R.id.nav_tickets).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,25 +121,7 @@ public class NavigationFragment extends Fragment {
                 showEmptyFragment();
             }
         });
-        view.findViewById(R.id.nav_volvo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-        view.findViewById(R.id.nav_event_guide).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
         view.findViewById(R.id.nav_radio).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-        view.findViewById(R.id.nav_catalog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEmptyFragment();

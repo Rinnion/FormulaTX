@@ -11,5 +11,38 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+    <style name="weather_temperature">
+        <item name="android:textSize">60sp</item>
+        <item name="android:fontFamily">Roboto-Light</item>
+    </style>
+    <style name="weather_country">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">Roboto-Regular</item>
+    </style>
+    <style name="weather_main">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">Roboto-Light</item>
+    </style>
+    <style name="weather_image">
+        <item name="android:layout_width">@android:dimen/app_icon_size</item>
+        <item name="android:layout_height">@android:dimen/app_icon_size</item>
+    </style>
+    <style name="news_list">
+    </style>
+    <style name="main_text">
+        <item name="android:fontFamily">SFUIText-Regular</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:paddingLeft">30dp</item>
+
+    </style>
+    <style name="main_menu_image">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+    <style name="menu_item_icon_size">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
     </style>
 </resources>
