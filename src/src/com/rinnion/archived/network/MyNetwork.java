@@ -8,12 +8,13 @@ import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.CommentHelper;
 import com.rinnion.archived.database.helper.NewsHelper;
-import com.rinnion.archived.network.handlers.WeatherHandler;
 import com.rinnion.archived.database.model.Profile;
 import com.rinnion.archived.database.model.User;
 import com.rinnion.archived.network.handlers.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Describes all Network operations
@@ -56,6 +57,30 @@ public final class MyNetwork {
                 .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q="+country+",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d")
                 .setHandler(new WeatherHandler(country))
                 .create();
+
+        return fetcher.execute();
+    }
+
+    //Загрузка данных турниров
+    public static Bundle queryTournaments() {
+        Log.d(TAG, String.format("query tournaments"));
+        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = null;
+        try {
+            fetcher = builder.setName("queryTournaments")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.URL_ACTION_OBJECT)
+                    .setHandler(new TournamentHandler())
+                    .create();
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
 
         return fetcher.execute();
     }

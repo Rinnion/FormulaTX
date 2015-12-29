@@ -57,8 +57,7 @@ public class TodayFragment extends Fragment implements
 
         mAdapter = new NewsAdapter(getActivity(), null);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
-        //getLoaderManager().initLoader(R.id.weather_loader, Bundle.EMPTY, this);
+//        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
@@ -119,8 +118,10 @@ public class TodayFragment extends Fragment implements
 
             @Override
             protected void onPostExecute(Bundle aBundle) {
-                int code = aBundle.getInt(HttpRequester.RESULT_CODE);
-                if (code != HttpRequester.RESULT_CODE_FAIL) LoadWeather(pbTemp, pbMain, petersburg);
+                String string = aBundle.getString(HttpRequester.RESULT);
+                if (string.equals(HttpRequester.RESULT_HTTP)) {
+                    LoadWeather(pbTemp, pbMain, petersburg);
+                }
             }
         };
         at.execute();
@@ -161,6 +162,7 @@ public class TodayFragment extends Fragment implements
         //Создаем асинхронный загрузчик
         return new NewsAsyncLoader(getActivity());
     }
+
 
     @Override
     public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
