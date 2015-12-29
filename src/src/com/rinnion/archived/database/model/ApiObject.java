@@ -1,6 +1,10 @@
 package com.rinnion.archived.database.model;
 
+
 public class ApiObject {
+
+
+
 
     public final long id;
     public String user;
@@ -30,9 +34,11 @@ public class ApiObject {
     public String parsers_include;
     public String login;
     public long update_time;
+    public int objType;
 
-    public ApiObject(long id) {
+    public ApiObject(long id,int objType) {
         this.id = id;
+        this.objType=objType;
     }
 
     @Override

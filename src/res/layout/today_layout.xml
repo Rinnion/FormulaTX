@@ -12,13 +12,14 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" android:layout_weight="1" android:gravity="center">
+                android:layout_height="fill_parent" android:layout_weight="1" android:gravity="center"
+                >
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="4"
-                    android:id="@+id/tl_tv_peter_temp"/>
+                    android:text="4\u00B0"
+                    android:id="@+id/tl_tv_peter_temp" android:textSize="40dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,14 +35,14 @@
             <ImageView
                     android:layout_width="@android:dimen/app_icon_size"
                     android:layout_height="@android:dimen/app_icon_size"
-                    android:id="@+id/tl_iv_peter"/>
+                    android:id="@+id/tl_iv_peter" android:background="@drawable/weather_sun_icon"/>
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:id="@+id/linearLayout" android:layout_weight="1"
                       android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5"
-                      android:id="@+id/tl_tv_moscow_temp"/>
+                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5\u00B0"
+                      android:id="@+id/tl_tv_moscow_temp" android:textSize="40dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceMedium" android:text="Москва"
                       android:id="@+id/textView5"/>
@@ -50,7 +51,7 @@
                       android:id="@+id/tl_tv_moscow_main"/>
             <ImageView android:layout_width="@android:dimen/app_icon_size"
                        android:layout_height="@android:dimen/app_icon_size"
-                       android:id="@+id/tl_iv_moscow"/>
+                       android:id="@+id/tl_iv_moscow" android:background="@drawable/weather_snow_icon"/>
         </LinearLayout>
     </LinearLayout>
     <TextView

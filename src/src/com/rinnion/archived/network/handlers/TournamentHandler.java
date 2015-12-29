@@ -21,6 +21,7 @@ public class TournamentHandler extends JSONObjectHandler {
             }
             Bundle bundle = new Bundle();
             bundle.putIntArray("ID[]", idArray);
+            return  bundle;
         }
         return Bundle.EMPTY;
     }

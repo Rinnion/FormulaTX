@@ -42,9 +42,10 @@ public class ApiObjectHelper implements BaseColumns {
     public static final String COLUMN_PARSERS_INCLUDE = "parsers_include";
     public static final String COLUMN_LOGIN = "login";
     public static final String COLUMN_UPDATE_TIME = "update_time";
+    public static final String COLUMN_OBJ_TYPE = "objType";
 
 
-    public static String DATABASE_TABLE = "news";
+    public static String DATABASE_TABLE = "objects";
     public static String[] COLS;
     public static String ALL_COLUMNS;
 
@@ -77,12 +78,13 @@ public class ApiObjectHelper implements BaseColumns {
                 COLUMN_TABLES,
                 COLUMN_PARSERS_INCLUDE,
                 COLUMN_LOGIN,
-                COLUMN_UPDATE_TIME
+                COLUMN_UPDATE_TIME,
+                COLUMN_OBJ_TYPE
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
 
-    private final String TAG = "MessageHelper";
+    private final String TAG = "ObjectsStore";
 
     private DatabaseOpenHelper doh;
 
@@ -166,7 +168,8 @@ public class ApiObjectHelper implements BaseColumns {
         map.put(COLUMN_TABLES, apiObject.tables);
         map.put(COLUMN_PARSERS_INCLUDE, apiObject.parsers_include);
         map.put(COLUMN_LOGIN, apiObject.login);
-        map.put(COLUMN_LOGIN, apiObject.update_time);
+        map.put(COLUMN_UPDATE_TIME, apiObject.update_time);
+        map.put(COLUMN_OBJ_TYPE,apiObject.objType);
 
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
