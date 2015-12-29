@@ -17,8 +17,14 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="4\u00B0"
+                    android:id="@+id/tl_tv_peter_temp" android:textSize="40dp"/>
+=======
+                    android:text="4"
                     android:id="@+id/tl_tv_peter_temp" style="@style/weather_temperature"/>
+>>>>>>> origin/master
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -30,23 +36,41 @@
                     android:text="Облачно"
                     android:id="@+id/tl_tv_peter_main" style="@style/weather_main"/>
             <ImageView
+<<<<<<< HEAD
+                    android:layout_width="@android:dimen/app_icon_size"
+                    android:layout_height="@android:dimen/app_icon_size"
+                    android:id="@+id/tl_iv_peter" android:background="@drawable/weather_sun_icon"/>
+=======
                     android:id="@+id/tl_iv_peter" android:src="@drawable/weather_sun_icon"
                     style="@style/weather_image"/>
+>>>>>>> origin/master
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:id="@+id/linearLayout" android:layout_weight="1"
                       android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+<<<<<<< HEAD
                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5\u00B0"
+                      android:id="@+id/tl_tv_moscow_temp" android:textSize="40dp"/>
+=======
+                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5"
                       android:id="@+id/tl_tv_moscow_temp" style="@style/weather_temperature"/>
+>>>>>>> origin/master
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceMedium" android:text="Москва"
                       android:id="@+id/textView5" style="@style/weather_country"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceMedium" android:text="Снег с наледью"
+<<<<<<< HEAD
+                      android:id="@+id/tl_tv_moscow_main"/>
+            <ImageView android:layout_width="@android:dimen/app_icon_size"
+                       android:layout_height="@android:dimen/app_icon_size"
+                       android:id="@+id/tl_iv_moscow" android:background="@drawable/weather_snow_icon"/>
+=======
                       android:id="@+id/tl_tv_moscow_main" style="@style/weather_main"/>
             <ImageView android:id="@+id/tl_iv_moscow" style="@style/weather_image"
                        android:src="@drawable/weather_snow_icon"/>
+>>>>>>> origin/master
         </LinearLayout>
     </LinearLayout>
     <TextView

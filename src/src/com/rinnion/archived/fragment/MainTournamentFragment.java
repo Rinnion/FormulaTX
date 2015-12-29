@@ -94,7 +94,7 @@ public class MainTournamentFragment extends Fragment{
         view.findViewById(R.id.nav_mt_program).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showProgramFragment();
             }
         });
 
@@ -154,6 +154,18 @@ public class MainTournamentFragment extends Fragment{
         getFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_container, mlf)
+            .addToBackStack(null)
+            .commit();
+    }
+
+    private void showProgramFragment() {
+        ProgramFragment mpf = new ProgramFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
+        mpf.setArguments(bundle);
+        getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragment_container, mpf)
             .addToBackStack(null)
             .commit();
     }

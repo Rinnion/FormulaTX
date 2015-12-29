@@ -2,6 +2,7 @@ package com.rinnion.archived.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import com.rinnion.archived.network.MyNetwork;
 
@@ -22,8 +23,11 @@ public class DownloadService extends IntentService {
         try {
             publishResults(10);
             //ask for weather
-            MyNetwork.queryTournaments();
+            Bundle bundleTurnirList = MyNetwork.queryTournamentsList();
             publishResults(20);
+
+            Bundle bundleTurnir = MyNetwork.queryTournaments(208);
+
             //list of tournaments
             Thread.sleep(2000);
             publishResults(50);

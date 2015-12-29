@@ -54,26 +54,31 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher = builder.setName("queryMessages")
-                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q="+country+",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d")
+                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q=" + country + ",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d")
                 .setHandler(new WeatherHandler(country))
                 .create();
 
         return fetcher.execute();
     }
 
-    //Загрузка данных турниров
-    public static Bundle queryTournaments() {
+    //Загрузка списка турниров
+    public static Bundle queryTournamentsList() {
         Log.d(TAG, String.format("query tournaments"));
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = null;
         try {
-            fetcher = builder.setName("queryTournaments")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.URL_ACTION_OBJECT)
+
+            fetcher = builder.setName("queryTournamentsList")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.DISPLAY_METHOD_OBJECT)
                     .setHandler(new TournamentHandler())
                     .create();
+
+
+
+
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "Error while server request", e);
             Bundle bundle = new Bundle();
@@ -84,6 +89,42 @@ public final class MyNetwork {
 
         return fetcher.execute();
     }
+
+    //Загрузка турниров
+    public static Bundle queryTournaments(int id) {
+        Log.d(TAG, String.format("query tournaments"));
+        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = null;
+
+        String strPost;
+
+        try {
+
+            strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id);
+            strPost+="&" + MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.LANG_RU;
+
+            fetcher = builder.setName("queryTournaments")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
+                    .setContent(strPost)
+                    .setHandler(new ApiObjectHandler())
+                    .create();
+
+
+
+
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
+
+        return fetcher.execute();
+    }
+
 
     public static Bundle queryDrafts() {
         Log.d(TAG, "queryDrafts");

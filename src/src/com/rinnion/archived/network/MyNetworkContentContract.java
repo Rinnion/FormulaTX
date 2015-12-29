@@ -20,9 +20,21 @@ public class MyNetworkContentContract {
     public static class FormulaTXApi {
         public static class StaticPage {
             public static final String URL = URL_API + "static_page";
-            public static final String URL_METHOD = URL + "?method=getallstaticpagebydisplaymethod";
-            public static final String URL_ACTION_OBJECT = "display_method=object";
-            public static final String URL_ACTION_PARTNER = "display_method=partner";
+            public static class getallstaticpagebydisplaymethod
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagebydisplaymethod";
+                public static final String DISPLAY_METHOD_OBJECT = "display_method=object";
+                public static final String DISPLAY_METHOD_PARTNER = "display_method=partner";
+            }
+
+            public static class getpage
+            {
+                public static final String URL_METHOD = URL + "?method=getpage";
+                public static final String ID = "id=%1s";
+                public static final String LANG_RU = "lang=ru";
+                public static final String LANG_EN = "lang=en";
+            }
+
         }
     }
 
