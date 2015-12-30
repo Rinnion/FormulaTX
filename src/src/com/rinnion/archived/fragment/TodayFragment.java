@@ -68,10 +68,10 @@ public class TodayFragment extends Fragment implements
 
         final TextView pbTemp = (TextView)view.findViewById(R.id.tl_tv_peter_temp);
         final TextView pbMain = (TextView)view.findViewById(R.id.tl_tv_peter_main);
-        ImageView pbView = (ImageView)view.findViewById(R.id.tl_iv_peter);
+        final ImageView pbIcon = (ImageView) view.findViewById(R.id.tl_iv_peter);
         final TextView mosTemp = (TextView)view.findViewById(R.id.tl_tv_moscow_temp);
         final TextView mosMain = (TextView)view.findViewById(R.id.tl_tv_moscow_main);
-        ImageView mosView = (ImageView)view.findViewById(R.id.tl_iv_moscow);
+        final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
 
         getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.ic_drawer);
@@ -85,31 +85,31 @@ public class TodayFragment extends Fragment implements
 
         mAdapter.swapCursor(mc);
 
-        LoadWeather(pbTemp, pbMain, "petersburg");
-        LoadWeather(mosTemp, mosMain, "moscow");
+        LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
+        LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
 
         return view;
     }
 
-    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final String petersburg) {
+    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
         String weather_petersburg = ArchivedApplication.getParameter("weather_" + petersburg);
         if (weather_petersburg != null) {
             try{
                 JSONObject jsonPetersburg = new JSONObject(weather_petersburg);
                 if (jsonPetersburg.getLong("time")+1800000<Calendar.getInstance().getTimeInMillis()){
-                    RunWeatherLoader(pbTemp, pbMain, petersburg);
+                    RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
                 }else {
-                    FitWeather(pbTemp, pbMain, jsonPetersburg);
+                    FitWeather(pbTemp, pbMain, pbIcon, jsonPetersburg);
                 }
             }catch (Exception ignored){
 
             }
         }else {
-            RunWeatherLoader(pbTemp, pbMain, petersburg);
+            RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
         }
     }
 
-    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final String petersburg) {
+    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
         AsyncTask<Void, Void, Bundle> at = new AsyncTask<Void, Void, Bundle>() {
             @Override
             protected Bundle doInBackground(Void... params) {
@@ -120,16 +120,50 @@ public class TodayFragment extends Fragment implements
             protected void onPostExecute(Bundle aBundle) {
                 String string = aBundle.getString(HttpRequester.RESULT);
                 if (string.equals(HttpRequester.RESULT_HTTP)) {
-                    LoadWeather(pbTemp, pbMain, petersburg);
+                    LoadWeather(pbTemp, pbMain, pbIcon, petersburg);
                 }
             }
         };
         at.execute();
     }
 
-    private void FitWeather(TextView pbTemp, TextView pbMain, JSONObject jsonPetersburg) throws JSONException {
-        pbTemp.setText(String.valueOf(jsonPetersburg.getDouble("temp")));
-        pbMain.setText(String.valueOf(jsonPetersburg.getString("main")));
+    private void FitWeather(TextView pbTemp, TextView pbMain, ImageView pbIcon, JSONObject jsonPetersburg) throws JSONException {
+        String main = jsonPetersburg.getString("main");
+        int temp = (int) Math.round(jsonPetersburg.getDouble("temp"));
+
+        pbTemp.setText(String.valueOf(temp));
+        pbMain.setText(String.valueOf(main));
+
+        try {
+            String strIcon = jsonPetersburg.getString("icon");
+            int iIcon = Integer.parseInt(strIcon.substring(1, 2));
+            switch (iIcon) {
+                case 1:
+                    pbIcon.setImageResource(R.drawable.weather_sunshine_icon);
+                    break;
+                case 2:
+                    pbIcon.setImageResource(R.drawable.weather_sun_icon);
+                    break;
+                case 3:
+                case 4:
+                    pbIcon.setImageResource(R.drawable.weather_cloud_icon);
+                    break;
+                case 9:
+                case 10:
+                case 11:
+                    pbIcon.setImageResource(R.drawable.weather_rain_icon);
+                    break;
+                case 13:
+                    pbIcon.setImageResource(R.drawable.weather_snow_icon);
+                    break;
+                default:
+                    pbIcon.setImageResource(R.drawable.ic_action_help);
+                    break;
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "error parse weather image", ex);
+            pbIcon.setImageResource(R.drawable.ic_action_help);
+        }
     }
 
 

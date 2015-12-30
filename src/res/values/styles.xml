@@ -37,8 +37,20 @@
     <style name="main_text">
         <item name="android:fontFamily">SFUIText-Regular</item>
         <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="main_text_small">
+        <item name="android:fontFamily">SFUIText-Regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="main_text_small_10">
+        <item name="android:fontFamily">SFUIText-Regular</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="menu_item_caption_padded" parent="main_text">
         <item name="android:paddingLeft">30dp</item>
-
     </style>
     <style name="main_menu_image">
         <item name="android:layout_width">30dp</item>
