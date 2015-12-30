@@ -15,4 +15,6 @@
     <dimen name="person_image_size">96dip</dimen>
     <dimen name="list_thumb_height">120dp</dimen>
     <dimen name="list_thumb_width">120dp</dimen>
+    <dimen name="menu_item_thumb_height">100dp</dimen>
+    <dimen name="menu_item_thumb_width">100dp</dimen>
 </resources>

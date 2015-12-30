@@ -3,29 +3,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:paddingBottom="10dp"
-              android:divider="@android:drawable/checkbox_on_background" android:paddingRight="20dp"
-              android:paddingLeft="20dp">
+              android:layout_height="wrap_content" android:paddingBottom="15dp"
+              android:divider="@android:drawable/checkbox_on_background" android:paddingRight="30dp"
+              android:paddingLeft="30dp" android:paddingTop="15dp">
 
     <ImageView
-            android:layout_width="@dimen/list_thumb_width"
-            android:layout_height="@dimen/list_thumb_height"
+            android:layout_width="@dimen/menu_item_thumb_width"
+            android:layout_height="@dimen/menu_item_thumb_height"
             android:id="@+id/inl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:paddingLeft="20dp">
+            android:layout_height="fill_parent" android:paddingLeft="15dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Заголовок новости"
-                android:id="@+id/inl_tv_caption" android:textSize="14sp" android:fontFamily="Roboto-Regular"
-                android:textColor="#ECECEC"/>
+                android:id="@+id/inl_tv_caption"
+                android:textColor="#ECECEC" style="@style/main_text_small"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="01.01.2015"
-                android:id="@+id/inl_tv_data" android:textSize="11sp" android:textColor="#929292"
-                android:paddingTop="8dp"/>
+                android:id="@+id/inl_tv_data" android:textColor="#929292"
+                android:paddingTop="8dp" style="@style/main_text_small_10"/>
     </LinearLayout>
 </LinearLayout>

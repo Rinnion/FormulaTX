@@ -28,25 +28,26 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Имя игрока"
+                android:text="Апполинарий Апполинариович Ааполинариев"
                 android:id="@+id/igl_tv_name" style="@style/main_text"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Страна"
-                android:id="@+id/igl_tv_country" android:textColor="#D8D8D8" android:paddingTop="8dp"/>
+                android:id="@+id/igl_tv_country" android:textColor="#D8D8D8" android:paddingTop="8dp"
+                style="@style/main_text_small"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:text="Рейтинг: "
-                      android:id="@+id/textView" android:textColor="#FFB500" android:textSize="12sp"
-                      android:paddingTop="8dp"/>
+                      android:id="@+id/textView" android:textColor="#FFB500"
+                      android:paddingTop="8dp" style="@style/main_text_small"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:text="90"
-                      android:id="@+id/igl_tv_rating" android:textColor="#FFB500" android:textSize="12sp"/>
+                      android:id="@+id/igl_tv_rating" android:textColor="#FFB500"
+                      style="@style/main_text_small"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -61,6 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="285"
-                android:id="@+id/igl_tv_like_count" android:textSize="10sp"/>
+                android:id="@+id/igl_tv_like_count" android:textSize="10sp" android:paddingTop="8sp"/>
     </LinearLayout>
 </LinearLayout>
