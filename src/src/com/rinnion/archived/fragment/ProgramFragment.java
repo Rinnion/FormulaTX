@@ -8,8 +8,6 @@ import android.content.Loader;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
@@ -66,13 +64,6 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
         }
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
-    }
 
     @Override
     public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {

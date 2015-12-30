@@ -33,13 +33,6 @@ public class AboutFragment extends Fragment  {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected");
         switch (item.getItemId()) {

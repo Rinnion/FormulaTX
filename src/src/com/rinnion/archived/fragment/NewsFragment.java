@@ -40,13 +40,6 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);

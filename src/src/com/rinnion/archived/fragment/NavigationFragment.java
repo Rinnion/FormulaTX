@@ -6,7 +6,10 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import com.rinnion.archived.R;
 
 /**
@@ -24,13 +27,6 @@ public class NavigationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
     }
 
     @Override

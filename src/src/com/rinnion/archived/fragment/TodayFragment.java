@@ -8,7 +8,10 @@ import android.database.MatrixCursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
@@ -45,13 +48,6 @@ public class TodayFragment extends Fragment implements
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
@@ -74,7 +70,7 @@ public class TodayFragment extends Fragment implements
         final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
 
         getActivity().getActionBar().setTitle(R.string.string_today);
-        getActivity().getActionBar().setIcon(R.drawable.ic_drawer);
+        getActivity().getActionBar().setIcon(R.drawable.menu_icon);
 
         MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
         mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});

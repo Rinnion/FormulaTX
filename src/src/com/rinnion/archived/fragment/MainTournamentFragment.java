@@ -5,7 +5,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 
@@ -27,13 +30,6 @@ public class MainTournamentFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
     }
 
     @Override
@@ -63,12 +59,20 @@ public class MainTournamentFragment extends Fragment{
 
         Bundle bundle = getArguments();
 
+        String type = bundle.getString(TYPE);
+
         TextView tv = (TextView) view.findViewById(R.id.mtl_tv_name);
-        tv.setText("ST.PETERBURG " + bundle.getString(TYPE));
+        tv.setText("ST.PETERBURG " + type);
 
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle("St.Petersburg" + bundle.getString(TYPE));
+        ab.setTitle("St.Petersburg" + type);
         ab.setIcon(R.drawable.ic_action_previous_item);
+
+        if (type.equals(TOURNAMENT_LADIES_TROPHY)) {
+            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
+        } else {
+            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_open_bg);
+        }
 
         view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,8 +8,6 @@ import android.content.Loader;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -108,13 +106,6 @@ public class OtherTournamentListFragment extends ListFragment implements LoaderM
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
     }
 
     @Override

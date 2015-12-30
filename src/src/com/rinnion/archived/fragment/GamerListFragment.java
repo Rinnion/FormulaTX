@@ -83,12 +83,6 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
                 .commit();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
-    }
 
     @Override
     public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {

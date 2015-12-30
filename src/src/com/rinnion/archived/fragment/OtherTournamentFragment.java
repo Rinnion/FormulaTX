@@ -5,7 +5,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 
@@ -40,13 +43,6 @@ public class OtherTournamentFragment extends Fragment {
                 Log.d(TAG, "onOptionsItemSelected: default section");
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu");
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_message, menu);
     }
 
     @Override
