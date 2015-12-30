@@ -18,7 +18,7 @@ import org.json.JSONObject;
                 JSONArray message = object.getJSONArray("message");
 
                 Bundle bundle = new Bundle();
-                bundle.putString("ApiObject",message.toString());
+                bundle.putString("ApiObject",message.get(0).toString());
                 return  bundle;
             }
             return Bundle.EMPTY;

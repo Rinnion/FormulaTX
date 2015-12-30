@@ -173,8 +173,8 @@ public class ApiObjectHelper implements BaseColumns {
 
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
-            db.insert(DATABASE_TABLE, null, map);
-            return true;
+            return (db.insert(DATABASE_TABLE, null, map)!=-1);
+
         } catch (SQLException e) {
             Log.e(TAG, "Error writing location", e);
             return false;

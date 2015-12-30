@@ -30,10 +30,10 @@ public class JSONObjectHandler extends JSONHandler {
     @Override
     protected Bundle onStringHandle(String content) throws JSONException {
 
-        String sss = content.replace("\\\"", "\"");
-        sss = sss.replace("\\\\", "\\");
-        sss = sss.replaceAll("^\"|\"$", "");
-        JSONObject jsonObject = new JSONObject(sss);
+        String jsonString = content.replace("\\\"", "\"");
+        jsonString = jsonString.replace("\\\\", "\\");
+        jsonString = jsonString.replaceAll("^\"|\"$", "");
+        JSONObject jsonObject = new JSONObject(jsonString);
         beforeHandle();
         Bundle bundle = Handle(jsonObject);
         afterHandle();
