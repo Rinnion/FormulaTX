@@ -40,18 +40,13 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
         setHasOptionsMenu(true);
 
         mAdapter = new GamerAdapter(getActivity(), null);
-        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
-        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
-        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
-        mAdapter.swapCursor(mc);
 
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle(R.string.string_gamers);
+        ab.setTitle(R.string.string_tournament_program);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
         super.onCreate(savedInstanceState);
