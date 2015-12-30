@@ -13,4 +13,6 @@
     <dimen name="text_size_list_order_metro">18dp</dimen>
     <dimen name="dialog_courier_info_rating_bar_height">5dp</dimen>
     <dimen name="person_image_size">96dip</dimen>
+    <dimen name="list_thumb_height">120dp</dimen>
+    <dimen name="list_thumb_width">120dp</dimen>
 </resources>

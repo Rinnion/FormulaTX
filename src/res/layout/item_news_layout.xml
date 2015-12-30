@@ -8,9 +8,9 @@
               android:paddingLeft="20dp">
 
     <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:id="@+id/inl_iv_thumb"/>
+            android:layout_width="@dimen/list_thumb_width"
+            android:layout_height="@dimen/list_thumb_height"
+            android:id="@+id/inl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"

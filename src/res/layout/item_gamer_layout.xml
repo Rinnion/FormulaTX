@@ -3,50 +3,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:gravity="center_vertical">
+              android:layout_height="wrap_content" android:gravity="center_vertical" android:paddingRight="15dp"
+              android:paddingLeft="15dp" android:paddingTop="7dp" android:paddingBottom="7dp">
 
     <RelativeLayout
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="@android:dimen/thumbnail_height">
+            android:layout_width="@dimen/list_thumb_width"
+            android:layout_height="@dimen/list_thumb_height">
         <ImageView
-                android:layout_width="@android:dimen/thumbnail_width"
-                android:layout_height="@android:dimen/thumbnail_height"
+                android:layout_width="@dimen/list_thumb_width"
+                android:layout_height="@dimen/list_thumb_height"
                 android:id="@+id/igl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
                 android:id="@+id/igl_iv_flag"
                 android:src="@android:drawable/sym_contact_card"
-                android:layout_marginRight="37dp"
-                android:layout_marginBottom="25dp" android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignBottom="@+id/igl_iv_thumb" android:layout_alignEnd="@+id/igl_iv_thumb"
+                android:layout_marginRight="7dp" android:layout_marginBottom="7dp"/>
     </RelativeLayout>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_weight="1">
+            android:layout_height="wrap_content" android:layout_weight="1" android:paddingLeft="15dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Имя игрока"
-                android:id="@+id/igl_tv_name"/>
+                android:id="@+id/igl_tv_name" style="@style/main_text"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Страна"
-                android:id="@+id/igl_tv_country"/>
+                android:id="@+id/igl_tv_country" android:textColor="#D8D8D8" android:paddingTop="8dp"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Рейтинг: "
-                      android:id="@+id/textView"/>
+                      android:text="Рейтинг: "
+                      android:id="@+id/textView" android:textColor="#FFB500" android:textSize="12sp"
+                      android:paddingTop="8dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="90"
-                      android:id="@+id/igl_tv_rating" android:textColor="#ffffd08d"/>
+                      android:text="90"
+                      android:id="@+id/igl_tv_rating" android:textColor="#FFB500" android:textSize="12sp"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -60,8 +60,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="285"
-                android:id="@+id/igl_tv_like_count"/>
+                android:id="@+id/igl_tv_like_count" android:textSize="10sp"/>
     </LinearLayout>
 </LinearLayout>
