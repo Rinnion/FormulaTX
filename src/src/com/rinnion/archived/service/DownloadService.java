@@ -4,7 +4,13 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
+import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.network.handlers.ApiObjectHandler;
+import org.json.JSONObject;
 
 public class DownloadService extends IntentService {
 
@@ -26,7 +32,29 @@ public class DownloadService extends IntentService {
             Bundle bundleTurnirList = MyNetwork.queryTournamentsList();
             publishResults(20);
 
-            Bundle bundleTurnir = MyNetwork.queryTournaments(208);
+            Bundle tmpTurnirList= bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
+
+
+            int[] intArray = tmpTurnirList.getIntArray("ID[]");
+
+            for (int bundleIndex=0;bundleIndex<intArray.length;bundleIndex++) {
+                Bundle bundleTurnir = MyNetwork.queryTournaments(intArray[bundleIndex]);
+
+                if (bundleTurnir.containsKey(HttpRequester.RESULT_HTTP)) {
+
+
+                    Bundle tmpHttpBundle = bundleTurnir.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
+                    if (tmpHttpBundle.containsKey("ApiObject")) {
+                        Tournament tournament = new Tournament(new JSONObject(tmpHttpBundle.getString("ApiObject")));
+                        ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
+                        if (!aoh.add(tournament))
+                            Log.e(TAG, "Error when insert 'Tournament' data to DB");
+                        else
+                            Log.d(TAG, "'Tournament' success added to DB id='" + tournament.id + "'" );
+                    }
+                }
+            }
+
 
             //list of tournaments
             Thread.sleep(2000);

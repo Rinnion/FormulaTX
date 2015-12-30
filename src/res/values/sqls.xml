@@ -5,7 +5,7 @@
         <item>"CREATE TABLE tournament (_id INTEGER PRIMARY KEY, post_name TEXT);"</item>
         <item>"CREATE TABLE news (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
         <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
-        <item>"CREATE TABLE object (id INTEGER,
+        <item>"CREATE TABLE objects (_id INTEGER,
             user TEXT,
             date TEXT,
             modified TEXT,
@@ -32,11 +32,15 @@
             tables TEXT,
             parsers_include TEXT,
             login TEXT,
-            update_time NUMBER);"
+            update_time NUMBER,
+            objType NUMBER);"
         </item>
     </string-array>
     <string-array name="sqlsUpgrade">
         <item>"DROP TABLE IF EXISTS settings;"</item>
+        <item>"DROP TABLE IF EXISTS tournament;"</item>
         <item>"DROP TABLE IF EXISTS news;"</item>
+        <item>"DROP TABLE IF EXISTS gamers;"</item>
+        <item>"DROP TABLE IF EXISTS objects;"</item>
     </string-array>
 </resources>
