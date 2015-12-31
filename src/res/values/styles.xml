@@ -9,7 +9,7 @@
     </style>
 
     <style name="FormulaTXTheme.Widget.ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">#14374D</item>
+        <item name="android:background">@color/action_bar_color</item>
     </style>
 
     <style name="left_menu_row">
@@ -30,15 +30,15 @@
     </style>
     <style name="weather_temperature">
         <item name="android:textSize">60sp</item>
-        <item name="android:fontFamily">Roboto-Light</item>
+        <!--item name="android:fontFamily">Roboto-Light</item-->
     </style>
     <style name="weather_country">
         <item name="android:textSize">17sp</item>
-        <item name="android:fontFamily">Roboto-Regular</item>
+        <!--item name="android:fontFamily">Roboto-Regular</item-->
     </style>
     <style name="weather_main">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">Roboto-Light</item>
+        <!--item name="android:fontFamily">Roboto-Light</item-->
     </style>
     <style name="weather_image">
         <item name="android:layout_width">@android:dimen/app_icon_size</item>
@@ -47,17 +47,17 @@
     <style name="news_list">
     </style>
     <style name="main_text">
-        <item name="android:fontFamily">SFUIText-Regular</item>
+        <!--item name="android:fontFamily">SFUIText-Regular</item-->
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="main_text_small">
-        <item name="android:fontFamily">SFUIText-Regular</item>
+        <!--item name="android:fontFamily">SFUIText-Regular</item-->
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="main_text_small_10">
-        <item name="android:fontFamily">SFUIText-Regular</item>
+        <!--item name="android:fontFamily">SFUIText-Regular</item-->
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>

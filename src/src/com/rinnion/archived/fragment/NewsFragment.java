@@ -3,10 +3,19 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.model.ApiObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +26,7 @@ import com.rinnion.archived.R;
  */
 public class NewsFragment extends Fragment {
 
+    public static final String ID = "id";
     private String TAG = getClass().getCanonicalName();
 
     @Override
@@ -52,6 +62,28 @@ public class NewsFragment extends Fragment {
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_news);
         ab.setIcon(R.drawable.ic_action_previous_item);
+
+        Bundle args = getArguments();
+        long anInt = args.getLong(NewsFragment.ID);
+        ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
+        ApiObject apiObject = aoh.get(anInt);
+
+        ImageView image = (ImageView) view.findViewById(R.id.nl_iv_image);
+        TextView title = (TextView) view.findViewById(R.id.nl_tv_title);
+        TextView date = (TextView) view.findViewById(R.id.nl_tv_date);
+        TextView content = (TextView) view.findViewById(R.id.nl_tv_content);
+
+        String thumb = apiObject.thumb;
+        if (thumb != null) {
+            image.setImageBitmap(BitmapFactory.decodeFile(thumb));
+        } else {
+            image.setImageResource(R.drawable.logo_splash_screen);
+        }
+
+        content.setText(apiObject.content);
+        date.setText(apiObject.date);
+        title.setText(apiObject.title);
+
 
         return view;
     }

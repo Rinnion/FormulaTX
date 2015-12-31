@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.database.MatrixCursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
-import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
@@ -34,7 +32,7 @@ import java.util.Calendar;
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
 public class TodayFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<ApiObjectCursor> {
+        LoaderManager.LoaderCallbacks<ApiObjectCursor>, AdapterView.OnItemClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -79,6 +77,7 @@ public class TodayFragment extends Fragment implements
 
         mListView = (ListView) view.findViewById(R.id.tl_lv_news);
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
 
         //mAdapter.swapCursor(mc);
 
@@ -207,4 +206,20 @@ public class TodayFragment extends Fragment implements
         Log.d(TAG, "onLoaderReset");
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        showNewsDefaultFragment(id);
+    }
+
+    private void showNewsDefaultFragment(long id) {
+        NewsFragment mlf = new NewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(NewsFragment.ID, id);
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
 }

@@ -124,7 +124,7 @@ public class ApiObjectHelper implements BaseColumns {
 
     }
 
-    public ApiObject get(int id) {
+    public ApiObject get(long id) {
         Log.d(TAG, "get (" + id + ")");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
@@ -132,7 +132,7 @@ public class ApiObjectHelper implements BaseColumns {
         ApiObjectCursor c = (ApiObjectCursor) d.rawQueryWithFactory(
                 new ApiObjectCursor.Factory(),
                 sql,
-                new String[]{Integer.toString(id)},
+                new String[]{String.valueOf(id)},
                 null);
         if (c.getCount() == 0) return null;
         c.moveToFirst();
