@@ -5,11 +5,8 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -82,7 +79,7 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
     private void showOtherTournamentFragment(long id) {
         NewsFragment mlf = new NewsFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(OtherTournamentFragment.TYPE, id);
+        bundle.putLong(NewsFragment.ID, id);
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
