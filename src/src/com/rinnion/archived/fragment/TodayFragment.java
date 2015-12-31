@@ -132,7 +132,7 @@ public class TodayFragment extends Fragment implements
 
         try {
             String strIcon = jsonPetersburg.getString("icon");
-            int iIcon = Integer.parseInt(strIcon.substring(1, 2));
+            int iIcon = Integer.parseInt(strIcon.substring(0, 2));
             switch (iIcon) {
                 case 1:
                     pbIcon.setImageResource(R.drawable.weather_sunshine_icon);
