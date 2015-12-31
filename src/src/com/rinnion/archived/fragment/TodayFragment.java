@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.network.HttpRequester;
@@ -33,7 +34,7 @@ import java.util.Calendar;
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
 public class TodayFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<NewsCursor> {
+        LoaderManager.LoaderCallbacks<ApiObjectCursor> {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -53,7 +54,7 @@ public class TodayFragment extends Fragment implements
 
         mAdapter = new NewsAdapter(getActivity(), null);
 
-//        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
@@ -72,14 +73,14 @@ public class TodayFragment extends Fragment implements
         getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.menu_icon);
 
-        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
+        //MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
+        //mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
+        //mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
 
         mListView = (ListView) view.findViewById(R.id.tl_lv_news);
         mListView.setAdapter(mAdapter);
 
-        mAdapter.swapCursor(mc);
+        //mAdapter.swapCursor(mc);
 
         LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
         LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
@@ -187,7 +188,7 @@ public class TodayFragment extends Fragment implements
     }
 
     @Override
-    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
+    public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
         //Создаем асинхронный загрузчик
         return new NewsAsyncLoader(getActivity());
@@ -195,14 +196,14 @@ public class TodayFragment extends Fragment implements
 
 
     @Override
-    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
+    public void onLoadFinished(Loader<ApiObjectCursor> loader, ApiObjectCursor data) {
         Log.d(TAG, "onLoadFinished");
         //Присваиваем результат в адаптер для отображения
-        //mAdapter.swapCursor(data);
+        mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<NewsCursor> loader) {
+    public void onLoaderReset(Loader<ApiObjectCursor> loader) {
         Log.d(TAG, "onLoaderReset");
     }
 

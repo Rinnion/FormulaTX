@@ -1,20 +1,17 @@
 package com.rinnion.archived.database.model;
 
-public class News {
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    public final long id;
-    public final String parent;
-    public final String date;
-    public final String name;
-    public final String content;
-    public final String thumbs;
+public class News extends ApiObject {
 
-    public News(long id, String parent, String name, String content, String thumbs, String date) {
-        this.id = id;
-        this.parent = parent;
-        this.name = name;
-        this.content = content;
-        this.thumbs = thumbs;
-        this.date = date;
+    public News(long id) {
+        super(id, ApiObjectTypes.EN_Object);
+    }
+
+    public News(JSONObject jsonObject) throws JSONException {
+        super(jsonObject,ApiObjectTypes.EN_News);
+
     }
 }

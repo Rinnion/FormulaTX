@@ -107,6 +107,22 @@ public class ApiObjectHelper implements BaseColumns {
         return c;
     }
 
+    public ApiObjectCursor getAllByType(int apiObjectType)
+    {
+        Log.v(TAG, "getAllByType ()");
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + "WHERE " + COLUMN_OBJ_TYPE + "=?  ORDER BY " + COLUMN_DATE + " DESC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        ApiObjectCursor c = (ApiObjectCursor) d.rawQueryWithFactory(
+                new ApiObjectCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(apiObjectType)},
+                null);
+        c.moveToFirst();
+        return c;
+
+    }
 
     public ApiObject get(int id) {
         Log.d(TAG, "get (" + id + ")");

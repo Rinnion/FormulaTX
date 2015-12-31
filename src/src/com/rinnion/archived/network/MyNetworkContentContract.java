@@ -35,6 +35,14 @@ public class MyNetworkContentContract {
                 public static final String LANG_EN = "lang=en";
             }
 
+            public static class getallstaticpagefromparent
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparent";
+                public static final String PARENT = "parent=%1s";
+
+            }
+
+
         }
     }
 
