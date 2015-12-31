@@ -24,8 +24,9 @@ public class SplashActivity extends Activity {
             if (bundle != null) {
                 if (bundle.getString(DownloadService.TYPE).equals(DownloadService.PROGRESS)) {
                     int anInt = bundle.getInt(DownloadService.PROGRESS);
+                    String mosInt = bundle.getString(DownloadService.MESSAGE);
                     Toast.makeText(SplashActivity.this,
-                            "Progress: " + anInt,
+                            "Progress: " + ((mosInt==null)? "": "("+mosInt+")"),
                             Toast.LENGTH_SHORT).show();
                     if (anInt == 100) {
                         new Handler().post(new Runnable() {

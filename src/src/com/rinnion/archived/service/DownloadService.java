@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class DownloadService extends IntentService {
 
     public static final String PROGRESS = "progress";
+    public static final String MESSAGE = "message";
     public static final String TYPE = "type";
     public static final String NOTIFICATION = "com.rinnion.archived.service.receiver";
     private String TAG = getClass().getSimpleName();
@@ -32,24 +33,28 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            publishResults(10);
+            publishResults(10, null);
             //ask for weather
             Bundle bundleTurnirList = MyNetwork.queryTournamentsList();
-            publishResults(20);
-
+            //publishResults(20);
+            publishResults(15, null);
             Bundle tmpTurnirList= bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
+            publishResults(20, "bundleTurnirList: " + bundleTurnirList.toString());
 
             ArrayList<Tournament> tournamentList=new ArrayList<Tournament>();
 
             int[] intArray = tmpTurnirList.getIntArray("ID[]");
+            publishResults(25, "int[] intArray len: " + Integer.toString(intArray.length));
 
             CreateTournamentList(tournamentList, intArray);
 
 
              for(Tournament tmpTournament: tournamentList) {
-
+                 publishResults(30, "do for tournamentList:" + tmpTournament.id);
                  Bundle tmpTurnirNewsList = MyNetwork.queryTournamentNewsList(tmpTournament.post_name);
+                 publishResults(35, "Bundle tmpTurnirNewsList:" + tmpTurnirNewsList.toString());
                  tmpTurnirNewsList = tmpTurnirNewsList.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
+
 
                  if (tmpTurnirNewsList != null) {
                      intArray = tmpTurnirNewsList.getIntArray("ID[]");
@@ -76,19 +81,18 @@ public class DownloadService extends IntentService {
 
             //list of tournaments
             //Thread.sleep(2000);
-            publishResults(50);
+            publishResults(50, null);
             //list of objects
             //Thread.sleep(2000);
-            publishResults(80);
+            publishResults(80, null);
             //list of news for tournaments
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
+            publishResults(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
-            Toast.makeText(this,
-                    ex.getMessage(),
-                    Toast.LENGTH_SHORT).show();
+            publishResults(100, "error: " + ex.toString());
         }
-        publishResults(100);
+
     }
 
     private void CreateTournamentList(ArrayList<Tournament> tournamentList, int[] intArray) throws JSONException {
@@ -113,11 +117,13 @@ public class DownloadService extends IntentService {
         }
     }
 
-    private void publishResults(int result) {
+    private void publishResults(int result, String message) {
         Log.d(TAG, "publishResults: " + result);
         Intent intent = new Intent(NOTIFICATION);
         intent.putExtra(TYPE, PROGRESS);
         intent.putExtra(PROGRESS, result);
+        intent.putExtra(MESSAGE, message);
         sendBroadcast(intent);
     }
-} 
+
+}
