@@ -13,7 +13,7 @@ public class MyNetworkContentContract {
 
 
     public static final String URL_LOCAL = "http://192.168.56.1:3000/";
-    public static final String URL_OUTSIDE = "http://app.formulatx.com/api/";
+    public static final String URL_OUTSIDE = "http://app.formulatx.com/";
     public static final String URL = (Settings.NETDEBUG) ? URL_LOCAL : URL_OUTSIDE;
     public static final String URL_API = URL + "api/";
 

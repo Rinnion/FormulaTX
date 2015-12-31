@@ -18,7 +18,7 @@
                 android:layout_height="20dp"
                 android:id="@+id/igl_iv_flag"
                 android:src="@android:drawable/sym_contact_card"
-                android:layout_alignBottom="@+id/igl_iv_thumb" android:layout_alignEnd="@+id/igl_iv_thumb"
+                android:layout_alignBottom="@+id/igl_iv_thumb"
                 android:layout_marginRight="7dp" android:layout_marginBottom="7dp"/>
     </RelativeLayout>
     <LinearLayout
