@@ -25,38 +25,40 @@ public class ApiObjectCursor extends SQLiteCursor {
         long id = getColId();
         int objType=getColType();
         ApiObject apiObject = new ApiObject(id,objType);
-        apiObject.comment_status = "comment_status";
-        apiObject.comment_status = "user";
-        apiObject.comment_status = "date";
-        apiObject.comment_status = "modified";
-        apiObject.comment_status = "content";
-        apiObject.comment_status = "title";
-        apiObject.comment_status = "status";
-        apiObject.comment_status = "comment_status";
-        apiObject.comment_status = "password";
-        apiObject.comment_status = "post_name";
-        apiObject.comment_status = "link";
-        apiObject.comment_status = "type";
-        apiObject.comment_status = "parent";
-        apiObject.comment_status = "meta_title";
-        apiObject.comment_status = "meta_description";
-        apiObject.comment_status = "meta_keywords";
-        apiObject.comment_status = "display_method";
-        apiObject.comment_status = "rss";
-        apiObject.comment_status = "files";
-        apiObject.comment_status = "thumb";
-        apiObject.comment_status = "lang";
-        apiObject.comment_status = "lang_id";
-        apiObject.comment_status = "references_include";
-        apiObject.comment_status = "gallery_include";
-        apiObject.comment_status = "tables";
-        apiObject.comment_status = "parsers_include";
-        apiObject.comment_status = "login";
+        apiObject.comment_status = getColByName(ApiObjectHelper.COLUMN_COMMENT_STATUS);;
+        apiObject.user = getColByName(ApiObjectHelper.COLUMN_USER);
+        apiObject.date = getColByName(ApiObjectHelper.COLUMN_DATE);
+        apiObject.modified = getColByName(ApiObjectHelper.COLUMN_MODIFIED);
+        apiObject.content = getColByName(ApiObjectHelper.COLUMN_CONTENT);
+        apiObject.title = getColByName(ApiObjectHelper.COLUMN_TITLE);
+        apiObject.status =getColByName(ApiObjectHelper.COLUMN_STATUS);
+        apiObject.password = getColByName(ApiObjectHelper.COLUMN_PASSWORD);
+        apiObject.post_name = getColByName(ApiObjectHelper.COLUMN_POST_NAME);
+        apiObject.link = getColByName(ApiObjectHelper.COLUMN_LINK);
+        apiObject.type =getColByName(ApiObjectHelper.COLUMN_TYPE);
+        apiObject.parent = getColByName(ApiObjectHelper.COLUMN_PARENT);
+        apiObject.meta_title = getColByName(ApiObjectHelper.COLUMN_META_TITLE);
+        apiObject.meta_description = getColByName(ApiObjectHelper.COLUMN_META_DESCRIPTION);
+        apiObject.meta_keywords = getColByName(ApiObjectHelper.COLUMN_META_KEYWORDS);
+        apiObject.display_method = getColByName(ApiObjectHelper.COLUMN_DISPLAY_METHOD);
+        apiObject.rss = getColByName(ApiObjectHelper.COLUMN_RSS);
+        apiObject.files = getColByName(ApiObjectHelper.COLUMN_FILES);
+        apiObject.thumb = getColByName(ApiObjectHelper.COLUMN_THUMB);
+        apiObject.lang = getColByName(ApiObjectHelper.COLUMN_LANG);
+        apiObject.lang_id = getColByName(ApiObjectHelper.COLUMN_LANG_ID);
+        apiObject.references_include = getColByName(ApiObjectHelper.COLUMN_REFERENCES_INCLUDE);
+        apiObject.gallery_include = getColByName(ApiObjectHelper.COLUMN_GALLERY_INCLUDE);
+        apiObject.tables = getColByName(ApiObjectHelper.COLUMN_TABLES);
+        apiObject.parsers_include = getColByName(ApiObjectHelper.COLUMN_PARSERS_INCLUDE);
+        apiObject.login = getColByName(ApiObjectHelper.COLUMN_LOGIN);
         apiObject.update_time = getColUpdateTime();
 
         return apiObject;
     }
 
+    private String getColByName(String name) {
+        return getString(getColumnIndexOrThrow(name));
+    }
     private long getColId() {
         return getLong(getColumnIndexOrThrow(ApiObjectHelper._ID));
     }

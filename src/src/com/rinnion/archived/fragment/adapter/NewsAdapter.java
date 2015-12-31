@@ -10,14 +10,16 @@ import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.model.ApiObject;
 
 public class NewsAdapter extends SimpleCursorAdapter {
     public static String[] fromSpinner = {
-            "_id",
-            "THUMB",
-            "CAPTION",
-            "DATA"
+            ApiObjectHelper._ID,
+            ApiObjectHelper.COLUMN_THUMB,
+            ApiObjectHelper.COLUMN_TITLE,
+            ApiObjectHelper.COLUMN_CONTENT
     };
     private static int[] toSpinner = {
             R.id.inl_iv_thumb,

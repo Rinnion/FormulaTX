@@ -111,7 +111,7 @@ public class ApiObjectHelper implements BaseColumns {
     {
         Log.v(TAG, "getAllByType ()");
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + "WHERE " + COLUMN_OBJ_TYPE + "=?  ORDER BY " + COLUMN_DATE + " DESC";
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE " + COLUMN_OBJ_TYPE + "=?  ORDER BY " + COLUMN_DATE + " DESC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         ApiObjectCursor c = (ApiObjectCursor) d.rawQueryWithFactory(
@@ -153,6 +153,9 @@ public class ApiObjectHelper implements BaseColumns {
     }
 
     public boolean add(ApiObject apiObject) {
+
+        delete(apiObject.id,apiObject.objType);
+
         Log.d(TAG, "add(" + apiObject.toString() + ")");
 
         ContentValues map;
@@ -197,13 +200,25 @@ public class ApiObjectHelper implements BaseColumns {
         }
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         Log.d(TAG, "delete (" + id + ")");
         try {
             Log.d(TAG, "Delete self location: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id)};
             db.delete(DATABASE_TABLE, _ID + "=?", args);
+        } catch (SQLException ex) {
+            Log.e(TAG, "Error delete self location", ex);
+        }
+    }
+
+    public void delete(long id,int objApiType) {
+        Log.d(TAG, "delete (" + id + ")");
+        try {
+            Log.d(TAG, "Delete self location: " + id);
+            SQLiteDatabase db = doh.getWritableDatabase();
+            String[] args = {Long.toString(id),Integer.toString(objApiType)};
+            db.delete(DATABASE_TABLE, _ID + "=? and objType=?", args);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }

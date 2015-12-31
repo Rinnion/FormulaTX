@@ -75,10 +75,10 @@ public class DownloadService extends IntentService {
 
 
             //list of tournaments
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
             publishResults(50);
             //list of objects
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
             publishResults(80);
             //list of news for tournaments
             Thread.sleep(2000);

@@ -99,11 +99,8 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
-        MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
 
-        mAdapter.swapCursor(mc);
+        mAdapter.swapCursor(null);
     }
 
     @Override
