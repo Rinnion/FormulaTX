@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.model.ApiObject;
 
 public class NewsAdapter extends SimpleCursorAdapter {
     public static String[] fromSpinner = {
@@ -35,9 +37,13 @@ public class NewsAdapter extends SimpleCursorAdapter {
         final TextView tvCaption = (TextView) view.findViewById(R.id.inl_tv_caption);
         final TextView tvData = (TextView) view.findViewById(R.id.inl_tv_data);
 
-        String thumb = cursor.getString(cursor.getColumnIndex(fromSpinner[1]));
-        String caption = cursor.getString(cursor.getColumnIndex(fromSpinner[2]));
-        String data = cursor.getString(cursor.getColumnIndex(fromSpinner[3]));
+        ApiObjectCursor aoc = (ApiObjectCursor) cursor;
+
+        ApiObject item = aoc.getItem();
+
+        String thumb = item.thumb;
+        String caption = item.title;
+        String data = item.content;
 
         if (thumb != null) {
             imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));

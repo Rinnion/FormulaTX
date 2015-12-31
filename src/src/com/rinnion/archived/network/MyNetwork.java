@@ -60,7 +60,6 @@ public final class MyNetwork {
 
         return fetcher.execute();
     }
-
     //Загрузка списка турниров
     public static Bundle queryTournamentsList() {
         Log.d(TAG, String.format("query tournaments"));
@@ -89,10 +88,39 @@ public final class MyNetwork {
 
         return fetcher.execute();
     }
+    //Загрузка списка новостей турнира
+    public static Bundle queryTournamentNewsList(String tournamentTranslation) {
+        Log.d(TAG, String.format("query queryTournamentNewsList"));
+        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = null;
+        String strPost;
+        try {
+            strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.PARENT,tournamentTranslation);
+            fetcher = builder.setName("queryTournamentNewsList")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.URL_METHOD)
+                    .setContent(strPost)
+                    .setHandler(new NewsHandler())
+                    .create();
+
+
+
+
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
+
+        return fetcher.execute();
+    }
 
     //Загрузка турниров
     public static Bundle queryTournaments(int id) {
-        Log.d(TAG, String.format("query tournaments"));
+        Log.d(TAG, String.format("query tournament"));
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         HttpRequester.Builder builder = new HttpRequester.Builder();
 

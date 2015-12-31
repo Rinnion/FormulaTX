@@ -5,14 +5,17 @@ import android.content.Context;
 import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
+import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.NewsHelper;
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.MyNetwork;
 
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class NewsAsyncLoader extends AsyncTaskLoader<NewsCursor> {
+public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
 
     private String TAG = getClass().getSimpleName();
 
@@ -31,16 +34,18 @@ public class NewsAsyncLoader extends AsyncTaskLoader<NewsCursor> {
     protected void onForceLoad() {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        NewsHelper mh = new NewsHelper(doh);
-        deliverResult(mh.getAll());
+        ApiObjectHelper aoh=new ApiObjectHelper(doh);
+
+
+        deliverResult(aoh.getAllByType(ApiObjectTypes.EN_News));
     }
 
     @Override
-    public NewsCursor loadInBackground() {
+    public ApiObjectCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-        MyNetwork.queryMessages();
+        //MyNetwork.queryMessages();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        NewsHelper mh = new NewsHelper(doh);
-        return mh.getAll();
+        ApiObjectHelper aoh=new ApiObjectHelper(doh);
+        return aoh.getAllByType(ApiObjectTypes.EN_News);
     }
 }

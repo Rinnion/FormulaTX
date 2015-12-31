@@ -16,27 +16,20 @@ import java.util.Calendar;
 public class NewsHandler extends JSONObjectHandler {
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
-        long id = object.getLong("MessageId");
-        String content = object.getString("Content");
-        String background = object.getString("Content");
-        long date_post = Utils.getTimeStamp(object, "Date");
-        long likes = object.getLong("Likes");
-        boolean like = object.getBoolean("Like");
-        Long comments = object.getLong("Comments");
-        JSONArray jsonTags = object.getJSONArray("Tags");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < jsonTags.length(); i++) {
-            JSONObject jsonTag = (JSONObject) jsonTags.get(i);
-            String name = jsonTag.getString("Name");
-            if (sb.length() > 0) sb.append(",");
-            sb.append(name);
+        boolean status = object.getBoolean("status");
+        if (status) {
+            JSONArray message = object.getJSONArray("message");
+            int[] idArray = new int[message.length()];
+            for (int i = 0; i < message.length(); i++) {
+                JSONObject o = (JSONObject) message.get(i);
+                idArray[i] = o.getInt("id");
+            }
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("ID[]", idArray);
+            return  bundle;
         }
-        long date_receive = Calendar.getInstance().getTimeInMillis();
-        NewsHelper mh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
-//Здусь должно бвыть сохрание в БД.
-        //Message message = new Message(id, content, background, date_post, likes, like, comments, sb.toString(), date_receive);
-        //mh.add(message);
         return Bundle.EMPTY;
+
     }
 
 }

@@ -91,7 +91,7 @@ public class NewsHelper implements BaseColumns {
     }
 
     public boolean add(News news) {
-        Log.d(TAG, "addLocation(" + news.toString() + ")");
+       /* Log.d(TAG, "addLocation(" + news.toString() + ")");
 
         ContentValues map;
         map = new ContentValues();
@@ -109,6 +109,8 @@ public class NewsHelper implements BaseColumns {
             Log.e(TAG, "Error writing location", e);
             return false;
         }
+        */
+        return false;
     }
 
     public void delete(int id) {

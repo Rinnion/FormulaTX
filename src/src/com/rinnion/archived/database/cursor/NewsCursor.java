@@ -22,14 +22,18 @@ public class NewsCursor extends SQLiteCursor {
     }
 
     public News getItem() {
-        long id = getColId();
+        /*long id = getColId();
         String parent = "thumbs";
         String name = "content";
         String content = "name";
         String thumbs = "date";
         String date = "type";
         News news = new News(id, parent, name, content, thumbs, date);
+
         return news;
+        */
+        return  null;
+
     }
 
     private boolean getColVote() {
@@ -68,4 +72,5 @@ public class NewsCursor extends SQLiteCursor {
             return c;
         }
     }
+
 }

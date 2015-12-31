@@ -11,8 +11,7 @@ import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.TodayFragment;
 import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 
-public class MainActivity extends Activity
-        implements LoaderManager.LoaderCallbacks<NewsCursor> {
+public class MainActivity extends Activity {
 
 
     private static final String TAG = "MainActivity";
@@ -42,19 +41,5 @@ public class MainActivity extends Activity
     }
 
 
-    @Override
-    public Loader<NewsCursor> onCreateLoader(int id, Bundle args) {
-        return new NewsAsyncLoader(this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<NewsCursor> loader, NewsCursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<NewsCursor> loader) {
-
-    }
 }
 
