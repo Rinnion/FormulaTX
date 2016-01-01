@@ -4,14 +4,12 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.database.model.News;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
-import com.rinnion.archived.network.handlers.ApiObjectHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,9 +17,11 @@ import java.util.ArrayList;
 
 public class DownloadService extends IntentService {
 
-    public static final String PROGRESS = "progress";
-    public static final String MESSAGE = "message";
     public static final String TYPE = "type";
+    public static final String PROGRESS = "progress";
+    public static final String ERROR = "error";
+    public static final String CUSTOM_MESSAGE = "message";
+
     public static final String NOTIFICATION = "com.rinnion.archived.service.receiver";
     private String TAG = getClass().getSimpleName();
 
@@ -33,75 +33,72 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            publishResults(10, null);
-            //ask for weather
+            publishProgress(10, null);
             Bundle bundleTurnirList = MyNetwork.queryTournamentsList();
-            //publishResults(20);
-            publishResults(15, null);
-            Bundle tmpTurnirList= bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
-            publishResults(20, "bundleTurnirList: " + bundleTurnirList.toString());
+            String result = bundleTurnirList.getString(HttpRequester.RESULT);
+            if (!result.equals(HttpRequester.RESULT_HTTP)){
+                publishError(result, bundleTurnirList.getString(result));
+                return;
+            }
 
+            Bundle tmpTurnirList = bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP);
+            if (tmpTurnirList == null) {publishError("No parse http", null); return;}
+            tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
+            publishProgress(15, null);
             ArrayList<Tournament> tournamentList=new ArrayList<Tournament>();
-
             int[] intArray = tmpTurnirList.getIntArray("ID[]");
-            publishResults(25, "int[] intArray len: " + Integer.toString(intArray.length));
+            publishProgress(25, null);
 
             CreateTournamentList(tournamentList, intArray);
 
-
-             for(Tournament tmpTournament: tournamentList) {
-                 publishResults(30, "do for tournamentList:" + tmpTournament.id);
-                 Bundle tmpTurnirNewsList = MyNetwork.queryTournamentNewsList(tmpTournament.post_name);
-                 publishResults(35, "Bundle tmpTurnirNewsList:" + tmpTurnirNewsList.toString());
-                 tmpTurnirNewsList = tmpTurnirNewsList.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
-
-
-                 if (tmpTurnirNewsList != null) {
-                     intArray = tmpTurnirNewsList.getIntArray("ID[]");
-
-
-                     for (int newsIndex = 0; newsIndex < intArray.length; newsIndex++) {
-                         Bundle bundleTurnirNews = MyNetwork.queryTournaments(intArray[newsIndex]);
-                         Bundle tmpHttpBundle = bundleTurnirNews.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
-                         if (tmpHttpBundle.containsKey("ApiObject")) {
-                             News news = new News(new JSONObject(tmpHttpBundle.getString("ApiObject")));
-                             ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
-                             if (!aoh.add(news))
-                                 Log.e(TAG, "Error when insert 'News' data to DB");
-                             else {
-
-                                 Log.d(TAG, "'News' success added to DB id='" + news.id + "'");
-                             }
-                         }
-                     }
-
-                 }
-             }
+            for(Tournament tmpTournament: tournamentList) {
+                publishProgress(30, null);
+                Bundle tmpTurnirNewsList = MyNetwork.queryTournamentNewsList(tmpTournament.post_name);
+                publishProgress(35, null);
+                result = tmpTurnirNewsList.getString(HttpRequester.RESULT);
+                if (!result.equals(HttpRequester.RESULT_HTTP)) continue;
+                Bundle bundle = tmpTurnirNewsList.getBundle(result);
+                if (bundle == null) continue;
+                tmpTurnirNewsList = bundle.getBundle(HttpRequester.RESULT_HTTP_PARSE);
 
 
-            //list of tournaments
-            //Thread.sleep(2000);
-            publishResults(50, null);
-            //list of objects
-            //Thread.sleep(2000);
-            publishResults(80, null);
-            //list of news for tournaments
-            //Thread.sleep(2000);
-            publishResults(100, null);
+                if (tmpTurnirNewsList != null) {
+                    intArray = tmpTurnirNewsList.getIntArray("ID[]");
+
+
+                    for (int newsIndex = 0; newsIndex < intArray.length; newsIndex++) {
+                        Bundle bundleTurnirNews = MyNetwork.queryObjects(intArray[newsIndex]);
+                        Bundle tmpHttpBundle = bundleTurnirNews.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
+                        if (tmpHttpBundle.containsKey("ApiObject")) {
+                            News news = new News(new JSONObject(tmpHttpBundle.getString("ApiObject")));
+                            ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
+                            if (!aoh.add(news))
+                                Log.e(TAG, "Error when insert 'News' data to DB");
+                            else {
+
+                                Log.d(TAG, "'News' success added to DB id='" + news.id + "'");
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            publishProgress(50, null);
+            publishProgress(80, null);
+            publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
-            publishResults(100, "error: " + ex.toString());
+            publishError("Error during network", ex.toString());
         }
 
     }
 
     private void CreateTournamentList(ArrayList<Tournament> tournamentList, int[] intArray) throws JSONException {
         for (int bundleTournamentIndex=0;bundleTournamentIndex<intArray.length;bundleTournamentIndex++) {
-            Bundle bundleTurnir = MyNetwork.queryTournaments(intArray[bundleTournamentIndex]);
-
+            Bundle bundleTurnir = MyNetwork.queryObjects(intArray[bundleTournamentIndex]);
             if (bundleTurnir.containsKey(HttpRequester.RESULT_HTTP)) {
-
-
                 Bundle tmpHttpBundle = bundleTurnir.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
                 if (tmpHttpBundle.containsKey("ApiObject")) {
                     Tournament tournament = new Tournament(new JSONObject(tmpHttpBundle.getString("ApiObject")));
@@ -115,14 +112,25 @@ public class DownloadService extends IntentService {
                 }
             }
         }
+
     }
 
-    private void publishResults(int result, String message) {
-        Log.d(TAG, "publishResults: " + result);
+    private void publishError(String error, String custom_message) {
+        Log.d(TAG, "publishError: " + error);
+        Intent intent = new Intent(NOTIFICATION);
+        intent.putExtra(TYPE, ERROR);
+        intent.putExtra(ERROR, error);
+        intent.putExtra(CUSTOM_MESSAGE, custom_message);
+        sendBroadcast(intent);
+    }
+
+
+    private void publishProgress(int progress, String custom_message) {
+        Log.d(TAG, "publishProgress: " + progress);
         Intent intent = new Intent(NOTIFICATION);
         intent.putExtra(TYPE, PROGRESS);
-        intent.putExtra(PROGRESS, result);
-        intent.putExtra(MESSAGE, message);
+        intent.putExtra(PROGRESS, progress);
+        intent.putExtra(CUSTOM_MESSAGE, custom_message);
         sendBroadcast(intent);
     }
 

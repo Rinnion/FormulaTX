@@ -97,15 +97,11 @@ public final class MyNetwork {
         HttpRequester fetcher = null;
         String strPost;
         try {
-            strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.PARENT,tournamentTranslation);
             fetcher = builder.setName("queryTournamentNewsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.URL_METHOD)
-                    .setContent(strPost)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.getParent(tournamentTranslation))
                     .setHandler(new NewsHandler())
                     .create();
-
-
-
 
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "Error while server request", e);
@@ -119,7 +115,7 @@ public final class MyNetwork {
     }
 
     //Загрузка турниров
-    public static Bundle queryTournaments(int id) {
+    public static Bundle queryObjects(int id) {
         Log.d(TAG, String.format("query tournament"));
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         HttpRequester.Builder builder = new HttpRequester.Builder();
@@ -129,13 +125,12 @@ public final class MyNetwork {
         String strPost;
 
         try {
+            //strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id);
+            //strPost+="&" + MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.LANG_RU;
 
-            strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id);
-            strPost+="&" + MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.LANG_RU;
-
-            fetcher = builder.setName("queryTournaments")
+            fetcher = builder.setName("queryObjects")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
-                    .setContent(strPost)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(String.valueOf(id)))
                     .setHandler(new ApiObjectHandler())
                     .create();
 

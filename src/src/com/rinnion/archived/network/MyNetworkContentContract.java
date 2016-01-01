@@ -1,6 +1,12 @@
 package com.rinnion.archived.network;
 
 import com.rinnion.archived.Settings;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,25 +26,53 @@ public class MyNetworkContentContract {
     public static class FormulaTXApi {
         public static class StaticPage {
             public static final String URL = URL_API + "static_page";
+
             public static class getallstaticpagebydisplaymethod
             {
+                static{
+                    ArrayList<NameValuePair> dm_object = new ArrayList<NameValuePair>(1);
+                    dm_object.add(new BasicNameValuePair("display_method", "object"));
+                    DISPLAY_METHOD_OBJECT = dm_object;
+
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                    dm_partner.add(new BasicNameValuePair("display_method", "partner"));
+                    DISPLAY_METHOD_PARTNER = dm_object;
+                }
+
                 public static final String URL_METHOD = URL + "?method=getallstaticpagebydisplaymethod";
-                public static final String DISPLAY_METHOD_OBJECT = "display_method=object";
-                public static final String DISPLAY_METHOD_PARTNER = "display_method=partner";
+                public static final ArrayList<NameValuePair> DISPLAY_METHOD_OBJECT;
+                public static final ArrayList<NameValuePair> DISPLAY_METHOD_PARTNER;
             }
 
             public static class getpage
             {
                 public static final String URL_METHOD = URL + "?method=getpage";
-                public static final String ID = "id=%1s";
-                public static final String LANG_RU = "lang=ru";
-                public static final String LANG_EN = "lang=en";
+
+                public static ArrayList<NameValuePair> getObject(String id) {
+                    ArrayList<NameValuePair> dm_object = new ArrayList<NameValuePair>(1);
+                    dm_object.add(new BasicNameValuePair("display_method", "object"));
+
+                    dm_object.add(new BasicNameValuePair(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id));
+                    dm_object.add(new BasicNameValuePair(LANG,LANG_RU));
+                    return dm_object;
+                }
+
+                public static final String ID = "id";
+                public static final String LANG = "lang";
+                public static final String LANG_RU = "ru";
+                public static final String LANG_EN = "en";
             }
 
             public static class getallstaticpagefromparent
             {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparent";
                 public static final String PARENT = "parent=%1s";
+
+                public static ArrayList<NameValuePair> getParent(String parent){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                    dm_partner.add(new BasicNameValuePair("parent", parent));
+                    return dm_partner;
+                }
 
             }
 

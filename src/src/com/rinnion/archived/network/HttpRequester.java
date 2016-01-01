@@ -2,9 +2,12 @@ package com.rinnion.archived.network;
 
 import android.os.Bundle;
 import android.util.Log;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -15,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -84,7 +88,7 @@ public class HttpRequester {
         private HttpUriRequest mRequest;
         private IResponseHandler mHandler;
         private String mCredentials;
-        private StringEntity mEntity;
+        private HttpEntity mEntity;
 
         public Builder setName(String name) {
             this.mIdentity = name;
@@ -143,11 +147,16 @@ public class HttpRequester {
             if (this.mCredentials != null && !this.mCredentials.isEmpty())
                 this.mRequest.addHeader("Authorization", "Basic " + this.mCredentials);
             if (this.mEntity != null && this.mRequest instanceof HttpEntityEnclosingRequest) {
-                this.mRequest.addHeader("content-type", "application/json");
+                this.mRequest.addHeader("content-type", this.mEntity.getContentType().getValue());
                 ((HttpEntityEnclosingRequest) this.mRequest).setEntity(this.mEntity);
             }
 
             return new HttpRequester(this.mIdentity, this.mRequest, this.mHandler);
+        }
+
+        public Builder setContent(ArrayList<NameValuePair> displayMethodObject) throws UnsupportedEncodingException {
+            this.mEntity = new UrlEncodedFormEntity(displayMethodObject);
+            return this;
         }
     }
 }
