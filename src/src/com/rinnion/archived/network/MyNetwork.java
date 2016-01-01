@@ -8,6 +8,7 @@ import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.CommentHelper;
 import com.rinnion.archived.database.helper.NewsHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.Profile;
 import com.rinnion.archived.database.model.User;
 import com.rinnion.archived.network.handlers.*;
@@ -72,7 +73,7 @@ public final class MyNetwork {
             fetcher = builder.setName("queryTournamentsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.DISPLAY_METHOD_OBJECT)
-                    .setHandler(new TournamentHandler())
+                    .setHandler(new TournamentListHandler())
                     .create();
 
 
@@ -114,29 +115,26 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
-    //Загрузка турниров
-    public static Bundle queryObjects(int id) {
+    //Загрузка турнира
+    public static Bundle queryTournament(int id) {
         Log.d(TAG, String.format("query tournament"));
-        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        TournamentHelper th = new TournamentHelper(doh);
+        return queryObjects(id, new TournamentHandler(th));
+    }
+
+    //Загрузка объектов
+    public static Bundle queryObjects(int id, ApiObjectHandler handler) {
+        Log.d(TAG, String.format("query tournament"));
         HttpRequester.Builder builder = new HttpRequester.Builder();
-
-        HttpRequester fetcher = null;
-
-        String strPost;
-
+        HttpRequester fetcher;
         try {
-            //strPost=String.format(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id);
-            //strPost+="&" + MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.LANG_RU;
 
             fetcher = builder.setName("queryObjects")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(String.valueOf(id)))
-                    .setHandler(new ApiObjectHandler())
+                    .setHandler(handler)
                     .create();
-
-
-
-
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "Error while server request", e);
             Bundle bundle = new Bundle();

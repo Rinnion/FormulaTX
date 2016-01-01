@@ -5,10 +5,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ApiObject {
+import java.io.Serializable;
 
-
-
+public class ApiObject implements Serializable{
 
     public final long id;
     public String user;
@@ -45,7 +44,7 @@ public class ApiObject {
         this.objType=objType;
     }
 
-    public ApiObject(JSONObject jsonObject,int objType) throws JSONException {
+    public ApiObject(JSONObject jsonObject, int objType) throws JSONException {
         this.objType=objType;
         id=jsonObject.getLong("id");
         user=jsonObject.getString("user");
@@ -74,24 +73,11 @@ public class ApiObject {
         tables=jsonObject.getString("tables");
         parsers_include=jsonObject.getString("parsers_include");
         login=jsonObject.getString("login");
-
-
-
-
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + ":" + id;
     }
-
-    public void Parse(JSONObject jsonObject)
-    {
-
-    }
-
-
-
-
 
 }

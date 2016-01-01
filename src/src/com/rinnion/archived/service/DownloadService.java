@@ -10,6 +10,7 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.database.model.News;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.network.handlers.ApiObjectHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,7 +68,7 @@ public class DownloadService extends IntentService {
 
 
                     for (int newsIndex = 0; newsIndex < intArray.length; newsIndex++) {
-                        Bundle bundleTurnirNews = MyNetwork.queryObjects(intArray[newsIndex]);
+                        Bundle bundleTurnirNews = MyNetwork.queryObjects(intArray[newsIndex], new ApiObjectHandler());
                         Bundle tmpHttpBundle = bundleTurnirNews.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
                         if (tmpHttpBundle.containsKey("ApiObject")) {
                             News news = new News(new JSONObject(tmpHttpBundle.getString("ApiObject")));
@@ -97,7 +98,7 @@ public class DownloadService extends IntentService {
 
     private void CreateTournamentList(ArrayList<Tournament> tournamentList, int[] intArray) throws JSONException {
         for (int bundleTournamentIndex=0;bundleTournamentIndex<intArray.length;bundleTournamentIndex++) {
-            Bundle bundleTurnir = MyNetwork.queryObjects(intArray[bundleTournamentIndex]);
+            Bundle bundleTurnir = MyNetwork.queryTournament(intArray[bundleTournamentIndex]);
             if (bundleTurnir.containsKey(HttpRequester.RESULT_HTTP)) {
                 Bundle tmpHttpBundle = bundleTurnir.getBundle(HttpRequester.RESULT_HTTP).getBundle(HttpRequester.RESULT_HTTP_PARSE);
                 if (tmpHttpBundle.containsKey("ApiObject")) {
