@@ -121,7 +121,6 @@ public class ApiObjectHelper implements BaseColumns {
                 null);
         c.moveToFirst();
         return c;
-
     }
 
     public ApiObject get(long id) {

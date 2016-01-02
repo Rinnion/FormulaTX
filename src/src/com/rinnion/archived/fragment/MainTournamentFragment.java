@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.helper.TournamentHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,9 +23,6 @@ import com.rinnion.archived.R;
 public class MainTournamentFragment extends Fragment{
 
     public static final String TYPE = "TYPE";
-    public static final String TOURNAMENT_LADIES_TROPHY = "stpetersburg_ladies_trophy";
-    //public static final String TOURNAMENT_OPEN = "st_petersburg_open";
-    public static final String TOURNAMENT_OPEN = "turnir_1";
 
     private String TAG = getClass().getCanonicalName();
 
@@ -68,7 +66,7 @@ public class MainTournamentFragment extends Fragment{
         TextView tv = (TextView) view.findViewById(R.id.mtl_tv_name);
         ActionBar ab = getActivity().getActionBar();
         ab.setIcon(R.drawable.ic_action_previous_item);
-        if (type.equals(TOURNAMENT_LADIES_TROPHY)) {
+        if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)) {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
             tv.setText(R.string.st_lady_title);
             ab.setTitle(R.string.st_lady_title);

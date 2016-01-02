@@ -1,18 +1,25 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.MatrixCursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
+import com.rinnion.archived.database.helper.TournamentHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,11 +28,10 @@ import com.rinnion.archived.database.cursor.TournamentCursor;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class OtherTournamentListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
+public class OtherTournamentListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
-    private ListView mListView;
     private TextView mTextView;
     private AdapterView.OnItemClickListener mListener;
     private View mEmpty;
@@ -42,32 +48,34 @@ public class OtherTournamentListFragment extends ListFragment implements LoaderM
         setHasOptionsMenu(true);
 
         String[] from = new String[]{
-                "_id",
-                "thumbs",
-                "caption"
+                TournamentHelper.COLUMN_TITLE,
+                TournamentHelper.COLUMN_THUMB
         };
 
         int[] to = new int[]{
                 R.id.itl_tv_caption,
-                R.id.itl_iv_thumbs,
-                R.id.itl_tv_caption
+                R.id.itl_iv_thumbs
         };
 
-        MatrixCursor cursor = new MatrixCursor(from);
-        cursor.addRow(new Object[]{1, null, "ФОРМУЛА ТХ"});
-        cursor.addRow(new Object[]{2, null, "ST.PETERSBURG HEAD JUNIOR"});
-        cursor.addRow(new Object[]{3, null, "WINTER MOSCOW"});
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        TournamentCursor cursor = th.getAllOther();
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_layout, cursor, from, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                super.setViewImage(v, "");
+                Log.d(TAG, "R: '" + value+"'");
+                Bitmap bitmap = BitmapFactory.decodeFile(value);
+
+                Log.d(TAG, "S: '"+String.valueOf(bitmap)+"'");
+                if (bitmap != null) {
+                    Log.d(TAG, "N: '"+String.valueOf(bitmap)+"'");
+                    v.setImageBitmap(bitmap);
+                } else {
+                    Log.d(TAG, "NN: '"+String.valueOf(bitmap)+"'");
+                    v.setImageResource(R.drawable.logo_splash_screen);
+                }
             }
         };
-
-        setListAdapter(mAdapter);
-
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_other_tounaments);
@@ -77,9 +85,12 @@ public class OtherTournamentListFragment extends ListFragment implements LoaderM
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        showOtherTournamentFragment(id);
-        //super.onListItemClick(l, v, position, id);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_layout, null, false);
+        ListView mListView = (ListView) view;
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
+        return view;
     }
 
     @Override
@@ -109,18 +120,8 @@ public class OtherTournamentListFragment extends ListFragment implements LoaderM
     }
 
     @Override
-    public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<TournamentCursor> loader) {
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        showOtherTournamentFragment(id);
     }
 }
 

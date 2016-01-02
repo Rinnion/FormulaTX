@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.helper.TournamentHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,13 +73,13 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_LADIES_TROPHY);
+                showMainTournmentFragment(TournamentHelper.TOURNAMENT_LADIES_TROPHY);
             }
         });
         view.findViewById(R.id.nav_StPetersburgOpen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMainTournmentFragment(MainTournamentFragment.TOURNAMENT_OPEN);
+                showMainTournmentFragment(TournamentHelper.TOURNAMENT_OPEN);
             }
         });
         view.findViewById(R.id.nav_other_tournaments).setOnClickListener(new View.OnClickListener() {

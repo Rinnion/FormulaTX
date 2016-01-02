@@ -18,4 +18,6 @@
     <dimen name="menu_item_thumb_height">100dp</dimen>
     <dimen name="menu_item_thumb_width">100dp</dimen>
     <dimen name="match_table_score_size">30dp</dimen>
+    <dimen name="menu_item_tournament_thumb_height">75dp</dimen>
+    <dimen name="menu_item_tournament_thumb_width">75dp</dimen>
 </resources>

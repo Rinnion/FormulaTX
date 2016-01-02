@@ -3,16 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:gravity="center">
+              android:layout_height="110dp" android:padding="15dp" android:gravity="center_vertical" style="@style/news_list"
+              android:background="@drawable/white_background_10">
 
     <ImageView
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="@android:dimen/thumbnail_height"
+            android:layout_width="@dimen/menu_item_tournament_thumb_width"
+            android:layout_height="@dimen/menu_item_tournament_thumb_height"
             android:id="@+id/itl_iv_thumbs"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Название турнира"
-            android:id="@+id/itl_tv_caption"/>
+            android:id="@+id/itl_tv_caption" android:paddingLeft="30dp" style="@style/main_text"/>
 </LinearLayout>
