@@ -33,7 +33,7 @@ public class TournamentHelper extends ApiObjectHelper {
     }
 
     public TournamentCursor getAllOther() {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getAllOther ()");
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
@@ -48,5 +48,25 @@ public class TournamentHelper extends ApiObjectHelper {
                 null);
         c.moveToFirst();
         return c;
+    }
+
+    public Tournament getByPostName(String post_name) {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE "+COLUMN_OBJ_TYPE+"=? AND " + COLUMN_POST_NAME + " in (?)" +
+                " ORDER BY " + COLUMN_TITLE + " ASC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[] {String.valueOf(ApiObjectTypes.EN_Object), post_name},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
+
     }
 }

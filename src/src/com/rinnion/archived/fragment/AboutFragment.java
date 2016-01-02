@@ -3,11 +3,16 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebView;
 import android.widget.TextView;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +29,6 @@ public class AboutFragment extends Fragment  {
     public static final String TYPE_TOURNAMENT_OTHER = "TOURNMENT_OTHER";
     public static final String TYPE_COMPANY = "COMPANY";
     private String TAG = getClass().getCanonicalName();
-    private TextView mTextViewAbout;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -55,20 +59,23 @@ public class AboutFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_layout, container, false);
-        mTextViewAbout = (TextView)view.findViewById(R.id.tv_about);
+        WebView mTextViewAbout = (WebView) view.findViewById(R.id.tv_about);
+
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("О компании");
         ab.setIcon(R.drawable.ic_action_previous_item);
 
         Bundle args = getArguments();
-        String type = args.getString(TYPE);
-        String entity = args.getString(ENTITY);
+        long id = args.getLong(TYPE);
 
-        type = type == null ? "type:null" : type;
-        entity = entity == null ? "entity:null" : entity;
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
 
-        mTextViewAbout.setText("Описание " + type + " " + entity);
+        ApiObject apiObject = th.get(id);
+
+        mTextViewAbout.loadData("<html><style>p {color:#FFF;}</style><body>"+apiObject.content+"</body></html>", "text/html; charset=UTF-8", null);
+        mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
+
 
         return view;
     }

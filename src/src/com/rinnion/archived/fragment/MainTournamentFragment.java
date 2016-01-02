@@ -10,8 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +27,7 @@ public class MainTournamentFragment extends Fragment{
     public static final String TYPE = "TYPE";
 
     private String TAG = getClass().getCanonicalName();
+    private long mTournamentId = 0;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -49,23 +52,26 @@ public class MainTournamentFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
+        Bundle args = getArguments();
+        String type = args.getString(TYPE);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament byPostName = th.getByPostName(type);
+        mTournamentId = byPostName.id;
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_tournament_layout, container, false);
-
         Bundle bundle = getArguments();
-
         String type = bundle.getString(TYPE);
 
-
-
         TextView tv = (TextView) view.findViewById(R.id.mtl_tv_name);
+
         ActionBar ab = getActivity().getActionBar();
+
         ab.setIcon(R.drawable.ic_action_previous_item);
+
         if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)) {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
             tv.setText(R.string.st_lady_title);
@@ -168,7 +174,7 @@ public class MainTournamentFragment extends Fragment{
     private void showProgramFragment() {
         ProgramFragment mpf = new ProgramFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
+        bundle.putLong(AboutFragment.TYPE, mTournamentId);
         mpf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
@@ -192,8 +198,7 @@ public class MainTournamentFragment extends Fragment{
     private void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_TOURNAMENT_MAIN);
-        bundle.putString(AboutFragment.ENTITY, getArguments().getString("TYPE"));
+        bundle.putLong(AboutFragment.TYPE, mTournamentId);
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

@@ -32,6 +32,7 @@ public class JSONObjectHandler extends JSONHandler {
 
         String jsonString = content.replace("\\\"", "\"");
         jsonString = jsonString.replace("\\\\", "\\");
+        jsonString = jsonString.replace("\\/", "/");
         jsonString = jsonString.replaceAll("^\"|\"$", "");
         JSONObject jsonObject = new JSONObject(jsonString);
         beforeHandle();
