@@ -38,12 +38,12 @@ public class DownloadService extends IntentService {
             Bundle bundleTurnirList = MyNetwork.queryTournamentsList();
             String result = bundleTurnirList.getString(HttpRequester.RESULT);
             if (!result.equals(HttpRequester.RESULT_HTTP)){
-                publishError(result, bundleTurnirList.getString(result));
+                publishError("No connection", null);
                 return;
             }
 
             Bundle tmpTurnirList = bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP);
-            if (tmpTurnirList == null) {publishError("No parse http", null); return;}
+            if (tmpTurnirList == null) {publishError("Network error", null); return;}
             tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
             publishProgress(15, null);
             ArrayList<Tournament> tournamentList=new ArrayList<Tournament>();
@@ -91,7 +91,7 @@ public class DownloadService extends IntentService {
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
-            publishError("Error during network", ex.toString());
+            publishError("Error during network ", ex.toString());
         }
 
     }
