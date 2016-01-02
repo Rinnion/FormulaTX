@@ -17,13 +17,15 @@ import com.rinnion.archived.R;
  * User: Lenovo
  * Date: 15.02.14
  * Time: 22:46
- * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
+ * To change this template use File | Settings | File Templates.
  */
 public class MainTournamentFragment extends Fragment{
 
     public static final String TYPE = "TYPE";
-    public static final String TOURNAMENT_LADIES_TROPHY = "LADIES TROPHY";
-    public static final String TOURNAMENT_OPEN = "OPEN";
+    public static final String TOURNAMENT_LADIES_TROPHY = "stpetersburg_ladies_trophy";
+    //public static final String TOURNAMENT_OPEN = "st_petersburg_open";
+    public static final String TOURNAMENT_OPEN = "turnir_1";
+
     private String TAG = getClass().getCanonicalName();
 
     @Override
@@ -61,17 +63,19 @@ public class MainTournamentFragment extends Fragment{
 
         String type = bundle.getString(TYPE);
 
+
+
         TextView tv = (TextView) view.findViewById(R.id.mtl_tv_name);
-        tv.setText("ST.PETERBURG " + type);
-
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle("St.Petersburg" + type);
         ab.setIcon(R.drawable.ic_action_previous_item);
-
         if (type.equals(TOURNAMENT_LADIES_TROPHY)) {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
+            tv.setText(R.string.st_lady_title);
+            ab.setTitle(R.string.st_lady_title);
         } else {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_open_bg);
+            tv.setText(R.string.st_open_title);
+            ab.setTitle(R.string.st_open_title);
         }
 
         view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
@@ -152,8 +156,9 @@ public class MainTournamentFragment extends Fragment{
 
     private void showGamersFragment() {
         GamerListFragment mlf = new GamerListFragment();
+        String type = getArguments().getString(AboutFragment.TYPE);
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
+        bundle.putString(GamerListFragment.TYPE, type);
         mlf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()

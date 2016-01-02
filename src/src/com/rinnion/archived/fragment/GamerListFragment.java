@@ -8,13 +8,12 @@ import android.content.Loader;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.TournamentCursor;
+import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.fragment.adapter.GamerAdapter;
+import com.rinnion.archived.network.loaders.GamerAsyncLoader;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,8 +22,9 @@ import com.rinnion.archived.fragment.adapter.GamerAdapter;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class GamerListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
+public class GamerListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<GamerCursor> {
 
+    public static final String TYPE = "type";
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
 
@@ -40,15 +40,10 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
         setHasOptionsMenu(true);
 
         mAdapter = new GamerAdapter(getActivity(), null);
-        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
-        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
-        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
-        mAdapter.swapCursor(mc);
 
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.message_loader, getArguments(), this);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_gamers);
@@ -85,23 +80,21 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
 
 
     @Override
-    public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<GamerCursor> onCreateLoader(int id, Bundle args) {
+        String type = args.getString(TYPE);
+        return new GamerAsyncLoader(getActivity(), type);
+
     }
 
     @Override
-    public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
-        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
-        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
-        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
-
-        mAdapter.swapCursor(mc);
+    public void onLoadFinished(Loader<GamerCursor> loader, GamerCursor data) {
+        mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<TournamentCursor> loader) {
+    public void onLoaderReset(Loader<GamerCursor> loader) {
 
     }
+
 }
 

@@ -37,4 +37,7 @@
     <string name="string_shop">Магазин</string>
     <string name="string_contacts">Контакты и ваш отзыв</string>
     <string name="string_snap">Формула Snap</string>
+    <string name="string_turnir">Турнир</string>
+    <string name="st_lady_title">St.PETERBURG LADIES TROPHY</string>
+    <string name="st_open_title">St.PETERBURG OPEN</string>
 </resources>

@@ -4,8 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
-import com.rinnion.archived.database.helper.NewsHelper;
-import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
@@ -15,15 +14,15 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
  * Time: 14:31
  * To change this template use File | Settings | File Templates.
  */
-public class TournamentCursor extends ApiObjectCursor {
+public class GamerCursor extends ApiObjectCursor {
 
-    public TournamentCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+    public GamerCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
         super(db, driver, editTable, query);
     }
 
-    public Tournament getItem() {
+    public Gamer getItem() {
         long id = getColId();
-        Tournament apiObject = new Tournament(id);
+        Gamer apiObject = new Gamer(id);
         fillApiObject(apiObject);
         return apiObject;
     }
@@ -32,7 +31,7 @@ public class TournamentCursor extends ApiObjectCursor {
 
         @Override
         public Cursor newCursor(SQLiteDatabase sqLiteDatabase, SQLiteCursorDriver sqLiteCursorDriver, String s, SQLiteQuery sqLiteQuery) {
-            TournamentCursor c = new TournamentCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
+            GamerCursor c = new GamerCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
             return c;
         }
     }

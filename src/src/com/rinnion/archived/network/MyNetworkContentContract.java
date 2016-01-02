@@ -66,7 +66,6 @@ public class MyNetworkContentContract {
             public static class getallstaticpagefromparent
             {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparent";
-                public static final String PARENT = "parent=%1s";
 
                 public static ArrayList<NameValuePair> getParent(String parent){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
@@ -76,77 +75,56 @@ public class MyNetworkContentContract {
 
             }
 
+            public static class getallstaticpagefromparentdisplaymethod
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentdisplaymethod";
+                public static final String PARTNER = "partner";
+                public static final String CARD = "card";
+                public static final String GAMER = "gamer";
+                public static final String PRODUCT = "product";
+                public static final String AREA = "area";
+                private static String DISPLAY_METHOD = "display_method";
 
-        }
-    }
+                public static ArrayList<NameValuePair> getParent(String parent){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>();
+                    dm_partner.add(new BasicNameValuePair("parent", parent));
+                    return dm_partner;
+                }
 
-    public static class Messages {
-        public static final String URL_MESSAGES_LIST = URL_API + "feed/";
-        public static final String URL_MESSAGES_INFO = URL_API + "feed/%s";
-        public static final String URL_MESSAGES_COMMENTS = URL_API + "messages/%s/comments/";
+                public static ArrayList<NameValuePair> getPartners(String parent){
+                    ArrayList<NameValuePair> dm_partner = getParent(parent);
+                    dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, PARTNER));
+                    return dm_partner;
+                }
 
-        public static String getUrlList() {
-            return String.format(URL_MESSAGES_LIST);
-        }
+                public static ArrayList<NameValuePair> getGamers(String parent){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>();
+                    dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, GAMER));
+                    dm_partner.add(new BasicNameValuePair("parent", parent));
+                    return dm_partner;
+                }
 
-        public static String getUrlInfo(long messageId) {
-            return String.format(URL_MESSAGES_INFO, messageId);
-        }
+                public static ArrayList<NameValuePair> getProducts(String parent){
+                    ArrayList<NameValuePair> dm_partner = getParent(parent);
+                    dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, PRODUCT));
+                    return dm_partner;
+                }
 
-        public static String getUrlCommentList(long messageId) {
-            return String.format(URL_MESSAGES_COMMENTS, messageId);
-        }
-    }
+                public static ArrayList<NameValuePair> getCards(String parent){
+                    ArrayList<NameValuePair> dm_partner = getParent(parent);
+                    dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, CARD));
+                    return dm_partner;
+                }
 
-    public static class Drafts {
-        public static final String URL_DRAFT_LIST = URL_API + "drafts/";
-        public static final String URL_DRAFT_INFO = URL_API + "drafts/%s";
+                public static ArrayList<NameValuePair> getAreas(String parent){
+                    ArrayList<NameValuePair> dm_partner = getParent(parent);
+                    dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, AREA));
+                    return dm_partner;
+                }
 
-        public static String getUrlList() {
-            return String.format(URL_DRAFT_LIST);
-        }
+            }
 
-        public static String getUrlInfo(long messageId) {
-            return String.format(URL_DRAFT_INFO, messageId);
-        }
-    }
 
-    public static class Users {
-        public static final String URL_USER_NEW = URL_API + "users/new";
-
-        public static String getUrlNew() {
-            return String.format(URL_USER_NEW);
-        }
-    }
-
-    public static class My {
-        public static final String URL_MY_PROFILE = URL_API + "my/profile";
-        public static final String URL_MY_LIKES = URL_API + "my/likes/%s";
-        public static final String URL_MY_MESSAGES = URL_API + "my/messages/";
-        public static final String URLT_MY_COMMENTS = URL_API + "my/comments/";
-
-        public static String getUrlProfile() {
-            return String.format(URL_MY_PROFILE);
-        }
-
-        public static String getUrlLikes(String id) {
-            return String.format(URL_MY_LIKES, id);
-        }
-
-        public static String getUrlLikes(long id) {
-            return String.format(URL_MY_LIKES, String.valueOf(id));
-        }
-
-        public static String getUrlLikes() {
-            return getUrlLikes("");
-        }
-
-        public static String getUrlMessages() {
-            return String.format(URL_MY_MESSAGES);
-        }
-
-        public static String getUrlComments() {
-            return String.format(URLT_MY_COMMENTS);
         }
     }
 

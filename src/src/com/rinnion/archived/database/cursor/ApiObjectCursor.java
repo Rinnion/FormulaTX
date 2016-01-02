@@ -25,7 +25,13 @@ public class ApiObjectCursor extends SQLiteCursor {
         long id = getColId();
         int objType=getColType();
         ApiObject apiObject = new ApiObject(id,objType);
-        apiObject.comment_status = getColByName(ApiObjectHelper.COLUMN_COMMENT_STATUS);;
+        fillApiObject(apiObject);
+        return apiObject;
+    }
+
+    protected void fillApiObject(ApiObject apiObject) {
+        apiObject.objType = getColType();
+        apiObject.comment_status = getColByName(ApiObjectHelper.COLUMN_COMMENT_STATUS);
         apiObject.user = getColByName(ApiObjectHelper.COLUMN_USER);
         apiObject.date = getColByName(ApiObjectHelper.COLUMN_DATE);
         apiObject.modified = getColByName(ApiObjectHelper.COLUMN_MODIFIED);
@@ -52,14 +58,13 @@ public class ApiObjectCursor extends SQLiteCursor {
         apiObject.parsers_include = getColByName(ApiObjectHelper.COLUMN_PARSERS_INCLUDE);
         apiObject.login = getColByName(ApiObjectHelper.COLUMN_LOGIN);
         apiObject.update_time = getColUpdateTime();
-
-        return apiObject;
     }
 
     private String getColByName(String name) {
         return getString(getColumnIndexOrThrow(name));
     }
-    private long getColId() {
+
+    protected long getColId() {
         return getLong(getColumnIndexOrThrow(ApiObjectHelper._ID));
     }
 

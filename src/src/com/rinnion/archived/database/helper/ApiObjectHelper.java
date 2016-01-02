@@ -86,7 +86,7 @@ public class ApiObjectHelper implements BaseColumns {
 
     private final String TAG = "ObjectsStore";
 
-    private DatabaseOpenHelper doh;
+    protected DatabaseOpenHelper doh;
 
     public ApiObjectHelper(DatabaseOpenHelper doh) {
         this.doh = doh;

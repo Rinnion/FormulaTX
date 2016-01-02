@@ -25,7 +25,6 @@ public abstract class JSONHandler implements IResponseHandler {
             String content = EntityUtils.toString(entity);
             bundle.putAll(onStringHandle(content));
         }
-
         return bundle;
     }
 

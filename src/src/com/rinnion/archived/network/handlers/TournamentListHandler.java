@@ -25,5 +25,4 @@ public class TournamentListHandler extends JSONObjectHandler {
         }
         return Bundle.EMPTY;
     }
-
 }
