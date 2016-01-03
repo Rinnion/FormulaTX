@@ -19,6 +19,8 @@
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical">
+                <GridView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/gtl_gv_photo" android:numColumns="2">
+                </GridView>
             </LinearLayout>
             <LinearLayout
                     android:id="@+id/tab2"
