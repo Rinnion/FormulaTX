@@ -130,6 +130,8 @@ public class TodayFragment extends Fragment implements
         pbTemp.setText(String.valueOf(temp));
         pbMain.setText(String.valueOf(main));
 
+        //FIXME: should work as described link
+        //http://openweathermap.org/weather-conditions
         try {
             String strIcon = jsonPetersburg.getString("icon");
             int iIcon = Integer.parseInt(strIcon.substring(0, 2));

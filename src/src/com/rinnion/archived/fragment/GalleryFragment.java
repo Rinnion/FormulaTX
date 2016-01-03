@@ -1,18 +1,26 @@
+
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
-import com.rinnion.archived.ArchivedApplication;
+import android.widget.TabHost;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObject;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,14 +29,10 @@ import com.rinnion.archived.database.model.ApiObject;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class AboutFragment extends Fragment  {
+public class GalleryFragment extends Fragment {
 
-    public static final String TYPE = "TYPE";
-    public static final String ENTITY = "ENTITY";
-    public static final String TYPE_TOURNAMENT_MAIN = "TOURNMENT_MAIN";
-    public static final String TYPE_TOURNAMENT_OTHER = "TOURNMENT_OTHER";
-    public static final String TYPE_COMPANY = "COMPANY";
     private String TAG = getClass().getCanonicalName();
+    private WebView mTextViewAbout;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -58,36 +62,38 @@ public class AboutFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.about_layout, container, false);
-        WebView mTextViewAbout = (WebView) view.findViewById(R.id.tv_about);
+        TabHost tabHost = (TabHost) inflater.inflate(R.layout.gallery_tabs_layout, container, false);
+        tabHost.setup();
 
-        Bundle args = getArguments();
-        String type = args.getString(TYPE);
+        TabHost.TabSpec tabSpec;
 
-        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        // создаем вкладку и указываем тег
+        tabSpec = tabHost.newTabSpec("photo");
+        tabSpec.setIndicator("Фото");
+        tabSpec.setContent(R.id.tab1);
+        tabHost.addTab(tabSpec);
 
-        ApiObject apiObject = th.getByPostName(type);
+        tabSpec = tabHost.newTabSpec("video");
+        tabSpec.setIndicator("Видео");
+        tabSpec.setContent(R.id.tab2);
+        tabHost.addTab(tabSpec);
 
-        if (apiObject.content.isEmpty()){
-            mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>О турнире</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-        }else{
-            mTextViewAbout.loadData("<html><style>p {color:#FFF;}</style><body>"+apiObject.content+"</body></html>", "text/html; charset=UTF-8", null);
-        }
+        // вторая вкладка будет выбрана по умолчанию
+        tabHost.setCurrentTabByTag("photo");
 
-        mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
-
-        return view;
+        return tabHost;
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_about);
+            ab.setTitle(R.string.string_gallery);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
-
     }
+
 }
 

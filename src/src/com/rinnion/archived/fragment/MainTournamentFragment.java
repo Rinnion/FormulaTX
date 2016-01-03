@@ -27,7 +27,6 @@ public class MainTournamentFragment extends Fragment{
     public static final String TYPE = "TYPE";
 
     private String TAG = getClass().getCanonicalName();
-    private long mTournamentId = 0;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -53,10 +52,6 @@ public class MainTournamentFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         Bundle args = getArguments();
-        String type = args.getString(TYPE);
-        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
-        Tournament byPostName = th.getByPostName(type);
-        mTournamentId = byPostName.id;
         super.onCreate(savedInstanceState);
     }
 
@@ -134,7 +129,7 @@ public class MainTournamentFragment extends Fragment{
         view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showGalleryFragment();
             }
         });
 
@@ -147,6 +142,18 @@ public class MainTournamentFragment extends Fragment{
 
 
         return view;
+    }
+
+    public void showGalleryFragment() {
+        GalleryFragment mlf = new GalleryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(NewsListFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void showEmptyFragment() {
@@ -174,7 +181,7 @@ public class MainTournamentFragment extends Fragment{
     private void showProgramFragment() {
         ProgramFragment mpf = new ProgramFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(AboutFragment.TYPE, mTournamentId);
+        bundle.putString(AboutFragment.TYPE, getArguments().getString(MainTournamentFragment.TYPE));
         mpf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
@@ -198,7 +205,7 @@ public class MainTournamentFragment extends Fragment{
     private void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(AboutFragment.TYPE, mTournamentId);
+        bundle.putString(AboutFragment.TYPE, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

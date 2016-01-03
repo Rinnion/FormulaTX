@@ -56,7 +56,7 @@ public class OtherTournamentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.other_tournament_layout, container, false);
-        TextView tv = (TextView)view.findViewById(R.id.otl_tv_name);
+        TextView tv = (TextView)view.findViewById(R.id.mtl_tv_name);
 
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
         Tournament tournament = th.getByPostName(getArguments().getString(TYPE));
@@ -68,7 +68,70 @@ public class OtherTournamentFragment extends Fragment {
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
 
+        view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_schedule).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_grids).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_livescore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
+        view.findViewById(R.id.nav_mt_findpath).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmptyFragment();
+            }
+        });
+
         return view;
+    }
+
+    private void showAboutFragment() {
+        AboutFragment mlf = new AboutFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AboutFragment.TYPE, getArguments().getString(TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showEmptyFragment() {
+        EmptyFragment mlf = new EmptyFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
 }

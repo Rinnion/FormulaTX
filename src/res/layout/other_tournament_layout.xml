@@ -1,114 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/mtl_ll_background">
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="150sp" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="150sp" android:layout_gravity="center_horizontal">
-
-            <HorizontalScrollView
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"/>
-        </LinearLayout>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/otl_tv_name"/>
-        <LinearLayout android:id="@+id/nav_mt_about" style="@style/menu_item_row">
-            <ImageView xmlns:tools="http://schemas.android.com/tools"
-                       android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"
-                       tools:showIn="@layout/main_tournment_layout"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_about" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_schedule"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical">
-            <ImageView android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_schedule" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_grids"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical">
-            <ImageView android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_grids" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_livescore"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical">
-            <ImageView android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_liveScore" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_findpath"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical">
-            <ImageView android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_findPath" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_contacts"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical">
-            <ImageView android:layout_width="@android:dimen/app_icon_size"
-                       android:layout_height="@android:dimen/app_icon_size"
-                       android:src="@drawable/ic_action_person"
-                       android:contentDescription="@string/string_profile"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_contacts" android:layout_weight="1"/>
-            <include layout="@layout/include_next_item"/>
-        </LinearLayout>
-    </LinearLayout>
+                    android:layout_height="150sp" android:layout_gravity="center_horizontal"
+                    android:gravity="center">
 
-</ScrollView>
+                <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Other tournament anme"
+                        android:id="@+id/mtl_tv_name"/>
+
+            </LinearLayout>
+            <LinearLayout android:id="@+id/nav_mt_about" android:layout_width="match_parent"
+                          android:layout_height="match_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView xmlns:tools="http://schemas.android.com/tools"
+                           android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@android:drawable/stat_sys_warning"
+                           android:contentDescription="@string/string_profile"
+                           tools:showIn="@layout/main_tournment_layout"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/string_tournament_about" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+            <LinearLayout android:id="@+id/nav_mt_schedule"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_action_person"
+                           android:contentDescription="@string/string_profile"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/string_tournament_schedule" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+            <LinearLayout android:id="@+id/nav_mt_grids"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_action_person"
+                           android:contentDescription="@string/string_profile"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/string_tournament_grids" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+            <LinearLayout android:id="@+id/nav_mt_livescore"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_action_person"
+                           android:contentDescription="@string/string_profile"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/string_tournament_liveScore" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+            <LinearLayout android:id="@+id/nav_mt_video"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_action_person"
+                           android:contentDescription="@string/string_profile"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/string_tournament_photoGallery" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+            <LinearLayout android:id="@+id/nav_mt_findpath"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:gravity="center_vertical"
+                          style="@style/menu_item_row">
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_action_person"
+                           android:contentDescription="@string/string_profile"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/string_tournament_findPath" android:layout_weight="1"
+                        style="@style/menu_item_caption_padded"/>
+                <include layout="@layout/include_next_item"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

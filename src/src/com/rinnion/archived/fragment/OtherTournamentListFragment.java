@@ -78,10 +78,6 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
             }
         };
 
-        ActionBar ab = getActivity().getActionBar();
-        ab.setTitle(R.string.string_other_tounaments);
-        ab.setIcon(R.drawable.ic_action_previous_item);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -126,5 +122,17 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
         Tournament tournament = th.get(id);
         showOtherTournamentFragment(tournament.post_name);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar ab = getActivity().getActionBar();
+        if (ab != null) {
+            ab.setTitle(R.string.string_other_tounaments);
+            ab.setIcon(R.drawable.ic_action_previous_item);
+        }
+    }
+
 }
 

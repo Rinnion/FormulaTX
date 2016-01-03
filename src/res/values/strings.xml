@@ -40,4 +40,6 @@
     <string name="string_turnir">Турнир</string>
     <string name="st_lady_title">St.PETERBURG LADIES TROPHY</string>
     <string name="st_open_title">St.PETERBURG OPEN</string>
+    <string name="string_gallery">Галерея</string>
+    <string name="string_about">О турнире</string>
 </resources>

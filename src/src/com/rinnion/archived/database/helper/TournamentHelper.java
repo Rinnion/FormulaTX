@@ -15,8 +15,8 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
 public class TournamentHelper extends ApiObjectHelper {
 
     public static final String TOURNAMENT_LADIES_TROPHY = "stpetersburg_ladies_trophy";
-    //public static final String TOURNAMENT_OPEN = "st_petersburg_open";
-    public static final String TOURNAMENT_OPEN = "turnir_1";
+    public static final String TOURNAMENT_OPEN = "st_petersburg_open";
+    //public static final String TOURNAMENT_OPEN = "turnir_1";
     private static final String TAG = "TournamentHelper";
 
     public TournamentHelper(DatabaseOpenHelper doh) {
