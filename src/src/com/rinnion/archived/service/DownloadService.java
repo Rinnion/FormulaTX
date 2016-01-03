@@ -7,7 +7,7 @@ import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
-import com.rinnion.archived.database.model.News;
+import com.rinnion.archived.database.model.ApiObjects.News;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
 import com.rinnion.archived.network.handlers.ApiObjectHandler;

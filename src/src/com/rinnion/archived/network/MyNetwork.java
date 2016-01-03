@@ -7,7 +7,6 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.CommentHelper;
-import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.Profile;
 import com.rinnion.archived.database.model.User;

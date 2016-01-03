@@ -1,5 +1,6 @@
-package com.rinnion.archived.database.model;
+package com.rinnion.archived.database.model.ApiObjects;
 
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import org.json.JSONException;
 import org.json.JSONObject;

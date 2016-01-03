@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
-import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.helper.SettingsHelper;
 
 /**
@@ -34,7 +33,7 @@ public class SettingCursor extends SQLiteCursor {
     }
 
     public int getColId() {
-        return getInt(getColumnIndexOrThrow(NewsHelper._ID));
+        return getInt(getColumnIndexOrThrow(SettingsHelper._ID));
     }
 
     public static class Factory implements SQLiteDatabase.CursorFactory {

@@ -3,7 +3,6 @@ package com.rinnion.archived.network.handlers;
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Utils;
-import com.rinnion.archived.database.helper.NewsHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

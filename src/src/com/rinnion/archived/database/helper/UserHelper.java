@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.database.model.News;
+import com.rinnion.archived.database.model.ApiObjects.News;
 import com.rinnion.archived.database.model.User;
 
 /**

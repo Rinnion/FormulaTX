@@ -11,8 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.cursor.TournamentCursor;
+import com.rinnion.archived.database.helper.NewsHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 
 /**
@@ -24,6 +29,7 @@ import com.rinnion.archived.fragment.adapter.NewsAdapter;
  */
 public class NewsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
 
+    public static String TOURNAMENT_POST_NAME = "tournament id";
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
 
@@ -38,12 +44,15 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new NewsAdapter(getActivity(), null);
+        Bundle args = getArguments();
+        String post_name = args.getString(TOURNAMENT_POST_NAME);
+        NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
+        NewsCursor newsCursor = nh.getByParent(post_name);
+
+        mAdapter = new NewsAdapter(getActivity(), newsCursor);
 
         setListAdapter(mAdapter);
-
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
-
+        //getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
         super.onCreate(savedInstanceState);
     }
 

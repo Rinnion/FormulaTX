@@ -186,7 +186,7 @@ public class MainTournamentFragment extends Fragment{
     private void showNewsFragment() {
         NewsListFragment mlf = new NewsListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString("TYPE"));
+        bundle.putString(NewsListFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

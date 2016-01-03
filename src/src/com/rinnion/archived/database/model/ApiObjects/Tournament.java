@@ -1,9 +1,6 @@
 package com.rinnion.archived.database.model.ApiObjects;
 
-import android.os.Bundle;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.News;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -11,7 +11,6 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
-import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.model.ApiObject;
 
 public class NewsAdapter extends SimpleCursorAdapter {

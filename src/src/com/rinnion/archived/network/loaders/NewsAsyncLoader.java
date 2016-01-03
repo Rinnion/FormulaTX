@@ -8,7 +8,6 @@ import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
-import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.MyNetwork;
 

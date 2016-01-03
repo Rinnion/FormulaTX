@@ -23,13 +23,23 @@ public class TournamentHelper extends ApiObjectHelper {
         super(doh);
     }
 
-    @Override
-    public boolean add(ApiObject apiObject) {
-        return super.add(apiObject);
-    }
-
     public boolean add(Tournament tournament) {
         return super.add(tournament);
+    }
+
+    public Tournament get(long id) {
+        Log.d(TAG, "get (" + id + ")");
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id=? AND " + COLUMN_OBJ_TYPE +"=?";
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(id), String.valueOf(ApiObjectTypes.EN_Object)},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
     }
 
     public TournamentCursor getAllOther() {
