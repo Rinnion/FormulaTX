@@ -3,9 +3,11 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebView;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 
@@ -19,7 +21,7 @@ import com.rinnion.archived.R;
 public class EmptyFragment extends Fragment {
 
     private String TAG = getClass().getCanonicalName();
-    private TextView mTextViewAbout;
+    private WebView mTextViewAbout;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -50,13 +52,14 @@ public class EmptyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_layout, container, false);
-        mTextViewAbout = (TextView) view.findViewById(R.id.tv_about);
+        mTextViewAbout = (WebView) view.findViewById(R.id.tv_about);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_stub);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
-        mTextViewAbout.setText("Здесь пока ничего нет");
+        mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>Заглушка</h2>Здесь пока ничего нет</body></html>", "text/html; charset=UTF-8", null);
+        mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
 
         return view;
     }
