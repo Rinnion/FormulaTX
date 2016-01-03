@@ -3,6 +3,8 @@ package com.rinnion.archived;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.SettingsHelper;
@@ -39,6 +41,14 @@ public class ArchivedApplication extends Application {
 
     public static String getResourceString(int id) {
         return getAppContext().getResources().getString(id);
+    }
+
+    public static Bitmap getBitmap(String thumb) {
+        Bitmap bitmap = BitmapFactory.decodeFile(thumb);
+        if (bitmap == null){
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_splash_screen);
+        }
+        return bitmap;
     }
 
     @Override

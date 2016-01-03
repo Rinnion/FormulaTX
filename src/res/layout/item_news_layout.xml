@@ -8,13 +8,13 @@
               android:paddingLeft="30dp" android:paddingTop="15dp">
 
     <ImageView
-            android:layout_width="@dimen/menu_item_thumb_width"
-            android:layout_height="@dimen/menu_item_thumb_height"
+            android:layout_width="@dimen/menu_item_tournament_thumb_width"
+            android:layout_height="@dimen/menu_item_tournament_thumb_height"
             android:id="@+id/inl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:paddingLeft="15dp">
+            android:layout_height="fill_parent" android:paddingLeft="15dp" android:gravity="center_vertical">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

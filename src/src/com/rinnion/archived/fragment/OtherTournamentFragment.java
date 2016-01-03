@@ -10,7 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +26,6 @@ public class OtherTournamentFragment extends Fragment {
 
     public static final String TYPE = "TYPE";
     private String TAG = getClass().getCanonicalName();
-    private TextView mTextViewAbout;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -54,11 +56,17 @@ public class OtherTournamentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.other_tournament_layout, container, false);
+        TextView tv = (TextView)view.findViewById(R.id.otl_tv_name);
+
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament tournament = th.getByPostName(getArguments().getString(TYPE));
+        tv.setText(tournament.title);
 
         ActionBar ab = getActivity().getActionBar();
-
-        ab.setTitle(String.valueOf(getArguments().getLong(TYPE)));
-        ab.setIcon(R.drawable.ic_action_previous_item);
+        if (ab != null) {
+            ab.setTitle(String.valueOf(tournament.title));
+            ab.setIcon(R.drawable.ic_action_previous_item);
+        }
 
         return view;
     }

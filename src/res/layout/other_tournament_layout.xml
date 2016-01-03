@@ -8,7 +8,7 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="150sp" android:layout_gravity="center_horizontal">
+            android:layout_height="150sp" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -19,6 +19,12 @@
                     android:layout_height="match_parent"
                     android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"/>
         </LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/otl_tv_name"/>
         <LinearLayout android:id="@+id/nav_mt_about" style="@style/menu_item_row">
             <ImageView xmlns:tools="http://schemas.android.com/tools"
                        android:layout_width="@android:dimen/app_icon_size"

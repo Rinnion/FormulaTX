@@ -20,6 +20,7 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
  * Created with IntelliJ IDEA.
@@ -107,10 +108,10 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
         }
     }
 
-    private void showOtherTournamentFragment(long id) {
+    private void showOtherTournamentFragment(String post_name) {
         OtherTournamentFragment mlf = new OtherTournamentFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(OtherTournamentFragment.TYPE, id);
+        bundle.putString(OtherTournamentFragment.TYPE, post_name);
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
@@ -121,7 +122,9 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showOtherTournamentFragment(id);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament tournament = th.get(id);
+        showOtherTournamentFragment(tournament.post_name);
     }
 }
 

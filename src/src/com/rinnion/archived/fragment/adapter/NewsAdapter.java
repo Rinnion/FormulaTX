@@ -2,11 +2,12 @@ package com.rinnion.archived.fragment.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
@@ -44,15 +45,14 @@ public class NewsAdapter extends SimpleCursorAdapter {
 
         String thumb = item.thumb;
         String caption = item.title;
-        String data = item.content;
+        String data = item.date;
 
-        if (thumb != null) {
-            imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
-        } else {
-            imlThumb.setImageResource(R.drawable.logo_splash_screen);
-        }
+        Bitmap bitmap = ArchivedApplication.getBitmap(thumb);
+
+        imlThumb.setImageBitmap(bitmap);
 
         tvCaption.setText(caption);
         tvData.setText(data);
     }
+
 }
