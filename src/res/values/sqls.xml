@@ -5,8 +5,8 @@
         <item>"CREATE TABLE tournament (_id INTEGER PRIMARY KEY, post_name TEXT);"</item>
         <item>"CREATE TABLE news (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
         <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
-        <item>"CREATE TABLE api_object_gallery (parent_api_object INTEGER, gallery_id );"</item>
-        <item>"CREATE TABLE gallery (_id INTEGER PRIMARY KEY, gallery_id INTEGER, type String, url String );"</item>
+        <item>"CREATE TABLE api_object_gallery (api_object_id INTEGER, gallery_id_link INTEGER);"</item>
+        <item>"CREATE TABLE gallery (_id INTEGER PRIMARY KEY, gallery_id INTEGER, type TEXT, url TEXT );"</item>
         <item>"CREATE TABLE objects (_id INTEGER,
             user TEXT,
             date TEXT,
@@ -45,5 +45,6 @@
         <item>"DROP TABLE IF EXISTS gamers;"</item>
         <item>"DROP TABLE IF EXISTS objects;"</item>
         <item>"DROP TABLE IF EXISTS gallery;"</item>
+        <item>"DROP TABLE IF EXISTS api_object_gallery;"</item>
     </string-array>
 </resources>

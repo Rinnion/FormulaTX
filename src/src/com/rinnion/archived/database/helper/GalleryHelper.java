@@ -1,6 +1,7 @@
 package com.rinnion.archived.database.helper;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
@@ -22,11 +23,12 @@ import com.rinnion.archived.database.model.GalleryItem;
  */
 public class GalleryHelper implements BaseColumns {
     public static final String COLUMN_API_OBJECT_ID = "api_object_id";
+    public static final String COLUMN_LINK_GALLERY_ID= "gallery_id_link";
     public static final String COLUMN_GALLERY_ID = "gallery_id";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_URL = "url";
     public static String DATABASE_TABLE = "gallery";
-    public static String DATABASE_TABLE_API_OBJECT = "api_object_gallery";
+    public static String DATABASE_TABLE_API_OBJECT_LINK = "api_object_gallery";
 
     public static String[] COLS;
     public static String ALL_COLUMNS;
@@ -49,14 +51,14 @@ public class GalleryHelper implements BaseColumns {
         this.doh = doh;
     }
 
-    public CommentCursor getAllItems() {
+    public GalleryItemCursor getAllItems() {
         Log.v(TAG, "getAll ()");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE;
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
+        GalleryItemCursor c = (GalleryItemCursor) d.rawQueryWithFactory(
+                new GalleryItemCursor.Factory(),
                 sql,
                 null,
                 null);
@@ -83,8 +85,8 @@ public class GalleryHelper implements BaseColumns {
         Log.v(TAG, "getAll ()");
 
         String sql = "SELECT " + ALL_COLUMNS +
-                " FROM " + DATABASE_TABLE +
-                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT + " ao ON ao._id="+COLUMN_GALLERY_ID +
+                " FROM " + DATABASE_TABLE + " AS g " +
+                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT_LINK + " AS ao ON ao."+COLUMN_LINK_GALLERY_ID+"=g."+COLUMN_GALLERY_ID +
                 " WHERE " + COLUMN_API_OBJECT_ID + "=?";
 
         SQLiteDatabase d = doh.getReadableDatabase();
@@ -101,9 +103,9 @@ public class GalleryHelper implements BaseColumns {
         Log.v(TAG, "getAll ()");
 
         String sql = "SELECT " + ALL_COLUMNS +
-                " FROM " + DATABASE_TABLE +
-                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT + " ao ON ao._id="+COLUMN_GALLERY_ID +
-                " WHERE " + COLUMN_API_OBJECT_ID + "=? AND " + COLUMN_TYPE + "=?";
+                " FROM " + DATABASE_TABLE + " AS g " +
+                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT_LINK + " AS aol ON aol."+COLUMN_LINK_GALLERY_ID+"=g."+COLUMN_GALLERY_ID +
+                " WHERE aol." + COLUMN_API_OBJECT_ID + "=? AND g." + COLUMN_TYPE + "=?";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GalleryItemCursor c = (GalleryItemCursor) d.rawQueryWithFactory(
@@ -149,17 +151,31 @@ public class GalleryHelper implements BaseColumns {
         }
     }
 
+    public Cursor getAttachedGallery(long api_object_id){
+        Log.d(TAG, "getAttachedGallery (" + api_object_id + ")");
+
+        String sql = "SELECT " + COLUMN_API_OBJECT_ID + ", " + COLUMN_LINK_GALLERY_ID + " FROM " + DATABASE_TABLE_API_OBJECT_LINK;
+        SQLiteDatabase d = doh.getReadableDatabase();
+        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
+                new CommentCursor.Factory(),
+                sql,
+                null,
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
     public boolean attachGallery(long api_object_id, long gallery_id){
         Log.d(TAG, "attachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
 
         ContentValues map;
         map = new ContentValues();
         map.put(COLUMN_API_OBJECT_ID, api_object_id);
-        map.put(COLUMN_GALLERY_ID, gallery_id);
+        map.put(COLUMN_LINK_GALLERY_ID, gallery_id);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
-            db.insert(DATABASE_TABLE, null, map);
-            return true;
+            long insert = db.insert(DATABASE_TABLE_API_OBJECT_LINK, null, map);
+            return insert != -1;
         } catch (SQLException e) {
             Log.e(TAG, "Error writing location", e);
             return false;

@@ -2,15 +2,18 @@ package com.rinnion.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
-import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.helper.GamerHelper;
-import com.rinnion.archived.database.model.GalleryItem;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
+import org.lorecraft.phparser.SerializedPhpParser;
+
+import java.util.Map;
 
 /**
  * Created by tretyakov on 08.07.2015.
@@ -46,10 +49,24 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
     @Override
     public GalleryItemCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-        //FIXME: get and parse gallery
-        //int[] ints = MyNetwork.queryGamerList(parent);
+
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        TournamentHelper th = new TournamentHelper(doh);
+        Tournament tournament = th.get(api_object_id);
+        String gallery_include = tournament.gallery_include;
+        SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+        Map parse = (Map)php.parse();
         GalleryHelper aoh=new GalleryHelper(doh);
-        return aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
+        for (Object item: parse.keySet()) {
+            long l = Long.parseLong(parse.get(item).toString());
+            Bundle bundle = MyNetwork.queryGallery(l);
+            aoh.attachGallery(api_object_id, l);
+
+            //FIXME: get gallery here!
+        }
+
+        GalleryItemCursor cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
+        //cursor = aoh.getAllItems();
+        return cursor;
     }
 }

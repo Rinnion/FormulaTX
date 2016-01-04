@@ -99,7 +99,7 @@ public class OtherTournamentFragment extends Fragment {
         view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showGalleryFragment();
             }
         });
 
@@ -111,6 +111,18 @@ public class OtherTournamentFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void showGalleryFragment() {
+        GalleryFragment mlf = new GalleryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void showAboutFragment() {

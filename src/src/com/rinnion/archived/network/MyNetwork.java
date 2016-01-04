@@ -120,6 +120,30 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    //Загрузка списка новостей турнира
+    public static Bundle queryGallery(long id) {
+        Log.d(TAG, String.format("queryGallery"));
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        try {
+            fetcher = builder.setName("queryTournamentNewsList")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
+                    .setHandler(new GalleryHandler(id))
+                    .create();
+
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
+
+        return fetcher.execute();
+    }
+
     //Загрузка турнира
     public static Bundle queryTournament(int id) {
         Log.d(TAG, String.format("query tournament"));

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Archived.iml" filepath="$PROJECT_DIR$/Archived.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../lib/serialized-php-parser/serialized-php-parser.iml" filepath="$PROJECT_DIR$/../lib/serialized-php-parser/serialized-php-parser.iml" />
     </modules>
   </component>
 </project>

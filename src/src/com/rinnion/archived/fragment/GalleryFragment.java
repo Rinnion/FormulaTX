@@ -27,9 +27,13 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,7 +48,9 @@ public class GalleryFragment extends Fragment {
 
     private static final int PHOTO_LOADER = 1;
     private static final int VIDEO_LOADER = 2;
+    public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
+
     private WebView mTextViewAbout;
     private SimpleCursorAdapter mAdapter;
 
@@ -111,9 +117,11 @@ public class GalleryFragment extends Fragment {
 
 
         MatrixCursor mc = new MatrixCursor(GalleryHelper.COLS);
-        mc.addRow(new Object[]{1, R.drawable.general_bg});
-        mc.addRow(new Object[]{2, R.drawable.st_lady_bg});
-        mc.addRow(new Object[]{3, R.drawable.st_open_bg});
+        mc.addRow(new Object[]{1, 15, "photo", "http://i.ytimg.com/vi/Vrhgk8Fa_QE/mqdefault.jpg"});
+        mc.addRow(new Object[]{2, 15, "photo", "http://i.ytimg.com/vi_webp/8u0GpAbAf9c/mqdefault.webp"});
+        mc.addRow(new Object[]{3, 15, "photo", "http://i.ytimg.com/vi/4er9XjsrBtw/mqdefault.jpg"});
+        mc.addRow(new Object[]{4, 15, "photo", "http://i.ytimg.com/vi_webp/g0WvM25rmCs/mqdefault.webp"});
+        mc.addRow(new Object[]{5, 15, "photo", "http://i.ytimg.com/vi_webp/zu7Cv83HrYM/mqdefault.webp"});
 
         GridView gv = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
 
@@ -123,7 +131,11 @@ public class GalleryFragment extends Fragment {
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, mc, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                v.setImageResource(R.drawable.logo_splash_screen);
+                Picasso.with(getActivity())
+                        .load(value)
+                        .resize(350,350).centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                        .into(v);
             }
         };
 
@@ -149,7 +161,7 @@ public class GalleryFragment extends Fragment {
     private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
         public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            new GalleryAsyncLoader(getActivity(), 205, "picture");
+            return new GalleryAsyncLoader(getActivity(), 205, "picture");
         }
 
         @Override
