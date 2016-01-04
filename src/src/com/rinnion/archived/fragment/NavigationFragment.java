@@ -67,7 +67,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAboutFragment();
+                showEmptyFragment();
             }
         });
         view.findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
