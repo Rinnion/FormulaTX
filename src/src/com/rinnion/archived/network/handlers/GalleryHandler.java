@@ -2,12 +2,8 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
-import com.rinnion.archived.Utils;
-import com.rinnion.archived.database.helper.CommentHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.model.Comment;
 import com.rinnion.archived.database.model.GalleryItem;
-import com.rinnion.archived.database.model.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,24 +21,38 @@ public class GalleryHandler extends FormulaTXResponseHandler {
     }
 
     @Override
-    public Bundle onTrueStatur(JSONObject message, Bundle bundle) throws JSONException {
+    public Bundle onTrueStatus(JSONObject message, Bundle bundle) throws JSONException {
         GalleryHelper gh = new GalleryHelper(ArchivedApplication.getDatabaseOpenHelper());
         JSONObject gallery = message.getJSONObject("gallery");
-        JSONArray pictureArray = gallery.getJSONArray("picture");
-        for (int i =0; i<pictureArray.length(); i++){
-            JSONObject item = (JSONObject) pictureArray.get(i);
-            long id = item.getLong("id");
-            String type = item.getString("type");
-            String url = "http://app.formulatx.com" + item.getString("picture");
-            GalleryItem gi = new GalleryItem(id, mId, type, url);
-            gh.add(gi);
-        }
-        bundle.putLong("Picture", pictureArray.length());
+        JSONArray array;
+        array = gallery.getJSONArray(GalleryHelper.TYPE_AUDIO);
+        bundle.putLong(GalleryHelper.TYPE_AUDIO, importPictureArray(gh, array));
+        array = gallery.getJSONArray(GalleryHelper.TYPE_PICTURE);
+        bundle.putLong(GalleryHelper.TYPE_PICTURE, importPictureArray(gh, array));
+        array = gallery.getJSONArray(GalleryHelper.TYPE_VIDEO);
+        bundle.putLong(GalleryHelper.TYPE_VIDEO, importPictureArray(gh, array));
+        array = gallery.getJSONArray(GalleryHelper.TYPE_WATERMARK);
+        bundle.putLong(GalleryHelper.TYPE_WATERMARK, importPictureArray(gh, array));
         return bundle;
     }
 
+    private int importPictureArray(GalleryHelper gh, JSONArray array) throws JSONException {
+    int k =0;
+        for (int i =0; i<array.length(); i++){
+            JSONObject item = (JSONObject) array.get(i);
+            long id = item.getLong("id");
+            String type = item.getString("type");
+            String url = item.getString("picture");
+            if (url.startsWith("/")) url = "http://app.formulatx.com" + url;
+            String link = item.getString("link");
+            GalleryItem gi = new GalleryItem(id, mId, type, url, link);
+            if (gh.merge(gi)) k++;
+        }
+        return k;
+    }
+
     @Override
-    public Bundle onFalseStatus(JSONObject message, Bundle bundle) {
+    public Bundle onErrorStatus(JSONObject message, Bundle bundle) {
         return Bundle.EMPTY;
     }
 

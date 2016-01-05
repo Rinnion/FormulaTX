@@ -26,7 +26,13 @@ public class GalleryHelper implements BaseColumns {
     public static final String COLUMN_LINK_GALLERY_ID= "gallery_id_link";
     public static final String COLUMN_GALLERY_ID = "gallery_id";
     public static final String COLUMN_TYPE = "type";
-    public static final String COLUMN_URL = "url";
+    public static final String COLUMN_LINK = "link";
+    public static final String COLUMN_PICTURE = "picture";
+
+    public static final String TYPE_PICTURE = "picture";
+    public static final String TYPE_VIDEO = "video";
+    public static final String TYPE_WATERMARK = "watermark";
+    public static final String TYPE_AUDIO = "audio";
     public static String DATABASE_TABLE = "gallery";
     public static String DATABASE_TABLE_API_OBJECT_LINK = "api_object_gallery";
 
@@ -38,7 +44,8 @@ public class GalleryHelper implements BaseColumns {
                 _ID,
                 COLUMN_GALLERY_ID,
                 COLUMN_TYPE,
-                COLUMN_URL
+                COLUMN_PICTURE,
+                COLUMN_LINK
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
@@ -52,7 +59,7 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public GalleryItemCursor getAllItems() {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getAllItems ()");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE;
 
@@ -67,7 +74,7 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public CommentCursor getGallery(long gallery_id) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getAll (" + String.valueOf(gallery_id) + ")");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE " + COLUMN_GALLERY_ID + "=?";
 
@@ -82,7 +89,7 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public CommentCursor getAllByApiObjectId(long api_object_id) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getAllByApiObjectId (" + String.valueOf(api_object_id) + ")");
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE + " AS g " +
@@ -100,7 +107,7 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public GalleryItemCursor getAllByApiObjectAndItemTypeId(long api_object_id, String item_type) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getAllByApiObjectAndItemTypeId (api_object:" + String.valueOf(api_object_id) + ", item_type:"+String.valueOf(item_type) + ")");
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE + " AS g " +
@@ -118,29 +125,60 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public Comment getItem(int id) {
-        Log.d(TAG, "getLocation (" + id + ")");
-
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
-        SQLiteDatabase d = doh.getReadableDatabase();
-        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
-                sql,
-                new String[]{Integer.toString(id)},
-                null);
+        Log.d(TAG, "getItem (" + id + ")");
+        CommentCursor c = searchItem(id);
         if (c.getCount() == 0) return null;
         c.moveToFirst();
         return c.getItem();
     }
 
+    public boolean isItemPresent(long id) {
+        Log.d(TAG, "isItemPresent (" + id + ")");
+        CommentCursor c = searchItem(id);
+        return c.getCount() == 1;
+    }
+
+    private CommentCursor searchItem(long id) {
+        Log.d(TAG, "searchItem (" + id + ")");
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
+        SQLiteDatabase d = doh.getReadableDatabase();
+        return (CommentCursor) d.rawQueryWithFactory(
+                new CommentCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(id)},
+                null);
+    }
+
+    public void deleteItem(long id){
+        Log.d(TAG, "deleteItem(" + String.valueOf(id) + ")");
+        try {
+            Log.d(TAG, "Delete item " + String.valueOf(id) + " from gallery");
+            SQLiteDatabase db = doh.getWritableDatabase();
+            String[] args = {String.valueOf(id)};
+            db.delete(DATABASE_TABLE,
+                    _ID + "=?",
+                    args);
+        } catch (SQLException ex) {
+            Log.e(TAG, "Error deleting item", ex);
+        }
+    }
+
+    public boolean merge(GalleryItem item){
+        if (isItemPresent(item.id)) deleteItem(item.id);
+        return add(item);
+    }
+
     public boolean add(GalleryItem item) {
-        Log.d(TAG, "addLocation(" + String.valueOf(item) + ")");
+        Log.d(TAG, "add(" + String.valueOf(item) + ")");
 
         ContentValues map;
         map = new ContentValues();
         map.put(_ID, item.id);
         map.put(COLUMN_GALLERY_ID, item.gallery_id);
         map.put(COLUMN_TYPE, item.type);
-        map.put(COLUMN_URL, item.url);
+        map.put(COLUMN_PICTURE, item.url);
+        map.put(COLUMN_LINK, item.link);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);
@@ -168,6 +206,8 @@ public class GalleryHelper implements BaseColumns {
     public boolean attachGallery(long api_object_id, long gallery_id){
         Log.d(TAG, "attachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
 
+        detachGallery(api_object_id, gallery_id);
+
         ContentValues map;
         map = new ContentValues();
         map.put(COLUMN_API_OBJECT_ID, api_object_id);
@@ -182,17 +222,17 @@ public class GalleryHelper implements BaseColumns {
         }
     }
 
-    public void dettachGallery(long api_object_id, long gallery_id){
-        Log.d(TAG, "dettachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
+    public void detachGallery(long api_object_id, long gallery_id){
+        Log.d(TAG, "detachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
         try {
             Log.d(TAG, "Delete gallery " + String.valueOf(gallery_id)+ " from apiObject: " + String.valueOf(api_object_id));
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {String.valueOf(api_object_id),String.valueOf(gallery_id)};
-            db.delete(DATABASE_TABLE,
-                    COLUMN_API_OBJECT_ID + "=? AND " + COLUMN_GALLERY_ID + "=?",
+            db.delete(DATABASE_TABLE_API_OBJECT_LINK,
+                    COLUMN_API_OBJECT_ID + "=? AND " + COLUMN_LINK_GALLERY_ID + "=?",
                     args);
         } catch (SQLException ex) {
-            Log.e(TAG, "Error delete self location", ex);
+            Log.e(TAG, "Error detaching gallery", ex);
         }
     }
 }

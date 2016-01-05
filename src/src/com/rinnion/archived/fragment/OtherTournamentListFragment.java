@@ -21,6 +21,7 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created with IntelliJ IDEA.
@@ -64,17 +65,19 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_layout, cursor, from, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                Log.d(TAG, "R: '" + value+"'");
-                Bitmap bitmap = BitmapFactory.decodeFile(value);
 
-                Log.d(TAG, "S: '"+String.valueOf(bitmap)+"'");
-                if (bitmap != null) {
-                    Log.d(TAG, "N: '"+String.valueOf(bitmap)+"'");
-                    v.setImageBitmap(bitmap);
-                } else {
-                    Log.d(TAG, "NN: '"+String.valueOf(bitmap)+"'");
-                    v.setImageResource(R.drawable.logo_splash_screen);
-                }
+                v.setImageResource(R.drawable.logo_splash_screen);
+                /*Log.d(TAG, String.valueOf(value));
+
+                if (value == null || value.isEmpty()) super.setViewImage(v,value);
+                Picasso.with(getActivity())
+                        .load(value)
+                        .resize(75,75).centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                         .error(R.drawable.logo_splash_screen)
+                        .into(v);
+
+                */
             }
         };
 

@@ -9,12 +9,14 @@ public class GalleryItem implements Serializable {
     public long gallery_id;
     public final String type;
     public final String url;
+    public String link;
 
-    public GalleryItem(long id, long gallery_id, String type, String url) {
+    public GalleryItem(long id, long gallery_id, String type, String url, String link) {
         this.id = id;
         this.gallery_id = gallery_id;
         this.type = type;
         this.url = url;
+        this.link = link;
     }
 
 

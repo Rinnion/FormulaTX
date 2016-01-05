@@ -2,18 +2,10 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.database.MatrixCursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -29,13 +20,8 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,7 +38,8 @@ public class GalleryFragment extends Fragment {
     private String TAG = getClass().getCanonicalName();
 
     private WebView mTextViewAbout;
-    private SimpleCursorAdapter mAdapter;
+    private SimpleCursorAdapter mPhotoAdapter;
+    private SimpleCursorAdapter mVideoAdapter;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -98,9 +85,6 @@ public class GalleryFragment extends Fragment {
         tabSpec.setContent(R.id.tab2);
         tabHost.addTab(tabSpec);
 
-        // вторая вкладка будет выбрана по умолчанию
-        tabHost.setCurrentTabByTag("photo");
-
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
@@ -115,20 +99,15 @@ public class GalleryFragment extends Fragment {
             }
         });
 
+        tabHost.setCurrentTabByTag("photo");
 
-        MatrixCursor mc = new MatrixCursor(GalleryHelper.COLS);
-        mc.addRow(new Object[]{1, 15, "photo", "http://i.ytimg.com/vi/Vrhgk8Fa_QE/mqdefault.jpg"});
-        mc.addRow(new Object[]{2, 15, "photo", "http://i.ytimg.com/vi_webp/8u0GpAbAf9c/mqdefault.webp"});
-        mc.addRow(new Object[]{3, 15, "photo", "http://i.ytimg.com/vi/4er9XjsrBtw/mqdefault.jpg"});
-        mc.addRow(new Object[]{4, 15, "photo", "http://i.ytimg.com/vi_webp/g0WvM25rmCs/mqdefault.webp"});
-        mc.addRow(new Object[]{5, 15, "photo", "http://i.ytimg.com/vi_webp/zu7Cv83HrYM/mqdefault.webp"});
-
-        GridView gv = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
-
-        String[] names = new String[]{GalleryHelper.COLUMN_URL};
+        String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
         int[] to = new int[] {R.id.il_iv_image};
 
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, mc, names, to, 0) {
+
+        GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
+        //gvPhoto.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_photo));
+        mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
@@ -138,10 +117,26 @@ public class GalleryFragment extends Fragment {
                         .into(v);
             }
         };
+        gvPhoto.setAdapter(mPhotoAdapter);
 
-        gv.setAdapter(mAdapter);
+
+        GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
+        //gvVideo.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_video));
+        mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
+            @Override
+            public void setViewImage(ImageView v, String value) {
+                Picasso.with(getActivity())
+                        .load(value)
+                        .resize(350,350).centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                        .into(v);
+            }
+        };
+        gvVideo.setAdapter(mVideoAdapter);
 
 
+        Bundle bundle = new Bundle();
+        getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
 
         return tabHost;
     }
@@ -161,12 +156,12 @@ public class GalleryFragment extends Fragment {
     private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
         public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), 205, "picture");
+            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
         }
 
         @Override
         public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
-            mAdapter.swapCursor(data);
+            mPhotoAdapter.swapCursor(data);
         }
 
         @Override
@@ -175,19 +170,19 @@ public class GalleryFragment extends Fragment {
         }
     }
 
-    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<Object> {
+    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
-        public Loader<Object> onCreateLoader(int id, Bundle args) {
-            return null;
+        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
+            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_VIDEO);
         }
 
         @Override
-        public void onLoadFinished(Loader<Object> loader, Object data) {
-
+        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
+            mVideoAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Object> loader) {
+        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
 
         }
     }

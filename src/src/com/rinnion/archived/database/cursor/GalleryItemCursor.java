@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 import com.rinnion.archived.database.helper.CommentHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.model.Comment;
 import com.rinnion.archived.database.model.GalleryItem;
 
 /**
@@ -27,8 +26,9 @@ public class GalleryItemCursor extends SQLiteCursor {
         long id = getColId();
         long gallery = getLong(getColumnIndexOrThrow(GalleryHelper.COLUMN_GALLERY_ID));
         String type = getString(getColumnIndexOrThrow(GalleryHelper.COLUMN_TYPE));
-        String url = getString(getColumnIndexOrThrow(GalleryHelper.COLUMN_URL));
-        GalleryItem comment = new GalleryItem(id, gallery, type, url);
+        String url = getString(getColumnIndexOrThrow(GalleryHelper.COLUMN_PICTURE));
+        String link = getString(getColumnIndexOrThrow(GalleryHelper.COLUMN_LINK));
+        GalleryItem comment = new GalleryItem(id, gallery, type, url, link);
         return comment;
     }
 
