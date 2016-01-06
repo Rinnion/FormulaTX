@@ -8,11 +8,11 @@ import org.json.JSONObject;
 /**
  * Parse News from server
  */
-public class TournamentListHandler extends JSONObjectHandler {
+public class ApiObjectListHandler extends JSONObjectHandler {
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
-        boolean status = object.getBoolean("status");
-        if (status) {
+        String status = object.getString("status");
+        if (status.equals("true")) {
             JSONArray message = object.getJSONArray("message");
             int[] idArray = new int[message.length()];
             for (int i = 0; i < message.length(); i++) {

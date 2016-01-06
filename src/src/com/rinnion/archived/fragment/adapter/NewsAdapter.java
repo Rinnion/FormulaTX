@@ -33,7 +33,7 @@ public class NewsAdapter extends SimpleCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, final Cursor cursor) {
-        super.bindView(view, context, cursor);
+        //super.bindView(view, context, cursor);
 
         final ImageView imlThumb = (ImageView) view.findViewById(R.id.inl_iv_thumb);
         final TextView tvCaption = (TextView) view.findViewById(R.id.inl_tv_caption);

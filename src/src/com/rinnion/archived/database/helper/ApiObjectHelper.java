@@ -45,7 +45,7 @@ public class ApiObjectHelper implements BaseColumns {
     public static final String COLUMN_OBJ_TYPE = "objType";
 
 
-    public static String DATABASE_TABLE = "objects o";
+    public static String DATABASE_TABLE = "objects";
     public static String[] COLS;
     public static String ALL_COLUMNS;
 
@@ -84,7 +84,7 @@ public class ApiObjectHelper implements BaseColumns {
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
 
-    private final String TAG = "ObjectsStore";
+    private final String TAG = "ApiObjectHelper";
 
     protected DatabaseOpenHelper doh;
 
@@ -153,7 +153,7 @@ public class ApiObjectHelper implements BaseColumns {
 
     public boolean add(ApiObject apiObject) {
 
-        delete(apiObject.id,apiObject.objType);
+        delete(apiObject.id, apiObject.objType);
 
         Log.d(TAG, "add(" + apiObject.toString() + ")");
 
@@ -211,12 +211,12 @@ public class ApiObjectHelper implements BaseColumns {
         }
     }
 
-    public void delete(long id,int objApiType) {
-        Log.d(TAG, "delete (" + id + ")");
+    public void delete(long id,int type) {
+        Log.d(TAG, "delete (id:" + id + ", type:" + type+ ")");
         try {
             Log.d(TAG, "Delete self location: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
-            String[] args = {Long.toString(id),Integer.toString(objApiType)};
+            String[] args = {Long.toString(id),Integer.toString(type)};
             db.delete(DATABASE_TABLE, _ID + "=? and objType=?", args);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);

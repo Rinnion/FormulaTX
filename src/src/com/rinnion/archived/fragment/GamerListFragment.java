@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GamerCursor;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.fragment.adapter.GamerAdapter;
 import com.rinnion.archived.network.loaders.GamerAsyncLoader;
 
@@ -25,6 +27,7 @@ import com.rinnion.archived.network.loaders.GamerAsyncLoader;
 public class GamerListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<GamerCursor> {
 
     public static final String TYPE = "type";
+    public static final String TOURNAMENT_ID = ApiObjectHelper._ID;
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
 
@@ -66,22 +69,9 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
         }
     }
 
-    private void showOtherTournamentFragment(long id) {
-        NewsFragment mlf = new NewsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putLong(OtherTournamentFragment.TYPE, id);
-        mlf.setArguments(bundle);
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, mlf)
-                .addToBackStack(null)
-                .commit();
-    }
-
-
     @Override
     public Loader<GamerCursor> onCreateLoader(int id, Bundle args) {
-        String type = args.getString(TYPE);
+        long type = args.getLong(TOURNAMENT_ID);
         return new GamerAsyncLoader(getActivity(), type);
 
     }

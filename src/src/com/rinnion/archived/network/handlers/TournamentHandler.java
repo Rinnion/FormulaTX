@@ -4,6 +4,7 @@ import android.nfc.FormatException;
 import android.os.Bundle;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +19,7 @@ public class TournamentHandler extends ApiObjectHandler {
     private TournamentHelper th;
 
     public TournamentHandler(TournamentHelper th){
+        super(th, ApiObjectTypes.EN_Object);
         this.th = th;
     }
 

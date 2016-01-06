@@ -1,9 +1,12 @@
 package com.rinnion.archived.database.cursor;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.helper.GamerHelper;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
@@ -14,7 +17,7 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
  * Time: 14:31
  * To change this template use File | Settings | File Templates.
  */
-public class GamerCursor extends ApiObjectCursor {
+public class GamerCursor extends SQLiteCursor {
 
     public GamerCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
         super(db, driver, editTable, query);
@@ -22,9 +25,18 @@ public class GamerCursor extends ApiObjectCursor {
 
     public Gamer getItem() {
         long id = getColId();
-        Gamer apiObject = new Gamer(id);
-        fillApiObject(apiObject);
-        return apiObject;
+        Gamer gamer = new Gamer(id);
+        gamer.name = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_NAME));
+        gamer.surname = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_SURNAME));
+        gamer.full_name = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_FULL_NAME));
+        gamer.rating = getLong(getColumnIndexOrThrow(GamerHelper.COLUMN_RATING));
+        gamer.country = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_COUNTRY));
+        gamer.flag = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_FLAG));
+        return gamer;
+    }
+
+    protected long getColId() {
+        return getLong(getColumnIndexOrThrow(ApiObjectHelper._ID));
     }
 
     public static class Factory implements SQLiteDatabase.CursorFactory {

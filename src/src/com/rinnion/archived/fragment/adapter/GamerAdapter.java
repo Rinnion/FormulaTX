@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.model.ApiObjects.Gamer;
 
 public class GamerAdapter extends SimpleCursorAdapter {
     public static String[] fromSpinner = {
@@ -29,21 +31,18 @@ public class GamerAdapter extends SimpleCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, final Cursor cursor) {
-        super.bindView(view, context, cursor);
+        //super.bindView(view, context, cursor);
 
-        //final ImageView imlThumb = (ImageView) view.findViewById(R.id.igl_iv_thumb);
-        //final TextView tvName = (TextView) view.findViewById(R.id.igl_tv_name);
-        //final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
-        //final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
+        final ImageView imlThumb = (ImageView) view.findViewById(R.id.igl_iv_thumb);
+        final TextView tvName = (TextView) view.findViewById(R.id.igl_tv_name);
+        final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
+        final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
 
-        //String thumb = cursor.getString(cursor.getColumnIndex(fromSpinner[1]));
-        //String name = cursor.getString(cursor.getColumnIndex(fromSpinner[2]));
-        //String country = cursor.getString(cursor.getColumnIndex(fromSpinner[3]));
-        //String rating = cursor.getString(cursor.getColumnIndex(fromSpinner[5]));
+        Gamer item = ((GamerCursor) cursor).getItem();
 
         //imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
-        //tvName.setText(name);
-        //tvCountry.setText(country);
-        //tvRating.setText(rating);
+        tvName.setText(item.full_name);
+        tvCountry.setText(item.country);
+        tvRating.setText(String.valueOf(item.rating));
     }
 }

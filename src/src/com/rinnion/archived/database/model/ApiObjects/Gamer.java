@@ -8,8 +8,9 @@ import org.json.JSONObject;
 /**
  * Created by tretyakov on 28.12.2015.
  */
-public class Gamer extends ApiObject {
+public class Gamer {
 
+    public long id;
     public String name;
     public String surname;
     public String full_name;
@@ -18,6 +19,9 @@ public class Gamer extends ApiObject {
     public String flag;
 
     public Gamer(long id) {
-        super(id, ApiObjectTypes.EN_Gamer);
+        this.id = id;
     }
+
+
+
 }

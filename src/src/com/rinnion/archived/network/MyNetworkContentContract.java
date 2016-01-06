@@ -67,9 +67,20 @@ public class MyNetworkContentContract {
             {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparent";
 
-                public static ArrayList<NameValuePair> getParent(String parent){
+                public static ArrayList<NameValuePair> getParent(long parent){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
-                    dm_partner.add(new BasicNameValuePair("parent", parent));
+                    dm_partner.add(new BasicNameValuePair("parent", String.valueOf(parent)));
+                    return dm_partner;
+                }
+            }
+
+            public static class getadditionalfields
+            {
+                public static final String URL_METHOD = URL + "?method=getadditionalfields";
+
+                public static ArrayList<NameValuePair> getUrl(long id){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
                     return dm_partner;
                 }
             }
@@ -96,10 +107,10 @@ public class MyNetworkContentContract {
                     return dm_partner;
                 }
 
-                public static ArrayList<NameValuePair> getGamers(String parent){
+                public static ArrayList<NameValuePair> getGamer(long parent){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>();
                     dm_partner.add(new BasicNameValuePair(DISPLAY_METHOD, GAMER));
-                    dm_partner.add(new BasicNameValuePair("parent", parent));
+                    dm_partner.add(new BasicNameValuePair("parent", String.valueOf(parent)));
                     return dm_partner;
                 }
 

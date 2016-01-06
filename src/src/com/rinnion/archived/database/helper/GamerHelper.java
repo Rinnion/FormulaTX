@@ -3,6 +3,7 @@ package com.rinnion.archived.database.helper;
 import android.content.ContentValues;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -16,7 +17,7 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
 /**
  * Helper for working with News repository
  */
-public class GamerHelper extends ApiObjectHelper {
+public class GamerHelper implements BaseColumns {
 
     private static final String TAG = "GamerHelper";
 
@@ -28,9 +29,12 @@ public class GamerHelper extends ApiObjectHelper {
     public static final String COLUMN_FLAG = "flag";
 
     public static String DATABASE_TABLE_ADDITINAL = "gamers";
+    private final ApiObjectHelper aoh;
+    private DatabaseOpenHelper doh;
 
     public GamerHelper(DatabaseOpenHelper doh) {
-        super(doh);
+        this.doh = doh;
+        aoh = new ApiObjectHelper(doh);
     }
 
     public static String[] COLS_ADDITIONAL;
@@ -49,11 +53,14 @@ public class GamerHelper extends ApiObjectHelper {
         ALL_COLUMNS_ADDITINAL = TextUtils.join(",", COLS_ADDITIONAL);
     }
 
-    public boolean add(Gamer gamer) {
-        Log.d(TAG, "add(" + gamer.toString() + ")");
+    public boolean merge(Gamer gamer) {
+        Log.d(TAG, "merge(" + gamer.toString() + ")");
+
+        //FIXME: Нужно переделать на update/merge
+        ApiObject apiObject = aoh.get(gamer.id);
 
         delete(gamer.id);
-        super.add(gamer);
+        aoh.add(apiObject);
 
         ContentValues map;
         map = new ContentValues();
@@ -67,7 +74,7 @@ public class GamerHelper extends ApiObjectHelper {
 
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
-            return (db.insert(DATABASE_TABLE, null, map)!=-1);
+            return (db.insert(DATABASE_TABLE_ADDITINAL, null, map)!=-1);
 
         } catch (SQLException e) {
             Log.e(TAG, "Error writing location", e);
@@ -82,21 +89,20 @@ public class GamerHelper extends ApiObjectHelper {
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id)};
             db.delete(DATABASE_TABLE_ADDITINAL, _ID + "=?", args);
-            super.delete(id);
+            aoh.delete(id, ApiObjectTypes.EN_Gamer);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }
     }
 
-    @Override
     public GamerCursor getAll() {
         Log.v(TAG, "getAll ()");
 
-        String sql = "SELECT " + ALL_COLUMNS_ADDITINAL +
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
-                " LEFT JOIN " + DATABASE_TABLE + " AS ao ON ao._id=o._id " +
-                " WHERE " + COLUMN_OBJ_TYPE +"=? " +
-                " ORDER BY o." + COLUMN_RATING + " ASC";
+                " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
+                " WHERE " + ApiObjectHelper.COLUMN_OBJ_TYPE +"=? " +
+                " ORDER BY g." + COLUMN_RATING + " ASC";
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
                 new GamerCursor.Factory(),
@@ -107,14 +113,34 @@ public class GamerHelper extends ApiObjectHelper {
         return c;
     }
 
+    public Gamer getGamer(long id) {
+        Log.v(TAG, "getGamer ("+id+")");
+
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
+                " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
+                " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
+                " WHERE " + ApiObjectHelper.COLUMN_OBJ_TYPE +"=? AND g._id=?" +
+                " ORDER BY g." + COLUMN_RATING + " ASC";
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
+                new GamerCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(ApiObjectTypes.EN_Gamer), String.valueOf(id)},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
+    }
+
     public GamerCursor getAllByParent(long parent) {
         Log.v(TAG, "getAllByParent ()");
 
-        String sql = "SELECT " + ALL_COLUMNS_ADDITINAL +
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
-                " LEFT JOIN " + DATABASE_TABLE + " AS ao ON ao._id=o._id " +
-                " WHERE ao." + COLUMN_OBJ_TYPE + "=? AND ao." + COLUMN_PARENT + "=? " +
-                " ORDER BY o." + COLUMN_RATING + " ASC";
+                " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
+                " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +
+                " WHERE ao." + ApiObjectHelper.COLUMN_OBJ_TYPE + "=? AND p." + ApiObjectHelper._ID + "=? " +
+                " ORDER BY g." + COLUMN_RATING + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(

@@ -168,8 +168,10 @@ public class MainTournamentFragment extends Fragment{
     private void showGamersFragment() {
         GamerListFragment mlf = new GamerListFragment();
         String type = getArguments().getString(AboutFragment.TYPE);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament t = th.getByPostName(type);
         Bundle bundle = new Bundle();
-        bundle.putString(GamerListFragment.TYPE, type);
+        bundle.putLong(GamerListFragment.TOURNAMENT_ID, t.id);
         mlf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
