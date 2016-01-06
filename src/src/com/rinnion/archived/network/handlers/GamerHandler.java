@@ -33,7 +33,7 @@ public class GamerHandler extends JSONObjectHandler {
                 String value = obj.getString("value");
 
                 if (ao == null) ao = th.getGamer(Long.parseLong(id));
-                if (ao == null) break;
+                if (ao == null) ao = new Gamer(Long.parseLong(id));
                 if (key.equals("Rating")) {
                     ao.rating = Float.parseFloat(value);
                 }

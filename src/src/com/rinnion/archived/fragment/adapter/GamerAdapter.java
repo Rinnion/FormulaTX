@@ -11,6 +11,7 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
+import com.squareup.picasso.Picasso;
 
 public class GamerAdapter extends SimpleCursorAdapter {
     public static String[] fromSpinner = {
@@ -37,12 +38,16 @@ public class GamerAdapter extends SimpleCursorAdapter {
         final TextView tvName = (TextView) view.findViewById(R.id.igl_tv_name);
         final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
         final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
+        final ImageView tvFavorite = (ImageView) view.findViewById(R.id.igl_iv_like);
 
         Gamer item = ((GamerCursor) cursor).getItem();
 
-        //imlThumb.setImageBitmap(BitmapFactory.decodeFile(thumb));
+        //imlThumb.getScaleX()
+
+        Picasso.with(context).load(item.thumb).resize(80, 80).centerCrop().into(imlThumb);
         tvName.setText(item.full_name);
         tvCountry.setText(item.country);
         tvRating.setText(String.valueOf(item.rating));
+        tvFavorite.setImageResource(R.drawable.like_noselected_icon);
     }
 }

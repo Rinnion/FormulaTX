@@ -46,11 +46,11 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
     public GamerCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
         int[] iaGamerList = MyNetwork.getIntArray(MyNetwork.queryGamerList(parent));
-        if (iaGamerList == null) return null;
-        for (int i : iaGamerList) {
-            MyNetwork.queryGamer(i);
+        if (iaGamerList != null) {
+            for (int i : iaGamerList) {
+                MyNetwork.queryGamer(i);
+            }
         }
-
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GamerHelper aoh=new GamerHelper(doh);
         return aoh.getAllByParent(parent);

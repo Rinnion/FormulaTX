@@ -11,6 +11,8 @@ import org.json.JSONObject;
 public class Gamer {
 
     public long id;
+    public String thumb;
+    public String favorite;
     public String name;
     public String surname;
     public String full_name;
