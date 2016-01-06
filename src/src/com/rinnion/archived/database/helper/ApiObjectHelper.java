@@ -45,7 +45,7 @@ public class ApiObjectHelper implements BaseColumns {
     public static final String COLUMN_OBJ_TYPE = "objType";
 
 
-    public static String DATABASE_TABLE = "objects";
+    public static String DATABASE_TABLE = "objects o";
     public static String[] COLS;
     public static String ALL_COLUMNS;
 
