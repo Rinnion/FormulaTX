@@ -3,6 +3,7 @@ package com.rinnion.archived.fragment.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -13,8 +14,11 @@ import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class NewsAdapter extends SimpleCursorAdapter {
+    private final String TAG = getClass().getSimpleName();
     public static String[] fromSpinner = {
             ApiObjectHelper._ID,
             ApiObjectHelper.COLUMN_THUMB,
@@ -47,9 +51,19 @@ public class NewsAdapter extends SimpleCursorAdapter {
         String caption = item.title;
         String data = item.date;
 
-        Bitmap bitmap = ArchivedApplication.getBitmap(thumb);
+        try {
+            Picasso.with(context)
+                    .load(thumb)
+                    .placeholder(R.drawable.logo_splash_screen)
+                    .error(R.drawable.logo_splash_screen)
+                    .resize(80, 80)
+                    .centerCrop()
+                    .into(imlThumb);
 
-        imlThumb.setImageBitmap(bitmap);
+
+        }catch(Exception ignore){
+            Log.e(TAG, ignore.getLocalizedMessage());
+        }
 
         tvCaption.setText(caption);
         tvData.setText(data);

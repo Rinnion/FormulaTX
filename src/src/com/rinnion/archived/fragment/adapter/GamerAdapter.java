@@ -3,6 +3,7 @@ package com.rinnion.archived.fragment.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -14,6 +15,7 @@ import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.squareup.picasso.Picasso;
 
 public class GamerAdapter extends SimpleCursorAdapter {
+    private final String TAG = getClass().getSimpleName();
     public static String[] fromSpinner = {
             "_id",
             "_id",
@@ -44,7 +46,17 @@ public class GamerAdapter extends SimpleCursorAdapter {
 
         //imlThumb.getScaleX()
 
-        Picasso.with(context).load(item.thumb).resize(80, 80).centerCrop().into(imlThumb);
+        try {
+            Picasso.with(context)
+                    .load(item.thumb)
+                    .placeholder(R.drawable.logo_splash_screen)
+                    .error(R.drawable.logo_splash_screen)
+                    .resize(80, 80)
+                    .centerCrop()
+                    .into(imlThumb);
+        }catch(Exception ignore){
+            Log.e(TAG, ignore.getLocalizedMessage());
+        }
         tvName.setText(item.full_name);
         tvCountry.setText(item.country);
         tvRating.setText(String.valueOf(item.rating));

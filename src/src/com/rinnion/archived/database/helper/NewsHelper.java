@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 
 /**
  * Helper for working with News repository
@@ -21,14 +22,14 @@ public class NewsHelper extends ApiObjectHelper {
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
-                " WHERE " + COLUMN_PARENT + "=? " +
+                " WHERE " + COLUMN_PARENT + "=? AND " + COLUMN_OBJ_TYPE + "=? " +
                 " ORDER BY " + COLUMN_DATE + " DESC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
                 new NewsCursor.Factory(),
                 sql,
-                new String[] {parent},
+                new String[] {parent,String.valueOf(ApiObjectTypes.EN_News)},
                 null);
         c.moveToFirst();
         return c;
