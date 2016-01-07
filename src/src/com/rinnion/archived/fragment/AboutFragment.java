@@ -25,8 +25,6 @@ public class AboutFragment extends Fragment  {
 
     public static final String TYPE = "TYPE";
     public static final String ENTITY = "ENTITY";
-    public static final String TYPE_TOURNAMENT_MAIN = "TOURNMENT_MAIN";
-    public static final String TYPE_TOURNAMENT_OTHER = "TOURNMENT_OTHER";
     public static final String TYPE_COMPANY = "COMPANY";
     private String TAG = getClass().getCanonicalName();
 

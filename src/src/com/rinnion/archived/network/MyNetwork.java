@@ -143,22 +143,6 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
-    //Загрузка турнира
-    public static Bundle queryTournament(int id) {
-        Log.d(TAG, String.format("query tournament"));
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        TournamentHelper th = new TournamentHelper(doh);
-        return queryApiObject(id, new TournamentHandler(th));
-    }
-
-    //Загрузка турнира
-    public static Bundle queryNews(int id) {
-        Log.d(TAG, String.format("query tournament"));
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        NewsHelper th = new NewsHelper(doh);
-        return queryApiObject(id, new NewsHandler(th));
-    }
-
     //Загрузка объектов
     public static Bundle queryApiObject(int id, int type) {
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
@@ -168,6 +152,8 @@ public final class MyNetwork {
                 break;
             case ApiObjectTypes.EN_News: handler = new NewsHandler(new NewsHelper(doh));
                 break;
+            default:
+                handler = new ApiObjectHandler(new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper()), type);
         }
 
         return queryApiObject(id, handler);
@@ -212,7 +198,7 @@ public final class MyNetwork {
         return intArray;
     }
 
-    public static JSONObject getJSONObject(Bundle objectBundle) throws JSONException {
+    public static JSONObject getApiObjectJSON(Bundle objectBundle) throws JSONException {
             String result = objectBundle.getString(HttpRequester.RESULT);
             if (result.equals(HttpRequester.RESULT_HTTP)) {
                 Bundle tmpTurnirList = objectBundle.getBundle(HttpRequester.RESULT_HTTP);

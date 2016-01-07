@@ -4,12 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
-import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -37,10 +36,9 @@ public class DownloadService extends IntentService {
                 publishError("Network error", null);
                 return;
             }
+
             publishProgress(25, null);
-
             FetchApiObjectsList(intArray, ApiObjectTypes.EN_Object);
-
             publishProgress(45, null);
 
             for (int id : intArray) {
@@ -52,8 +50,8 @@ public class DownloadService extends IntentService {
                 FetchApiObjectsList(iaNewsList, ApiObjectTypes.EN_News);
             }
 
-
             publishProgress(50, null);
+            loadAbout(Settings.ABOUT_API_OBJECT);
             publishProgress(80, null);
             publishProgress(100, null);
         } catch (Exception ex) {
@@ -63,21 +61,14 @@ public class DownloadService extends IntentService {
 
     }
 
+    private void loadAbout(int aboutApiObject) {
+        MyNetwork.queryApiObject(aboutApiObject, ApiObjectTypes.EN_About);
+    }
+
     private ArrayList<ApiObject> FetchApiObjectsList(int[] intArray, int type) throws JSONException {
         ArrayList<ApiObject> tournamentList = new ArrayList<ApiObject>(intArray.length);
         for (int anIntArray : intArray) {
             MyNetwork.queryApiObject(anIntArray, type);
-            /*
-            JSONObject jsonObject = getJSONObject(bundle);
-            ApiObject apiObject = new ApiObject(jsonObject, type);
-            ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
-            if (!aoh.merge(apiObject))
-                Log.e(TAG, "Error when insert " + String.valueOf(apiObject) + " data to DB");
-            else {
-                tournamentList.merge(apiObject);
-                Log.d(TAG, apiObject + " success added to DB id='" + apiObject.id + "'");
-            }
-            */
         }
         return tournamentList;
 

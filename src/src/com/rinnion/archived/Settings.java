@@ -11,6 +11,8 @@ public final class Settings {
     public static final boolean NETDEBUG = false;
     public static final boolean DEBUG = false;
 
+    public static final int ABOUT_API_OBJECT = 201;
+
     public static final String USER_ID = "UserId";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_AVATAR = "USER_AVATAR";
