@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.rinnion.archived.R;
+import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TournamentHelper;
 
 /**
@@ -67,7 +68,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showAboutFragment();
             }
         });
         view.findViewById(R.id.nav_StPetersburgLadiesTrophy).setOnClickListener(new View.OnClickListener() {
@@ -140,8 +141,7 @@ public class NavigationFragment extends Fragment {
     public void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, AboutFragment.TYPE_COMPANY);
-        bundle.putString(AboutFragment.ENTITY, null);
+        bundle.putString(AboutFragment.TYPE, Settings.ABOUT_API_OBJECT_ALIAS);
         mlf.setArguments(bundle);
         getFragmentManager().popBackStack();
         getFragmentManager()

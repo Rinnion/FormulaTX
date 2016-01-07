@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
@@ -59,7 +60,7 @@ public class OtherTournamentFragment extends Fragment {
         TextView tv = (TextView)view.findViewById(R.id.mtl_tv_name);
 
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
-        Tournament tournament = th.getByPostName(getArguments().getString(TYPE));
+        Tournament tournament = th.getByPostName(getArguments().getString(TYPE), ApiObjectTypes.EN_Object);
         tv.setText(tournament.title);
 
         ActionBar ab = getActivity().getActionBar();

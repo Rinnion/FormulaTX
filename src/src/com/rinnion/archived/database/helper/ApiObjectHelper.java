@@ -8,7 +8,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
+import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
  * Helper for working with News repository
@@ -221,5 +223,44 @@ public class ApiObjectHelper implements BaseColumns {
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }
+    }
+
+    public Tournament getByPostName(String post_name, int type) {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE "+COLUMN_OBJ_TYPE+"=? AND " + COLUMN_POST_NAME + "=?" +
+                " ORDER BY " + COLUMN_TITLE + " ASC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[] {String.valueOf(type), post_name},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
+    }
+
+    public ApiObject getByPostName(String post_name) {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE "+ COLUMN_POST_NAME + "=?" +
+                " ORDER BY " + COLUMN_TITLE + " ASC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[] {post_name},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
+
     }
 }

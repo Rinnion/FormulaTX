@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
-import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
 
 /**
@@ -24,9 +23,8 @@ import com.rinnion.archived.database.model.ApiObject;
 public class AboutFragment extends Fragment  {
 
     public static final String TYPE = "TYPE";
-    public static final String ENTITY = "ENTITY";
-    public static final String TYPE_COMPANY = "COMPANY";
     private String TAG = getClass().getCanonicalName();
+    private ApiObject mApiObject;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -62,18 +60,23 @@ public class AboutFragment extends Fragment  {
         Bundle args = getArguments();
         String type = args.getString(TYPE);
 
-        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        //TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        ApiObjectHelper th = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
 
-        ApiObject apiObject = th.getByPostName(type);
+        mApiObject = th.getByPostName(type);
 
-        if (apiObject.content.isEmpty()){
-            mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>О турнире</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-        }else{
-            mTextViewAbout.loadData("<html><style>p {color:#FFF;}</style><body>"+apiObject.content+"</body></html>", "text/html; charset=UTF-8", null);
+        if (mApiObject == null) {
+            mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
+        } else {
+            if (mApiObject.content.isEmpty()) {
+                mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
+            } else {
+                mTextViewAbout.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+            }
+
         }
 
         mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
-
         return view;
     }
 
@@ -82,7 +85,11 @@ public class AboutFragment extends Fragment  {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_about);
+            if (mApiObject != null) {
+                ab.setTitle(mApiObject.title);
+            } else {
+                ab.setTitle(getArguments().getString(TYPE));
+            }
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
 

@@ -52,21 +52,21 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
 
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         TournamentHelper th = new TournamentHelper(doh);
+        GalleryItemCursor cursor = null;
         Tournament tournament = th.get(api_object_id);
-        String gallery_include = tournament.gallery_include;
-        SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-        Map parse = (Map)php.parse();
-        GalleryHelper aoh=new GalleryHelper(doh);
-        for (Object item: parse.keySet()) {
-            long l = Long.parseLong(parse.get(item).toString());
-            Bundle bundle = MyNetwork.queryGallery(l);
-            aoh.attachGallery(api_object_id, l);
-
-            //FIXME: get gallery here!
+        if (tournament != null) {
+            String gallery_include = tournament.gallery_include;
+            SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+            Map parse = (Map) php.parse();
+            GalleryHelper aoh = new GalleryHelper(doh);
+            for (Object item : parse.keySet()) {
+                long l = Long.parseLong(parse.get(item).toString());
+                MyNetwork.queryGallery(l);
+                aoh.attachGallery(api_object_id, l);
+            }
+            cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
         }
 
-        GalleryItemCursor cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
-        //cursor = aoh.getAllItems();
         return cursor;
     }
 }

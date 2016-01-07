@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
 /**
@@ -167,11 +168,15 @@ public class MainTournamentFragment extends Fragment{
 
     private void showGamersFragment() {
         GamerListFragment mlf = new GamerListFragment();
-        String type = getArguments().getString(AboutFragment.TYPE);
+        String type = getArguments().getString(TYPE);
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
-        Tournament t = th.getByPostName(type);
         Bundle bundle = new Bundle();
-        bundle.putLong(GamerListFragment.TOURNAMENT_ID, t.id);
+        Tournament t = th.getByPostName(type, ApiObjectTypes.EN_Object);
+        if (t != null) {
+            bundle.putLong(GamerListFragment.TOURNAMENT_ID, t.id);
+        }else{
+            bundle.putLong(GamerListFragment.TOURNAMENT_ID, 0);
+        }
         mlf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
@@ -183,7 +188,7 @@ public class MainTournamentFragment extends Fragment{
     private void showProgramFragment() {
         ProgramFragment mpf = new ProgramFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(AboutFragment.TYPE, getArguments().getString(TYPE));
         mpf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
