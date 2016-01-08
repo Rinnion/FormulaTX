@@ -42,4 +42,6 @@
     <string name="st_open_title">St.PETERBURG OPEN</string>
     <string name="string_gallery">Галерея</string>
     <string name="string_about_default">Ошибка?</string>
+    <string name="string_instagram">Instagram</string>
+    <string name="string_twitter">Twitter</string>
 </resources>

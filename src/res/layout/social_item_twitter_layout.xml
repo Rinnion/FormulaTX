@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp">
+
+    <ImageView
+            android:layout_width="@dimen/menu_item_tournament_thumb_height"
+            android:layout_height="@dimen/menu_item_tournament_thumb_width"
+            android:id="@+id/sitl_iv_image"
+            android:src="@drawable/logo_splash_screen"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Формула ТХ"
+                    android:id="@+id/sitl_tv_caption"
+                    style="@style/main_text_small"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14.12.15"
+                    android:id="@+id/sitl_tv_date"
+                    android:layout_marginLeft="20dp"
+                    style="@style/main_text_small_10"
+                    android:textColor="#929292"/>
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Много много текста Много много текста Много много текста Много много текста Много много текста Много много текста Много много текста Много много текста Много много текста Много много текста "
+                android:id="@+id/sitl_tv_text"
+                android:layout_marginTop="5dp"
+                style="@style/main_text_small"/>
+    </LinearLayout>
+</LinearLayout>

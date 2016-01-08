@@ -16,31 +16,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout
-                    android:id="@+id/tab1"
+                    android:id="@+id/stl_tab_instagram"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_horizontal">
-                <GridView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/gtl_gv_photo" android:numColumns="2">
-                </GridView>
+                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_gv_photo" android:numColumns="2"
+                >
+                </ListView>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Large Text"
-                        android:id="@+id/gtl_tv_no_photo" android:visibility="gone"/>
+                        android:id="@+id/stl_tv_no_photo" android:visibility="gone"/>
             </LinearLayout>
             <LinearLayout
-                    android:id="@+id/tab2"
+                    android:id="@+id/stl_tab_twitter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical">
-                <GridView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/gtl_gv_video" android:numColumns="2"
+                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_gv_video" android:numColumns="2"
                           android:visibility="visible"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-                          android:text="Large Text" android:id="@+id/gtl_tv_no_video" android:visibility="gone"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:orientation="vertical">
+                          android:text="Large Text" android:id="@+id/stl_tv_no_video" android:visibility="gone"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
