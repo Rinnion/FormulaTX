@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FormulaTX</string>
+    <string name="title_photography">Фотография</string>
+    <string name="message_cannot_take_photo">"Не возможно сфотографировать: "</string>
+    <string name="intro_text">Правила пользования!\n Пока их нет.</string>
+    <string name="string_view">Просмотр</string>
+    <string name="string_feed">Лента</string>
+    <string name="string_heap">Куча</string>
+    <string name="string_tags">Тэги</string>
+    <string name="string_profile">Профиль</string>
+    <string name="string_stub">Заглушка</string>
+    <string name="string_other_tounaments">Другие турниры</string>
+    <string name="string_tournament_about">О турнире</string>
+    <string name="string_tournament_gamers">Игроки</string>
+    <string name="string_tournament_program">Программа</string>
+    <string name="string_tournament_schedule">Расписание</string>
+    <string name="string_tournament_grids">Сетки</string>
+    <string name="string_tournament_liveScore">Livescore</string>
+    <string name="string_tournament_photoGallery">Видео и фото</string>
+    <string name="string_tournament_findPath">Как добраться</string>
+    <string name="string_tournament_news">Новости</string>
+    <string name="string_tournament_contacts">Контакты</string>
+    <string name="string_today">Home</string>
+    <string name="string_navigation">Navigation</string>
+    <string name="string_news">News</string>
+    <string name="string_gamers">Gamers</string>
+    <string name="string_about_company">About company</string>
+    <string name="string_st_petersburg_ladies_trophy">St. Peterburg Ladies Trophy</string>
+    <string name="string_st_petersburg_open">St.Peterburg Open</string>
+    <string name="string_other_tournament">Others tournaments</string>
+    <string name="string_photogallery">Photo</string>
+    <string name="string_social_networks">Социальные сети</string>
+    <string name="string_gazprom_export">Газпром экспорт</string>
+    <string name="string_radio">Radio</string>
+    <string name="string_tickets">Tickets</string>
+    <string name="string_shop">Shop</string>
+    <string name="string_contacts">Feedback</string>
+    <string name="string_snap">Fromula Snap</string>
+    <string name="string_turnir">Турнир</string>
+    <string name="st_lady_title">St.PETERBURG LADIES TROPHY</string>
+    <string name="st_open_title">St.PETERBURG OPEN</string>
+    <string name="string_gallery">Галерея</string>
+    <string name="string_about_default">Ошибка?</string>
+    <string name="string_instagram">Instagram</string>
+    <string name="string_twitter">Twitter</string>
+</resources>
