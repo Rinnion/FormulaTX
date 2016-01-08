@@ -86,6 +86,21 @@
                     android:text="@string/string_other_tournament" android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
         </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_tickets"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical"
+                      style="@style/menu_item_row">
+            <ImageView android:src="@drawable/menu_tickets_icon"
+                       android:contentDescription="@string/string_profile" style="@style/menu_item_icon_size"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_tickets" android:layout_weight="1"
+                    style="@style/menu_item_caption_padded"/>
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/nav_photogallery"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
@@ -99,6 +114,21 @@
                     android:text="@string/string_photogallery" android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
         </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_radio"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent" android:gravity="center_vertical"
+                      style="@style/menu_item_row">
+            <ImageView android:src="@drawable/menu_podcast_icon"
+                       android:contentDescription="@string/string_profile" style="@style/menu_item_icon_size"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/string_radio" android:layout_weight="1"
+                    style="@style/menu_item_caption_padded"/>
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/nav_social_networks"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
@@ -115,7 +145,8 @@
         <LinearLayout android:id="@+id/nav_gazprom_export"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
-                      style="@style/menu_item_row">
+                      style="@style/menu_item_row"
+                      android:visibility="gone">
             <ImageView android:src="@drawable/menu_gasprom_icon"
                        android:contentDescription="@string/string_gazprom_export" style="@style/menu_item_icon_size"/>
             <TextView
@@ -125,32 +156,7 @@
                     android:text="@string/string_gazprom_export" android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_radio"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical"
-                      style="@style/menu_item_row">
-            <ImageView android:src="@drawable/menu_podcast_icon"
-                       android:contentDescription="@string/string_profile" style="@style/menu_item_icon_size"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_radio" android:layout_weight="1"
-                    style="@style/menu_item_caption_padded"/>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/nav_tickets"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:gravity="center_vertical"
-                      style="@style/menu_item_row">
-            <ImageView android:src="@drawable/menu_tickets_icon"
-                       android:contentDescription="@string/string_profile" style="@style/menu_item_icon_size"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tickets" android:layout_weight="1"
-                    style="@style/menu_item_caption_padded"/>
-        </LinearLayout>
+
         <LinearLayout android:id="@+id/nav_shop"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
@@ -180,7 +186,8 @@
         <LinearLayout android:id="@+id/nav_snap"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
-                      style="@style/menu_item_row">
+                      style="@style/menu_item_row"
+                      android:visibility="gone">
             <ImageView android:src="@drawable/menu_snap_icon"
                        android:contentDescription="@string/string_profile" style="@style/menu_item_icon_size"/>
             <TextView

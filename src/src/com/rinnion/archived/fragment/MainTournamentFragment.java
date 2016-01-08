@@ -152,6 +152,7 @@ public class MainTournamentFragment extends Fragment{
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
@@ -161,6 +162,7 @@ public class MainTournamentFragment extends Fragment{
         EmptyFragment mlf = new EmptyFragment();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
@@ -180,6 +182,7 @@ public class MainTournamentFragment extends Fragment{
         mlf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
+            .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
             .replace(R.id.fragment_container, mlf)
             .addToBackStack(null)
             .commit();
@@ -192,6 +195,7 @@ public class MainTournamentFragment extends Fragment{
         mpf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()
+            .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
             .replace(R.id.fragment_container, mpf)
             .addToBackStack(null)
             .commit();
@@ -204,6 +208,7 @@ public class MainTournamentFragment extends Fragment{
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
@@ -216,6 +221,7 @@ public class MainTournamentFragment extends Fragment{
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();

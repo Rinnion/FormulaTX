@@ -134,10 +134,12 @@ public class NavigationFragment extends Fragment {
         EmptyFragment mlf = new EmptyFragment();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
     }
+
     public void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
@@ -152,19 +154,18 @@ public class NavigationFragment extends Fragment {
                 .commit();
     }
 
-
     public void showOtherTournmentFragment() {
         OtherTournamentListFragment mlf = new OtherTournamentListFragment();
         getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
     }
 
     public void showTodayFragment() {
-        TodayFragment mlf = new TodayFragment();
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getFragmentManager().popBackStack();
     }
@@ -177,6 +178,7 @@ public class NavigationFragment extends Fragment {
         getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();

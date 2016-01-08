@@ -92,6 +92,7 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
