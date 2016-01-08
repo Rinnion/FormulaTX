@@ -167,10 +167,6 @@ public class NavigationFragment extends Fragment {
         TodayFragment mlf = new TodayFragment();
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getFragmentManager().popBackStack();
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, mlf)
-                .commit();
     }
 
     public void showMainTournmentFragment(String type) {
