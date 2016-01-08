@@ -7,6 +7,11 @@
         <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, name TEXT, surname TEXT, full_name TEXT, rating REAL, country TEXT, flag TEXT, favorite TEXT );"</item>
         <item>"CREATE TABLE api_object_gallery (api_object_id INTEGER, gallery_id_link INTEGER);"</item>
         <item>"CREATE TABLE gallery (_id INTEGER PRIMARY KEY, gallery_id INTEGER, type TEXT, picture TEXT, link TEXT );"</item>
+
+        <item>"CREATE TABLE api_object_reference (api_object_id INTEGER, reference_id_link INTEGER, reference_type TEXT);"</item>
+        <item>"CREATE TABLE instagram_cache (_id INTEGER PRIMARY KEY, reference_id INTEGER, picture TEXT, text TEXT, link TEXT, date INTEGER );"</item>
+        <item>"CREATE TABLE twitter_cache (_id INTEGER PRIMARY KEY, reference_id INTEGER, text TEXT, link TEXT, date TEXT );"</item>
+
         <item>"CREATE TABLE objects (_id INTEGER,
             user TEXT,
             date TEXT,
@@ -46,5 +51,8 @@
         <item>"DROP TABLE IF EXISTS objects;"</item>
         <item>"DROP TABLE IF EXISTS gallery;"</item>
         <item>"DROP TABLE IF EXISTS api_object_gallery;"</item>
+        <item>"DROP TABLE IF EXISTS api_object_reference;"</item>
+        <item>"DROP TABLE IF EXISTS instagram_cache;"</item>
+        <item>"DROP TABLE IF EXISTS twitter_cache;"</item>
     </string-array>
 </resources>

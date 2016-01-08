@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="out_screen" format="float" type="dimen">1.1</item>
+    <item name="in_screen" format="float" type="dimen">0.9</item>
+    <item name="animation_time" format="integer" type="dimen">250</item>
+</resources>

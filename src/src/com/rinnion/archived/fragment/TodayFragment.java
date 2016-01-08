@@ -169,6 +169,7 @@ public class TodayFragment extends Fragment implements
         NavigationFragment mlf = new NavigationFragment();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.scale_outside_to_bound, R.animator.scale_inside, R.animator.scale_inside_to_bound, R.animator.scale_outside)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();

@@ -146,6 +146,7 @@ public class NavigationFragment extends Fragment {
         getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();

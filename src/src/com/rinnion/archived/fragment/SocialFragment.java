@@ -153,7 +153,8 @@ public class SocialFragment extends Fragment {
     private class InstagramCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
         public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
+            return null;
+            //return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
         }
 
         @Override
