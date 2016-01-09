@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.webkit.WebView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
@@ -106,14 +108,17 @@ public class GalleryFragment extends Fragment {
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
-        gvPhoto.getMeasuredWidth();
-        //gvPhoto.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_photo));
+        DisplayMetrics dm = ArchivedApplication.getAppContext().getResources().getDisplayMetrics();
+        //FIXME: hardcoded values...
+        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels,dm.density ,2));
+        final int width = Math.abs(dm.widthPixels / 2);
+        Log.i(TAG, String.valueOf(width));
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
                         .load(value)
-                        .resize(150,150).centerCrop()
+                        .resize(width,width).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
             }
@@ -122,13 +127,14 @@ public class GalleryFragment extends Fragment {
 
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
+
         //gvVideo.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_video));
         mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
                         .load(value)
-                        .resize(150, 150).centerCrop()
+                        .resize(width, width).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
             }

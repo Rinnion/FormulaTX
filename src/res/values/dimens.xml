@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="image_gallery_size">150dp</dimen>
+
     <dimen name="io_font_size">10dp</dimen>
     <dimen name="padding_top">@dimen/default_padding</dimen>
     <dimen name="padding_right">@dimen/default_padding</dimen>
