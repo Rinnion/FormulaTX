@@ -106,13 +106,14 @@ public class GalleryFragment extends Fragment {
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
+        gvPhoto.getMeasuredWidth();
         //gvPhoto.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_photo));
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
                         .load(value)
-                        .resize(350,350).centerCrop()
+                        .resize(150,150).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
             }
@@ -127,7 +128,7 @@ public class GalleryFragment extends Fragment {
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
                         .load(value)
-                        .resize(350,350).centerCrop()
+                        .resize(150, 150).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
             }
@@ -140,6 +141,8 @@ public class GalleryFragment extends Fragment {
 
         return tabHost;
     }
+
+
 
 
     @Override

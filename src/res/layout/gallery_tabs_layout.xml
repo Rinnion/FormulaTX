@@ -9,7 +9,8 @@
         <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/action_bar_color">
         </TabWidget>
         <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -19,7 +20,9 @@
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_horizontal">
-                <GridView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/gtl_gv_photo" android:numColumns="2">
+                <GridView
+                        android:id="@+id/gtl_gv_photo"
+                        style="@style/gridview_gallery">
                 </GridView>
                 <TextView
                         android:layout_width="wrap_content"
@@ -32,15 +35,11 @@
                     android:id="@+id/tab2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical">
-                <GridView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/gtl_gv_video" android:numColumns="2"
-                          android:visibility="visible"/>
+                <GridView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/gtl_gv_video" android:numColumns="2"
+                          android:visibility="visible"
+                          style="@style/gridview_gallery"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
                           android:text="Large Text" android:id="@+id/gtl_tv_no_video" android:visibility="gone"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:orientation="vertical">
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
