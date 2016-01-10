@@ -32,22 +32,39 @@
                     android:id="@+id/mtl_tv_name"/>
 
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_mt_about" android:layout_width="match_parent"
-                      android:layout_height="match_parent" android:gravity="center_vertical"
-                      style="@style/menu_item_row">
+
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mtl_lv_menu"
+        />
+
+        <LinearLayout
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/nav_mt_about"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                style="@style/menu_item_row"
+                tools:showIn="@layout/main_tournament_layout">
+
             <ImageView xmlns:tools="http://schemas.android.com/tools"
                        android:layout_width="30dp"
                        android:layout_height="30dp"
                        android:src="@android:drawable/stat_sys_warning"
                        android:contentDescription="@string/string_profile"
                        tools:showIn="@layout/main_tournment_layout"/>
+
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/string_tournament_about" android:layout_weight="1"
+                    android:text="@string/string_tournament_about"
+                    android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
+
             <include layout="@layout/include_next_item"/>
         </LinearLayout>
+
         <View android:layout_width="match_parent" android:layout_height="1dp"
               android:background="@android:color/darker_gray"/>
         <LinearLayout android:id="@+id/nav_mt_news" android:layout_width="match_parent"
@@ -189,7 +206,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/string_tournament_findPath" android:layout_weight="1"
+                    android:text="@string/string_tournament_findway" android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
             <include layout="@layout/include_next_item"/>
         </LinearLayout>

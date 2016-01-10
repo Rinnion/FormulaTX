@@ -134,7 +134,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/string_tournament_findPath" android:layout_weight="1"
+                        android:text="@string/string_tournament_findway" android:layout_weight="1"
                         style="@style/menu_item_caption_padded"/>
                 <include layout="@layout/include_next_item"/>
             </LinearLayout>

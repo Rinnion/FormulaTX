@@ -21,7 +21,6 @@ import java.util.Map;
 public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
 
     private String TAG = getClass().getSimpleName();
-    private String parent;
     private long api_object_id;
     private String type;
 
@@ -55,15 +54,17 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
         GalleryItemCursor cursor = null;
         Tournament tournament = th.get(api_object_id);
         if (tournament != null) {
-            String gallery_include = tournament.gallery_include;
-            SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-            Map parse = (Map) php.parse();
             GalleryHelper aoh = new GalleryHelper(doh);
-            for (Object item : parse.keySet()) {
-                long l = Long.parseLong(parse.get(item).toString());
-                MyNetwork.queryGallery(l);
-                aoh.attachGallery(api_object_id, l);
-            }
+            try {
+                String gallery_include = tournament.gallery_include;
+                SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+                Map parse = (Map) php.parse();
+                for (Object item : parse.keySet()) {
+                    long l = Long.parseLong(parse.get(item).toString());
+                    MyNetwork.queryGallery(l);
+                    aoh.attachGallery(api_object_id, l);
+                }
+            }catch(Exception ignored){}
             cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
         }
 

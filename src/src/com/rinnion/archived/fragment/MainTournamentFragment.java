@@ -2,14 +2,17 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
@@ -26,6 +29,15 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
 public class MainTournamentFragment extends Fragment{
 
     public static final String TYPE = "TYPE";
+    public static final String ABOUT = "ABOUT";
+    public static final String NEWS = "NEWS";
+    public static final String GAMERS = "GAMERS";
+    public static final String PROGRAM = "PROGRAM";
+    public static final String SCHEDULE = "SCHEDULE";
+    public static final String GRIDS = "GRIDS";
+    public static final String LIVESCORE = "LIVESCORE";
+    public static final String VIDEO = "VIDEO";
+    public static final String FINDWAY = "FINDWAY";
 
     private String TAG = getClass().getCanonicalName();
 
@@ -58,7 +70,7 @@ public class MainTournamentFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_tournament_layout, container, false);
+        View view = inflater.inflate(R.layout.main_tournament_list_menu_layout, container, false);
         Bundle bundle = getArguments();
         String type = bundle.getString(TYPE);
 
@@ -78,69 +90,106 @@ public class MainTournamentFragment extends Fragment{
             ab.setTitle(R.string.st_open_title);
         }
 
-        view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
+        int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
+        String[] names = new String[]{"resource", "text", "type"};
+        String[] columns = new String[]{"_id", "resource", "text", "type"};
+        MatrixCursor mc = new MatrixCursor(columns);
+        mc.addRow(new Object[]{1, android.R.drawable.stat_sys_warning,  getResources().getString(R.string.string_tournament_about), ABOUT});
+        mc.addRow(new Object[]{2, R.drawable.menu_news_icon,  getResources().getString(R.string.string_news), NEWS});
+        mc.addRow(new Object[]{2, R.drawable.menu_other_mutch_icon, getResources().getString(R.string.string_gamers), GAMERS});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_program), PROGRAM});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_schedule), SCHEDULE});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_grids), GRIDS});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_liveScore), LIVESCORE});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_photogallery), VIDEO});
+        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_findway), FINDWAY});
+        ListView listView = (ListView) view.findViewById(R.id.mtl_lv_menu);
+        SimpleCursorAdapter sca = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_menu_layout, mc, names, ints, 0){
             @Override
-            public void onClick(View v) {
-                showAboutFragment();
+            public void bindView(View view, Context context, Cursor cursor) {
+                final ImageView image = (ImageView) view.findViewById(R.id.itml_image);
+                final TextView text = (TextView) view.findViewById(R.id.itml_text);
+
+                int resource = cursor.getInt(1);
+                String string = cursor.getString(2);
+                String type = cursor.getString(3);
+                image.setImageResource(resource);
+                text.setText(string);
+                view.setTag(type);
+            }
+        };
+        listView.setAdapter(sca);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String tag = (String) view.getTag();
+                if (tag.equals(ABOUT)) showAboutFragment();
+                if (tag.equals(NEWS)) showNewsFragment();
+                if (tag.equals(GAMERS)) showGamersFragment();
+                if (tag.equals(PROGRAM)) showProgramFragment();
+                if (tag.equals(SCHEDULE)) showEmptyFragment();
+                if (tag.equals(GRIDS)) showEmptyFragment();
+                if (tag.equals(LIVESCORE)) showEmptyFragment();
+                if (tag.equals(VIDEO)) showGalleryFragment();
+                if (tag.equals(FINDWAY)) showEmptyFragment();
             }
         });
 
-        view.findViewById(R.id.nav_mt_news).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNewsFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_gamers).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showGamersFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_program).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showProgramFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_schedule).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_grids).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_livescore).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showGalleryFragment();
-            }
-        });
-
-        view.findViewById(R.id.nav_mt_findpath).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
-
+//        view.findViewById(R.id.nav_mt_about).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showAboutFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_news).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showNewsFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_gamers).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showGamersFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_program).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showProgramFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_schedule).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showEmptyFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_grids).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showEmptyFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_livescore).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showEmptyFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_video).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showGalleryFragment();
+//            }
+//        });
+//        view.findViewById(R.id.nav_mt_findpath).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showEmptyFragment();
+//            }
+//        });
 
         return view;
     }
