@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 public class TournamentHandler extends ApiObjectHandler {
 
 
-    Pattern ptrnImgSrc = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
     private TournamentHelper th;
 
     public TournamentHandler(TournamentHelper th){
@@ -42,17 +41,7 @@ public class TournamentHandler extends ApiObjectHandler {
             bundle.putString("ApiObject", obj.toString());
             Tournament ao = new Tournament(obj);
 
-            Matcher imgs = ptrnImgSrc.matcher(ao.content);
-            StringBuffer sb = new StringBuffer();
-            while (imgs.find()){
-                String group = imgs.group();
-                String text = imgs.group(1);
-                if (text.startsWith("/")) group = group.replace(text, MyNetworkContentContract.URL + text.substring(1));
-                if (text.startsWith(".")) group = group.replace(text, MyNetworkContentContract.URL + text);
-                imgs.appendReplacement(sb, group);
-            }
-            imgs.appendTail(sb);
-            ao.content = sb.toString();
+            ao.content = changeLinksWithinHtml(ao);
 
             th.add(ao);
 

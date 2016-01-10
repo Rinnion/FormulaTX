@@ -35,6 +35,9 @@ public class NewsHandler extends ApiObjectHandler {
             Bundle bundle = new Bundle();
             bundle.putString("ApiObject", obj.toString());
             News ao = new News(obj);
+
+            ao.content = changeLinksWithinHtml(ao);
+
             th.add(ao);
 
             return bundle;
