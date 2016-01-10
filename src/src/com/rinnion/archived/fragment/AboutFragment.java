@@ -1,12 +1,16 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
@@ -55,28 +59,40 @@ public class AboutFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_layout, container, false);
-        WebView mTextViewAbout = (WebView) view.findViewById(R.id.tv_about);
+        WebView myWebView = (WebView) view.findViewById(R.id.tv_about);
 
         Bundle args = getArguments();
         String type = args.getString(TYPE);
 
-        //TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
         ApiObjectHelper th = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
 
         mApiObject = th.getByPostName(type);
 
         if (mApiObject == null) {
-            mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
+            myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
         } else {
             if (mApiObject.content.isEmpty()) {
-                mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
+                myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
             } else {
-                mTextViewAbout.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+                ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
+                if (cm != null) {
+                    NetworkInfo ani = cm.getActiveNetworkInfo();
+                    if (ani != null && ani.isConnected()) {
+                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+                    }else{
+                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+                    }
+                }
+                else{
+                    myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+                }
+
+                myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
             }
 
         }
 
-        mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
+        myWebView.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 

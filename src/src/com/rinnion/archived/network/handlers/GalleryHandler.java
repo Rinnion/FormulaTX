@@ -2,8 +2,10 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.model.GalleryItem;
+import com.rinnion.archived.network.MyNetworkContentContract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +45,7 @@ public class GalleryHandler extends FormulaTXResponseHandler {
             long id = item.getLong("id");
             String type = item.getString("type");
             String url = item.getString("picture");
-            if (url.startsWith("/")) url = "http://app.formulatx.com" + url;
+            if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
             String link = item.getString("link");
             GalleryItem gi = new GalleryItem(id, mId, type, url, link);
             if (gh.merge(gi)) k++;
