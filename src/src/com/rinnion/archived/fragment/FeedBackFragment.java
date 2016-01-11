@@ -8,17 +8,17 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.*;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.utils.Files;
-import com.rinnion.archived.utils.Log;
-
-import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +27,7 @@ import java.io.File;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class AboutFragment extends Fragment  {
+public class FeedBackFragment extends Fragment  {
 
     public static final String TYPE = "TYPE";
     private String TAG = getClass().getCanonicalName();
@@ -81,27 +81,9 @@ public class AboutFragment extends Fragment  {
                 if (cm != null) {
                     NetworkInfo ani = cm.getActiveNetworkInfo();
                     if (ani != null && ani.isConnected()) {
-                        Log.d(TAG,"getActiveNetworkInfo isConnected == true");
                         myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-                        myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
-                        myWebView.getSettings().setAppCachePath(Files.getCacheDir());
-                        myWebView.getSettings().setAllowFileAccess(true);
-                        myWebView.getSettings().setAppCacheEnabled(true);
-                        myWebView.getSettings().setDomStorageEnabled(true);
-                        myWebView.getSettings().setJavaScriptEnabled(true);
-                        Log.d(TAG, "WebView set cache success");
-
                     }else{
-                        Log.d(TAG,"getActiveNetworkInfo isConnected == false or ani == null");
-                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
-                        myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
-                        myWebView.getSettings().setAppCachePath(Files.getCacheDir());
-                        myWebView.getSettings().setAllowFileAccess(true);
-                        myWebView.getSettings().setAppCacheEnabled(true);
-                        myWebView.getSettings().setDomStorageEnabled(true);
-                        myWebView.getSettings().setJavaScriptEnabled(true);
-                        Log.d(TAG,"WebView set cache success");
-
+                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
                     }
                 }
                 else{

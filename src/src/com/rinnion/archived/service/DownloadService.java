@@ -3,7 +3,6 @@ package com.rinnion.archived.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TwitterHelper;
@@ -11,6 +10,7 @@ import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
 import org.lorecraft.phparser.SerializedPhpParser;
 

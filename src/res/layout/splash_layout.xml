@@ -13,7 +13,7 @@
             android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp"/>
     <ProgressBar
             style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-            android:layout_width="200dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar" android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" android:progress="0"/>
@@ -26,12 +26,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="100"
-                android:id="@+id/sl_tv_progress" android:layout_gravity="center_horizontal"/>
+                android:id="@+id/sl_tv_progress" android:layout_gravity="center_horizontal"
+                android:visibility="invisible"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text=" %"
-                android:id="@+id/textView6"/>
+                android:id="@+id/textView6" android:visibility="invisible"/>
     </LinearLayout>
 </LinearLayout>
