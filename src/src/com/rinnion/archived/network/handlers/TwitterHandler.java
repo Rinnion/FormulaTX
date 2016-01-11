@@ -45,23 +45,8 @@ public class TwitterHandler extends FormulaTXArrayResponseHandler {
         return bundle;
     }
 
-    private int importPictureArray(GalleryHelper gh, JSONArray array) throws JSONException {
-    int k =0;
-        for (int i =0; i<array.length(); i++){
-            JSONObject item = (JSONObject) array.get(i);
-            long id = item.getLong("id");
-            String type = item.getString("type");
-            String url = item.getString("picture");
-            if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
-            String link = item.getString("link");
-            GalleryItem gi = new GalleryItem(id, mId, type, url, link);
-            if (gh.merge(gi)) k++;
-        }
-        return k;
-    }
-
     @Override
-    public Bundle onErrorStatus(JSONArray message, Bundle bundle) {
+    public Bundle onErrorStatus(JSONObject message, Bundle bundle) {
         return Bundle.EMPTY;
     }
 

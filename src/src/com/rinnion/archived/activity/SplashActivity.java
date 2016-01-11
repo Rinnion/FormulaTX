@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.rinnion.archived.R;
+import com.rinnion.archived.Settings;
 import com.rinnion.archived.service.DownloadService;
 
 public class SplashActivity extends Activity {
@@ -43,7 +44,7 @@ public class SplashActivity extends Activity {
                     }
                 }
                     if (type.equals(DownloadService.ERROR)) {
-                        final String error = bundle.getString(DownloadService.ERROR);
+                        final String error = (Settings.DEBUG)?bundle.getString(DownloadService.CUSTOM_MESSAGE):bundle.getString(DownloadService.ERROR) ;
                         Log.d(TAG, "error string: " + error);
                         new Handler().post(new Runnable() {
                             @Override

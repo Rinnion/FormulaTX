@@ -36,9 +36,10 @@ public class DownloadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
             publishProgress(10, null);
-            int[] intArray = MyNetwork.getIntArray(MyNetwork.queryTournamentList());
+            Bundle bundle = MyNetwork.queryTournamentList();
+            int[] intArray = MyNetwork.getIntArray(bundle);
             if (intArray == null) {
-                publishError("Network error", null);
+                publishError("Network error", (Settings.DEBUG) ? bundle.toString() : null);
                 return;
             }
 
@@ -50,7 +51,7 @@ public class DownloadService extends IntentService {
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
-            publishError("Error during network ", ex.toString());
+            publishError("Error during network ", ex.getMessage());
         }
 
     }
@@ -76,7 +77,7 @@ public class DownloadService extends IntentService {
             Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
             FetchNewsForTournament(ao);
-            FetchSocialsForTournament(ao);
+            //FetchSocialsForTournament(ao);
             publishProgress((int)(startProgress + pr * i), null);
         }
         return tournamentList;

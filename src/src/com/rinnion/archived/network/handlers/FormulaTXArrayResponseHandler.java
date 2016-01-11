@@ -14,14 +14,19 @@ public abstract class FormulaTXArrayResponseHandler extends JSONObjectHandler{
 
     public abstract Bundle onTrueStatus(JSONArray message, Bundle bundle) throws JSONException;
 
-    public abstract Bundle onErrorStatus(JSONArray message, Bundle bundle);
+    public abstract Bundle onErrorStatus(JSONObject message, Bundle bundle);
 
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
         boolean status = object.getBoolean("status");
-        JSONArray message = object.getJSONArray("message");
         Bundle bundle = new Bundle();
         bundle.putBoolean(STATUS, status);
-        if (status) { return onTrueStatus(message, bundle); }else{return onErrorStatus(message, bundle);}
+        if (status) {
+            JSONArray message = object.getJSONArray("message");
+            return onTrueStatus(message, bundle);
+        }else{
+            JSONObject message = object.getJSONObject("message");
+            return onErrorStatus(message, bundle);
+        }
     }
 }
