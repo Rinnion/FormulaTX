@@ -33,7 +33,7 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher = builder.setName("queryMessages")
-                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q=" + country + ",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d")
+                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q=" + country + ",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d&lang=ru")
                 .setHandler(new WeatherHandler(country))
                 .create();
 

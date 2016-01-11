@@ -170,7 +170,7 @@
                     android:text="@string/string_shop" android:layout_weight="1"
                     style="@style/menu_item_caption_padded"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/nav_contacts"
+        <LinearLayout android:id="@+id/nav_feedback"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
                       style="@style/menu_item_row">

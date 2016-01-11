@@ -101,12 +101,7 @@ public class NavigationFragment extends Fragment {
                 showEmptyFragment();
             }
         });
-        view.findViewById(R.id.nav_contacts).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEmptyFragment();
-            }
-        });
+
         view.findViewById(R.id.nav_tickets).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,13 +120,27 @@ public class NavigationFragment extends Fragment {
                 showEmptyFragment();
             }
         });
-
+        view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFeedBackFragment();
+            }
+        });
 
         return view;
     }
 
     public void showEmptyFragment() {
         EmptyFragment mlf = new EmptyFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+    public void showFeedBackFragment() {
+        FeedBackFragment mlf = new FeedBackFragment();
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
