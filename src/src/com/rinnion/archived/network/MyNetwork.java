@@ -15,6 +15,8 @@ import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -48,6 +50,15 @@ public final class MyNetwork {
     //Загрузка списка турниров
     public static Bundle queryApiObjectsList(ArrayList<NameValuePair> objectType) {
         Log.d(TAG, String.format("query tournaments"));
+
+        if (Settings.NETDEBUG){
+            String type = objectType.get(0).getValue();
+            String fileName = "json/"+type+".json";
+            IResponseHandler mHandler = new ApiObjectListHandler();
+            Bundle result = processFile(fileName, mHandler);
+            return result;
+        }
+
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
@@ -97,6 +108,7 @@ public final class MyNetwork {
     //Загрузка списка новостей турнира
     public static Bundle queryTournamentNewsList(long tournamentTranslation) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
+
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = null;
@@ -143,8 +155,81 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    //Загрузка списка новостей турнира
+    public static Bundle queryTwitter(long id) {
+
+        if (Settings.NETDEBUG){
+            String fileName = "json/references-57-1.json";
+            TwitterHandler mHandler = new TwitterHandler(id);
+            Bundle result = processFile(fileName, mHandler);
+            return result;
+        }
+
+        Log.d(TAG, String.format("queryGallery"));
+        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        try {
+            fetcher = builder.setName("queryTournamentNewsList")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
+                    .setHandler(new GalleryHandler(id))
+                    .create();
+
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
+
+        return fetcher.execute();
+    }
+
+    private static Bundle processFile(String fileName, IResponseHandler mHandler) {
+        String response = getStringFromAsset(fileName);
+        Bundle result = new Bundle();
+        try{
+            Bundle bundle = new Bundle();
+            bundle.putInt(HttpRequester.STATUS_CODE, 200);
+
+            result.putSerializable(HttpRequester.RESULT, HttpRequester.RESULT_HTTP);
+            result.putBundle(HttpRequester.RESULT_HTTP, bundle);
+            bundle.putBundle(HttpRequester.RESULT_HTTP_PARSE, mHandler.Handle(response));
+
+        } catch (Exception e) {
+            result.putSerializable(HttpRequester.RESULT, HttpRequester.RESULT_EXCEPTION);
+            result.putSerializable(HttpRequester.RESULT_EXCEPTION, e);
+        }
+        return result;
+    }
+
+    private static String getStringFromAsset(String fileName) {
+        String string = null;
+        try {
+            InputStreamReader in = new InputStreamReader(ArchivedApplication.getAppContext().getAssets().open(fileName));
+
+            BufferedReader reader = new BufferedReader(in);
+            String mLine;
+
+            StringBuffer sb = new StringBuffer();
+            while ((mLine = reader.readLine()) != null) {
+                sb.append(mLine);
+            }
+
+            string = sb.toString();
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+        return string;
+    }
+
     //Загрузка объектов
     public static Bundle queryApiObject(int id, int type) {
+
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHandler handler = null;
         switch (type){
@@ -160,6 +245,13 @@ public final class MyNetwork {
     }
 
     public static Bundle queryApiObject(int id, ApiObjectHandler handler) {
+
+        if (Settings.NETDEBUG){
+            String fileName = "json/" + String.valueOf(id) +"ru.json";
+            Bundle result = processFile(fileName, handler);
+            return result;
+        }
+
         Log.d(TAG, String.format("query tournament"));
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;

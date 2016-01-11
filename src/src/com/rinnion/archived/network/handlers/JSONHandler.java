@@ -29,4 +29,13 @@ public abstract class JSONHandler implements IResponseHandler {
     }
 
     protected abstract Bundle onStringHandle(String content) throws JSONException;
+
+    @Override
+    public final Bundle Handle(String string) throws Exception {
+        Bundle bundle = new Bundle();
+
+        bundle.putAll(onStringHandle(string));
+
+        return bundle;
+    }
 }

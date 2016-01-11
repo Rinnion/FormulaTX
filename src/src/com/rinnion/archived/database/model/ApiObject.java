@@ -1,7 +1,5 @@
 package com.rinnion.archived.database.model;
 
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,8 +74,6 @@ public class ApiObject implements Serializable{
     }
 
     @Override
-    public String toString() {
-        return getClass().getSimpleName() + ":" + id;
-    }
+    public String toString() {return ApiObject.class.getSimpleName() + ":" + id;}
 
 }

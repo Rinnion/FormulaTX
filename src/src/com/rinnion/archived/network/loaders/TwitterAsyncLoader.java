@@ -6,28 +6,27 @@ import android.util.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
+import com.rinnion.archived.database.cursor.TwitterItemCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.helper.TwitterHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
 import org.lorecraft.phparser.SerializedPhpParser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 
-/**
- * Created by tretyakov on 08.07.2015.
- */
-public class TwitterAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
+public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
 
     private String TAG = getClass().getSimpleName();
-    private String parent;
     private long api_object_id;
-    private String type;
 
-    public TwitterAsyncLoader(Context context, long api_object_id, String type) {
+    public TwitterAsyncLoader(Context context, long api_object_id) {
         super(context);
         this.api_object_id = api_object_id;
-        this.type = type;
         Log.d(TAG, ".ctor");
     }
 
@@ -41,29 +40,37 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
     protected void onForceLoad() {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        GalleryHelper aoh=new GalleryHelper(doh);
-        deliverResult(aoh.getAllByApiObjectAndItemTypeId(api_object_id, type));
+        TwitterHelper aoh=new TwitterHelper(doh);
+        deliverResult(aoh.getAllItems());
     }
 
     @Override
-    public GalleryItemCursor loadInBackground() {
+    public TwitterItemCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         TournamentHelper th = new TournamentHelper(doh);
-        GalleryItemCursor cursor = null;
+        TwitterItemCursor cursor = null;
         Tournament tournament = th.get(api_object_id);
+        Log.d(TAG, String.valueOf(tournament));
         if (tournament != null) {
-            String gallery_include = tournament.gallery_include;
-            SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+            String references_include = tournament.references_include;
+            Log.d(TAG, String.valueOf(references_include));
+            SerializedPhpParser php = new SerializedPhpParser(references_include);
             Map parse = (Map) php.parse();
-            GalleryHelper aoh = new GalleryHelper(doh);
+            TwitterHelper aoh = new TwitterHelper(doh);
             for (Object item : parse.keySet()) {
-                long l = Long.parseLong(parse.get(item).toString());
-                MyNetwork.queryGallery(l);
-                aoh.attachGallery(api_object_id, l);
+                Log.d(TAG, "key:'"+String.valueOf(item)+"'");
+                try {
+                    String value = parse.get(item).toString();
+                    Log.d(TAG, "value:'"+String.valueOf(value)+"'");
+                    long l = Long.parseLong(value);
+                    MyNetwork.queryTwitter(l);
+                    aoh.attachReference(api_object_id, l);
+                } catch (Exception ignored) {
+                }
             }
-            cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
+            cursor = aoh.getAllItems();
         }
 
         return cursor;

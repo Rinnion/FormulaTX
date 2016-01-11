@@ -2,7 +2,6 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
-import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.network.MyNetworkContentContract;
@@ -13,7 +12,7 @@ import org.json.JSONObject;
 /**
  * Created by tretyakov on 07.07.2015.
  */
-public class GalleryHandler extends FormulaTXResponseHandler {
+public class GalleryHandler extends FormulaTXObjectResponseHandler {
 
     private long mId;
 

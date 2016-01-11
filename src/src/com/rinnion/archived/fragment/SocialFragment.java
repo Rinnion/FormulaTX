@@ -13,13 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.GridView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TabHost;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
-import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
+import com.rinnion.archived.database.cursor.TwitterItemCursor;
+import com.rinnion.archived.database.helper.TwitterHelper;
+import com.rinnion.archived.network.loaders.TwitterAsyncLoader;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -38,8 +40,8 @@ public class SocialFragment extends Fragment {
     private String TAG = getClass().getCanonicalName();
 
     private WebView mTextViewAbout;
-    private SimpleCursorAdapter mPhotoAdapter;
-    private SimpleCursorAdapter mVideoAdapter;
+    private SimpleCursorAdapter mTwitterAdapter;
+    private SimpleCursorAdapter mInstagramAdapter;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,16 +71,16 @@ public class SocialFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TabHost tabHost = (TabHost) inflater.inflate(R.layout.gallery_tabs_layout, container, false);
+        TabHost tabHost = (TabHost) inflater.inflate(R.layout.social_tabs_layout, container, false);
         tabHost.setup();
 
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег
-        tabSpec = tabHost.newTabSpec(TAB_TAG_INSTAGRAM);
-        tabSpec.setIndicator(getString(R.string.string_instagram));
-        tabSpec.setContent(R.id.stl_tab_instagram);
-        tabHost.addTab(tabSpec);
+        //tabSpec = tabHost.newTabSpec(TAB_TAG_INSTAGRAM);
+        //tabSpec.setIndicator(getString(R.string.string_instagram));
+        //tabSpec.setContent(R.id.stl_tab_instagram);
+        //tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec(TAB_TAG_TWITTER);
         tabSpec.setIndicator(getString(R.string.string_twitter));
@@ -88,11 +90,11 @@ public class SocialFragment extends Fragment {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("photo")){
+                if (tabId.equals(TAB_TAG_INSTAGRAM)){
                     Bundle bundle = new Bundle();
                     getLoaderManager().initLoader(INSTAGRAM_LOADER, bundle, new InstagramCallback());
                 }
-                if (tabId.equals("video")){
+                if (tabId.equals(TAB_TAG_TWITTER)){
                     Bundle bundle = new Bundle();
                     getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
                 }
@@ -101,11 +103,23 @@ public class SocialFragment extends Fragment {
 
         tabHost.setCurrentTabByTag(TAB_TAG_TWITTER);
 
-        String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
-        int[] to = new int[] {R.id.il_iv_image};
+        String[] names = new String[]{TwitterHelper.COLUMN_TEXT, TwitterHelper.ALIAS_API_OBJECT_TITLE, TwitterHelper.COLUMN_DATE};
+        int[] to = new int[] {R.id.sitl_tv_text, R.id.sitl_tv_caption, R.id.sitl_tv_date};
 
-        GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
-        mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
+        ListView lvTwitter = (ListView) tabHost.findViewById(R.id.stl_lv_twitter);
+        mTwitterAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_social_twitter_layout, null, names, to, 0) {};
+        lvTwitter.setAdapter(mTwitterAdapter);
+        lvTwitter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object item = parent.getAdapter().getItem(position);
+                Log.d(TAG, "pos:" +position);
+            }
+        });
+
+
+        ListView lvInstagram = (ListView) tabHost.findViewById(R.id.stl_lv_instagram);
+        mInstagramAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_social_instagram_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
@@ -115,25 +129,11 @@ public class SocialFragment extends Fragment {
                         .into(v);
             }
         };
-        gvPhoto.setAdapter(mPhotoAdapter);
-
-
-        GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
-        mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
-            @Override
-            public void setViewImage(ImageView v, String value) {
-                Picasso.with(getActivity())
-                        .load(value)
-                        .resize(350,350).centerCrop()
-                        .placeholder(R.drawable.logo_splash_screen)
-                        .into(v);
-            }
-        };
-        gvVideo.setAdapter(mVideoAdapter);
+        lvInstagram.setAdapter(mInstagramAdapter);
 
 
         Bundle bundle = new Bundle();
-        getLoaderManager().initLoader(INSTAGRAM_LOADER, bundle, new InstagramCallback());
+        getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
 
         return tabHost;
     }
@@ -159,7 +159,7 @@ public class SocialFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
-            mPhotoAdapter.swapCursor(data);
+            mInstagramAdapter.swapCursor(data);
         }
 
         @Override
@@ -168,19 +168,19 @@ public class SocialFragment extends Fragment {
         }
     }
 
-    private class TwitterCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
+    private class TwitterCallback implements android.app.LoaderManager.LoaderCallbacks<TwitterItemCursor> {
         @Override
-        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_VIDEO);
+        public Loader<TwitterItemCursor> onCreateLoader(int id, Bundle args) {
+            return new TwitterAsyncLoader(getActivity(), 205);
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
-            mVideoAdapter.swapCursor(data);
+        public void onLoadFinished(Loader<TwitterItemCursor> loader, TwitterItemCursor data) {
+            mTwitterAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
+        public void onLoaderReset(Loader<TwitterItemCursor> loader) {
 
         }
     }

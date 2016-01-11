@@ -30,4 +30,9 @@ public final class AnyPostHandler implements IResponseHandler {
         }
         return Bundle.EMPTY;
     }
+
+    @Override
+    public Bundle Handle(String string) throws Exception {
+        return Bundle.EMPTY;
+    }
 }

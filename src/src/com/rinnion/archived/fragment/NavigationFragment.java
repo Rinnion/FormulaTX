@@ -98,7 +98,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_social_networks).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showSocialFragment();
             }
         });
         view.findViewById(R.id.nav_contacts).setOnClickListener(new View.OnClickListener() {
@@ -145,6 +145,17 @@ public class NavigationFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(AboutFragment.TYPE, Settings.ABOUT_API_OBJECT_ALIAS);
         mlf.setArguments(bundle);
+        getFragmentManager().popBackStack();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showSocialFragment() {
+        SocialFragment mlf = new SocialFragment();
         getFragmentManager().popBackStack();
         getFragmentManager()
                 .beginTransaction()

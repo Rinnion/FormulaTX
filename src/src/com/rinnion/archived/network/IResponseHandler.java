@@ -12,4 +12,5 @@ import org.apache.http.HttpResponse;
  */
 public interface IResponseHandler {
     public Bundle Handle(HttpResponse response) throws Exception;
+    public Bundle Handle(String string) throws Exception;
 }

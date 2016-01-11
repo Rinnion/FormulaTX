@@ -8,7 +8,7 @@ package com.rinnion.archived;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG = false;
+    public static final boolean NETDEBUG = true;
     public static final boolean DEBUG = false;
 
     public static final int ABOUT_API_OBJECT = 201;

@@ -15,4 +15,9 @@ public final class EmptyResponseHandler implements IResponseHandler {
     public Bundle Handle(HttpResponse response) throws Exception {
         return Bundle.EMPTY;
     }
+
+    @Override
+    public Bundle Handle(String string) throws Exception {
+        return Bundle.EMPTY;
+    }
 }
