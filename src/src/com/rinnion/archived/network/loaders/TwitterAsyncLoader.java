@@ -60,10 +60,10 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
             Map parse = (Map) php.parse();
             TwitterHelper aoh = new TwitterHelper(doh);
             for (Object item : parse.keySet()) {
-                Log.d(TAG, "key:'"+String.valueOf(item)+"'");
+                Log.d(TAG, "key:'" + String.valueOf(item) + "'");
                 try {
                     String value = parse.get(item).toString();
-                    Log.d(TAG, "value:'"+String.valueOf(value)+"'");
+                    Log.d(TAG, "value:'" + String.valueOf(value) + "'");
                     long l = Long.parseLong(value);
                     MyNetwork.queryTwitter(l);
                     aoh.attachReference(api_object_id, l);

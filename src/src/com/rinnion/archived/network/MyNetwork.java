@@ -9,6 +9,7 @@ import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GamerHelper;
 import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.handlers.*;
 import org.apache.http.NameValuePair;
@@ -291,16 +292,35 @@ public final class MyNetwork {
     }
 
     public static JSONObject getApiObjectJSON(Bundle objectBundle) throws JSONException {
-            String result = objectBundle.getString(HttpRequester.RESULT);
-            if (result.equals(HttpRequester.RESULT_HTTP)) {
-                Bundle tmpTurnirList = objectBundle.getBundle(HttpRequester.RESULT_HTTP);
+        String result = objectBundle.getString(HttpRequester.RESULT);
+        if (result.equals(HttpRequester.RESULT_HTTP)) {
+            Bundle tmpTurnirList = objectBundle.getBundle(HttpRequester.RESULT_HTTP);
+            if (tmpTurnirList != null) {
+                tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
                 if (tmpTurnirList != null) {
-                    tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
-                    if (tmpTurnirList != null) {
-                        return new JSONObject(tmpTurnirList.getString("ApiObject"));
+                    return new JSONObject(tmpTurnirList.getString("ApiObject"));
+                }
+            }
+        }
+        return null;
+    }
+
+    public static <T extends ApiObject> T getApiObjectCasted(Class<T> clazz, Bundle objectBundle) throws JSONException {
+        String result = objectBundle.getString(HttpRequester.RESULT);
+        if (result.equals(HttpRequester.RESULT_HTTP)) {
+            Bundle tmpTurnirList = objectBundle.getBundle(HttpRequester.RESULT_HTTP);
+            if (tmpTurnirList != null) {
+                tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
+                if (tmpTurnirList != null) {
+                    try {
+                        Object obj = tmpTurnirList.getSerializable(ApiObjectHandler.OBJECT);
+                        return clazz.cast(obj);
+                    }catch(ClassCastException cce){
+                        return null;
                     }
                 }
             }
+        }
         return null;
     }
 

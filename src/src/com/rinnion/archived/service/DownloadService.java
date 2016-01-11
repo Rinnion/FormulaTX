@@ -4,13 +4,18 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
+import com.rinnion.archived.database.helper.TwitterHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
 import org.json.JSONException;
+import org.lorecraft.phparser.SerializedPhpParser;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DownloadService extends IntentService {
 
@@ -37,20 +42,9 @@ public class DownloadService extends IntentService {
                 return;
             }
 
-            publishProgress(25, null);
-            FetchApiObjectsList(intArray, ApiObjectTypes.EN_Object);
-            publishProgress(45, null);
+            publishProgress(15, null);
+            FetchTournamentsList(intArray, 15, 80);
 
-            for (int id : intArray) {
-                int[] iaNewsList = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(id));
-                if (iaNewsList == null) {
-                    continue;
-                }
-
-                FetchApiObjectsList(iaNewsList, ApiObjectTypes.EN_News);
-            }
-
-            publishProgress(50, null);
             loadAbout(Settings.ABOUT_API_OBJECT);
             publishProgress(80, null);
             publishProgress(100, null);
@@ -72,6 +66,50 @@ public class DownloadService extends IntentService {
         }
         return tournamentList;
 
+    }
+
+    private ArrayList<ApiObject> FetchTournamentsList(int[] intArray, int startProgress, int endProgress) throws JSONException {
+        ArrayList<ApiObject> tournamentList = new ArrayList<ApiObject>(intArray.length);
+        float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
+        for (int i = 0; i < intArray.length; i++) {
+            int id = intArray[i];
+            Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
+            ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
+            FetchNewsForTournament(ao);
+            FetchSocialsForTournament(ao);
+            publishProgress((int)(startProgress + pr * i), null);
+        }
+        return tournamentList;
+
+    }
+
+    private void FetchNewsForTournament(ApiObject ao) throws JSONException {
+        if (ao == null) return;
+        int[] iaNewsList = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(ao.id));
+        if (iaNewsList == null) {
+            return;
+        }
+        FetchApiObjectsList(iaNewsList, ApiObjectTypes.EN_News);
+    }
+
+    private void FetchSocialsForTournament(ApiObject ao) throws JSONException {
+        if (ao == null) return;
+        String references_include = ao.references_include;
+        Log.d(TAG, String.valueOf(references_include));
+        SerializedPhpParser php = new SerializedPhpParser(references_include);
+        Map parse = (Map) php.parse();
+        TwitterHelper aoh = new TwitterHelper(ArchivedApplication.getDatabaseOpenHelper());
+        for (Object item : parse.keySet()) {
+            Log.d(TAG, "key:'" + String.valueOf(item) + "'");
+            try {
+                String value = parse.get(item).toString();
+                Log.d(TAG, "value:'" + String.valueOf(value) + "'");
+                long l = Long.parseLong(value);
+                MyNetwork.queryTwitter(l);
+                aoh.attachReference(ao.id, l);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     private void publishError(String error, String custom_message) {

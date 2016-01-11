@@ -17,6 +17,10 @@ import java.util.regex.Pattern;
 
 public class ApiObjectHandler extends JSONObjectHandler {
 
+
+    public static final String OBJECT = "object";
+    public static final String API_OBJECT = "ApiObject";
+
     Pattern ptrnImgSrc = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
     private ApiObjectHelper aoh;
     private int type;
@@ -40,6 +44,8 @@ public class ApiObjectHandler extends JSONObjectHandler {
             ao.content = changeLinksWithinHtml(ao);
 
             aoh.add(ao);
+
+            bundle.putSerializable(OBJECT, ao);
 
             return bundle;
         }

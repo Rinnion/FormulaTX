@@ -38,12 +38,14 @@ public class TournamentHandler extends ApiObjectHandler {
             JSONObject obj = (JSONObject) message.get(0);
 
             Bundle bundle = new Bundle();
-            bundle.putString("ApiObject", obj.toString());
+            bundle.putString(API_OBJECT, obj.toString());
             Tournament ao = new Tournament(obj);
 
             ao.content = changeLinksWithinHtml(ao);
 
             th.add(ao);
+
+            bundle.putSerializable(OBJECT, ao);
 
             return bundle;
         }

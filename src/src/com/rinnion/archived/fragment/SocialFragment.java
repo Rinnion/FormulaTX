@@ -13,10 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TabHost;
+import android.widget.*;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.cursor.TwitterItemCursor;
@@ -112,8 +109,9 @@ public class SocialFragment extends Fragment {
         lvTwitter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object item = parent.getAdapter().getItem(position);
-                Log.d(TAG, "pos:" +position);
+                Toast.makeText(getActivity(), "pressed", Toast.LENGTH_SHORT).show();
+                //Object item = parent.getAdapter().getItem(position);
+                //Log.d(TAG, "pos:" +position);
             }
         });
 
@@ -144,7 +142,7 @@ public class SocialFragment extends Fragment {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_gallery);
+            ab.setTitle(R.string.string_social_networks);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
     }
