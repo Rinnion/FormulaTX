@@ -77,7 +77,7 @@ public class DownloadService extends IntentService {
             Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
             FetchNewsForTournament(ao);
-            //FetchSocialsForTournament(ao);
+            FetchSocialsForTournament(ao);
             publishProgress((int)(startProgress + pr * i), null);
         }
         return tournamentList;
@@ -95,21 +95,26 @@ public class DownloadService extends IntentService {
 
     private void FetchSocialsForTournament(ApiObject ao) throws JSONException {
         if (ao == null) return;
-        String references_include = ao.references_include;
-        Log.d(TAG, String.valueOf(references_include));
-        SerializedPhpParser php = new SerializedPhpParser(references_include);
-        Map parse = (Map) php.parse();
-        TwitterHelper aoh = new TwitterHelper(ArchivedApplication.getDatabaseOpenHelper());
-        for (Object item : parse.keySet()) {
-            Log.d(TAG, "key:'" + String.valueOf(item) + "'");
-            try {
-                String value = parse.get(item).toString();
-                Log.d(TAG, "value:'" + String.valueOf(value) + "'");
-                long l = Long.parseLong(value);
-                MyNetwork.queryTwitter(l);
-                aoh.attachReference(ao.id, l);
-            } catch (Exception ignored) {
+        try {
+            String references_include = ao.references_include;
+            Log.d(TAG, String.valueOf(references_include));
+            SerializedPhpParser php = new SerializedPhpParser(references_include);
+            Map parse = (Map) php.parse();
+            TwitterHelper aoh = new TwitterHelper(ArchivedApplication.getDatabaseOpenHelper());
+            for (Object item : parse.keySet()) {
+                Log.d(TAG, "key:'" + String.valueOf(item) + "'");
+                try {
+                    String value = parse.get(item).toString();
+                    Log.d(TAG, "value:'" + String.valueOf(value) + "'");
+                    long l = Long.parseLong(value);
+                    MyNetwork.queryTwitter(l);
+                    aoh.attachReference(ao.id, l);
+                } catch (Exception ignored) {
+                    Log.d(TAG, "skip item " + String.valueOf(item));
+                }
             }
+        }catch(Exception ex){
+            Log.d(TAG, "FetchSocialsForTournament exception:", ex);
         }
     }
 

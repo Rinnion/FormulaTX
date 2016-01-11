@@ -65,6 +65,12 @@ public class NavigationFragment extends Fragment {
                 showTodayFragment();
             }
         });
+        view.findViewById(R.id.nav_mt_news).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNewsFragment();
+            }
+        });
         view.findViewById(R.id.nav_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +129,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFeedBackFragment();
+                showEmptyFragment();
             }
         });
 
@@ -139,6 +145,17 @@ public class NavigationFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void showNewsFragment() {
+        NewsListFragment mlf = new NewsListFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showFeedBackFragment() {
         FeedBackFragment mlf = new FeedBackFragment();
         getFragmentManager()

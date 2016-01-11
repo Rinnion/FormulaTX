@@ -30,8 +30,8 @@ public class TournamentHandler extends ApiObjectHandler {
 
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
-        boolean status = object.getBoolean("status");
-        if (status) {
+        String status = object.getString("status");
+        if (status.equals("true")) {
             JSONArray message = object.getJSONArray("message");
             if (message.length() != 1) throw new JSONException("Get message with not only one element" + message.length());
 

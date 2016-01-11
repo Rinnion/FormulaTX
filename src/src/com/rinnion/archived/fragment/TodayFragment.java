@@ -154,6 +154,9 @@ public class TodayFragment extends Fragment implements
                 case 13:
                     pbIcon.setImageResource(R.drawable.weather_snow_icon);
                     break;
+                case 50:
+                    pbIcon.setImageResource(R.drawable.weather_fog_icon);
+                    break;
                 default:
                     pbIcon.setImageResource(R.drawable.ic_action_help);
                     break;

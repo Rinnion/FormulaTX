@@ -45,12 +45,16 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
         setHasOptionsMenu(true);
 
         Bundle args = getArguments();
-        String post_name = args.getString(TOURNAMENT_POST_NAME);
+
         NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
-        NewsCursor newsCursor = nh.getByParent(post_name);
-
+        NewsCursor newsCursor = null;
+        if (args != null){
+            String post_name = args.getString(TOURNAMENT_POST_NAME);
+            newsCursor = nh.getByParent(post_name);
+        }else{
+            newsCursor = nh.getAll();
+        }
         mAdapter = new NewsAdapter(getActivity(), newsCursor);
-
         setListAdapter(mAdapter);
         //getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
         super.onCreate(savedInstanceState);
@@ -100,7 +104,6 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
-
         return null;
     }
 

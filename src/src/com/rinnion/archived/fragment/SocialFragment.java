@@ -109,7 +109,7 @@ public class SocialFragment extends Fragment {
         lvTwitter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "pressed", Toast.LENGTH_SHORT).show();
                 //Object item = parent.getAdapter().getItem(position);
                 //Log.d(TAG, "pos:" +position);
             }

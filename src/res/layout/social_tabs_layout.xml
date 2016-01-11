@@ -19,22 +19,20 @@
                     android:id="@+id/stl_tab_instagram"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_horizontal">
-                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_twitter">
-                </ListView>
+                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_instagram"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Large Text"
                         android:id="@+id/stl_tv_no_photo" android:visibility="gone"/>
             </LinearLayout>
             <LinearLayout
                     android:id="@+id/stl_tab_twitter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:orientation="vertical">
-                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_instagram"/>
+                <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_twitter"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-                          android:text="Large Text" android:id="@+id/stl_tv_no_video" android:visibility="gone"/>
+                          android:id="@+id/stl_tv_no_video" android:visibility="gone"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

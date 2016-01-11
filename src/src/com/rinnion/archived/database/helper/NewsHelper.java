@@ -34,4 +34,22 @@ public class NewsHelper extends ApiObjectHelper {
         c.moveToFirst();
         return c;
     }
+
+    public NewsCursor getAll() {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE " + COLUMN_OBJ_TYPE + "=? " +
+                " ORDER BY " + COLUMN_DATE + " DESC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
+                new NewsCursor.Factory(),
+                sql,
+                new String[] {String.valueOf(ApiObjectTypes.EN_News)},
+                null);
+        c.moveToFirst();
+        return c;
+    }
 }

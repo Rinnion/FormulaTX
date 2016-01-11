@@ -69,7 +69,7 @@ public class MyNetworkContentContract {
 
                 public static ArrayList<NameValuePair> getParent(long parent){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
-                    dm_partner.add(new BasicNameValuePair("parent", String.valueOf(parent)));
+                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(parent)));
                     return dm_partner;
                 }
             }
@@ -146,6 +146,25 @@ public class MyNetworkContentContract {
                 public static ArrayList<NameValuePair> getUrl(long id){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
                     dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
+                    return dm_partner;
+                }
+            }
+        }
+
+        public static class References {
+            public static final String URL = URL_API + "references";
+
+            public static class getreferencebyidapproved
+            {
+                public static final String URL_METHOD = URL + "?method=getreferencebyidapproved";
+
+                public static ArrayList<NameValuePair> getUrl(long id, long page){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(5);
+                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
+                    dm_partner.add(new BasicNameValuePair("page", String.valueOf(page)));
+                    dm_partner.add(new BasicNameValuePair("num_rec", String.valueOf(10)));
+                    dm_partner.add(new BasicNameValuePair("sort_by", "date"));
+                    dm_partner.add(new BasicNameValuePair("sort_method", "desc"));
                     return dm_partner;
                 }
             }

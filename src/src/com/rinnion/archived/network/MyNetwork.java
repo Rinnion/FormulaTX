@@ -173,9 +173,9 @@ public final class MyNetwork {
         HttpRequester fetcher;
         try {
             fetcher = builder.setName("queryTournamentNewsList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
-                    .setHandler(new GalleryHandler(id))
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl(id, 1))
+                    .setHandler(new TwitterHandler(id))
                     .create();
 
         } catch (UnsupportedEncodingException e) {
