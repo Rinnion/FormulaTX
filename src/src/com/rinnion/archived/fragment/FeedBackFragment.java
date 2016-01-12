@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.network.tasks.AsyncActivityTask;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.network.tasks.SendCommentTask;
 
