@@ -20,7 +20,7 @@ public class MyLocale {
     public static void Initialize()
     {
         mCurLocale= Locale.getDefault().getLanguage().toLowerCase();
-        
+
 
         if((mCurLocale.equals(EN_LOCALE_RUS))||
         (mCurLocale.equals(EN_LOCALE_ENG))){

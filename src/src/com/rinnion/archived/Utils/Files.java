@@ -2,8 +2,10 @@ package com.rinnion.archived.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Environment;
 import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.Settings;
 
 import java.io.*;
 
@@ -17,6 +19,25 @@ public class Files {
     static File mFileExternal;
     static Object syncWriteObject;
 
+
+    public static File getExternalCachePath() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            File externalStorageDir = Environment.getExternalStorageDirectory();
+            // {SD_PATH}/Android/data/com.package.name/cache
+
+            File extStorageAppCachePath = new File(externalStorageDir, Settings.EXTERNAL_PATH + File.separator + "cache");
+            externalStorageDir.mkdir();
+            return extStorageAppCachePath;
+        }
+
+        return null;
+    }
+
+
+    public static File getFileExternal()
+    {
+        return mFileExternal;
+    }
 
     public static void Initialize()
     {
@@ -47,15 +68,41 @@ public class Files {
         return  file.getPath();
     }
 
-    public  static String getExternalDir(String combinedString)
+    public  static String getExternalDir(String filename)
     {
-        File file = new File(mFileExternal, combinedString);
+        return getExternalDir("",filename);
+    }
+
+    public  static String getExternalDir(String path, String filename)
+    {
+
+
+        File fileDir=new File(mFileExternal,Settings.EXTERNAL_PATH + ((path==null || path.isEmpty())? "": (File.separatorChar + path))) ;
+
+
+
+
+        fileDir.mkdir();
+
+        File file=new File(fileDir, filename);
+
+
+        /*if(createSuccess)*/
+
+        /*else
+            file= new File(mFileExternal, combinedString);*/
+
         return  file.getAbsolutePath();
     }
 
     public  static String getExternalDir()
     {
-        return  mFileExternal.getAbsolutePath();
+        File fileDir=new File(mFileExternal, Settings.EXTERNAL_PATH);
+
+
+
+        fileDir.mkdir();
+        return  fileDir.getAbsolutePath();
     }
 
     public static String getFilesDir(String combinedString)

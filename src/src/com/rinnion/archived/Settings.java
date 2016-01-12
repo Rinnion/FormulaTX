@@ -8,7 +8,7 @@ package com.rinnion.archived;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG = true;
+    public static final boolean NETDEBUG = false;
     public static final boolean DEBUG = true;
 
     public static final int ABOUT_API_OBJECT = 201;
@@ -44,6 +44,6 @@ public final class Settings {
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";
-
+    public static final String EXTERNAL_PATH="FormulaTX";
 }
 

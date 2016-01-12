@@ -11,11 +11,20 @@ import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.SettingsHelper;
 import com.rinnion.archived.utils.MyLocale;
 
+import java.io.File;
+
 /**
  * Created by tretyakov on 08.05.2014.
  */
 public class ArchivedApplication extends Application {
     private final static String TAG = "ArchivedApplication";
+
+    @Override
+    public File getCacheDir() {
+        return Files.getExternalCachePath();
+        /*return super.getCacheDir();*/
+    }
+
     public static SettingAccessor Settings;
     private static DatabaseOpenHelper doh;
     private static Context context;
