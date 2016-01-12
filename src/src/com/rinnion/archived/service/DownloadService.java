@@ -76,6 +76,14 @@ public class DownloadService extends IntentService {
             int id = intArray[i];
             Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
+            try {
+                SerializedPhpParser parser = new SerializedPhpParser(ao.tables);
+                Object parse = parser.parse();
+                Log.d(TAG, parse.toString());
+            }catch(Exception ex){
+                Log.w(TAG, "parse error" + ex.getMessage());
+            }
+
             FetchNewsForTournament(ao);
             FetchSocialsForTournament(ao);
             publishProgress((int)(startProgress + pr * i), null);
