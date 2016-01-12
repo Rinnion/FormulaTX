@@ -3,16 +3,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:paddingTop="17dp" android:paddingLeft="5dp"
+              android:paddingRight="5dp" android:paddingBottom="5dp">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Адрес:"
+            android:id="@+id/textView" style="@style/main_text_small"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="Санкт-Петербург, Футбольная аллея, дом 8" android:id="@+id/textView4"
+              style="@style/main_text_small"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="Телефон:"
+              android:id="@+id/textView2" android:layout_marginTop="35dp" style="@style/main_text_small"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="+7 (865) 299-99-82"
+              android:id="@+id/textView3" style="@style/main_text_small"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="e-mail: info@formulatx.com"
+              android:id="@+id/textView5" style="@style/main_text_small"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="Ваш отзыв"
+              android:id="@+id/textView6" android:layout_gravity="center_horizontal" android:layout_marginTop="70dp"
+              style="@style/main_text_small"/>
+    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:id="@+id/fbl_ed_name"
+              android:gravity="top|left" android:layout_marginTop="25dp" android:hint="Как вас зовут?"
+              style="@style/main_text_small"/>
+    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:id="@+id/fbl_ed_email"
+              android:gravity="top|left" android:hint="Введите ваш e-mail" style="@style/main_text_small"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/nml_ed_content" android:layout_weight="1" android:hint="Введите вашу запись"
-            android:gravity="top|left"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Записать"
-            android:id="@+id/nml_bt_send" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/fbl_ed_feedback" android:layout_weight="1"
+            android:gravity="top|left" android:layout_marginBottom="25dp" android:hint="Оставьте ваш отзыв"
+            style="@style/main_text_small"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:text="ОСТАВИТЬ ОТЗЫВ"
+            android:id="@+id/fdl_btn_send" android:gravity="center" style="@style/main_text_small"
+            android:background="@drawable/click_view"/>
 </LinearLayout>
