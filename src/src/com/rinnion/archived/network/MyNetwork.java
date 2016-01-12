@@ -84,16 +84,25 @@ public final class MyNetwork {
     }
 
     //Загрузка списка турниров
-    public static Bundle queryGamerList(long parent) {
+    public static Bundle queryGamerList(long id) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
+
+        ApiObjectListHandler handler = new ApiObjectListHandler();
+
+        if (Settings.NETDEBUG){
+            String fileName = "json/"+String.valueOf(id)+"gamer.json";
+            Bundle result = processFile(fileName, handler);
+            return result;
+        }
+
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = null;
         try {
             fetcher = builder.setName("queryTournamentNewsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.getGamer(parent))
-                    .setHandler(new ApiObjectListHandler())
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.getGamer(id))
+                    .setHandler(handler)
                     .create();
 
         } catch (UnsupportedEncodingException e) {
@@ -109,8 +118,15 @@ public final class MyNetwork {
 
 
     //Загрузка списка новостей турнира
-    public static Bundle queryTournamentNewsList(long tournamentTranslation) {
+    public static Bundle queryTournamentNewsList(long id) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
+
+        if (Settings.NETDEBUG){
+            String fileName = "json/"+String.valueOf(id)+"parent.json";
+            IResponseHandler mHandler = new ApiObjectListHandler();
+            Bundle result = processFile(fileName, mHandler);
+            return result;
+        }
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
@@ -118,7 +134,7 @@ public final class MyNetwork {
         try {
             fetcher = builder.setName("queryTournamentNewsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.getParent(tournamentTranslation))
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.getParent(id))
                     .setHandler(new ApiObjectListHandler())
                     .create();
 
@@ -328,15 +344,29 @@ public final class MyNetwork {
 
     public static Bundle queryGamer(int id) {
         Log.d(TAG, String.format("query gamer"));
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Gamer);
+        GamerHandler handlerGamer = new GamerHandler(new GamerHelper(doh));
+
+        if (Settings.NETDEBUG){
+            String fileName = "json/" + String.valueOf(id) +"ru.json";
+            processFile(fileName, handlerObject);
+
+            fileName = "json/" + String.valueOf(id) +"add.json";
+            processFile(fileName, handlerGamer);
+            return Bundle.EMPTY;
+        }
+
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
+
         try {
 
-            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
             fetcher = builder.setName("queryApiObject")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(String.valueOf(id)))
-                    .setHandler(new ApiObjectHandler(new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper()), ApiObjectTypes.EN_Gamer))
+                    .setHandler(handlerObject)
                     .create();
 
             fetcher.execute();
@@ -344,7 +374,7 @@ public final class MyNetwork {
             fetcher = builder.setName("queryApiObject")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getUrl(id))
-                    .setHandler(new GamerHandler(new GamerHelper(doh)))
+                    .setHandler(handlerGamer)
                     .create();
 
             fetcher.execute();
@@ -357,6 +387,6 @@ public final class MyNetwork {
             return bundle;
         }
 
-        return fetcher.execute();
+        return Bundle.EMPTY;
     }
 }

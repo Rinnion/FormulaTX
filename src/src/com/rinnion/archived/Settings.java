@@ -8,7 +8,7 @@ package com.rinnion.archived;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG = false;
+    public static final boolean NETDEBUG = true;
     public static final boolean DEBUG = true;
 
     public static final int ABOUT_API_OBJECT = 201;
@@ -38,9 +38,9 @@ public final class Settings {
     public static final int OUT_DATE_TIME_OWN_DEFAULT = 5 * 24 * 60 * 60 * 1000; //5 days
     public static final int OUT_DATE_TIME_ASSIGNED_DEFAULT = 24 * 60 * 60 * 1000; // 1 day
     public static final long UPDATE_TIME = 60000; //60 sec
-    public static final String VERSION_MAJOR = "0.8";
-    public static final String VERSION_MINOR = "9";
-    public static final String VERSION_BUILD = "1518";
+    public static final String VERSION_NUMBER = "0.5.1";
+    public static final String VERSION_BUILD_TIME = "0907";
+    public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";

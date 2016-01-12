@@ -92,7 +92,7 @@ public class GamerHelper implements BaseColumns {
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id)};
             db.delete(DATABASE_TABLE_ADDITINAL, _ID + "=?", args);
-            aoh.delete(id, ApiObjectTypes.EN_Gamer);
+            aoh.delete(id);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }
@@ -104,13 +104,13 @@ public class GamerHelper implements BaseColumns {
         String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
-                " WHERE " + ApiObjectHelper.COLUMN_OBJ_TYPE +"=? AND g._id=?" +
+                " WHERE " + ApiObjectHelper.COLUMN_DISPLAY_METHOD +"=? AND g._id=?" +
                 " ORDER BY g." + COLUMN_RATING + " ASC";
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
                 new GamerCursor.Factory(),
                 sql,
-                new String[]{String.valueOf(ApiObjectTypes.EN_Gamer), String.valueOf(id)},
+                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(id)},
                 null);
         if (c.getCount() == 0) return null;
         c.moveToFirst();
@@ -124,14 +124,14 @@ public class GamerHelper implements BaseColumns {
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +
-                " WHERE ao." + ApiObjectHelper.COLUMN_OBJ_TYPE + "=? AND p." + ApiObjectHelper._ID + "=? " +
+                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? AND p." + ApiObjectHelper._ID + "=? " +
                 " ORDER BY g." + COLUMN_RATING + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
                 new GamerCursor.Factory(),
                 sql,
-                new String[]{String.valueOf(ApiObjectTypes.EN_Gamer), String.valueOf(parent)},
+                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(parent)},
                 null);
         c.moveToFirst();
         return c;

@@ -109,6 +109,21 @@ public class ApiObjectHelper implements BaseColumns {
         return c;
     }
 
+    public ApiObjectCursor getAllByType(String type) {
+        Log.v(TAG, "getAllByType ()");
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE " + COLUMN_DISPLAY_METHOD + "=?  ORDER BY " + COLUMN_DATE + " DESC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        ApiObjectCursor c = (ApiObjectCursor) d.rawQueryWithFactory(
+                new ApiObjectCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(type)},
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
     public ApiObjectCursor getAllByType(int apiObjectType)
     {
         Log.v(TAG, "getAllByType ()");
@@ -155,7 +170,7 @@ public class ApiObjectHelper implements BaseColumns {
 
     public boolean add(ApiObject apiObject) {
 
-        delete(apiObject.id, apiObject.objType);
+        delete(apiObject.id);
 
         Log.d(TAG, "add(" + apiObject.toString() + ")");
 
@@ -213,13 +228,13 @@ public class ApiObjectHelper implements BaseColumns {
         }
     }
 
-    public void delete(long id,int type) {
+    public void delete(long id, int type) {
         Log.d(TAG, "delete (id:" + id + ", type:" + type+ ")");
         try {
             Log.d(TAG, "Delete self location: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id),Integer.toString(type)};
-            db.delete(DATABASE_TABLE, _ID + "=? and objType=?", args);
+            db.delete(DATABASE_TABLE, _ID + "=? and " + COLUMN_OBJ_TYPE + "=?", args);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }
@@ -231,6 +246,25 @@ public class ApiObjectHelper implements BaseColumns {
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
                 " WHERE "+COLUMN_OBJ_TYPE+"=? AND " + COLUMN_POST_NAME + "=?" +
+                " ORDER BY " + COLUMN_TITLE + " ASC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[] {String.valueOf(type), post_name},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
+    }
+
+    public Tournament getByPostName(String post_name, String type) {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE "+COLUMN_DISPLAY_METHOD+"=? AND " + COLUMN_POST_NAME + "=?" +
                 " ORDER BY " + COLUMN_TITLE + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
@@ -263,4 +297,5 @@ public class ApiObjectHelper implements BaseColumns {
         return c.getItem();
 
     }
+
 }

@@ -4,12 +4,14 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import com.rinnion.archived.utils.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
@@ -71,7 +73,7 @@ public class NewsFragment extends Fragment {
         ImageView image = (ImageView) view.findViewById(R.id.nl_iv_image);
         TextView title = (TextView) view.findViewById(R.id.nl_tv_title);
         TextView date = (TextView) view.findViewById(R.id.nl_tv_date);
-        TextView content = (TextView) view.findViewById(R.id.nl_tv_content);
+        WebView content = (WebView) view.findViewById(R.id.nl_tv_content);
 
         String thumb = apiObject.thumb;
         if (thumb != null) {
@@ -80,7 +82,8 @@ public class NewsFragment extends Fragment {
             image.setImageResource(R.drawable.logo_splash_screen);
         }
 
-        content.setText(apiObject.content);
+        content.loadData("<html><style>body {padding:0px; color:#FFF;}</style><body>" + apiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+                content.setBackgroundColor(Color.TRANSPARENT);
         date.setText(apiObject.date);
         title.setText(apiObject.title);
 

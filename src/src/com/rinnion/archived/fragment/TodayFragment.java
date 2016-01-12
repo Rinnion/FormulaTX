@@ -29,16 +29,13 @@ import java.util.Calendar;
  * User: Lenovo
  * Date: 15.02.14
  * Time: 22:46
- * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
+ * To change this template use File | Settings | File Templates.
  */
 public class TodayFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<ApiObjectCursor>, AdapterView.OnItemClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
-    private ListView mListView;
-    private AdapterView.OnItemClickListener mListener;
-    private View mEmpty;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,7 +72,7 @@ public class TodayFragment extends Fragment implements
         //mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
         //mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
 
-        mListView = (ListView) view.findViewById(R.id.tl_lv_news);
+        ListView mListView = (ListView) view.findViewById(R.id.tl_lv_news);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
