@@ -8,6 +8,7 @@ import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.MyNetwork;
 
@@ -36,15 +37,14 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
         ApiObjectHelper aoh=new ApiObjectHelper(doh);
 
 
-        deliverResult(aoh.getAllByType(ApiObjectTypes.EN_News));
+        deliverResult(aoh.getAllByType(ApiObject.OTHER));
     }
 
     @Override
     public ApiObjectCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-        //MyNetwork.queryMessages();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHelper aoh=new ApiObjectHelper(doh);
-        return aoh.getAllByType(ApiObjectTypes.EN_News);
+        return aoh.getAllByType(ApiObject.OTHER);
     }
 }

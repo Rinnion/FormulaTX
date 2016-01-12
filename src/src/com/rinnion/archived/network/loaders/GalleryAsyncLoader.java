@@ -64,7 +64,9 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
                     MyNetwork.queryGallery(l);
                     aoh.attachGallery(api_object_id, l);
                 }
-            }catch(Exception ignored){}
+            }catch(Exception ignored){
+                Log.w(TAG, ignored.getMessage());
+            }
             cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
         }
 

@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:gravity="center" android:background="@drawable/start_bg">
-
-    <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:id="@+id/imageView" android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_splash_screen" android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp"/>
-    <ProgressBar
-            style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar" android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" android:progress="0"/>
+                android:layout_height="match_parent">
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:gravity="center">
-        <TextView
-                android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@drawable/start_bg">
+
+        <ImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:id="@+id/imageView" android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo_splash_screen" android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp"/>
+        <ProgressBar
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="100"
-                android:id="@+id/sl_tv_progress" android:layout_gravity="center_horizontal"
-                android:visibility="invisible"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text=" %"
-                android:id="@+id/textView6" android:visibility="invisible"/>
+                android:id="@+id/progressBar" android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" android:progress="0"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:gravity="center">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="100"
+                    android:id="@+id/sl_tv_progress" android:layout_gravity="center_horizontal"
+                    android:visibility="invisible"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=" %"
+                    android:id="@+id/textView6" android:visibility="invisible"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="version"
+            android:id="@+id/splash_tv_version" android:layout_gravity="right" android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" android:textColor="#20FFFFFF"/>
+</RelativeLayout>

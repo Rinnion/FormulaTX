@@ -16,6 +16,7 @@ import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
@@ -222,7 +223,7 @@ public class MainTournamentFragment extends Fragment{
         String type = getArguments().getString(TYPE);
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
         Bundle bundle = new Bundle();
-        Tournament t = th.getByPostName(type, ApiObjectTypes.EN_Object);
+        Tournament t = th.getByPostName(type, ApiObject.OBJECT);
         if (t != null) {
             bundle.putLong(GamerListFragment.TOURNAMENT_ID, t.id);
         }else{

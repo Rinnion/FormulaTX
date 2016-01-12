@@ -2,15 +2,12 @@ package com.rinnion.archived.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.rinnion.archived.R;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.service.DownloadService;
@@ -87,6 +84,9 @@ public class SplashActivity extends Activity {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
+        TextView version = (TextView) findViewById(R.id.splash_tv_version);
+        version.setText(Settings.VERSION);
+
 
         tvProgress = (TextView)findViewById(R.id.sl_tv_progress);
         pbProgress = (ProgressBar)findViewById(R.id.progressBar);
