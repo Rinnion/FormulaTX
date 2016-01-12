@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.fragment.TodayFragment;

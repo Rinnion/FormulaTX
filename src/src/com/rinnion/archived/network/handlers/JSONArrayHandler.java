@@ -2,7 +2,7 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.network.tasks.AsyncActivityTask;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.network.tasks.SendCommentTask;
 
 /**
@@ -100,7 +99,9 @@ public class FeedBackFragment extends Fragment  {
 
     @Override
     public void onStart() {
+
         super.onStart();
+
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
             ab.setTitle(R.string.string_contacts);

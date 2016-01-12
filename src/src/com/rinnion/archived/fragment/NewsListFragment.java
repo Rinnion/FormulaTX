@@ -6,7 +6,7 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;

@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.rinnion.archived.R;

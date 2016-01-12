@@ -8,7 +8,6 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
+import com.rinnion.archived.utils.Log;
 import com.squareup.picasso.Picasso;
 
 /**

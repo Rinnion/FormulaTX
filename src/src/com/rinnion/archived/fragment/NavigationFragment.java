@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import com.rinnion.archived.R;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.utils.Log;
 
 /**
  * Created with IntelliJ IDEA.

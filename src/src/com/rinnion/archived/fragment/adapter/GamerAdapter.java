@@ -3,7 +3,7 @@ package com.rinnion.archived.fragment.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;

@@ -1,7 +1,7 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.helper.TwitterHelper;
