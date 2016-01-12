@@ -5,11 +5,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
-import android.widget.TextView;
 import com.rinnion.archived.R;
+import com.rinnion.archived.utils.Log;
 
 /**
  * Created with IntelliJ IDEA.

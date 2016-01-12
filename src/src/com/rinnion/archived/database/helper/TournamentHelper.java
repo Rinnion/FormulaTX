@@ -1,7 +1,7 @@
 package com.rinnion.archived.database.helper;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.TournamentCursor;

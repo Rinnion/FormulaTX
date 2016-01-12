@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;

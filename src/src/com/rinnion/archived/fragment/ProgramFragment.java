@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;

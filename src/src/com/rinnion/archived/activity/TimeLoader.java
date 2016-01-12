@@ -5,7 +5,7 @@ import android.content.Loader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

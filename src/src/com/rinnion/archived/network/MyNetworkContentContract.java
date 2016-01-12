@@ -1,12 +1,14 @@
 package com.rinnion.archived.network;
 
 import com.rinnion.archived.Settings;
+import com.rinnion.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,14 +55,13 @@ public class MyNetworkContentContract {
                     dm_object.add(new BasicNameValuePair("display_method", "object"));
 
                     dm_object.add(new BasicNameValuePair(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id));
-                    dm_object.add(new BasicNameValuePair(LANG,LANG_RU));
+                    dm_object.add(new BasicNameValuePair(LANG, MyLocale.getCurrent()));
                     return dm_object;
                 }
 
                 public static final String ID = "id";
                 public static final String LANG = "lang";
-                public static final String LANG_RU = "ru";
-                public static final String LANG_EN = "en";
+
             }
 
             public static class getallstaticpagefromparent

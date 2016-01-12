@@ -2,7 +2,7 @@ package com.rinnion.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;

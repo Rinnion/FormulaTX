@@ -1,10 +1,8 @@
 package com.rinnion.archived.utils;
 
-import com.rinnion.archived.ArchivedApplication;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.lang.reflect.Method;
+import android.os.Environment;
+import com.rinnion.archived.Settings;
 
 /**
  * Created by alekseev on 11.01.2016.
@@ -15,14 +13,23 @@ public class Log {
     static private String logFile;
 
 
-    static {
-        logFile=Files.getTmpFile("AppFTXLog");
 
+    public static void Initialize()
+    {
+        if ((Settings.DEBUG) && (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED))) {
+            logFile=Files.getExternalDir("FormulaTX.log"); //Files.getTmpFile("AppFTXLog");
+        }
+        else {
+            logFile = Files.getCacheDir("FormulaTX.log");
+        }
     }
+
+
 
     private static void writeToFile(String method,String tag,String msg)
     {
-        String string="[%s][%s] %s";
+        String string="[%s][%s] %s\n";
 
 
         Files.WriteToFile(logFile,String.format(string,method,tag,msg) );
@@ -30,10 +37,10 @@ public class Log {
 
     private static void writeToFile(String method,String tag,String msg,Exception ex)
     {
-        String string="[%s][%s] %s \nException:\n %s\n";
+        String string="[%s][%s] %s \nException:\n";
 
 
-        Files.WriteToFile(logFile,String.format(string,method,tag,msg,ex.toString()) );
+        Files.WriteToFile(logFile,String.format(string,method,tag,msg),ex );
     }
 
     public static void d(String tag,String msg,Exception ex)

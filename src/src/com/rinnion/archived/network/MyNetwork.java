@@ -1,7 +1,7 @@
 package com.rinnion.archived.network;
 
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -12,6 +12,7 @@ import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.handlers.*;
+import com.rinnion.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Describes all Network operations
@@ -36,7 +38,7 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher = builder.setName("queryMessages")
-                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q=" + country + ",ru&units=metric&appid=d20301f9f0795290b4e28b322f0f355d&lang=ru")
+                .setGetRequest("http://api.openweathermap.org/data/2.5/weather?q=" + country + "," + MyLocale.getCurrent() + "&units=metric&appid=d20301f9f0795290b4e28b322f0f355d&lang=" + MyLocale.getCurrent())
                 .setHandler(new WeatherHandler(country))
                 .create();
 

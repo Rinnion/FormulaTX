@@ -6,7 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;

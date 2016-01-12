@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import com.rinnion.archived.utils.Files;
+import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.SettingsHelper;
+import com.rinnion.archived.utils.MyLocale;
 
 /**
  * Created by tretyakov on 08.05.2014.
@@ -54,9 +56,14 @@ public class ArchivedApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate");
+
         ArchivedApplication.context = getApplicationContext();
         ArchivedApplication.Settings = new SettingAccessor();
+        Files.Initialize();
+        Log.Initialize();
+        MyLocale.Initialize();
+
+        Log.i(TAG, "onCreate");
     }
 
     @Override
@@ -74,9 +81,7 @@ public class ArchivedApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         Log.i(TAG, "onConifgurationChanged");
-        if (Log.isLoggable(TAG, Log.VERBOSE)) {
-            Log.v(TAG, newConfig.toString());
-        }
+
     }
 
 }

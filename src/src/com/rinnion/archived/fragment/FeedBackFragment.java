@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.utils.Log;
 
 /**
  * Created with IntelliJ IDEA.
@@ -101,7 +101,9 @@ public class FeedBackFragment extends Fragment  {
 
     @Override
     public void onStart() {
+
         super.onStart();
+
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
             if (mApiObject != null) {

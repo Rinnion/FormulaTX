@@ -1,7 +1,7 @@
 package com.rinnion.archived.network;
 
 import android.os.Bundle;
-import android.util.Log;
+import com.rinnion.archived.utils.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
@@ -16,6 +15,7 @@ import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.fragment.adapter.GamerAdapter;
 import com.rinnion.archived.network.loaders.GamerAsyncLoader;
+import com.rinnion.archived.utils.Log;
 
 /**
  * Created with IntelliJ IDEA.
