@@ -21,7 +21,7 @@ public abstract class AsyncActivityTask<Params, Progress, Result> extends AsyncT
 
     @Override
     protected final void onCancelled(Result result) {
-        mAsyncHandler.onCancelExecute(result);
+        raiseOnCancelExecute(result);
     }
 
     protected final void raiseOnBeforeExecute() {

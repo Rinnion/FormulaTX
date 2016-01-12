@@ -13,6 +13,7 @@ import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.handlers.*;
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,9 +53,9 @@ public final class MyNetwork {
     public static Bundle queryApiObjectsList(ArrayList<NameValuePair> objectType) {
         Log.d(TAG, String.format("query tournaments"));
 
-        if (Settings.NETDEBUG){
+        if (Settings.NETDEBUG) {
             String type = objectType.get(0).getValue();
-            String fileName = "json/"+type+".json";
+            String fileName = "json/" + type + ".json";
             IResponseHandler mHandler = new ApiObjectListHandler();
             Bundle result = processFile(fileName, mHandler);
             return result;
@@ -87,8 +88,8 @@ public final class MyNetwork {
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
-        if (Settings.NETDEBUG){
-            String fileName = "json/"+String.valueOf(id)+"gamer.json";
+        if (Settings.NETDEBUG) {
+            String fileName = "json/" + String.valueOf(id) + "gamer.json";
             Bundle result = processFile(fileName, handler);
             return result;
         }
@@ -119,8 +120,8 @@ public final class MyNetwork {
     public static Bundle queryTournamentNewsList(long id) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
 
-        if (Settings.NETDEBUG){
-            String fileName = "json/"+String.valueOf(id)+"parent.json";
+        if (Settings.NETDEBUG) {
+            String fileName = "json/" + String.valueOf(id) + "parent.json";
             IResponseHandler mHandler = new ApiObjectListHandler();
             Bundle result = processFile(fileName, mHandler);
             return result;
@@ -175,7 +176,7 @@ public final class MyNetwork {
     //Загрузка списка новостей турнира
     public static Bundle queryTwitter(long id) {
 
-        if (Settings.NETDEBUG){
+        if (Settings.NETDEBUG) {
             String fileName = "json/references-57-1.json";
             TwitterHandler mHandler = new TwitterHandler(id);
             Bundle result = processFile(fileName, mHandler);
@@ -208,7 +209,7 @@ public final class MyNetwork {
     private static Bundle processFile(String fileName, IResponseHandler mHandler) {
         String response = getStringFromAsset(fileName);
         Bundle result = new Bundle();
-        try{
+        try {
             Bundle bundle = new Bundle();
             bundle.putInt(HttpRequester.STATUS_CODE, 200);
 
@@ -249,10 +250,12 @@ public final class MyNetwork {
 
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHandler handler = null;
-        switch (type){
-            case ApiObjectTypes.EN_Object: handler = new TournamentHandler(new TournamentHelper(doh));
+        switch (type) {
+            case ApiObjectTypes.EN_Object:
+                handler = new TournamentHandler(new TournamentHelper(doh));
                 break;
-            case ApiObjectTypes.EN_News: handler = new NewsHandler(new NewsHelper(doh));
+            case ApiObjectTypes.EN_News:
+                handler = new NewsHandler(new NewsHelper(doh));
                 break;
             default:
                 handler = new ApiObjectHandler(new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper()), type);
@@ -263,8 +266,8 @@ public final class MyNetwork {
 
     public static Bundle queryApiObject(int id, ApiObjectHandler handler) {
 
-        if (Settings.NETDEBUG){
-            String fileName = "json/" + String.valueOf(id) +"ru.json";
+        if (Settings.NETDEBUG) {
+            String fileName = "json/" + String.valueOf(id) + "ru.json";
             Bundle result = processFile(fileName, handler);
             return result;
         }
@@ -294,12 +297,11 @@ public final class MyNetwork {
     public static int[] getIntArray(Bundle bundleTurnirList) {
         int[] intArray = null;
         String result = bundleTurnirList.getString(HttpRequester.RESULT);
-        if (result.equals(HttpRequester.RESULT_HTTP)){
+        if (result.equals(HttpRequester.RESULT_HTTP)) {
             Bundle tmpTurnirList = bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP);
-            if (tmpTurnirList != null)
-            {
+            if (tmpTurnirList != null) {
                 tmpTurnirList = tmpTurnirList.getBundle(HttpRequester.RESULT_HTTP_PARSE);
-                if (tmpTurnirList != null){
+                if (tmpTurnirList != null) {
                     intArray = tmpTurnirList.getIntArray("ID[]");
                 }
             }
@@ -331,7 +333,7 @@ public final class MyNetwork {
                     try {
                         Object obj = tmpTurnirList.getSerializable(ApiObjectHandler.OBJECT);
                         return clazz.cast(obj);
-                    }catch(ClassCastException cce){
+                    } catch (ClassCastException cce) {
                         return null;
                     }
                 }
@@ -347,11 +349,11 @@ public final class MyNetwork {
         ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Gamer);
         GamerHandler handlerGamer = new GamerHandler(new GamerHelper(doh));
 
-        if (Settings.NETDEBUG){
-            String fileName = "json/" + String.valueOf(id) +"ru.json";
+        if (Settings.NETDEBUG) {
+            String fileName = "json/" + String.valueOf(id) + "ru.json";
             processFile(fileName, handlerObject);
 
-            fileName = "json/" + String.valueOf(id) +"add.json";
+            fileName = "json/" + String.valueOf(id) + "add.json";
             processFile(fileName, handlerGamer);
             return Bundle.EMPTY;
         }
@@ -387,4 +389,25 @@ public final class MyNetwork {
 
         return Bundle.EMPTY;
     }
+
+    public static void sendComment(String author, String comment, String email, String phone) throws Exception {
+        String credentials = ArchivedApplication.getParameter(Settings.CREDENTIALS);
+
+        ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(4);
+        dm_partner.add(new BasicNameValuePair("author", String.valueOf(author)));
+        dm_partner.add(new BasicNameValuePair("comment", String.valueOf(comment)));
+        dm_partner.add(new BasicNameValuePair("email", String.valueOf(email)));
+        dm_partner.add(new BasicNameValuePair("phone", String.valueOf(phone)));
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester sender = builder.setName("sendComment")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.Feedback.URL)
+                .setCredentials(credentials)
+                .setContent(dm_partner)
+                .setHandler(new AnyPostHandler())
+                .create();
+
+        sender.execute();
+    }
+
 }

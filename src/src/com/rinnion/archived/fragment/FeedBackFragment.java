@@ -1,24 +1,19 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import com.rinnion.archived.ArchivedApplication;
+import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.network.tasks.AsyncActivityTask;
+import com.rinnion.archived.network.tasks.SendCommentTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,6 +27,7 @@ public class FeedBackFragment extends Fragment  {
     public static final String TYPE = "TYPE";
     private String TAG = getClass().getCanonicalName();
     private ApiObject mApiObject;
+    private View btnSend;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -61,41 +57,44 @@ public class FeedBackFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.about_layout, container, false);
-        WebView myWebView = (WebView) view.findViewById(R.id.tv_about);
+        View view = inflater.inflate(R.layout.feedback_layout, container, false);
+        final TextView edName = (TextView) view.findViewById(R.id.fbl_ed_name);
+        final TextView edEmail = (TextView) view.findViewById(R.id.fbl_ed_email);
+        final TextView edFeedBack= (TextView) view.findViewById(R.id.fbl_ed_feedback);
+        btnSend = view.findViewById(R.id.fdl_btn_send);
 
-        Bundle args = getArguments();
-        String type = args.getString(TYPE);
-
-        ApiObjectHelper th = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
-
-        mApiObject = th.getByPostName(type);
-
-        if (mApiObject == null) {
-            myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-        } else {
-            if (mApiObject.content.isEmpty()) {
-                myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-            } else {
-                ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
-                if (cm != null) {
-                    NetworkInfo ani = cm.getActiveNetworkInfo();
-                    if (ani != null && ani.isConnected()) {
-                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-                    }else{
-                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = edName.getText().toString();
+                String email = edEmail.getText().toString();
+                String comment = edFeedBack.getText().toString();
+                String phone = "+0(000)000-00-00";
+                if (name.isEmpty() || email.isEmpty() || comment.isEmpty() || phone.isEmpty()) return;
+                SendCommentTask sct = new SendCommentTask(name, comment, email, phone, new AsyncActivityTask.IAsyncHandler<Void>() {
+                    @Override
+                    public void onBeforeExecute() {
+                        btnSend.setEnabled(false);
                     }
-                }
-                else{
-                    myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-                }
 
-                myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+                    @Override
+                    public void onAfterExecute(Void aVoid) {
+                        edName.setText("");
+                        edEmail.setText("");
+                        edFeedBack.setText("");
+                        btnSend.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onCancelExecute(Void aVoid) {
+                        btnSend.setEnabled(true);
+                    }
+                });
+                sct.execute();
             }
+        });
 
-        }
 
-        myWebView.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 
@@ -104,11 +103,7 @@ public class FeedBackFragment extends Fragment  {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            if (mApiObject != null) {
-                ab.setTitle(mApiObject.title);
-            } else {
-                ab.setTitle(getArguments().getString(TYPE));
-            }
+            ab.setTitle(R.string.string_contacts);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
 

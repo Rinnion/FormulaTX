@@ -129,7 +129,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showFeedBackFragment();
             }
         });
 
@@ -148,6 +148,16 @@ public class NavigationFragment extends Fragment {
 
     private void showNewsFragment() {
         NewsListFragment mlf = new NewsListFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showGalleryFragment() {
+        GalleryFragment mlf = new GalleryFragment();
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)

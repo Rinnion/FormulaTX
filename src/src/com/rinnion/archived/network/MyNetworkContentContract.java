@@ -136,12 +136,28 @@ public class MyNetworkContentContract {
 
 
         }
+
         public static class Gallery {
             public static final String URL = URL_API + "gallery";
 
             public static class getgallery
             {
                 public static final String URL_METHOD = URL + "?method=getgallery";
+
+                public static ArrayList<NameValuePair> getUrl(long id){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
+                    return dm_partner;
+                }
+            }
+        }
+
+        public static class Feedback {
+            public static final String URL = URL_API + "feedback";
+
+            public static class getgallery
+            {
+                public static final String URL_METHOD = URL + "?method=addfeedbackwithoutcaptcha";
 
                 public static ArrayList<NameValuePair> getUrl(long id){
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
