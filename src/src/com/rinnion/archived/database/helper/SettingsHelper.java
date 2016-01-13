@@ -17,6 +17,7 @@ public class SettingsHelper implements BaseColumns {
     public static String COLUMN_IDENTITY = "_id";
     public static String COLUMN_PARAMETER = "parameter";
     public static String COLUMN_VALUE = "value";
+    public static String COLUMN_TYPE = "type";
     private final String TAG = "SettingsHelper";
     private final DatabaseOpenHelper doh;
 
@@ -24,16 +25,18 @@ public class SettingsHelper implements BaseColumns {
         this.doh = doh;
     }
 
-    public String getParameter(String parameterName) {
-        Log.d(TAG, "getParameter (" + parameterName + ")");
-        String sql = "SELECT l." + SettingsHelper.COLUMN_IDENTITY + ",l." + SettingsHelper.COLUMN_PARAMETER + "," + SettingsHelper.COLUMN_VALUE +
+
+
+    protected String getParameter(String parameterName, String type) {
+        Log.d(TAG, "getStringParameter (" + parameterName + ", " + type + ")");
+        String sql = "SELECT l." + SettingsHelper.COLUMN_IDENTITY + ",l." + SettingsHelper.COLUMN_PARAMETER + ", l." + SettingsHelper.COLUMN_VALUE +
                 " FROM " + SettingsHelper.DATABASE_TABLE + " AS l" +
-                " WHERE l." + SettingsHelper.COLUMN_PARAMETER + "=?";
+                " WHERE l." + SettingsHelper.COLUMN_PARAMETER + "=? AND l." + SettingsHelper.COLUMN_TYPE + "=?";
         SQLiteDatabase d = doh.getReadableDatabase();
         SettingCursor c = (SettingCursor) d.rawQueryWithFactory(
                 new SettingCursor.Factory(),
                 sql,
-                new String[]{parameterName},
+                new String[]{parameterName, type},
                 null);
         c.moveToFirst();
         int index = c.getColumnIndex(SettingsHelper.COLUMN_VALUE);
@@ -43,29 +46,48 @@ public class SettingsHelper implements BaseColumns {
         return c.getString(index);
     }
 
-    public Integer getIntParameter(String parameterName, int i) {
-        String parameter = getParameter(parameterName);
+
+    public String getStringParameter(String parameterName) {
+        String parameter = getParameter(parameterName, "s");
+        return parameter;
+    }
+
+    public int getIntParameter(String parameterName, int i) {
+        String parameter = getParameter(parameterName, "i");
         if (parameter == null) return i;
         return Integer.parseInt(parameter);
     }
 
-    public Double getDoubleParameter(String parameterName, double i) {
-        String parameter = getParameter(parameterName);
-        if (parameter == null) return i;
+    public double getDoubleParameter(String parameterName, double d) {
+        String parameter = getParameter(parameterName, "d");
+        if (parameter == null) return d;
         return Double.parseDouble(parameter);
     }
 
     public void setParameter(String paramName, String paramValue) {
-        Log.d(TAG, String.format("setParameter (%s,%s)", paramName, paramValue));
+        setTypedParameter(paramName, paramValue, "s");
+    }
+
+    public void setParameter(String paramName, int paramValue) {
+        setTypedParameter(paramName, String.valueOf(paramValue), "i");
+    }
+
+    public void setParameter(String paramName, double paramValue) {
+        setTypedParameter(paramName, String.valueOf(paramValue), "d");
+    }
+
+    protected void setTypedParameter(String paramName, String paramValue, String type) {
+        Log.d(TAG, String.format("setTypedParameter (%s, %s, %s)", paramName, paramValue, type));
         ContentValues map;
         map = new ContentValues();
         map.put(SettingsHelper.COLUMN_PARAMETER, paramName);
         map.put(SettingsHelper.COLUMN_VALUE, paramValue);
+        map.put(SettingsHelper.COLUMN_TYPE, type);
         SQLiteDatabase db = null;
         try {
             db = this.doh.getWritableDatabase();
             db.beginTransaction();
-            db.delete(SettingsHelper.DATABASE_TABLE, SettingsHelper.COLUMN_PARAMETER + "=?", new String[]{paramName});
+            db.delete(SettingsHelper.DATABASE_TABLE, SettingsHelper.COLUMN_PARAMETER + "=? AND " + SettingsHelper.COLUMN_TYPE + "=?", new String[]{paramName, type});
             db.insert(SettingsHelper.DATABASE_TABLE, null, map);
             db.setTransactionSuccessful();
         } catch (SQLException e) {

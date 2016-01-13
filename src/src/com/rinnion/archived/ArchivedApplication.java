@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import com.rinnion.archived.utils.Files;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -40,12 +41,32 @@ public class ArchivedApplication extends Application {
         return doh;
     }
 
-    public static String getParameter(String parameter) {
+    public static String getStringParameter(String parameter) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
-        return sh.getParameter(parameter);
+        return sh.getStringParameter(parameter);
+    }
+
+    public static int getIntParameter(String parameter, int i) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        return sh.getIntParameter(parameter, i);
+    }
+
+    public static double getDoubleParameter(String parameter, double d) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        return sh.getDoubleParameter(parameter, d);
     }
 
     public static void setParameter(String parameter, String value) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        sh.setParameter(parameter, value);
+    }
+
+    public static void setParameter(String parameter, int value) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        sh.setParameter(parameter, value);
+    }
+
+    public static void setParameter(String parameter, double value) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
         sh.setParameter(parameter, value);
     }

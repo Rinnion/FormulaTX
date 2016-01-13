@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sqlsCreate">
-        <item>"CREATE TABLE settings (_id INTEGER PRIMARY KEY, parameter TEXT, value TEXT );"</item>
+        <item>"CREATE TABLE settings (_id INTEGER PRIMARY KEY, parameter TEXT, value TEXT, type TEXT );"</item>
         <item>"CREATE TABLE tournament (_id INTEGER PRIMARY KEY, post_name TEXT);"</item>
         <item>"CREATE TABLE news (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
         <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, name TEXT, surname TEXT, full_name TEXT, rating REAL, country TEXT, flag TEXT, favorite TEXT );"</item>
