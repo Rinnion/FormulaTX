@@ -21,7 +21,9 @@ import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.utils.MyWebViewClient;
 import com.rinnion.archived.utils.Network;
 
-import java.io.File;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -81,18 +83,20 @@ public class AboutFragment extends Fragment  {
                 myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
             } else {
                 ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
+                setWebViewSettings(myWebView);
+                loadFromCache(myWebView);
                 if (cm != null) {
 
-                    setWebViewSettings(myWebView);
+
 
                     NetworkInfo ani = cm.getActiveNetworkInfo();
 
-                    Log.d(TAG,"Online ani == " + String.valueOf(ani));
+                    Log.d(TAG, "Online ani == " + String.valueOf(ani));
 
 
 
                     if (ani != null && ani.isConnected()) {
-                        loadFromCache(myWebView);
+
                         Network network=new Network(){
                             @Override
                             protected void onPostExecute(Boolean aBoolean) {
@@ -107,18 +111,22 @@ public class AboutFragment extends Fragment  {
 
                         network.execute();
 
-                    }else{
+                    }
+
+
+
+                    /*else{
                         loadFromCache(myWebView);
 
-                    }
+                    }*/
                 }
-                else{
+               /* else{
                     Log.d(TAG, "WORK OFFLINE");
                     myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
                     myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-                }
+                }*/
 
-
+                /*loadDataToCache(myWebView);*/
 
                 /*myWebView.setWebViewClient(new MyWebViewClient());
                 myWebView.loadUrl("http://yandex.ru");
@@ -147,15 +155,62 @@ public class AboutFragment extends Fragment  {
         myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
     }
 
+
+    public byte[] getFileAllBytes(String filePath)
+    {
+        File file = new File(filePath);
+        int size = (int) file.length();
+        byte[] bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bytes;
+    }
+
     private void loadFromCache(WebView myWebView) {
         Log.d(TAG, "getActiveNetworkInfo isConnected == false or ani == null");
-        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        //myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         Log.d(TAG, "WebView set cache success");
 
         String filePath= Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht");
         File file=new File(filePath);
-        if(file.exists())
-            myWebView.loadUrl("file:///" + filePath);
+
+        if(file.exists()) {
+            //myWebView.loadUrl("file:///" + filePath);
+            byte []fileBytes=getFileAllBytes(filePath);
+            String str = null;
+            try {
+                str = new String(fileBytes, "UTF-8");
+
+                if(str.startsWith("<?xml"))
+                    myWebView.loadData(str, "application/x-webarchive-xml", "UTF-8");
+                else
+                    myWebView.loadUrl("file:///" + filePath);
+                Log.d(TAG,"LoadData size: " + fileBytes.length);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                Log.e(TAG,"UnsupportedEncodingException",e);
+            }
+
+
+
+
+            /**/
+
+
+            //Map<String,String> map=new HashMap<String, String>();
+            //map.put("content-type","content=\"application/x-webarchive-xml\"");
+
+            //myWebView.loadUrl("file:///" + filePath,map);
+        }
         else
             myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
     }

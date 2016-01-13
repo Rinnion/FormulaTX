@@ -57,6 +57,13 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
+    private void prepateHtmlOnWebView()
+    {
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_layout, container, false);
