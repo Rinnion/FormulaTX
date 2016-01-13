@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.webkit.WebSettings;
@@ -17,6 +18,8 @@ import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.utils.Files;
 import com.rinnion.archived.utils.Log;
+import com.rinnion.archived.utils.MyWebViewClient;
+import com.rinnion.archived.utils.Network;
 
 import java.io.File;
 
@@ -62,7 +65,7 @@ public class AboutFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_layout, container, false);
-        WebView myWebView = (WebView) view.findViewById(R.id.tv_about);
+        final WebView myWebView = (WebView) view.findViewById(R.id.tv_about);
 
         Bundle args = getArguments();
         String type = args.getString(TYPE);
@@ -79,42 +82,99 @@ public class AboutFragment extends Fragment  {
             } else {
                 ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
                 if (cm != null) {
+
+                    setWebViewSettings(myWebView);
+
                     NetworkInfo ani = cm.getActiveNetworkInfo();
+
+                    Log.d(TAG,"Online ani == " + String.valueOf(ani));
+
+
+
                     if (ani != null && ani.isConnected()) {
-                        Log.d(TAG,"getActiveNetworkInfo isConnected == true");
-                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-                        myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
-                        myWebView.getSettings().setAppCachePath(Files.getCacheDir());
-                        myWebView.getSettings().setAllowFileAccess(true);
-                        myWebView.getSettings().setAppCacheEnabled(true);
-                        myWebView.getSettings().setDomStorageEnabled(true);
-                        myWebView.getSettings().setJavaScriptEnabled(true);
-                        Log.d(TAG, "WebView set cache success");
+                        loadFromCache(myWebView);
+                        Network network=new Network(){
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                if(aBoolean)
+                                    loadDataToCache(myWebView);
+                                //else
+
+
+                            }
+                        };
+
+                        network.execute();
 
                     }else{
-                        Log.d(TAG,"getActiveNetworkInfo isConnected == false or ani == null");
-                        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
-                        myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
-                        myWebView.getSettings().setAppCachePath(Files.getCacheDir());
-                        myWebView.getSettings().setAllowFileAccess(true);
-                        myWebView.getSettings().setAppCacheEnabled(true);
-                        myWebView.getSettings().setDomStorageEnabled(true);
-                        myWebView.getSettings().setJavaScriptEnabled(true);
-                        Log.d(TAG,"WebView set cache success");
+                        loadFromCache(myWebView);
 
                     }
                 }
                 else{
+                    Log.d(TAG, "WORK OFFLINE");
                     myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+                    myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
                 }
 
-                myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+
+
+                /*myWebView.setWebViewClient(new MyWebViewClient());
+                myWebView.loadUrl("http://yandex.ru");
+                myWebView.requestFocus();
+                */
+
             }
 
         }
 
         myWebView.setBackgroundColor(Color.TRANSPARENT);
         return view;
+    }
+
+    private void loadDataToCache(WebView myWebView) {
+        Log.d(TAG, "getActiveNetworkInfo isConnected == true");
+        myWebView.setWebViewClient(new MyWebViewClient(getActivity()) {
+           @Override
+           public void onPageFinished(WebView view, String url) {
+               super.onPageFinished(view, url);
+
+               view.saveWebArchive(Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht"));
+           }
+       });
+
+        myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+    }
+
+    private void loadFromCache(WebView myWebView) {
+        Log.d(TAG, "getActiveNetworkInfo isConnected == false or ani == null");
+        myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        Log.d(TAG, "WebView set cache success");
+
+        String filePath= Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht");
+        File file=new File(filePath);
+        if(file.exists())
+            myWebView.loadUrl("file:///" + filePath);
+        else
+            myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+    }
+
+    private void setWebViewSettings(WebView myWebView) {
+
+
+        myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+
+        WebSettings mWebViewSettings = myWebView.getSettings();
+        mWebViewSettings.setJavaScriptEnabled(true);
+        mWebViewSettings.setAllowFileAccess(true);
+        mWebViewSettings.setAppCacheEnabled(true);
+        if (Build.VERSION.SDK_INT < 18)
+            mWebViewSettings.setAppCacheMaxSize(8 * 1024 * 1024);
+        mWebViewSettings.setLoadsImagesAutomatically(true);
+        mWebViewSettings.setAppCachePath(Files.getCacheDir());
+        myWebView.setWebViewClient(new MyWebViewClient(getActivity()));
     }
 
     @Override

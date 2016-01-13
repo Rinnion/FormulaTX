@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.*;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import com.rinnion.archived.utils.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
@@ -19,6 +21,7 @@ import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
 import com.rinnion.archived.network.loaders.NewsAsyncLoader;
+import com.rinnion.archived.utils.MoveTracker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +56,13 @@ public class TodayFragment extends Fragment implements
 
         super.onCreate(savedInstanceState);
     }
+    public static View tmpViewTest;
+    public static View tmpViewWeather;
+    public static View tmpViewEvents;
+    public static View tmpViewNews;
+    public static MoveTracker moveTracker;
+    public static boolean isUpped=false;
+    public static int mHeight=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +74,158 @@ public class TodayFragment extends Fragment implements
         final TextView mosTemp = (TextView)view.findViewById(R.id.tl_tv_moscow_temp);
         final TextView mosMain = (TextView)view.findViewById(R.id.tl_tv_moscow_main);
         final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
+
+        final  View tmpView=(View)view.findViewById(R.id.textView7);
+        tmpViewTest=view.findViewById(R.id.main_today);
+        tmpViewWeather=view.findViewById(R.id.weather);
+        tmpViewEvents=view.findViewById(R.id.events);
+        tmpViewNews=view.findViewById(R.id.tl_lv_news);
+
+        moveTracker=new MoveTracker();
+
+
+
+
+
+        tmpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                /*if (currentState != State.EDIT_MOVE) return false;*/
+
+                //LinearLayout params = (FrameLayout.LayoutParams) view.getLayoutParams();
+                if(mHeight==0) {
+                    mHeight = tmpViewWeather.getMeasuredHeight();
+
+                }
+                LinearLayout linearLayout = (LinearLayout) tmpViewTest;
+                //Animation slideAnimUp=AnimationUtils.loadAnimation(ArchivedApplication.getAppContext(),R.anim.weather_up);
+                //Animation slideAnimDown=AnimationUtils.loadAnimation(ArchivedApplication.getAppContext(),R.anim.weather_down);
+
+                TranslateAnimation translateAnimationUp=new TranslateAnimation(0,0,0,-mHeight);
+
+                translateAnimationUp.setDuration(1000);
+                translateAnimationUp.setFillAfter(false);
+                translateAnimationUp.setFillEnabled(true);
+                //translateAnimationUp.setFillBefore(false);
+
+                translateAnimationUp.setInterpolator(new AccelerateInterpolator());
+                translateAnimationUp.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        //tmpViewTest.setEnabled(false);
+                      //  tmpViewTest.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // tmpViewTest.setEnabled(true)
+                         tmpView.clearAnimation();
+                       tmpViewTest.setTranslationY(-mHeight);
+
+                       // tmpView.clearAnimation();
+                        //tmpViewTest.requestLayout();
+                        //tmpViewNews.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom() + mHeight);
+
+                        //tmpViewNews.requestLayout();
+
+                        //tmpViewNews.layout(tmpViewEvents.getLeft(), tmpViewEvents.getTop(), tmpViewEvents.getRight(), tmpViewEvents.getBottom() + mHeight);
+
+                       // tmpViewTest.setVisibility(View.VISIBLE);
+                        //tmpViewTest.requestLayout();
+
+                        int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
+
+                        /*tmpViewNews.getLayoutParams().height=tmpViewNews.getLayoutParams().height+specH;*/
+
+                    Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
+
+                        tmpViewTest.getLayoutParams().height=specH;
+                        isUpped = true;
+                        //tmpViewTest.requestLayout();
+                        //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                TranslateAnimation translateAnimationDown=new TranslateAnimation(0,0,-mHeight,0);
+                translateAnimationDown.setDuration(2000);
+                translateAnimationDown.setFillAfter(false);
+                translateAnimationDown.setFillEnabled(true);
+                translateAnimationDown.setFillBefore(false);
+
+                translateAnimationDown.setInterpolator(new AccelerateInterpolator());
+                translateAnimationDown.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        //tmpViewTest.setEnabled(false);
+                        tmpViewTest.setTranslationY(0);
+                        tmpViewTest.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        //tmpViewTest.setEnabled(true);
+                        tmpViewTest.setTranslationY(0);
+                        tmpView.clearAnimation();
+
+
+                        tmpViewTest.setVisibility(View.VISIBLE);
+                        isUpped=false;
+                        // tmpViewTest.requestLayout();
+                        //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
+                /*if (view.getId() != R.id.weather) return false;*/
+
+                switch (event.getAction()) {
+
+
+                    case MotionEvent.ACTION_UP:
+                        /*params.height = (int) event.getRawY() - view.getHeight();
+
+                        linearLayout.setLayoutParams(params);*/
+
+                        if (moveTracker.Up(event) == MoveTracker.MoveUp) {
+                            if(!isUpped)
+                            linearLayout.startAnimation(translateAnimationUp);
+
+                            //tmpViewEvents.startAnimation(slideAnimUp);
+
+                        } else {
+                            //linearLayout.startAnimation(slideAnimDown);
+                            //tmpViewEvents.startAnimation(slideAnimDown);
+                            if(isUpped)
+                            linearLayout.startAnimation(translateAnimationDown);
+                        }
+                        Log.d(TAG, "MotionEvent.ACTION_UP");
+                        break;
+
+                    case MotionEvent.ACTION_DOWN:
+                        moveTracker.Down(event);
+                        /*linearLayout.setLayoutParams(params);*/
+                        Log.d(TAG, "MotionEvent.ACTION_DOWN");
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+
 
         getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.menu_icon);
@@ -173,6 +335,7 @@ public class TodayFragment extends Fragment implements
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
+
     }
 
     @Override
@@ -202,6 +365,7 @@ public class TodayFragment extends Fragment implements
         Log.d(TAG, "onLoadFinished");
         //Присваиваем результат в адаптер для отображения
         mAdapter.swapCursor(data);
+
     }
 
     @Override
