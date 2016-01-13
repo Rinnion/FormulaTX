@@ -1,5 +1,6 @@
 package com.rinnion.archived.utils;
 
+import android.os.AsyncTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -11,7 +12,11 @@ import org.apache.http.params.HttpParams;
 /**
  * Created by Eloy on 12.01.2016.
  */
-public class Network {
+public class Network extends AsyncTask<Void,Void,Boolean> {
+    public static final String TAG="Network";
+
+
+
 
     public static Boolean isOnlineWithDataConnection() {
 
@@ -34,8 +39,19 @@ public class Network {
             response.getStatusLine().getStatusCode();
             return true;
         } catch (Exception e) {
+
+
             return false;
+
         }
 
+    }
+
+
+
+
+    @Override
+    protected Boolean doInBackground(Void[] params) {
+        return isOnlineWithDataConnection();
     }
 }
