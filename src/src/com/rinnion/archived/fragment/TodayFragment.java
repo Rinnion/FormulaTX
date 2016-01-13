@@ -85,7 +85,7 @@ public class TodayFragment extends Fragment implements
     }
 
     private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
-        String weather_petersburg = ArchivedApplication.getParameter("weather_" + petersburg);
+        String weather_petersburg = ArchivedApplication.getStringParameter("weather_" + petersburg);
         if (weather_petersburg != null) {
             try{
                 JSONObject jsonPetersburg = new JSONObject(weather_petersburg);

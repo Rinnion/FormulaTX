@@ -42,6 +42,12 @@ public final class Settings {
     public static final String VERSION_BUILD_TIME = "0907";
     public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
+
+    public static final String LOADING_TYPE = "preloading_type";
+    public static final String LOADING_PROGRESS = "preloading_progress";
+    public static final String LOADING_ERROR = "preloading_error";
+    public static final String LOADING_CUSTOM_MESSAGE = "preloading_custom_message";
+
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";
 

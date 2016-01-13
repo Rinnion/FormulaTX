@@ -3,6 +3,34 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/assets/json/211ru.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/212ru.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/213ru.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/gallery-getlistgallery-gallery.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/gallery-getlistgallery-podcast.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/object.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-30.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-35.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-37.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-38.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-39.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-40.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-41.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-42.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-43.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-44.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-45.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-46.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-47.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/parsers-48.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/partner.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/references-57-1.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/references-57-2.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/static-page-card.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/static-page-product.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/static_page.json" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

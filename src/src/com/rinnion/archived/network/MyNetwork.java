@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Describes all Network operations
@@ -35,7 +34,7 @@ public final class MyNetwork {
     public static Bundle queryWeather(String country) {
         Log.d(TAG, String.format("query wheather: %s", country));
         final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        String credentials = ArchivedApplication.getParameter(Settings.CREDENTIALS);
+        String credentials = ArchivedApplication.getStringParameter(Settings.CREDENTIALS);
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher = builder.setName("queryMessages")
@@ -393,7 +392,7 @@ public final class MyNetwork {
     }
 
     public static void sendComment(String author, String comment, String email, String phone) throws Exception {
-        String credentials = ArchivedApplication.getParameter(Settings.CREDENTIALS);
+        String credentials = ArchivedApplication.getStringParameter(Settings.CREDENTIALS);
 
         ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(4);
         dm_partner.add(new BasicNameValuePair("author", String.valueOf(author)));

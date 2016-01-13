@@ -14,15 +14,15 @@ public final class SettingAccessor {
     }
 
     private String getParameter(String parameter) {
-        return getSettingsHelper().getParameter(parameter);
+        return getSettingsHelper().getStringParameter(parameter);
     }
 
     private void setParameter(String parameter, String value) {
-        getSettingsHelper().setParameter(parameter, String.valueOf(value));
+        getSettingsHelper().setParameter(parameter, value);
     }
 
     private void setParameter(String parameter, Long value) {
-        getSettingsHelper().setParameter(parameter, String.valueOf(value));
+        getSettingsHelper().setParameter(parameter, value);
     }
 
     private long castToLong(String parameter) {
