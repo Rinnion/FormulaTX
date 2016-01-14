@@ -90,7 +90,7 @@ public class NewsFragment extends Fragment {
         }
 
         content.loadData("<html><style>body {padding:0px; color:#FFF;}</style><body>" + apiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-                content.setBackgroundColor(Color.TRANSPARENT);
+        content.setBackgroundColor(Color.TRANSPARENT);
         date.setText(apiObject.date);
         title.setText(apiObject.title);
 

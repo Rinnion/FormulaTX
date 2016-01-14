@@ -1,14 +1,11 @@
 package com.rinnion.archived.network;
 
 import android.os.Bundle;
+import com.rinnion.archived.database.helper.*;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.helper.ApiObjectHelper;
-import com.rinnion.archived.database.helper.GamerHelper;
-import com.rinnion.archived.database.helper.NewsHelper;
-import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.handlers.*;
@@ -85,7 +82,7 @@ public final class MyNetwork {
 
     //Загрузка списка турниров
     public static Bundle queryGamerList(long id) {
-        Log.d(TAG, String.format("query queryTournamentNewsList"));
+        Log.d(TAG, String.format("query queryGamerList"));
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
@@ -116,6 +113,47 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    public static Bundle queryProductList() {
+        Log.d(TAG, String.format("query queryProductList"));
+
+        ApiObjectListHandler handler = new ApiObjectListHandler();
+
+        if (Settings.NETDEBUG) {
+            String fileName = "json/0-product.json";
+            Bundle result = processFile(fileName, handler);
+            return result;
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle queryCardList() {
+        Log.d(TAG, String.format("query queryProductList"));
+
+        ApiObjectListHandler handler = new ApiObjectListHandler();
+
+        if (Settings.NETDEBUG) {
+            String fileName = "json/0-product.json";
+            Bundle result = processFile(fileName, handler);
+            return result;
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
 
     //Загрузка списка новостей турнира
     public static Bundle queryTournamentNewsList(long id) {
@@ -350,12 +388,28 @@ public final class MyNetwork {
         ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Gamer);
         GamerHandler handlerGamer = new GamerHandler(new GamerHelper(doh));
 
+        return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
+    }
+
+    public static Bundle queryProduct(int id) {
+        Log.d(TAG, String.format("query product"));
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Product);
+        ProductHandler productHandler = new ProductHandler(new ProductHelper(doh));
+
+        return getObjectWithAdditionalFields(id, handlerObject, productHandler);
+    }
+
+    private static Bundle getObjectWithAdditionalFields(int id, ApiObjectHandler handlerObject, JSONObjectHandler handlerProduct) {
+        Log.d(TAG, String.format("query object with additional fields"));
+
         if (Settings.NETDEBUG) {
             String fileName = "json/" + String.valueOf(id) + "ru.json";
             processFile(fileName, handlerObject);
 
             fileName = "json/" + String.valueOf(id) + "add.json";
-            processFile(fileName, handlerGamer);
+            processFile(fileName, handlerProduct);
             return Bundle.EMPTY;
         }
 
@@ -375,7 +429,7 @@ public final class MyNetwork {
             fetcher = builder.setName("queryApiObject")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getUrl(id))
-                    .setHandler(handlerGamer)
+                    .setHandler(handlerProduct)
                     .create();
 
             fetcher.execute();

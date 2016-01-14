@@ -75,6 +75,21 @@ public class MyNetworkContentContract {
                 }
             }
 
+            public static class getallstaticpagefromparentproduct
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentproduct";
+            }
+
+            public static class getallstaticpagefromparentticket
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentticket";
+            }
+
+            public static class getallstaticpagefromparentradio
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentradio";
+            }
+
             public static class getadditionalfields
             {
                 public static final String URL_METHOD = URL + "?method=getadditionalfields";

@@ -82,11 +82,6 @@ public class DownloadService extends IntentService {
         ArrayList<ApiObject> tournamentList = new ArrayList<ApiObject>(intArray.length);
         float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
         for (int i = 0; i < intArray.length; i++) {
-            try {
-                Thread.sleep(1000L);
-            } catch (InterruptedException ignored) {
-                return tournamentList;
-            }
             int id = intArray[i];
             Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);

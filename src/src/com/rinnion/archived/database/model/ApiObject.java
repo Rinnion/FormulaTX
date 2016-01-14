@@ -11,6 +11,7 @@ public class ApiObject implements Serializable{
     public static final String NEWS = "";
     public static final String GAMER = "gamer";
     public static final String OBJECT = "object";
+    public static final String PRODUCT = "product";
     public final long id;
     public String user;
     public String date;
