@@ -80,9 +80,9 @@ public class MyNetworkContentContract {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentproduct";
             }
 
-            public static class getallstaticpagefromparentticket
+            public static class getallstaticpagefromparentcard
             {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentticket";
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentcard";
             }
 
             public static class getallstaticpagefromparentradio

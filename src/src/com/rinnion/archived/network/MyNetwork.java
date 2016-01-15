@@ -135,7 +135,7 @@ public final class MyNetwork {
     }
 
     public static Bundle queryCardList() {
-        Log.d(TAG, String.format("query queryProductList"));
+        Log.d(TAG, String.format("queryCardList"));
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
@@ -147,8 +147,8 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
-        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+        HttpRequester fetcher = builder.setName("query all cards")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentcard.URL_METHOD)
                 .setHandler(handler)
                 .create();
 

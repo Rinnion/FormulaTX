@@ -206,11 +206,7 @@ public class AboutFragment extends Fragment  {
     }
 
     private void setWebViewSettings(WebView myWebView) {
-
-
         myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-
         WebSettings mWebViewSettings = myWebView.getSettings();
         mWebViewSettings.setJavaScriptEnabled(true);
         mWebViewSettings.setAllowFileAccess(true);
@@ -224,20 +220,6 @@ public class AboutFragment extends Fragment  {
 
         myWebView.setWebViewClient(new MyWebViewClient(getActivity()));
 
-    }
-
-    private void setWebViewSettings(WebView myWebView) {
-        myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-
-        WebSettings mWebViewSettings = myWebView.getSettings();
-        mWebViewSettings.setJavaScriptEnabled(true);
-        mWebViewSettings.setAllowFileAccess(true);
-        mWebViewSettings.setAppCacheEnabled(true);
-        if (Build.VERSION.SDK_INT < 18)
-            mWebViewSettings.setAppCacheMaxSize(8 * 1024 * 1024);
-        mWebViewSettings.setLoadsImagesAutomatically(true);
-        mWebViewSettings.setAppCachePath(Files.getCacheDir());
     }
 
     @Override
