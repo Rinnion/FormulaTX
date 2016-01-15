@@ -140,7 +140,7 @@ public final class MyNetwork {
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
         if (Settings.NETDEBUG) {
-            String fileName = "json/0-product.json";
+            String fileName = "json/0-card.json";
             Bundle result = processFile(fileName, handler);
             return result;
         }
@@ -279,7 +279,7 @@ public final class MyNetwork {
             string = sb.toString();
 
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+            Log.e(TAG, "Cannot find file: " + fileName);
         }
         return string;
     }
@@ -399,6 +399,16 @@ public final class MyNetwork {
         ProductHandler productHandler = new ProductHandler(new ProductHelper(doh));
 
         return getObjectWithAdditionalFields(id, handlerObject, productHandler);
+    }
+
+    public static Bundle queryCard(int id) {
+        Log.d(TAG, String.format("query card"));
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Card);
+        CardHandler cardHandler = new CardHandler(new CardHelper(doh));
+
+        return getObjectWithAdditionalFields(id, handlerObject, cardHandler);
     }
 
     private static Bundle getObjectWithAdditionalFields(int id, ApiObjectHandler handlerObject, JSONObjectHandler handlerProduct) {
