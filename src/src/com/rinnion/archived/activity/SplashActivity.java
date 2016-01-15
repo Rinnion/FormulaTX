@@ -47,6 +47,7 @@ public class SplashActivity extends Activity {
                     //noinspection ConstantConditions
                     final String error = bundle.getString((Settings.DEBUG) ? Settings.LOADING_CUSTOM_MESSAGE : Settings.LOADING_ERROR);
                     Log.d(TAG, "error string: " + error);
+
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
@@ -64,7 +65,8 @@ public class SplashActivity extends Activity {
                                     }
                                 });
                                 Log.d(TAG, "start dialog: ");
-                                ab.create().show();
+                                AlertDialog dialog = ab.create();
+                                dialog.show();
                             } catch (Exception ex) {
                                 Log.e(TAG, "error: ", ex);
                             }

@@ -4,6 +4,9 @@
     <entry_points version="2.0" />
   </component>
   <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/assets/json/0-card.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/0-object.json" />
+    <file url="file://$PROJECT_DIR$/assets/json/0-product.json" />
     <file url="file://$PROJECT_DIR$/assets/json/201en.json" />
     <file url="file://$PROJECT_DIR$/assets/json/201ru.json" />
     <file url="file://$PROJECT_DIR$/assets/json/205en.json" />

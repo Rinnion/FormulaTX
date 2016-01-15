@@ -163,7 +163,7 @@ public class ApiObjectHelper implements BaseColumns {
             Log.d(TAG, "success");
             return true;
         } catch (SQLException e) {
-            Log.e(TAG, "Error clearing self location table");
+            Log.e(TAG, "Error clear table");
             return false;
         }
     }
@@ -211,7 +211,7 @@ public class ApiObjectHelper implements BaseColumns {
             return (db.insert(DATABASE_TABLE, null, map)!=-1);
 
         } catch (SQLException e) {
-            Log.e(TAG, "Error writing location", e);
+            Log.e(TAG, "Error adding", e);
             return false;
         }
     }
@@ -219,19 +219,17 @@ public class ApiObjectHelper implements BaseColumns {
     public void delete(long id) {
         Log.d(TAG, "delete (" + id + ")");
         try {
-            Log.d(TAG, "Delete self location: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id)};
             db.delete(DATABASE_TABLE, _ID + "=?", args);
         } catch (SQLException ex) {
-            Log.e(TAG, "Error delete self location", ex);
+            Log.e(TAG, "Error delete", ex);
         }
     }
 
     public void delete(long id, int type) {
         Log.d(TAG, "delete (id:" + id + ", type:" + type+ ")");
         try {
-            Log.d(TAG, "Delete self location: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id),Integer.toString(type)};
             db.delete(DATABASE_TABLE, _ID + "=? and " + COLUMN_OBJ_TYPE + "=?", args);
@@ -279,7 +277,7 @@ public class ApiObjectHelper implements BaseColumns {
     }
 
     public ApiObject getByPostName(String post_name) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getByPostName ()");
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
