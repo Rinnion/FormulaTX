@@ -4,5 +4,6 @@
     <item type="id" name="weather_loader"/>
     <item type="id" name="comment_loader"/>
     <item type="id" name="profile_loader"/>
+    <item type="id" name="program_loader"/>
     <item type="id" name="loader"/>
 </resources>

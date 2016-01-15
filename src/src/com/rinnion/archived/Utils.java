@@ -269,7 +269,7 @@ public class Utils {
             FileInputStream fstrm = new FileInputStream(filepath);
             String filename = Uri.parse(filepath).getLastPathSegment();
 
-            String credentials = ArchivedApplication.getParameter(Settings.CREDENTIALS);
+            String credentials = ArchivedApplication.getStringParameter(Settings.CREDENTIALS);
 
             SendFile(photoUploadPURL, method, credentials, fstrm, filename, "no description");
 

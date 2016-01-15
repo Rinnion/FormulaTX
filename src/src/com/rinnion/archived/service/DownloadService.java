@@ -8,7 +8,6 @@ import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TwitterHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
@@ -20,9 +19,6 @@ import java.util.Map;
 public class DownloadService extends IntentService {
 
     public static final String TYPE = "type";
-    public static final String PROGRESS = "progress";
-    public static final String ERROR = "error";
-    public static final String CUSTOM_MESSAGE = "message";
 
     public static final String NOTIFICATION = "com.rinnion.archived.service.receiver";
     private String TAG = getClass().getSimpleName();
@@ -30,6 +26,17 @@ public class DownloadService extends IntentService {
     public DownloadService() {
         super("DownloadService");
     }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        ArchivedApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_PROGRESS);
+        ArchivedApplication.setParameter(Settings.LOADING_PROGRESS, String.valueOf(0));
+        ArchivedApplication.setParameter(Settings.LOADING_CUSTOM_MESSAGE, "");
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+
 
     // will be called asynchronously by Android
     @Override
@@ -56,6 +63,8 @@ public class DownloadService extends IntentService {
 
     }
 
+
+
     private void loadAbout(int aboutApiObject) {
         MyNetwork.queryApiObject(aboutApiObject, ApiObjectTypes.EN_About);
     }
@@ -77,15 +86,15 @@ public class DownloadService extends IntentService {
             Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
             try {
-                SerializedPhpParser parser = new SerializedPhpParser(ao.tables);
-                Object parse = parser.parse();
-                Log.d(TAG, parse.toString());
+                //SerializedPhpParser parser = new SerializedPhpParser(ao.tables);
+                //Object parse = parser.parse();
+                //Log.d(TAG, parse.toString());
             }catch(Exception ex){
                 Log.w(TAG, "parse error" + ex.getMessage());
             }
 
-            FetchNewsForTournament(ao);
-            FetchSocialsForTournament(ao);
+            //FetchNewsForTournament(ao);
+            //FetchSocialsForTournament(ao);
             publishProgress((int)(startProgress + pr * i), null);
         }
         return tournamentList;
@@ -128,20 +137,30 @@ public class DownloadService extends IntentService {
 
     private void publishError(String error, String custom_message) {
         Log.d(TAG, "publishError: " + error);
+        ArchivedApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_ERROR);
+        ArchivedApplication.setParameter(Settings.LOADING_ERROR, error);
+        ArchivedApplication.setParameter(Settings.LOADING_CUSTOM_MESSAGE, custom_message);
+
         Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(TYPE, ERROR);
-        intent.putExtra(ERROR, error);
-        intent.putExtra(CUSTOM_MESSAGE, custom_message);
+        intent.putExtra(Settings.LOADING_TYPE, Settings.LOADING_ERROR);
+        intent.putExtra(Settings.LOADING_ERROR, error);
+        intent.putExtra(Settings.LOADING_CUSTOM_MESSAGE, custom_message);
         sendBroadcast(intent);
+
+
     }
 
 
     private void publishProgress(int progress, String custom_message) {
         Log.d(TAG, "publishProgress: " + progress);
+        ArchivedApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_PROGRESS);
+        ArchivedApplication.setParameter(Settings.LOADING_PROGRESS, progress);
+        ArchivedApplication.setParameter(Settings.LOADING_CUSTOM_MESSAGE, custom_message);
+
         Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(TYPE, PROGRESS);
-        intent.putExtra(PROGRESS, progress);
-        intent.putExtra(CUSTOM_MESSAGE, custom_message);
+        intent.putExtra(Settings.LOADING_TYPE, Settings.LOADING_PROGRESS);
+        intent.putExtra(Settings.LOADING_PROGRESS, progress);
+        intent.putExtra(Settings.LOADING_CUSTOM_MESSAGE, custom_message);
         sendBroadcast(intent);
     }
 

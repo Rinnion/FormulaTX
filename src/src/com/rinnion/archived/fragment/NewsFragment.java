@@ -57,6 +57,13 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
+    private void prepateHtmlOnWebView()
+    {
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_layout, container, false);
@@ -83,7 +90,7 @@ public class NewsFragment extends Fragment {
         }
 
         content.loadData("<html><style>body {padding:0px; color:#FFF;}</style><body>" + apiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-                content.setBackgroundColor(Color.TRANSPARENT);
+        content.setBackgroundColor(Color.TRANSPARENT);
         date.setText(apiObject.date);
         title.setText(apiObject.title);
 

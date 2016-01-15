@@ -209,7 +209,17 @@ public class MainTournamentFragment extends Fragment{
     }
 
     public void showEmptyFragment() {
-        EmptyFragment mlf = new EmptyFragment();
+        ProgramFragment mlf = new ProgramFragment();
+        String type = getArguments().getString(TYPE);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Bundle bundle = new Bundle();
+        Tournament t = th.getByPostName(type);
+        if (t != null) {
+            bundle.putLong(ProgramFragment.TOURNAMENT_ID, t.id);
+        }else{
+            bundle.putLong(ProgramFragment.TOURNAMENT_ID, 0);
+        }
+        mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)

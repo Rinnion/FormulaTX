@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:gravity="center_vertical" android:paddingRight="15dp"
+              android:paddingLeft="15dp" android:paddingTop="7dp" android:paddingBottom="7dp">
+
+    <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/ipl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_weight="1" android:paddingLeft="15dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Апполинарий Апполинариович Ааполинариев"
+                android:id="@+id/ipl_tv_title" style="@style/main_text"/>
+    </LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="285"
+            android:id="@+id/ipl_tv_price"
+            android:textColor="#FFB500" style="@style/main_text_small"/>
+    <TextView style="@style/main_text_small" android:layout_width="wrap_content"
+              android:layout_height="wrap_content" android:text="Р" android:id="@+id/textView"
+              android:textColor="#FFB500"/>
+</LinearLayout>

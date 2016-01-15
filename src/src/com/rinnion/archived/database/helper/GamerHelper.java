@@ -99,7 +99,7 @@ public class GamerHelper implements BaseColumns {
     }
 
     public Gamer getGamer(long id) {
-        Log.v(TAG, "getGamer ("+id+")");
+        Log.v(TAG, "getProduct ("+id+")");
 
         String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +

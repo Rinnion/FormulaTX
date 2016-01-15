@@ -3,10 +3,10 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.content.Intent;
-import android.content.Loader;
+import android.content.*;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import com.rinnion.archived.database.cursor.ProductCursor;
 import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
@@ -21,8 +21,9 @@ import com.rinnion.archived.fragment.adapter.GamerAdapter;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class ProgramFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
+public class ProgramFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ProgramCursor> {
 
+    public static final String TOURNAMENT_ID = "tourn_id";
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
 
@@ -41,7 +42,7 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
 
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.program_loader, Bundle.EMPTY, this);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_tournament_program);
@@ -66,22 +67,41 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
 
 
     @Override
-    public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<ProgramCursor> onCreateLoader(int id, Bundle args) {
+        return new ProgramAsyncLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
-        MatrixCursor mc = new MatrixCursor(GamerAdapter.fromSpinner);
-        mc.addRow(new Object[]{1, null, "Томаш Бердых", "Чешская Республика", "CHZ", "6",});
-        mc.addRow(new Object[]{2, null, "Милош Раонич", "Канада", "CND", "10",});
-        mc.addRow(new Object[]{3, null, "Михаил Кукушкин", "Казахстан", "KAZ", "54",});
-
-        mAdapter.swapCursor(mc);
+    public void onLoadFinished(Loader<ProgramCursor> loader, ProgramCursor data) {
+        mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<TournamentCursor> loader) {
+    public void onLoaderReset(Loader<ProgramCursor> loader) {
+
+    }
+
+    private class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
+        public ProgramAsyncLoader(Context context) {
+            super(context);
+        }
+
+        @Override
+        public ProgramCursor loadInBackground() {
+
+            ProgramCursor mc = new ProgramCursor();
+            mc.addRow(1, "Пн, 11 янв 16", null, true);
+            mc.addRow(1, "Начало", "12:00", true);
+            mc.addRow(1, "Презентация", "23:00", true);
+            mc.addRow(1, "Вт, 12 янв 16", "8:30", true);
+            mc.addRow(1, "Нало продолжения", null, false);
+            mc.addRow(1, "Ср, 13 янв 16", null, false);
+            mc.addRow(1, "Завершение", "9:00", false);
+            mc.addRow(1, "Кофе пауза", "12:00", false);
+
+            return mc;
+        }
+
 
     }
 }
