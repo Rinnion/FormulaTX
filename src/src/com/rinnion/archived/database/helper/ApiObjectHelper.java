@@ -277,7 +277,7 @@ public class ApiObjectHelper implements BaseColumns {
     }
 
     public ApiObject getByPostName(String post_name) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getByPostName ()");
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +

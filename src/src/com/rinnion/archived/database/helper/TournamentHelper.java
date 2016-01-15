@@ -30,12 +30,14 @@ public class TournamentHelper extends ApiObjectHelper {
     public Tournament get(long id) {
         Log.d(TAG, "get (" + id + ")");
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id=? AND " + COLUMN_OBJ_TYPE +"=?";
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE _id=? AND " + COLUMN_DISPLAY_METHOD + "=?";
         SQLiteDatabase d = doh.getReadableDatabase();
         TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
                 new TournamentCursor.Factory(),
                 sql,
-                new String[]{String.valueOf(id), String.valueOf(ApiObjectTypes.EN_Object)},
+                new String[]{String.valueOf(id), ApiObject.OBJECT},
                 null);
         if (c.getCount() == 0) return null;
         c.moveToFirst();
@@ -47,17 +49,37 @@ public class TournamentHelper extends ApiObjectHelper {
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
-                " WHERE "+COLUMN_OBJ_TYPE+"=? AND " + COLUMN_POST_NAME + " not in (?,?)" +
+                " WHERE " + COLUMN_DISPLAY_METHOD + "=? AND " + COLUMN_POST_NAME + " not in (?,?)" +
                 " ORDER BY " + COLUMN_TITLE + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
                 new TournamentCursor.Factory(),
                 sql,
-                new String[] {String.valueOf(ApiObjectTypes.EN_Object), TOURNAMENT_LADIES_TROPHY, TOURNAMENT_OPEN},
+                new String[]{ApiObject.OBJECT, TOURNAMENT_LADIES_TROPHY, TOURNAMENT_OPEN},
                 null);
         c.moveToFirst();
         return c;
+    }
+
+    @Override
+    public Tournament getByPostName(String post_name) {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE +
+                " WHERE " + COLUMN_POST_NAME + "=? AND " + COLUMN_DISPLAY_METHOD + "=?" +
+                " ORDER BY " + COLUMN_TITLE + " ASC";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TournamentCursor c = (TournamentCursor) d.rawQueryWithFactory(
+                new TournamentCursor.Factory(),
+                sql,
+                new String[]{post_name, ApiObject.OBJECT},
+                null);
+        if (c.getCount() == 0) return null;
+        c.moveToFirst();
+        return c.getItem();
     }
 
 }
