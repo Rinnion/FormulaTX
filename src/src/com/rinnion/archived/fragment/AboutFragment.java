@@ -143,6 +143,8 @@ public class AboutFragment extends Fragment  {
 
     private void loadDataToCache(WebView myWebView) {
         Log.d(TAG, "getActiveNetworkInfo isConnected == true");
+        myWebView.stopLoading();
+
         myWebView.setWebViewClient(new MyWebViewClient(getActivity()) {
            @Override
            public void onPageFinished(WebView view, String url) {
@@ -229,7 +231,11 @@ public class AboutFragment extends Fragment  {
             mWebViewSettings.setAppCacheMaxSize(8 * 1024 * 1024);
         mWebViewSettings.setLoadsImagesAutomatically(true);
         mWebViewSettings.setAppCachePath(Files.getCacheDir());
+
+
+
         myWebView.setWebViewClient(new MyWebViewClient(getActivity()));
+
     }
 
     @Override
