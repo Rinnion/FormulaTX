@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -38,6 +39,8 @@ public class GalleryFragment extends Fragment {
     private static final int PHOTO_LOADER = 1;
     private static final int VIDEO_LOADER = 2;
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
+    public static final String PHOTO = "photo";
+    public static final String VIDEO = "video";
     private String TAG = getClass().getCanonicalName();
 
     private WebView mTextViewAbout;
@@ -78,12 +81,12 @@ public class GalleryFragment extends Fragment {
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег
-        tabSpec = tabHost.newTabSpec("photo");
+        tabSpec = tabHost.newTabSpec(PHOTO);
         tabSpec.setIndicator("Фото");
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("video");
+        tabSpec = tabHost.newTabSpec(VIDEO);
         tabSpec.setIndicator("Видео");
         tabSpec.setContent(R.id.tab2);
         tabHost.addTab(tabSpec);
@@ -91,18 +94,16 @@ public class GalleryFragment extends Fragment {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("photo")) {
+                if (tabId.equals(PHOTO)) {
                     Bundle bundle = getArguments();
                     getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
                 }
-                if (tabId.equals("video")) {
+                if (tabId.equals(VIDEO)) {
                     Bundle bundle = getArguments();
                     getLoaderManager().initLoader(VIDEO_LOADER, bundle, new VideoLoaderCallback());
                 }
             }
         });
-
-        tabHost.setCurrentTabByTag("photo");
 
         String[] names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_PICTURE, GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE};
         int[] to = new int[]{R.id.il_iv_image, R.id.il_tv_text};
@@ -125,6 +126,22 @@ public class GalleryFragment extends Fragment {
             }
         };
         gvPhoto.setAdapter(mPhotoAdapter);
+        gvPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GalleryContentFragment gcf = new GalleryContentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(GalleryContentFragment.GALLERY, l);
+                bundle.putString("TYPE", PHOTO);
+                gcf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, gcf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
@@ -132,14 +149,32 @@ public class GalleryFragment extends Fragment {
         mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-//                Picasso.with(getActivity())
-//                        .load(value)
-//                        .resize(width, width).centerCrop()
-//                        .placeholder(R.drawable.logo_splash_screen)
-//                        .into(v);
+                Picasso.with(getActivity())
+                        .load(value)
+                        .resize(width, width).centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                        .into(v);
             }
         };
         gvVideo.setAdapter(mVideoAdapter);
+        gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GalleryContentFragment gcf = new GalleryContentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(GalleryContentFragment.GALLERY, l);
+                bundle.putString(GalleryContentFragment.TYPE, GalleryContentFragment.VIDEO);
+                gcf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, gcf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        tabHost.setCurrentTabByTag(PHOTO);
 
         Bundle bundle = getArguments();
         getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());

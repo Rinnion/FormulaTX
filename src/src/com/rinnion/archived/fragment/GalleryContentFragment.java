@@ -18,10 +18,13 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.DatabaseOpenHelper;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
+import com.rinnion.archived.network.loaders.GalleryContentAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import com.squareup.picasso.Picasso;
 
@@ -37,11 +40,16 @@ public class GalleryContentFragment extends Fragment {
     private static final int PHOTO_LOADER = 1;
     private static final int VIDEO_LOADER = 2;
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
+    public static final String PHOTO = "photo";
+    public static final String VIDEO = "video";
+    public static final String TYPE = "TYPE";
+    public static final String GALLERY = "GALLERY";
     private String TAG = getClass().getCanonicalName();
 
     private WebView mTextViewAbout;
     private SimpleCursorAdapter mPhotoAdapter;
     private SimpleCursorAdapter mVideoAdapter;
+    private GalleryHelper galleryHelper;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -66,6 +74,8 @@ public class GalleryContentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        galleryHelper = new GalleryHelper(doh        );
         super.onCreate(savedInstanceState);
     }
 
@@ -77,12 +87,12 @@ public class GalleryContentFragment extends Fragment {
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег
-        tabSpec = tabHost.newTabSpec("photo");
+        tabSpec = tabHost.newTabSpec(GalleryContentFragment.PHOTO);
         tabSpec.setIndicator("Фото");
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("video");
+        tabSpec = tabHost.newTabSpec(VIDEO);
         tabSpec.setIndicator("Видео");
         tabSpec.setContent(R.id.tab2);
         tabHost.addTab(tabSpec);
@@ -90,18 +100,14 @@ public class GalleryContentFragment extends Fragment {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("photo")){
-                    Bundle bundle = new Bundle();
-                    getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
+                if (tabId.equals(PHOTO)) {
+                    getLoaderManager().initLoader(PHOTO_LOADER, getArguments(), new PhotoLoaderCallback());
                 }
-                if (tabId.equals("video")){
-                    Bundle bundle = new Bundle();
-                    getLoaderManager().initLoader(VIDEO_LOADER, bundle, new VideoLoaderCallback());
+                if (tabId.equals(VIDEO)) {
+                    getLoaderManager().initLoader(VIDEO_LOADER, getArguments(), new VideoLoaderCallback());
                 }
             }
         });
-
-        tabHost.setCurrentTabByTag("photo");
 
         String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
         int[] to = new int[] {R.id.il_iv_image};
@@ -140,14 +146,19 @@ public class GalleryContentFragment extends Fragment {
         };
         gvVideo.setAdapter(mVideoAdapter);
 
-        Bundle bundle = new Bundle();
-        getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
+        String type = getArguments().getString(TYPE);
+        if (type != null && type.equals(VIDEO)) {
+            tabHost.setCurrentTabByTag(VIDEO);
+            getLoaderManager().initLoader(VIDEO_LOADER, getArguments(), new VideoLoaderCallback());
+
+        } else {
+            tabHost.setCurrentTabByTag(PHOTO);
+            getLoaderManager().initLoader(PHOTO_LOADER, getArguments(), new PhotoLoaderCallback());
+        }
+
 
         return tabHost;
     }
-
-
-
 
     @Override
     public void onStart() {
@@ -159,11 +170,10 @@ public class GalleryContentFragment extends Fragment {
         }
     }
 
-
     private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
         public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return null;//new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
+            return new GalleryContentAsyncLoader(getActivity(), args, GalleryHelper.TYPE_PICTURE);
         }
 
         @Override
@@ -180,7 +190,7 @@ public class GalleryContentFragment extends Fragment {
     private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
         public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return null;//new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_VIDEO);
+            return new GalleryContentAsyncLoader(getActivity(), args, GalleryHelper.TYPE_VIDEO);
         }
 
         @Override
