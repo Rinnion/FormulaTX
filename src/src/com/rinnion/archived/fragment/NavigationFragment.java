@@ -98,7 +98,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_photogallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showGalleryFragment();
             }
         });
         view.findViewById(R.id.nav_social_networks).setOnClickListener(new View.OnClickListener() {

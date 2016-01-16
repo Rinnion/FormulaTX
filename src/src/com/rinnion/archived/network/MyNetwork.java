@@ -212,6 +212,22 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    //Загрузка списка галлерей турнира
+    public static int[] queryGalleryList() {
+        Log.d(TAG, String.format("queryGalleryList"));
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryGalleryList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_GALLERY)
+                .setHandler(new ApiObjectListHandler())
+                .create();
+
+        Bundle execute = fetcher.execute();
+
+        return getIntArray(execute);
+    }
+
     //Загрузка списка новостей турнира
     public static Bundle queryTwitter(long id) {
 
@@ -334,7 +350,7 @@ public final class MyNetwork {
 
 
     public static int[] getIntArray(Bundle bundleTurnirList) {
-        int[] intArray = null;
+        int[] intArray = new int[0];
         String result = bundleTurnirList.getString(HttpRequester.RESULT);
         if (result.equals(HttpRequester.RESULT_HTTP)) {
             Bundle tmpTurnirList = bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP);

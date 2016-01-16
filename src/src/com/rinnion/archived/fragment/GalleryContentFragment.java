@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
@@ -33,7 +32,7 @@ import com.squareup.picasso.Picasso;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class GalleryFragment extends Fragment {
+public class GalleryContentFragment extends Fragment {
 
     private static final int PHOTO_LOADER = 1;
     private static final int VIDEO_LOADER = 2;
@@ -91,12 +90,12 @@ public class GalleryFragment extends Fragment {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("photo")) {
-                    Bundle bundle = getArguments();
+                if (tabId.equals("photo")){
+                    Bundle bundle = new Bundle();
                     getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
                 }
-                if (tabId.equals("video")) {
-                    Bundle bundle = getArguments();
+                if (tabId.equals("video")){
+                    Bundle bundle = new Bundle();
                     getLoaderManager().initLoader(VIDEO_LOADER, bundle, new VideoLoaderCallback());
                 }
             }
@@ -104,14 +103,14 @@ public class GalleryFragment extends Fragment {
 
         tabHost.setCurrentTabByTag("photo");
 
-        String[] names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_PICTURE, GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE};
-        int[] to = new int[]{R.id.il_iv_image, R.id.il_tv_text};
+        String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
+        int[] to = new int[] {R.id.il_iv_image};
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
         DisplayMetrics dm = ArchivedApplication.getAppContext().getResources().getDisplayMetrics();
         //FIXME: hardcoded values...
-        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
+        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels,dm.density ,2));
         final int width = Math.abs(dm.widthPixels / 2);
         Log.i(TAG, String.valueOf(width));
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
@@ -119,7 +118,7 @@ public class GalleryFragment extends Fragment {
             public void setViewImage(ImageView v, String value) {
                 Picasso.with(getActivity())
                         .load(value)
-                        .resize(width, width).centerCrop()
+                        .resize(width,width).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
             }
@@ -132,16 +131,16 @@ public class GalleryFragment extends Fragment {
         mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-//                Picasso.with(getActivity())
-//                        .load(value)
-//                        .resize(width, width).centerCrop()
-//                        .placeholder(R.drawable.logo_splash_screen)
-//                        .into(v);
+                Picasso.with(getActivity())
+                        .load(value)
+                        .resize(width, width).centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                        .into(v);
             }
         };
         gvVideo.setAdapter(mVideoAdapter);
 
-        Bundle bundle = getArguments();
+        Bundle bundle = new Bundle();
         getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
 
         return tabHost;
@@ -161,36 +160,36 @@ public class GalleryFragment extends Fragment {
     }
 
 
-    private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
+    private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
-        public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), args, GalleryHelper.TYPE_PICTURE);
+        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
+            return null;//new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryDescriptionCursor> loader, GalleryDescriptionCursor data) {
+        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
             mPhotoAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryDescriptionCursor> loader) {
+        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
 
         }
     }
 
-    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
+    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
         @Override
-        public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), args, GalleryHelper.TYPE_VIDEO);
+        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
+            return null;//new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_VIDEO);
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryDescriptionCursor> loader, GalleryDescriptionCursor data) {
+        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
             mVideoAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryDescriptionCursor> loader) {
+        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
 
         }
     }

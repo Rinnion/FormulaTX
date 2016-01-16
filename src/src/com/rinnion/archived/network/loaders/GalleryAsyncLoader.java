@@ -3,30 +3,25 @@ package com.rinnion.archived.network.loaders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.Bundle;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.MyNetwork;
-import org.lorecraft.phparser.SerializedPhpParser;
-
-import java.util.Map;
 
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
+public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor> {
 
     private String TAG = getClass().getSimpleName();
-    private long api_object_id;
+    private Bundle args;
     private String type;
 
-    public GalleryAsyncLoader(Context context, long api_object_id, String type) {
+    public GalleryAsyncLoader(Context context, Bundle args, String type) {
         super(context);
-        this.api_object_id = api_object_id;
+        this.args = args;
         this.type = type;
         Log.d(TAG, ".ctor");
     }
@@ -42,34 +37,42 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GalleryHelper aoh=new GalleryHelper(doh);
-        deliverResult(aoh.getAllByApiObjectAndItemTypeId(api_object_id, type));
+        deliverResult(aoh.getAllGalleries());
     }
 
     @Override
-    public GalleryItemCursor loadInBackground() {
+    public GalleryDescriptionCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        TournamentHelper th = new TournamentHelper(doh);
-        GalleryItemCursor cursor = null;
-        Tournament tournament = th.get(api_object_id);
-        if (tournament != null) {
-            GalleryHelper aoh = new GalleryHelper(doh);
-            try {
-                String gallery_include = tournament.gallery_include;
-                SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-                Map parse = (Map) php.parse();
-                for (Object item : parse.keySet()) {
-                    long l = Long.parseLong(parse.get(item).toString());
-                    MyNetwork.queryGallery(l);
-                    aoh.attachGallery(api_object_id, l);
-                }
-            }catch(Exception ignored){
-                Log.w(TAG, ignored.getMessage());
-            }
-            cursor = aoh.getAllByApiObjectAndItemTypeId(api_object_id, type);
+        int[] galleries = MyNetwork.queryGalleryList();
+        for (int gid : galleries) {
+            MyNetwork.queryGallery(gid);
         }
 
-        return cursor;
+//        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+//        TournamentHelper th = new TournamentHelper(doh);
+//        GalleryItemCursor cursor = null;
+//        Tournament tournament = th.get(args);
+//        if (tournament != null) {
+//            GalleryHelper aoh = new GalleryHelper(doh);
+//            try {
+//                String gallery_include = tournament.gallery_include;
+//                SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+//                Map parse = (Map) php.parse();
+//                for (Object item : parse.keySet()) {
+//                    long l = Long.parseLong(parse.get(item).toString());
+//                    MyNetwork.queryGallery(l);
+//                    aoh.attachGallery(args, l);
+//                }
+//            }catch(Exception ignored){
+//                Log.w(TAG, ignored.getMessage());
+//            }
+//            cursor = aoh.getAllByApiObjectAndItemTypeId(args, type);
+//        }
+
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        GalleryHelper gh = new GalleryHelper(doh);
+        return gh.getAllGalleries();
     }
 }

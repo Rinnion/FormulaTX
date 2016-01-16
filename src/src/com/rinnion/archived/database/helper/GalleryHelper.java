@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.CommentCursor;
@@ -33,7 +34,12 @@ public class GalleryHelper implements BaseColumns {
     public static final String TYPE_VIDEO = "video";
     public static final String TYPE_WATERMARK = "watermark";
     public static final String TYPE_AUDIO = "audio";
+    public static final String COLUMN_GALLERY_DESCRIPTION_TITLE = "gd_title";
+    public static final String COLUMN_GALLERY_DESCRIPTION_PICTURE = "gd_picture";
+    public static final String COLUMN_GALLERY_DESCRIPTION_TYPE = "gd_type";
+    public static final String COLUMN_GALLERY_DESCRIPTION_VIDEO = "gd_video";
     public static String DATABASE_TABLE = "gallery";
+    public static String DATABASE_TABLE_DESCRIPTION = "gallery_description";
     public static String DATABASE_TABLE_API_OBJECT_LINK = "api_object_gallery";
 
     public static String[] COLS;
@@ -68,6 +74,21 @@ public class GalleryHelper implements BaseColumns {
                 new GalleryItemCursor.Factory(),
                 sql,
                 null,
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public GalleryItemCursor getAllItemsByGalleryIdAndType(long gallery_id, String type) {
+        Log.v(TAG, "getAllItems ()");
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE " + COLUMN_GALLERY_ID + "=? AND " + COLUMN_TYPE + "=?";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryItemCursor c = (GalleryItemCursor) d.rawQueryWithFactory(
+                new GalleryItemCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(gallery_id), type},
                 null);
         c.moveToFirst();
         return c;
@@ -234,5 +255,95 @@ public class GalleryHelper implements BaseColumns {
         } catch (SQLException ex) {
             Log.e(TAG, "Error detaching gallery", ex);
         }
+    }
+
+
+    public GalleryDescriptionCursor getAllGalleries() {
+        Log.v(TAG, "getAllGalleries ()");
+
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
+                " FROM " + DATABASE_TABLE_DESCRIPTION;
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
+                sql,
+                null,
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public GalleryDescriptionCursor getAllGalleriesByContent(String type) {
+        Log.v(TAG, "getAllGalleries ()");
+
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
+                sql,
+                new String[] {type},
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public boolean isGalleryExists(long id) {
+        Log.v(TAG, "isGalleryExists ()");
+
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE +
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE _id=?" ;
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
+                sql,
+                new String[] {String.valueOf(id)},
+                null);
+        c.moveToFirst();
+        return c.getCount() > 0;
+    }
+
+    public boolean addGallery(GalleryDescriptionCursor.GalleryDescription gd) {
+        Log.v(TAG, "addGallery (" + gd.toString() +")");
+
+        ContentValues map;
+        map = new ContentValues();
+        map.put(_ID, gd.id);
+        map.put(COLUMN_GALLERY_DESCRIPTION_TITLE, gd.title);
+        map.put(COLUMN_GALLERY_DESCRIPTION_TYPE, gd.type);
+        map.put(COLUMN_GALLERY_DESCRIPTION_PICTURE, gd.picture);
+        map.put(COLUMN_GALLERY_DESCRIPTION_VIDEO, gd.video);
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            db.insert(DATABASE_TABLE_DESCRIPTION, null, map);
+            return true;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error writing location", e);
+            return false;
+        }
+    }
+
+    public void deleteGallery(long id) {
+        Log.d(TAG, "deleteGallery(" + String.valueOf(id) + ")");
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            String[] args = {String.valueOf(id)};
+            db.delete(DATABASE_TABLE_DESCRIPTION,
+                    _ID + "=?",
+                    args);
+        } catch (SQLException ex) {
+            Log.e(TAG, "Error deleting item", ex);
+        }
+    }
+
+    public boolean mergeGallery(GalleryDescriptionCursor.GalleryDescription gd) {
+        Log.d(TAG, "mergeGallery(" + String.valueOf(gd) + ")");
+        if (isGalleryExists(gd.id)) deleteGallery(gd.id);
+        return addGallery(gd);
     }
 }

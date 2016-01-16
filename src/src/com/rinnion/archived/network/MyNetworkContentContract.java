@@ -166,6 +166,13 @@ public class MyNetworkContentContract {
                     return dm_partner;
                 }
             }
+
+            public static class getListGallery
+            {
+                public static final String URL_METHOD = URL + "?method=getListGallery";
+                public static final String URL_PODCAST = URL + "?method=getListGallery&type=podcast";
+                public static final String URL_GALLERY = URL + "?method=getListGallery&type=gallery";
+            }
         }
 
         public static class Feedback {
