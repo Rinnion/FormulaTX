@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.renderscript.Program;
 import android.text.TextUtils;
 import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.utils.Log;
@@ -13,6 +15,10 @@ import com.rinnion.archived.database.cursor.CommentCursor;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.model.Comment;
 import com.rinnion.archived.database.model.GalleryItem;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -94,19 +100,22 @@ public class GalleryHelper implements BaseColumns {
         return c;
     }
 
-    public CommentCursor getGallery(long gallery_id) {
-        Log.v(TAG, "getAll (" + String.valueOf(gallery_id) + ")");
+    public GalleryDescriptionCursor.GalleryDescription getGallery(long gallery_id) {
+        Log.v(TAG, "getGallery (" + String.valueOf(gallery_id) + ")");
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE " + COLUMN_GALLERY_ID + "=?";
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+COLUMN_GALLERY_DESCRIPTION_TYPE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE " + _ID + "=?";
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
                 sql,
                 new String[] {String.valueOf(gallery_id)},
                 null);
         c.moveToFirst();
-        return c;
+        if (c.getCount() == 0) return null;
+        return c.getItem();
     }
 
     public CommentCursor getAllByApiObjectId(long api_object_id) {
@@ -269,6 +278,30 @@ public class GalleryHelper implements BaseColumns {
                 new GalleryDescriptionCursor.Factory(),
                 sql,
                 null,
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public GalleryDescriptionCursor getAllGalleries(int[] range) {
+        Log.v(TAG, "getAllGalleries ()");
+
+        if (range == null) range = new int[0];
+        StringBuilder sb = new StringBuilder();
+        for (int i : range) {
+            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
+        }
+        String in = sb.toString();
+
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE " + _ID + " in (" + in + ") AND " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
+                sql,
+                new String[]{"gallery"},
                 null);
         c.moveToFirst();
         return c;

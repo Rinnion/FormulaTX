@@ -37,42 +37,29 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GalleryHelper aoh=new GalleryHelper(doh);
-        deliverResult(aoh.getAllGalleries());
+        int[] ints = args.getIntArray("ints");
+        if (ints != null) {
+            deliverResult(aoh.getAllGalleries(ints));
+        }else {
+            deliverResult(aoh.getAllGalleries());
+        }
     }
 
     @Override
     public GalleryDescriptionCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        int[] galleries = MyNetwork.queryGalleryList();
-        for (int gid : galleries) {
+        int[] ints = args.getIntArray("ints");
+        if (ints == null){
+            ints = MyNetwork.queryGalleryList();
+        }
+        for (int gid : ints) {
             MyNetwork.queryGallery(gid);
         }
 
-//        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-//        TournamentHelper th = new TournamentHelper(doh);
-//        GalleryItemCursor cursor = null;
-//        Tournament tournament = th.get(args);
-//        if (tournament != null) {
-//            GalleryHelper aoh = new GalleryHelper(doh);
-//            try {
-//                String gallery_include = tournament.gallery_include;
-//                SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-//                Map parse = (Map) php.parse();
-//                for (Object item : parse.keySet()) {
-//                    long l = Long.parseLong(parse.get(item).toString());
-//                    MyNetwork.queryGallery(l);
-//                    aoh.attachGallery(args, l);
-//                }
-//            }catch(Exception ignored){
-//                Log.w(TAG, ignored.getMessage());
-//            }
-//            cursor = aoh.getAllByApiObjectAndItemTypeId(args, type);
-//        }
-
-
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GalleryHelper gh = new GalleryHelper(doh);
-        return gh.getAllGalleries();
+
+        return gh.getAllGalleries(ints);
     }
 }

@@ -198,7 +198,7 @@ public class MainTournamentFragment extends Fragment{
     public void showGalleryFragment() {
         GalleryFragment mlf = new GalleryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(NewsListFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

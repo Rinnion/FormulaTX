@@ -165,7 +165,13 @@ public class GalleryContentFragment extends Fragment {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_gallery);
+            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+            Bundle args = getArguments();
+            if (args == null) throw new IllegalStateException("No arguments");
+            long gid = getArguments().getLong("GALLERY");
+            GalleryHelper gh=new GalleryHelper(doh);
+            GalleryDescriptionCursor.GalleryDescription gallery = gh.getGallery(gid);
+            ab.setTitle(gallery.title);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
     }

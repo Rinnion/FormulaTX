@@ -19,13 +19,19 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
-import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import com.squareup.picasso.Picasso;
+import org.lorecraft.phparser.SerializedPhpParser;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -118,11 +124,15 @@ public class GalleryFragment extends Fragment {
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                Picasso.with(getActivity())
-                        .load(value)
-                        .resize(width, width).centerCrop()
-                        .placeholder(R.drawable.logo_splash_screen)
-                        .into(v);
+                try {
+                    Picasso.with(getActivity())
+                            .load(value)
+                            .resize(width, width).centerCrop()
+                            .placeholder(R.drawable.logo_splash_screen)
+                            .into(v);
+                }catch(Exception ignored){
+                    Log.e(TAG, ignored.getMessage());
+                }
             }
         };
         gvPhoto.setAdapter(mPhotoAdapter);
@@ -149,11 +159,15 @@ public class GalleryFragment extends Fragment {
         mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                Picasso.with(getActivity())
+                try {
+                    Picasso.with(getActivity())
                         .load(value)
                         .resize(width, width).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
+            }catch(Exception ignored){
+                Log.e(TAG, ignored.getMessage());
+            }
             }
         };
         gvVideo.setAdapter(mVideoAdapter);
@@ -196,10 +210,44 @@ public class GalleryFragment extends Fragment {
     }
 
 
+
+
     private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
         @Override
         public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), args, GalleryHelper.TYPE_PICTURE);
+            int[] galleryArrayFromTournament = getGalleryArrayFromTournament(args);
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("ints", galleryArrayFromTournament);
+            return new GalleryAsyncLoader(getActivity(), bundle, GalleryHelper.TYPE_PICTURE);
+        }
+
+        private int[] getGalleryArrayFromTournament(Bundle args) {
+            if (args == null) return null;
+            String post_name = args.getString(TOURNAMENT_POST_NAME);
+            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+            TournamentHelper th = new TournamentHelper(doh);
+            Tournament tournament = th.getByPostName(post_name);
+            ArrayList<Long> intArray = new ArrayList<Long>();
+            if (tournament != null) {
+                try {
+                    String gallery_include = tournament.gallery_include;
+                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+                    Map parse = (Map) php.parse();
+                    for (Object item : parse.keySet()) {
+                        long l = Long.parseLong(parse.get(item).toString());
+                        intArray.add(l);
+                    }
+                } catch (Exception ignored) {
+                    Log.w(TAG, ignored.getMessage());
+                }
+            }
+
+            int[] ret = new int[intArray.size()];
+            for (int i = 0; i < intArray.size(); i++) {
+                ret[i] = intArray.get(i).intValue();
+            }
+
+            return ret;
         }
 
         @Override
@@ -216,7 +264,38 @@ public class GalleryFragment extends Fragment {
     private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
         @Override
         public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), args, GalleryHelper.TYPE_VIDEO);
+            int[] galleryArrayFromTournament = getGalleryArrayFromTournament(args);
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("ints", galleryArrayFromTournament);
+            return new GalleryAsyncLoader(getActivity(), bundle, GalleryHelper.TYPE_VIDEO);
+        }
+        private int[] getGalleryArrayFromTournament(Bundle args) {
+            if (args == null) return null;
+            String post_name = args.getString(TOURNAMENT_POST_NAME);
+            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+            TournamentHelper th = new TournamentHelper(doh);
+            Tournament tournament = th.getByPostName(post_name);
+            ArrayList<Long> intArray = new ArrayList<Long>();
+            if (tournament != null) {
+                try {
+                    String gallery_include = tournament.gallery_include;
+                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+                    Map parse = (Map) php.parse();
+                    for (Object item : parse.keySet()) {
+                        long l = Long.parseLong(parse.get(item).toString());
+                        intArray.add(l);
+                    }
+                } catch (Exception ignored) {
+                    Log.w(TAG, ignored.getMessage());
+                }
+            }
+
+            int[] ret = new int[intArray.size()];
+            for (int i = 0; i < intArray.size(); i++) {
+                ret[i] = intArray.get(i).intValue();
+            }
+
+            return ret;
         }
 
         @Override

@@ -64,7 +64,12 @@ public class TournamentHelper extends ApiObjectHelper {
 
     @Override
     public Tournament getByPostName(String post_name) {
-        Log.v(TAG, "getAll ()");
+        Log.v(TAG, "getByPostName ("+String.valueOf(post_name)+")");
+
+        if (post_name == null){
+            Log.e(TAG, "post_name is null");
+            return null;
+        }
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
