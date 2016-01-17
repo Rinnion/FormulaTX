@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="id" name="message_loader"/>
+    <item type="id" name="gallery_loader"/>
+    <item type="id" name="card_loader"/>
     <item type="id" name="weather_loader"/>
     <item type="id" name="comment_loader"/>
+    <item type="id" name="gamer_loader"/>
+    <item type="id" name="news_loader"/>
+    <item type="id" name="product_loader"/>
     <item type="id" name="profile_loader"/>
     <item type="id" name="program_loader"/>
     <item type="id" name="loader"/>

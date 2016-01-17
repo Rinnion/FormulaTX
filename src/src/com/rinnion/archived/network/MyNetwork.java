@@ -228,6 +228,22 @@ public final class MyNetwork {
         return getIntArray(execute);
     }
 
+    //Загрузка списка галлерей турнира
+    public static int[] queryPodcastList() {
+        Log.d(TAG, String.format("queryGalleryList"));
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryGalleryList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_PODCAST)
+                .setHandler(new ApiObjectListHandler())
+                .create();
+
+        Bundle execute = fetcher.execute();
+
+        return getIntArray(execute);
+    }
+
     //Загрузка списка новостей турнира
     public static Bundle queryTwitter(long id) {
 

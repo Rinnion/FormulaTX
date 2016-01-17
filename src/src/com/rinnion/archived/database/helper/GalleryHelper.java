@@ -154,9 +154,9 @@ public class GalleryHelper implements BaseColumns {
         return c;
     }
 
-    public Comment getItem(int id) {
+    public GalleryItem getItem(long id) {
         Log.d(TAG, "getItem (" + id + ")");
-        CommentCursor c = searchItem(id);
+        GalleryItemCursor c = searchItem(id);
         if (c.getCount() == 0) return null;
         c.moveToFirst();
         return c.getItem();
@@ -164,17 +164,17 @@ public class GalleryHelper implements BaseColumns {
 
     public boolean isItemPresent(long id) {
         Log.d(TAG, "isItemPresent (" + id + ")");
-        CommentCursor c = searchItem(id);
+        GalleryItemCursor c = searchItem(id);
         return c.getCount() == 1;
     }
 
-    private CommentCursor searchItem(long id) {
+    private GalleryItemCursor searchItem(long id) {
         Log.d(TAG, "searchItem (" + id + ")");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
         SQLiteDatabase d = doh.getReadableDatabase();
-        return (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
+        return (GalleryItemCursor) d.rawQueryWithFactory(
+                new GalleryItemCursor.Factory(),
                 sql,
                 new String[]{String.valueOf(id)},
                 null);
@@ -266,24 +266,40 @@ public class GalleryHelper implements BaseColumns {
         }
     }
 
+    public GalleryDescriptionCursor getAllPodcasts() {
+        return getAllGalleries("podcast");
+    }
+
+    public GalleryDescriptionCursor getAllPodcasts(int[] range) {
+        return getAllGalleries("podcast", range);
+    }
 
     public GalleryDescriptionCursor getAllGalleries() {
+        return getAllGalleries("gallery");
+    }
+
+    public GalleryDescriptionCursor getAllGalleries(int[] range) {
+        return getAllGalleries("gallery", range);
+    }
+
+    protected GalleryDescriptionCursor getAllGalleries(String type) {
         Log.v(TAG, "getAllGalleries ()");
 
         String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
-                " FROM " + DATABASE_TABLE_DESCRIPTION;
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
                 new GalleryDescriptionCursor.Factory(),
                 sql,
-                null,
+                new String[]{type},
                 null);
         c.moveToFirst();
         return c;
     }
 
-    public GalleryDescriptionCursor getAllGalleries(int[] range) {
+    protected GalleryDescriptionCursor getAllGalleries(String type, int[] range) {
         Log.v(TAG, "getAllGalleries ()");
 
         if (range == null) range = new int[0];
@@ -301,7 +317,7 @@ public class GalleryHelper implements BaseColumns {
         GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
                 new GalleryDescriptionCursor.Factory(),
                 sql,
-                new String[]{"gallery"},
+                new String[]{type},
                 null);
         c.moveToFirst();
         return c;

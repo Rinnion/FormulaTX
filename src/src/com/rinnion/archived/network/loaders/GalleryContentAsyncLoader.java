@@ -16,6 +16,7 @@ import com.rinnion.archived.utils.Log;
  */
 public class GalleryContentAsyncLoader extends AsyncTaskLoader<GalleryItemCursor> {
 
+    public static final String GALLERY = "GALLERY";
     private String TAG = getClass().getSimpleName();
     private Bundle args;
     private String type;
@@ -37,7 +38,7 @@ public class GalleryContentAsyncLoader extends AsyncTaskLoader<GalleryItemCursor
     protected void onForceLoad() {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        long gid = args.getLong("GALLERY");
+        long gid = args.getLong(GALLERY);
         GalleryHelper gh=new GalleryHelper(doh);
         deliverResult(gh.getAllItemsByGalleryIdAndType(gid, type));
     }
@@ -46,7 +47,7 @@ public class GalleryContentAsyncLoader extends AsyncTaskLoader<GalleryItemCursor
     public GalleryItemCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        long gid = args.getLong("GALLERY");
+        long gid = args.getLong(GALLERY);
 
         MyNetwork.queryGallery(gid);
 

@@ -37,7 +37,7 @@ public class CardFragment extends ListFragment implements LoaderManager.LoaderCa
         mAdapter = new CardAdapter(getActivity(), null);
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.card_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }

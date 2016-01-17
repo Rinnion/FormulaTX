@@ -66,6 +66,7 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
             String url = item.getString("picture");
             if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
             String link = item.getString("link");
+            if (link.startsWith("/")) link = MyNetworkContentContract.URL + link.substring(1);
             GalleryItem gi = new GalleryItem(id, mId, type, url, link);
             if (gh.merge(gi)) k++;
         }

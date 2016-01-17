@@ -123,7 +123,7 @@ public class NavigationFragment extends Fragment {
         view.findViewById(R.id.nav_radio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmptyFragment();
+                showPodcastFragment();
             }
         });
         view.findViewById(R.id.nav_feedback).setOnClickListener(new View.OnClickListener() {
@@ -178,6 +178,16 @@ public class NavigationFragment extends Fragment {
 
     public void showGalleryFragment() {
         GalleryFragment mlf = new GalleryFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showPodcastFragment() {
+        PodcastFragment mlf = new PodcastFragment();
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)

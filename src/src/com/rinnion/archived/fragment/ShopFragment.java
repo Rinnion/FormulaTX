@@ -41,7 +41,7 @@ public class ShopFragment extends ListFragment implements LoaderManager.LoaderCa
         mAdapter = new ProductAdapter(getActivity(), null);
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
