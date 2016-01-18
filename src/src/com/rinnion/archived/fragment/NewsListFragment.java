@@ -6,6 +6,8 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import com.rinnion.archived.database.cursor.ApiObjectCursor;
+import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +29,7 @@ import com.rinnion.archived.fragment.adapter.NewsAdapter;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class NewsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<TournamentCursor> {
+public class NewsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ApiObjectCursor> {
 
     public static String TOURNAMENT_POST_NAME = "tournament id";
     private String TAG = getClass().getCanonicalName();
@@ -103,18 +105,18 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public Loader<TournamentCursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
+        return new NewsAsyncLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<TournamentCursor> loader, TournamentCursor data) {
+    public void onLoadFinished(Loader<ApiObjectCursor> loader, ApiObjectCursor data) {
 
-        mAdapter.swapCursor(null);
+        mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<TournamentCursor> loader) {
+    public void onLoaderReset(Loader<ApiObjectCursor> loader) {
 
     }
 }

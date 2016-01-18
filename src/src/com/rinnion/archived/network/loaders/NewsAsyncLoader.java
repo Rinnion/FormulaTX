@@ -35,9 +35,7 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHelper aoh=new ApiObjectHelper(doh);
-
-
-        deliverResult(aoh.getAllByType(ApiObject.OTHER));
+        deliverResult(aoh.getAllByType(ApiObject.NEWS));
     }
 
     @Override
@@ -45,6 +43,6 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
         Log.d(TAG, "loadInBackground");
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHelper aoh=new ApiObjectHelper(doh);
-        return aoh.getAllByType(ApiObject.OTHER);
+        return aoh.getAllByType(ApiObject.NEWS);
     }
 }

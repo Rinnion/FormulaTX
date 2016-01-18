@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp" android:weightSum="1"
+              android:gravity="right">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="0.75" android:gravity="right">
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ipdl_tv_title" android:text="Начало матчей" android:textSize="28sp"/>
+        </LinearLayout>
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="0.25">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ipdl_iv_image"
+                        android:src="@drawable/ic_action_not_important"
+                        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="9:30"
+                        android:id="@+id/ipdl_tv_time"
+                        android:layout_centerVertical="true" android:layout_toRightOf="@+id/ipdl_iv_image"/>
+        </RelativeLayout>
+</LinearLayout>
