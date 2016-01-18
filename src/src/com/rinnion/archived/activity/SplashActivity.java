@@ -21,10 +21,12 @@ public class SplashActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "Receive data");
             Bundle bundle = intent.getExtras();
             Log.d(TAG, String.valueOf(bundle));
             if (bundle != null) {
                 String type = bundle.getString(Settings.LOADING_TYPE);
+                if (type == null) return;
                 Log.d(TAG, "bundle.type: " + type);
 
                 if (type.equals(Settings.LOADING_PROGRESS)) {

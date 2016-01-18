@@ -36,7 +36,7 @@ public class ProductHandler extends JSONObjectHandler {
 
                 if (ao == null) ao = th.getProduct(Long.parseLong(id));
                 if (ao == null) ao = new Product(Long.parseLong(id));
-                if (key.equals("price")) {
+                if (key.equals("Price")) {
                     ao.price = value;
                 }
                 if (key.equals("TOP")) {

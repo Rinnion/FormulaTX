@@ -2,6 +2,8 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
+import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.network.MyNetworkContentContract;
@@ -24,6 +26,10 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
     @Override
     public Bundle onTrueStatus(JSONObject message, Bundle bundle) throws JSONException {
         GalleryHelper gh = new GalleryHelper(ArchivedApplication.getDatabaseOpenHelper());
+        String title = message.getString("title");
+        String type = message.getString("type");
+        long id = message.getLong("id");
+
         JSONObject gallery = message.getJSONObject("gallery");
         JSONArray array;
         array = gallery.getJSONArray(GalleryHelper.TYPE_AUDIO);
@@ -33,6 +39,20 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
         array = gallery.getJSONArray(GalleryHelper.TYPE_VIDEO);
         bundle.putLong(GalleryHelper.TYPE_VIDEO, importPictureArray(gh, array));
         array = gallery.getJSONArray(GalleryHelper.TYPE_WATERMARK);
+
+        GalleryDescriptionCursor.GalleryDescription gd = new GalleryDescriptionCursor.GalleryDescription(id, title, type);
+        GalleryItemCursor pctPicture = gh.getAllItemsByGalleryIdAndType(id, "picture");
+        if (pctPicture.getCount() > 0) {
+            GalleryItem item = pctPicture.getItem();
+            gd.picture = item.url;
+        }
+        GalleryItemCursor pctVideo = gh.getAllItemsByGalleryIdAndType(id, "video");
+        if (pctVideo.getCount() > 0) {
+            GalleryItem item = pctVideo.getItem();
+            gd.video = item.url;
+        }
+        gh.mergeGallery(gd);
+
         bundle.putLong(GalleryHelper.TYPE_WATERMARK, importPictureArray(gh, array));
         return bundle;
     }
@@ -46,6 +66,7 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
             String url = item.getString("picture");
             if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
             String link = item.getString("link");
+            if (link.startsWith("/")) link = MyNetworkContentContract.URL + link.substring(1);
             GalleryItem gi = new GalleryItem(id, mId, type, url, link);
             if (gh.merge(gi)) k++;
         }

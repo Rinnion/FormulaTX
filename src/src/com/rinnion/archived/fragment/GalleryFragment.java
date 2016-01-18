@@ -13,17 +13,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.GalleryItemCursor;
+import com.rinnion.archived.database.DatabaseOpenHelper;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GalleryHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.network.loaders.GalleryAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import com.squareup.picasso.Picasso;
+import org.lorecraft.phparser.SerializedPhpParser;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,6 +45,8 @@ public class GalleryFragment extends Fragment {
     private static final int PHOTO_LOADER = 1;
     private static final int VIDEO_LOADER = 2;
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
+    public static final String PHOTO = "photo";
+    public static final String VIDEO = "video";
     private String TAG = getClass().getCanonicalName();
 
     private WebView mTextViewAbout;
@@ -77,12 +87,12 @@ public class GalleryFragment extends Fragment {
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег
-        tabSpec = tabHost.newTabSpec("photo");
+        tabSpec = tabHost.newTabSpec(PHOTO);
         tabSpec.setIndicator("Фото");
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("video");
+        tabSpec = tabHost.newTabSpec(VIDEO);
         tabSpec.setIndicator("Видео");
         tabSpec.setContent(R.id.tab2);
         tabHost.addTab(tabSpec);
@@ -90,59 +100,97 @@ public class GalleryFragment extends Fragment {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("photo")){
-                    Bundle bundle = new Bundle();
+                if (tabId.equals(PHOTO)) {
+                    Bundle bundle = getArguments();
                     getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
                 }
-                if (tabId.equals("video")){
-                    Bundle bundle = new Bundle();
+                if (tabId.equals(VIDEO)) {
+                    Bundle bundle = getArguments();
                     getLoaderManager().initLoader(VIDEO_LOADER, bundle, new VideoLoaderCallback());
                 }
             }
         });
 
-        tabHost.setCurrentTabByTag("photo");
-
-        String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
-        int[] to = new int[] {R.id.il_iv_image};
+        String[] names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_PICTURE, GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE};
+        int[] to = new int[]{R.id.il_iv_image, R.id.il_tv_text};
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
         DisplayMetrics dm = ArchivedApplication.getAppContext().getResources().getDisplayMetrics();
         //FIXME: hardcoded values...
-        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels,dm.density ,2));
+        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
         final int width = Math.abs(dm.widthPixels / 2);
         Log.i(TAG, String.valueOf(width));
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                Picasso.with(getActivity())
-                        .load(value)
-                        .resize(width,width).centerCrop()
-                        .placeholder(R.drawable.logo_splash_screen)
-                        .into(v);
+                try {
+                    Picasso.with(getActivity())
+                            .load(value)
+                            .resize(width, width).centerCrop()
+                            .placeholder(R.drawable.logo_splash_screen)
+                            .into(v);
+                }catch(Exception ignored){
+                    Log.e(TAG, ignored.getMessage());
+                }
             }
         };
         gvPhoto.setAdapter(mPhotoAdapter);
+        gvPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GalleryContentFragment gcf = new GalleryContentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(GalleryContentFragment.GALLERY, l);
+                bundle.putString("TYPE", PHOTO);
+                gcf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, gcf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
 
-        //gvVideo.setEmptyView(tabHost.findViewById(R.id.gtl_tv_no_video));
         mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
             @Override
             public void setViewImage(ImageView v, String value) {
-                Picasso.with(getActivity())
+                try {
+                    Picasso.with(getActivity())
                         .load(value)
                         .resize(width, width).centerCrop()
                         .placeholder(R.drawable.logo_splash_screen)
                         .into(v);
+            }catch(Exception ignored){
+                Log.e(TAG, ignored.getMessage());
+            }
             }
         };
         gvVideo.setAdapter(mVideoAdapter);
+        gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GalleryContentFragment gcf = new GalleryContentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(GalleryContentFragment.GALLERY, l);
+                bundle.putString(GalleryContentFragment.TYPE, GalleryContentFragment.VIDEO);
+                gcf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, gcf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
+        tabHost.setCurrentTabByTag(PHOTO);
 
-        Bundle bundle = new Bundle();
+        Bundle bundle = getArguments();
         getLoaderManager().initLoader(PHOTO_LOADER, bundle, new PhotoLoaderCallback());
 
         return tabHost;
@@ -162,36 +210,101 @@ public class GalleryFragment extends Fragment {
     }
 
 
-    private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
+
+
+    private class PhotoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
         @Override
-        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
+        public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
+            int[] galleryArrayFromTournament = getGalleryArrayFromTournament(args);
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("ints", galleryArrayFromTournament);
+            return new GalleryAsyncLoader(getActivity(), bundle, GalleryHelper.TYPE_PICTURE);
+        }
+
+        private int[] getGalleryArrayFromTournament(Bundle args) {
+            if (args == null) return null;
+            String post_name = args.getString(TOURNAMENT_POST_NAME);
+            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+            TournamentHelper th = new TournamentHelper(doh);
+            Tournament tournament = th.getByPostName(post_name);
+            ArrayList<Long> intArray = new ArrayList<Long>();
+            if (tournament != null) {
+                try {
+                    String gallery_include = tournament.gallery_include;
+                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+                    Map parse = (Map) php.parse();
+                    for (Object item : parse.keySet()) {
+                        long l = Long.parseLong(parse.get(item).toString());
+                        intArray.add(l);
+                    }
+                } catch (Exception ignored) {
+                    Log.w(TAG, ignored.getMessage());
+                }
+            }
+
+            int[] ret = new int[intArray.size()];
+            for (int i = 0; i < intArray.size(); i++) {
+                ret[i] = intArray.get(i).intValue();
+            }
+
+            return ret;
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
+        public void onLoadFinished(Loader<GalleryDescriptionCursor> loader, GalleryDescriptionCursor data) {
             mPhotoAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
+        public void onLoaderReset(Loader<GalleryDescriptionCursor> loader) {
 
         }
     }
 
-    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
+    private class VideoLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryDescriptionCursor> {
         @Override
-        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_VIDEO);
+        public Loader<GalleryDescriptionCursor> onCreateLoader(int id, Bundle args) {
+            int[] galleryArrayFromTournament = getGalleryArrayFromTournament(args);
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("ints", galleryArrayFromTournament);
+            return new GalleryAsyncLoader(getActivity(), bundle, GalleryHelper.TYPE_VIDEO);
+        }
+        private int[] getGalleryArrayFromTournament(Bundle args) {
+            if (args == null) return null;
+            String post_name = args.getString(TOURNAMENT_POST_NAME);
+            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+            TournamentHelper th = new TournamentHelper(doh);
+            Tournament tournament = th.getByPostName(post_name);
+            ArrayList<Long> intArray = new ArrayList<Long>();
+            if (tournament != null) {
+                try {
+                    String gallery_include = tournament.gallery_include;
+                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
+                    Map parse = (Map) php.parse();
+                    for (Object item : parse.keySet()) {
+                        long l = Long.parseLong(parse.get(item).toString());
+                        intArray.add(l);
+                    }
+                } catch (Exception ignored) {
+                    Log.w(TAG, ignored.getMessage());
+                }
+            }
+
+            int[] ret = new int[intArray.size()];
+            for (int i = 0; i < intArray.size(); i++) {
+                ret[i] = intArray.get(i).intValue();
+            }
+
+            return ret;
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
+        public void onLoadFinished(Loader<GalleryDescriptionCursor> loader, GalleryDescriptionCursor data) {
             mVideoAdapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
+        public void onLoaderReset(Loader<GalleryDescriptionCursor> loader) {
 
         }
     }

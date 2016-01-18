@@ -3,27 +3,22 @@ package com.rinnion.archived.network.loaders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.Bundle;
-import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
-import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
+import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.utils.Log;
 
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor> {
+public class PodcastAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor> {
 
     private String TAG = getClass().getSimpleName();
-    private Bundle args;
-    private String type;
 
-    public GalleryAsyncLoader(Context context, Bundle args, String type) {
+    public PodcastAsyncLoader(Context context) {
         super(context);
-        this.args = args;
-        this.type = type;
-        Log.d(TAG, ".ctor");
     }
 
     @Override
@@ -37,22 +32,16 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor
         super.onForceLoad();
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GalleryHelper aoh=new GalleryHelper(doh);
-        int[] ints = args.getIntArray("ints");
-        if (ints != null) {
-            deliverResult(aoh.getAllGalleries(ints));
-        }else {
-            deliverResult(aoh.getAllGalleries());
-        }
+        deliverResult(aoh.getAllPodcasts());
     }
 
     @Override
     public GalleryDescriptionCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        int[] ints = args.getIntArray("ints");
-        if (ints == null){
-            ints = MyNetwork.queryGalleryList();
-        }
+
+        int[] ints = MyNetwork.queryPodcastList();
+
         for (int gid : ints) {
             MyNetwork.queryGallery(gid);
         }
@@ -60,6 +49,6 @@ public class GalleryAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         GalleryHelper gh = new GalleryHelper(doh);
 
-        return gh.getAllGalleries(ints);
+        return gh.getAllPodcasts();
     }
 }

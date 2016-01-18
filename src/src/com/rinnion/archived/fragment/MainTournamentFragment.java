@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -133,7 +134,7 @@ public class MainTournamentFragment extends Fragment{
                 if (tag.equals(GRIDS)) showEmptyFragment();
                 if (tag.equals(LIVESCORE)) showEmptyFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
-                if (tag.equals(FINDWAY)) showEmptyFragment();
+                if (tag.equals(FINDWAY)) showMapFragment();
             }
         });
 
@@ -198,7 +199,7 @@ public class MainTournamentFragment extends Fragment{
     public void showGalleryFragment() {
         GalleryFragment mlf = new GalleryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(NewsListFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
@@ -285,6 +286,18 @@ public class MainTournamentFragment extends Fragment{
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void showMapFragment() {
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        final Tournament byPostName;
+        byPostName = th.getByPostName(getArguments().getString(MainTournamentFragment.TYPE));
+
+        //TODO/ get additional fields
+
+        Uri uri = Uri.parse("geo:47.6,-122.3?z=11");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }
 

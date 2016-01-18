@@ -135,7 +135,7 @@ public final class MyNetwork {
     }
 
     public static Bundle queryCardList() {
-        Log.d(TAG, String.format("query queryProductList"));
+        Log.d(TAG, String.format("queryCardList"));
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
@@ -147,8 +147,8 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
-        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+        HttpRequester fetcher = builder.setName("query all cards")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentcard.URL_METHOD)
                 .setHandler(handler)
                 .create();
 
@@ -210,6 +210,38 @@ public final class MyNetwork {
         }
 
         return fetcher.execute();
+    }
+
+    //Загрузка списка галлерей турнира
+    public static int[] queryGalleryList() {
+        Log.d(TAG, String.format("queryGalleryList"));
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryGalleryList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_GALLERY)
+                .setHandler(new ApiObjectListHandler())
+                .create();
+
+        Bundle execute = fetcher.execute();
+
+        return getIntArray(execute);
+    }
+
+    //Загрузка списка галлерей турнира
+    public static int[] queryPodcastList() {
+        Log.d(TAG, String.format("queryGalleryList"));
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryGalleryList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_PODCAST)
+                .setHandler(new ApiObjectListHandler())
+                .create();
+
+        Bundle execute = fetcher.execute();
+
+        return getIntArray(execute);
     }
 
     //Загрузка списка новостей турнира
@@ -334,7 +366,7 @@ public final class MyNetwork {
 
 
     public static int[] getIntArray(Bundle bundleTurnirList) {
-        int[] intArray = null;
+        int[] intArray = new int[0];
         String result = bundleTurnirList.getString(HttpRequester.RESULT);
         if (result.equals(HttpRequester.RESULT_HTTP)) {
             Bundle tmpTurnirList = bundleTurnirList.getBundle(HttpRequester.RESULT_HTTP);

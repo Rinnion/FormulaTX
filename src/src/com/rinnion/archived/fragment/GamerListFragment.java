@@ -46,7 +46,7 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
 
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(R.id.message_loader, getArguments(), this);
+        getLoaderManager().initLoader(R.id.gamer_loader, getArguments(), this);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_gamers);

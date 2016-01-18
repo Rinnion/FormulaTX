@@ -18,10 +18,10 @@ public class Log {
     {
         if ((Settings.DEBUG) && (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED))) {
-            logFile=Files.getExternalDir("FormulaTX.log"); //Files.getTmpFile("AppFTXLog");
+            logFile=Files.getExternalDir("FormulaTX.txt"); //Files.getTmpFile("AppFTXLog");
         }
         else {
-            logFile = Files.getCacheDir("FormulaTX.log");
+            logFile = Files.getCacheDir("FormulaTX.txt");
         }
     }
 

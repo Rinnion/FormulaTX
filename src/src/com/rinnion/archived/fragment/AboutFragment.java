@@ -92,11 +92,7 @@ public class AboutFragment extends Fragment  {
                     NetworkInfo ani = cm.getActiveNetworkInfo();
 
                     Log.d(TAG, "Online ani == " + String.valueOf(ani));
-
-
-
                     if (ani != null && ani.isConnected()) {
-
                         Network network=new Network(){
                             @Override
                             protected void onPostExecute(Boolean aBoolean) {
@@ -104,7 +100,6 @@ public class AboutFragment extends Fragment  {
                                 if(aBoolean)
                                     loadDataToCache(myWebView);
                                 //else
-
 
                             }
                         };
@@ -181,17 +176,14 @@ public class AboutFragment extends Fragment  {
         Log.d(TAG, "getActiveNetworkInfo isConnected == false or ani == null");
         //myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         Log.d(TAG, "WebView set cache success");
-
         String filePath= Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht");
         File file=new File(filePath);
-
         if(file.exists()) {
             //myWebView.loadUrl("file:///" + filePath);
             byte []fileBytes=getFileAllBytes(filePath);
             String str = null;
             try {
                 str = new String(fileBytes, "UTF-8");
-
                 if(str.startsWith("<?xml"))
                     myWebView.loadData(str, "application/x-webarchive-xml", "UTF-8");
                 else
@@ -201,12 +193,7 @@ public class AboutFragment extends Fragment  {
                 e.printStackTrace();
                 Log.e(TAG,"UnsupportedEncodingException",e);
             }
-
-
-
-
             /**/
-
 
             //Map<String,String> map=new HashMap<String, String>();
             //map.put("content-type","content=\"application/x-webarchive-xml\"");
@@ -215,14 +202,11 @@ public class AboutFragment extends Fragment  {
         }
         else
             myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
+                    myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
     }
 
     private void setWebViewSettings(WebView myWebView) {
-
-
         myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-
         WebSettings mWebViewSettings = myWebView.getSettings();
         mWebViewSettings.setJavaScriptEnabled(true);
         mWebViewSettings.setAllowFileAccess(true);

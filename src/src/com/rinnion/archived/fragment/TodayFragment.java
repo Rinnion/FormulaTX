@@ -52,7 +52,7 @@ public class TodayFragment extends Fragment implements
 
         mAdapter = new NewsAdapter(getActivity(), null);
 
-        getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }

@@ -80,9 +80,9 @@ public class MyNetworkContentContract {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentproduct";
             }
 
-            public static class getallstaticpagefromparentticket
+            public static class getallstaticpagefromparentcard
             {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentticket";
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentcard";
             }
 
             public static class getallstaticpagefromparentradio
@@ -165,6 +165,13 @@ public class MyNetworkContentContract {
                     dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
                     return dm_partner;
                 }
+            }
+
+            public static class getListGallery
+            {
+                public static final String URL_METHOD = URL + "?method=getListGallery";
+                public static final String URL_PODCAST = URL + "?method=getListGallery&type=podcast";
+                public static final String URL_GALLERY = URL + "?method=getListGallery&type=gallery";
             }
         }
 
