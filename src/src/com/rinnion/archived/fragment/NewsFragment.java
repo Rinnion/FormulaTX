@@ -5,12 +5,12 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.*;
+import android.widget.FrameLayout;
 import com.rinnion.archived.utils.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +18,7 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.utils.WebViewWithCache;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,40 +60,73 @@ public class NewsFragment extends Fragment {
 
 
 
-    private void prepateHtmlOnWebView()
+    private String prepateHtml(ApiObject apiObject,int width)
     {
+        if(apiObject==null)
+            return "";
 
+
+
+        String thumb =(apiObject.thumb.isEmpty())?"":"<div><img src='"+ apiObject.thumb + "' style=\"max-width: " + width  + "px; height: auto;\"></div>";
+
+
+        String title=(apiObject.title.isEmpty())?"":"<p>" + apiObject.title + "</p>";
+        String date=(apiObject.date.isEmpty())?"":"<div>" + apiObject.date + "</div>";
+        String content=(apiObject.content.isEmpty())?"":apiObject.content;
+
+        Log.d(TAG,String.format("Width: %s\nThumb: %s\nTitle: %s\nDate: %s\nContent: %s\n\n",Integer.toString(width),thumb,title,date,content));
+
+
+        String strHtml="<html><style>body {padding:0px; color:#FFF;}</style><body>" + thumb + title  + date + content + "</body></html>";
+        return strHtml;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_layout, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        ActionBar ab = getActivity().getActionBar();
-        ab.setTitle(R.string.string_news);
-        ab.setIcon(R.drawable.ic_action_previous_item);
+        FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.mainFrame);
 
         Bundle args = getArguments();
         long anInt = args.getLong(NewsFragment.ID);
         ApiObjectHelper aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
         ApiObject apiObject = aoh.get(anInt);
 
-        ImageView image = (ImageView) view.findViewById(R.id.nl_iv_image);
-        TextView title = (TextView) view.findViewById(R.id.nl_tv_title);
-        TextView date = (TextView) view.findViewById(R.id.nl_tv_date);
-        WebView content = (WebView) view.findViewById(R.id.nl_tv_content);
+        WebViewWithCache myWebView = (WebViewWithCache) view.findViewById(R.id.nl_tv_content);
 
-        String thumb = apiObject.thumb;
-        if (thumb != null) {
-            image.setImageBitmap(BitmapFactory.decodeFile(thumb));
-        } else {
-            image.setImageResource(R.drawable.logo_splash_screen);
-        }
 
-        content.loadData("<html><style>body {padding:0px; color:#FFF;}</style><body>" + apiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-        content.setBackgroundColor(Color.TRANSPARENT);
-        date.setText(apiObject.date);
-        title.setText(apiObject.title);
+
+Display display=getActivity().getWindowManager().getDefaultDisplay();
+
+
+        DisplayMetrics displayMetrics=new DisplayMetrics();
+
+        display.getMetrics(displayMetrics);
+
+        String webHTML=prepateHtml(apiObject,displayMetrics.heightPixels);
+        String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
+        if (apiObject.content.isEmpty())
+            webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + apiObject.title + "</h2>Нет описания</body></html>";
+
+
+
+        myWebView.loadDataOrCache(getActivity(), apiObject, webHTML, webHTMLEmpty);
+
+        myWebView.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.news_layout, container, false);
+
+
+        ActionBar ab = getActivity().getActionBar();
+        ab.setTitle(R.string.string_news);
+        ab.setIcon(R.drawable.ic_action_previous_item);
+
+
+ //       date.setText(apiObject.date);
+   //     title.setText(apiObject.title);
 
 
         return view;
