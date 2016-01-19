@@ -93,9 +93,9 @@ public class ProgramAdapter extends SimpleCursorAdapter {
         tvTitle.setText(item.getTitle());
         boolean today = item.getToday();
         boolean past = item.getInPast();
-        if (today) ivImage.setImageResource(R.drawable.square_selected_100);
-        if (!today && past) ivImage.setImageResource(R.drawable.square_noselected_15);
-        if (!today && !past) ivImage.setImageResource(R.drawable.square_noselected_100);
+        if (today) ivImage.setImageResource(R.drawable.square_selected_today);
+        if (!today && past) ivImage.setImageResource(R.drawable.square_noselected_past);
+        if (!today && !past) ivImage.setImageResource(R.drawable.square_selected_future);
     }
 
 }

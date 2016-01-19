@@ -5,17 +5,16 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.*;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.fragment.adapter.ProgramAdapter;
 import com.rinnion.archived.network.loaders.ProgramAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
 import com.rinnion.archived.R;
-import com.rinnion.archived.fragment.adapter.GamerAdapter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,7 +25,7 @@ import com.rinnion.archived.fragment.adapter.GamerAdapter;
  */
 public class ProgramFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ProgramCursor> {
 
-    public static final String TOURNAMENT_ID = "tourn_id";
+    public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
 
@@ -76,7 +75,12 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
 
     @Override
     public Loader<ProgramCursor> onCreateLoader(int id, Bundle args) {
-        return new ProgramAsyncLoader(getActivity());
+        Bundle arguments = getArguments();
+        String post_name = arguments.getString(TOURNAMENT_POST_NAME);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament byPostName = th.getByPostName(post_name);
+        if (byPostName==null) return null;
+        return new ProgramAsyncLoader(getActivity(), byPostName.tables);
     }
 
     @Override

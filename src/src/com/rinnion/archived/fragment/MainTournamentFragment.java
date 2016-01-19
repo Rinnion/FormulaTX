@@ -17,7 +17,6 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.utils.Log;
 
@@ -210,17 +209,7 @@ public class MainTournamentFragment extends Fragment{
     }
 
     public void showEmptyFragment() {
-        ProgramFragment mlf = new ProgramFragment();
-        String type = getArguments().getString(TYPE);
-        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
-        Bundle bundle = new Bundle();
-        Tournament t = th.getByPostName(type);
-        if (t != null) {
-            bundle.putLong(ProgramFragment.TOURNAMENT_ID, t.id);
-        }else{
-            bundle.putLong(ProgramFragment.TOURNAMENT_ID, 0);
-        }
-        mlf.setArguments(bundle);
+        EmptyFragment mlf = new EmptyFragment();
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
@@ -252,7 +241,7 @@ public class MainTournamentFragment extends Fragment{
     private void showProgramFragment() {
         ProgramFragment mpf = new ProgramFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString(TYPE));
+        bundle.putString(ProgramFragment.TOURNAMENT_POST_NAME, getArguments().getString(TYPE));
         mpf.setArguments(bundle);
         getFragmentManager()
             .beginTransaction()

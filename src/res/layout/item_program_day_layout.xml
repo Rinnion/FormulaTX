@@ -24,7 +24,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/ipdl_iv_image"
-                        android:src="@drawable/square_noselected_15"/>
+                        android:src="@drawable/square_noselected_future"/>
                 TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
