@@ -2,13 +2,7 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.MatrixCursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import com.rinnion.archived.utils.Log;
 import android.view.LayoutInflater;
@@ -21,7 +15,6 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created with IntelliJ IDEA.
@@ -110,7 +103,7 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
     private void showOtherTournamentFragment(String post_name) {
         OtherTournamentFragment mlf = new OtherTournamentFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(OtherTournamentFragment.TYPE, post_name);
+        bundle.putString(OtherTournamentFragment.TOURNAMENT_POST_NAME, post_name);
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
