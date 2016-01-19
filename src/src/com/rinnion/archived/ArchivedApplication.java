@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.rinnion.archived.utils.Files;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -93,12 +95,16 @@ public class ArchivedApplication extends Application {
         Log.Initialize();
         MyLocale.Initialize();
 
+        Parse.initialize(this, "reX8ztBii9yEqZF5lxjTnOK4k3R2AHteA4rfu69x", "pEGaA2qIqCmEsCEwejFxNyGs1bPUBLXeqDMOcwxs");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+
         Log.i(TAG, "onCreate");
     }
 
     @Override
     public void onTerminate() {
         Log.i(TAG, "onTerminate");
+        super.onTerminate();
 
     }
 
@@ -106,12 +112,13 @@ public class ArchivedApplication extends Application {
     public void onLowMemory() {
         // In-memory caches should be thrown overboard here
         Log.i(TAG, "onLowMemory");
+        super.onLowMemory();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         Log.i(TAG, "onConifgurationChanged");
-
+        super.onConfigurationChanged(newConfig);
     }
 
 }
