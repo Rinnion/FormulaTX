@@ -113,6 +113,8 @@ public class WebViewWithCache extends WebView {
 
 
     private void setDefaultSettings() {
+        this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
         WebSettings mWebViewSettings = this.getSettings();
         mWebViewSettings.setJavaScriptEnabled(true);
         mWebViewSettings.setAllowFileAccess(true);
@@ -121,6 +123,8 @@ public class WebViewWithCache extends WebView {
             mWebViewSettings.setAppCacheMaxSize(8 * 1024 * 1024);
         mWebViewSettings.setLoadsImagesAutomatically(true);
         mWebViewSettings.setAppCachePath(Files.getCacheDir());
+        mWebViewSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebViewSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 
         this.setWebViewClient(new MyWebViewClient(activity));
     }

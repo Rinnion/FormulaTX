@@ -3,17 +3,11 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.FrameLayout;
 import com.rinnion.archived.utils.Log;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
@@ -60,21 +54,21 @@ public class NewsFragment extends Fragment {
 
 
 
-    private String prepateHtml(ApiObject apiObject,int width)
+    private String prepateHtml(ApiObject apiObject)
     {
         if(apiObject==null)
             return "";
 
 
 
-        String thumb =(apiObject.thumb.isEmpty())?"":"<div><img src='"+ apiObject.thumb + "' style=\"max-width: " + width  + "px; height: auto;\"></div>";
+        String thumb =(apiObject.thumb.isEmpty())?"":"<div><img src='"+ apiObject.thumb + "' style=\"width: 100%; height: auto;\"></div>";
 
 
         String title=(apiObject.title.isEmpty())?"":"<p>" + apiObject.title + "</p>";
         String date=(apiObject.date.isEmpty())?"":"<div>" + apiObject.date + "</div>";
         String content=(apiObject.content.isEmpty())?"":apiObject.content;
 
-        Log.d(TAG,String.format("Width: %s\nThumb: %s\nTitle: %s\nDate: %s\nContent: %s\n\n",Integer.toString(width),thumb,title,date,content));
+        Log.d(TAG,String.format("Thumb: %s\nTitle: %s\nDate: %s\nContent: %s\n\n",thumb,title,date,content));
 
 
         String strHtml="<html><style>body {padding:0px; color:#FFF;}</style><body>" + thumb + title  + date + content + "</body></html>";
@@ -99,11 +93,7 @@ public class NewsFragment extends Fragment {
 Display display=getActivity().getWindowManager().getDefaultDisplay();
 
 
-        DisplayMetrics displayMetrics=new DisplayMetrics();
-
-        display.getMetrics(displayMetrics);
-
-        String webHTML=prepateHtml(apiObject,displayMetrics.heightPixels);
+        String webHTML=prepateHtml(apiObject);
         String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
         if (apiObject.content.isEmpty())
             webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + apiObject.title + "</h2>Нет описания</body></html>";
