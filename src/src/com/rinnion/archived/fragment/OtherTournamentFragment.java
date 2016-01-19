@@ -129,7 +129,7 @@ public class OtherTournamentFragment extends Fragment {
         }
         try {
             JSONArray array = new JSONArray(t.files);
-            String filename = array.getString(0);
+            String filename = Utils.fixUrlWithFullPath(array.getString(0));
             //TODO: download file first;
             //TODO: then open target
         }catch(Exception ex){
