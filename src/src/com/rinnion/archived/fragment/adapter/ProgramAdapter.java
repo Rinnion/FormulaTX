@@ -1,21 +1,16 @@
 package com.rinnion.archived.fragment.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.GamerCursor;
-import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.rinnion.archived.fragment.ProgramCursor;
 import com.rinnion.archived.utils.Log;
-import com.squareup.picasso.Picasso;
 
 public class ProgramAdapter extends SimpleCursorAdapter {
     private final String TAG = getClass().getSimpleName();
@@ -82,10 +77,13 @@ public class ProgramAdapter extends SimpleCursorAdapter {
     private void fillEvtView(View v, ProgramCursor item) {
         TextView tvTitle = (TextView) v.findViewById(R.id.ipdl_tv_title);
         TextView tvTime = (TextView) v.findViewById(R.id.ipdl_tv_time);
-        ImageView ivImage = (ImageView) v.findViewById(R.id.ipdl_iv_image);
+        LinearLayout llLink = (LinearLayout) v.findViewById(R.id.ipel_ll_link);
 
         tvTitle.setText(item.getTitle());
         tvTime.setText(item.getTime());
+        boolean past = item.getInPast();
+        llLink.setAlpha(past ? 0.15f : 1f);
+
     }
 
     private void fillDayView(View v, ProgramCursor item) {
@@ -93,38 +91,11 @@ public class ProgramAdapter extends SimpleCursorAdapter {
         ImageView ivImage = (ImageView) v.findViewById(R.id.ipdl_iv_image);
 
         tvTitle.setText(item.getTitle());
+        boolean today = item.getToday();
+        boolean past = item.getInPast();
+        if (today) ivImage.setImageResource(R.drawable.square_selected_100);
+        if (!today && past) ivImage.setImageResource(R.drawable.square_noselected_15);
+        if (!today && !past) ivImage.setImageResource(R.drawable.square_noselected_100);
     }
 
-    @Override
-    public void bindView(View view, Context context, final Cursor cursor) {
-        Log.d(TAG, "bind");
-
-        //super.bindView(view, context, cursor);
-
-        final ImageView imlThumb = (ImageView) view.findViewById(R.id.igl_iv_thumb);
-        final TextView tvName = (TextView) view.findViewById(R.id.igl_tv_name);
-        final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
-        final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
-        final ImageView tvFavorite = (ImageView) view.findViewById(R.id.igl_iv_like);
-
-        Gamer item = ((GamerCursor) cursor).getItem();
-
-        //imlThumb.getScaleX()
-
-        try {
-            Picasso.with(context)
-                    .load(item.thumb)
-                    .placeholder(R.drawable.logo_splash_screen)
-                    .error(R.drawable.logo_splash_screen)
-                    .resize(80, 80)
-                    .centerCrop()
-                    .into(imlThumb);
-        }catch(Exception ignore){
-            Log.e(TAG, ignore.getLocalizedMessage());
-        }
-        tvName.setText(item.full_name);
-        tvCountry.setText(item.country);
-        tvRating.setText(String.valueOf(item.rating));
-        tvFavorite.setImageResource(R.drawable.like_noselected_icon);
-    }
 }

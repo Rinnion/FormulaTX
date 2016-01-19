@@ -41,20 +41,20 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
 
     private ProgramCursor getProgramCursor() {
         ProgramCursor mc = new ProgramCursor();
-        mc.addRow(ProgramCursor.TYPE_DAY, "Пн, 11 янв 16", null, true);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Пн, 11 янв 16", null, true, false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Начало", "12:00", true);
         mc.addRow(ProgramCursor.TYPE_EVT, "Презентация", "23:00", true);
-        mc.addRow(ProgramCursor.TYPE_DAY, "Вт, 12 янв 16", null, true);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Вт, 12 янв 16", null, true, true);
         mc.addRow(ProgramCursor.TYPE_EVT, "Нало продолжения", "8:30", false);
-        mc.addRow(ProgramCursor.TYPE_DAY, "Ср, 13 янв 16", null, false);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Ср, 13 янв 16", null, false, false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Завершение", "9:00", false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Кофе пауза", "12:00", false);
-        mc.addRow(ProgramCursor.TYPE_DAY, "Чт, 14 янв 16", null, true);
-        mc.addRow(ProgramCursor.TYPE_EVT, "Начало", "12:00", true);
-        mc.addRow(ProgramCursor.TYPE_EVT, "Презентация", "23:00", true);
-        mc.addRow(ProgramCursor.TYPE_DAY, "Пт, 15 янв 16", null, true);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Чт, 14 янв 16", null, false, false);
+        mc.addRow(ProgramCursor.TYPE_EVT, "Начало", "12:00", false);
+        mc.addRow(ProgramCursor.TYPE_EVT, "Презентация", "23:00", false);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Пт, 15 янв 16", null, false, false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Нало продолжения", "8:30", false);
-        mc.addRow(ProgramCursor.TYPE_DAY, "Cб, 16 янв 16", null, false);
+        mc.addRow(ProgramCursor.TYPE_DAY, "Cб, 16 янв 16", null, false, false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Завершение", "9:00", false);
         mc.addRow(ProgramCursor.TYPE_EVT, "Кофе пауза", "12:00", false);
         mc.moveToFirst();

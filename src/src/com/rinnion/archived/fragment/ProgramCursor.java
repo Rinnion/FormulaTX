@@ -18,13 +18,14 @@ public class ProgramCursor extends MatrixCursor{
     public static final String NAME = "name";
     public static final String TIME = "time";
     public static final String IN_PAST = "in_past";
+    public static final String TODAY = "today";
 
     public static final int TYPE_DAY = 0;
     public static final int TYPE_EVT = 1;
     private static final String TAG = "ProgramCursor";
 
-    private static String[] names = new String[]{TYPE, NAME, TIME, IN_PAST};
-    private static String[] columns = new String[]{_ID, TYPE, NAME, TIME, IN_PAST};
+    private static String[] names = new String[]{TYPE, NAME, TIME, IN_PAST, TODAY};
+    private static String[] columns = new String[]{_ID, TYPE, NAME, TIME, IN_PAST, TODAY};
 
     public ProgramCursor() {
         super(columns);
@@ -47,12 +48,24 @@ public class ProgramCursor extends MatrixCursor{
     }
 
     public boolean getInPast() {
-        return getInt(getColumnIndexOrThrow(IN_PAST)) == 1;
+        String value = getString(getColumnIndexOrThrow(IN_PAST));
+        return (value!=null && Boolean.TRUE.equals(Boolean.valueOf(value)));
+    }
+    public boolean getToday() {
+        String value = getString(getColumnIndexOrThrow(TODAY));
+        return (value!=null && Boolean.TRUE.equals(Boolean.valueOf(value)));
+    }
+
+    public void addRow(int type, String name, String time, boolean in_past, boolean b) {
+        int count = getCount();
+        Object[] columnValues = {count + 1, type, name, time, in_past, b};
+        Log.d(TAG, Arrays.toString(columnValues));
+        super.addRow(columnValues);
     }
 
     public void addRow(int type, String name, String time, boolean in_past) {
         int count = getCount();
-        Object[] columnValues = {count + 1, type, name, time, in_past};
+        Object[] columnValues = {count + 1, type, name, time, in_past, null};
         Log.d(TAG, Arrays.toString(columnValues));
         super.addRow(columnValues);
     }

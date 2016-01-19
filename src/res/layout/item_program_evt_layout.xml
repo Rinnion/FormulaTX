@@ -2,34 +2,53 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="10dp" android:weightSum="1"
-              android:gravity="right">
+              android:layout_height="65dp"
+              android:weightSum="1"
+              android:gravity="center_vertical|right" android:paddingRight="10dp" android:paddingLeft="10dp">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="0.75" android:gravity="right">
+                android:layout_height="wrap_content" android:layout_weight="0.75" android:gravity="right"
+                android:background="@drawable/rounded_background_10"
+                android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:layout_marginRight="10dp">
                 <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ipdl_tv_title" android:text="Начало матчей" android:textSize="28sp"/>
+                android:id="@+id/ipdl_tv_title" android:text="Начало матчей"
+                style="@style/main_text"/>
         </LinearLayout>
         <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="0.25">
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ipdl_iv_image"
-                        android:src="@drawable/ic_action_not_important"
-                        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+                android:layout_height="match_parent" android:layout_weight="0.25">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="@dimen/program_square"
+                        android:layout_height="match_parent" android:id="@+id/ipel_ll_link"
+                        android:gravity="center_horizontal" android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true" android:alpha="1">
+                        <ImageView android:layout_width="3dp" android:layout_height="match_parent"
+                                   android:id="@+id/imageView" android:src="@drawable/white_background_100"
+                                   android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                                   android:layout_weight="0.5"/>
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ipdl_iv_image"
+                                android:src="@drawable/circle_white_100"
+                                android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                                />
+                        <ImageView android:layout_width="3dp" android:layout_height="match_parent" android:id="@+id/imageView2"
+                                   android:src="@drawable/white_background_100" android:layout_alignParentTop="true"
+                                   android:layout_alignParentLeft="true" android:layout_weight="0.5"/>
+                </LinearLayout>
                 <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="9:30"
                         android:id="@+id/ipdl_tv_time"
-                        android:layout_centerVertical="true" android:layout_toRightOf="@+id/ipdl_iv_image"/>
+                        android:layout_centerVertical="true" android:layout_toRightOf="@+id/ipel_ll_link"
+                        android:layout_marginLeft="10dp" android:gravity="left"/>
         </RelativeLayout>
 </LinearLayout>

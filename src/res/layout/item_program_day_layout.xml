@@ -2,27 +2,29 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="10dp" android:weightSum="1"
-              android:gravity="right">
+              android:layout_height="65dp"
+              android:weightSum="1"
+              android:gravity="center_vertical|right" android:paddingLeft="10dp" android:paddingRight="10dp">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="match_parent" android:layout_weight="0.75" android:gravity="right">
+                android:layout_height="wrap_content" android:layout_weight="0.75" android:gravity="right"
+                android:layout_marginTop="10dp" android:layout_marginRight="10dp" android:layout_marginBottom="10dp">
                 <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ipdl_tv_title" android:text="Пн, 18.01.2016" android:textSize="28sp"/>
+                android:id="@+id/ipdl_tv_title" android:text="Пн, 18.01.2016"
+                android:layout_marginRight="10dp" style="@style/main_text" android:textStyle="bold"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" android:gravity="left|center_vertical" android:layout_weight="0.25">
+                android:layout_height="match_parent" android:gravity="left|center_vertical" android:layout_weight="0.25">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/ipdl_iv_image"
-                        android:src="@drawable/ic_action_not_important"/>
+                        android:src="@drawable/square_noselected_15"/>
                 TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

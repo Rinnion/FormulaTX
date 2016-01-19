@@ -5,6 +5,10 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.*;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 import com.rinnion.archived.fragment.adapter.ProgramAdapter;
 import com.rinnion.archived.network.loaders.ProgramAsyncLoader;
 import com.rinnion.archived.utils.Log;
@@ -64,6 +68,11 @@ public class ProgramFragment extends ListFragment implements LoaderManager.Loade
         }
     }
 
+    @Override
+    public void onStart() {
+        getListView().setDivider(null);
+        super.onStart();
+    }
 
     @Override
     public Loader<ProgramCursor> onCreateLoader(int id, Bundle args) {

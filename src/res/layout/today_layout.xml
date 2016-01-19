@@ -35,7 +35,7 @@
                     style="@style/weather_image"/>
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
-                      android:layout_height="fill_parent" android:id="@+id/linearLayout" android:layout_weight="1"
+                      android:layout_height="fill_parent" android:id="@+id/ipel_ll_link" android:layout_weight="1"
                       android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="-5\u00B0"

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="action_bar_color">#14374D</color>
+    <color name="white_15a">#30d8d8d8</color>
+    <color name="white_10a">#20d8d8d8</color>
+    <color name="white_20a">#40d8d8d8</color>
+    <color name="white_100a">#FFd8d8d8</color>
 </resources>
