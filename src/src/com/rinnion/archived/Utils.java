@@ -11,6 +11,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import com.rinnion.archived.network.MyNetworkContentContract;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -372,6 +373,11 @@ public class Utils {
         } catch (IOException ioe) {
             Log.e(Tag, "IO error: " + ioe.getMessage(), ioe);
         }
+    }
+
+    public static String fixUrlWithFullPath(String url) {
+        if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
+        return url;
     }
 }
 

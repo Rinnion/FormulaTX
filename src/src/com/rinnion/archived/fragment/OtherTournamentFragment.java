@@ -7,17 +7,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.Utils;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.helper.TournamentHelper;
+import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.utils.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +31,7 @@ import com.rinnion.archived.database.model.ApiObjects.Tournament;
  */
 public class OtherTournamentFragment extends Fragment {
 
-    public static final String TYPE = "TYPE";
+    public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     public static final String ABOUT = "ABOUT";
     public static final String SCHEDULE = "SCHEDULE";
     public static final String GRIDS = "GRIDS";
@@ -106,8 +109,8 @@ public class OtherTournamentFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String tag = (String) view.getTag();
                 if (tag.equals(ABOUT)) showAboutFragment();
-                if (tag.equals(SCHEDULE)) showEmptyFragment();
-                if (tag.equals(GRIDS)) showEmptyFragment();
+                if (tag.equals(SCHEDULE)) showScheduleFragment();
+                if (tag.equals(GRIDS)) showGridsFragment();
                 if (tag.equals(LIVESCORE)) showEmptyFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
                 if (tag.equals(FINDWAY)) showEmptyFragment();
@@ -115,6 +118,47 @@ public class OtherTournamentFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void showGridsFragment() {
+        String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament t = th.getByPostName(post_name);
+        if (t == null) {
+            showNoValueMessage();
+        }
+        try {
+            JSONArray array = new JSONArray(t.files);
+            String filename = array.getString(0);
+            //TODO: download file first;
+            //TODO: then open target
+        }catch(Exception ex){
+            Log.e(TAG, "ERROR", ex);
+            showNoValueMessage();
+        }
+
+    }
+
+    private void showNoValueMessage() {
+
+    }
+
+    private void showScheduleFragment() {
+        String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
+        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+        Tournament t = th.getByPostName(post_name);
+        if (t == null) {
+            showNoValueMessage();
+        }
+        try {
+            JSONArray array = new JSONArray(t.files);
+            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            //TODO: download file first;
+            //TODO: then open target
+        }catch(Exception ex){
+            Log.e(TAG, "ERROR", ex);
+            showNoValueMessage();
+        }
     }
 
     public void showGalleryFragment() {
@@ -132,7 +176,7 @@ public class OtherTournamentFragment extends Fragment {
     private void showAboutFragment() {
         AboutFragment mlf = new AboutFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AboutFragment.TYPE, getArguments().getString(TYPE));
+        bundle.putString(AboutFragment.TYPE, getArguments().getString(TOURNAMENT_POST_NAME));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
