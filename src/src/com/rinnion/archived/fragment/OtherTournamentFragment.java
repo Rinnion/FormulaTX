@@ -74,7 +74,12 @@ public class OtherTournamentFragment extends Fragment {
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
             ab.setIcon(R.drawable.ic_action_previous_item);
-            ab.setTitle(R.string.st_lady_title);
+            ab.setHomeButtonEnabled(true);
+
+            String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
+            TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
+            Tournament t = th.getByPostName(post_name);
+            ab.setTitle(t.title);
         }
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
@@ -129,7 +134,7 @@ public class OtherTournamentFragment extends Fragment {
         }
         try {
             JSONArray array = new JSONArray(t.files);
-            String filename = array.getString(0);
+            String filename = Utils.fixUrlWithFullPath(array.getString(0));
             //TODO: download file first;
             //TODO: then open target
         }catch(Exception ex){
