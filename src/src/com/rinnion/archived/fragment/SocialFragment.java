@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import com.rinnion.archived.utils.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class SocialFragment extends Fragment {
     private WebView mTextViewAbout;
     private SimpleCursorAdapter mTwitterAdapter;
     private SimpleCursorAdapter mInstagramAdapter;
+    private SwipeRefreshLayout mViewTwitter;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -83,6 +85,14 @@ public class SocialFragment extends Fragment {
         tabSpec.setIndicator(getString(R.string.string_twitter));
         tabSpec.setContent(R.id.stl_tab_twitter);
         tabHost.addTab(tabSpec);
+        mViewTwitter = (SwipeRefreshLayout) tabHost.findViewById(R.id.stl_tab_twitter);
+        mViewTwitter.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
+        mViewTwitter.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mViewTwitter.setRefreshing(true);
+            }
+        });
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -175,6 +185,7 @@ public class SocialFragment extends Fragment {
         @Override
         public void onLoadFinished(Loader<TwitterItemCursor> loader, TwitterItemCursor data) {
             mTwitterAdapter.swapCursor(data);
+            mViewTwitter.setRefreshing(false);
         }
 
         @Override
