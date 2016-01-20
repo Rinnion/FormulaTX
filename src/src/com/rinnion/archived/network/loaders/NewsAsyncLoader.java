@@ -2,6 +2,8 @@ package com.rinnion.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import com.rinnion.archived.database.helper.NewsHelper;
+import com.rinnion.archived.fragment.adapter.NewsAdapter;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -33,16 +35,15 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHelper aoh=new ApiObjectHelper(doh);
-        deliverResult(aoh.getAllByType(ApiObject.NEWS));
+        NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
+        deliverResult(nh.getAll());
     }
 
     @Override
     public ApiObjectCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHelper aoh=new ApiObjectHelper(doh);
-        return aoh.getAllByType(ApiObject.NEWS);
+        NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
+        NewsCursor newsCursor = nh.getAll();
+        return newsCursor;
     }
 }

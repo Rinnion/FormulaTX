@@ -81,9 +81,10 @@ public class PodcastContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ListView view = (ListView) inflater.inflate(R.layout.list_layout, container, false);
-        view.setAdapter(mAdapter);
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        View view = inflater.inflate(R.layout.list_layout, container, false);
+        ListView mListView = (ListView) view.findViewById(R.id.listView);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();

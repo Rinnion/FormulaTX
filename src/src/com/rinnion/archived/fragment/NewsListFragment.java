@@ -1,11 +1,16 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.network.loaders.NewsAsyncLoader;
 import com.rinnion.archived.utils.Log;
@@ -29,11 +34,12 @@ import com.rinnion.archived.fragment.adapter.NewsAdapter;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class NewsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ApiObjectCursor> {
+public class NewsListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ApiObjectCursor> {
 
     public static String TOURNAMENT_POST_NAME = "tournament id";
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
+    private SwipeRefreshLayout view;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -57,8 +63,7 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
             newsCursor = nh.getAll();
         }
         mAdapter = new NewsAdapter(getActivity(), newsCursor);
-        setListAdapter(mAdapter);
-        //getLoaderManager().initLoader(R.id.message_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
         super.onCreate(savedInstanceState);
     }
 
@@ -73,8 +78,26 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        showOtherTournamentFragment(id);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = (SwipeRefreshLayout) inflater.inflate(R.layout.list_layout, container, false);
+        view.setColorScheme(android.R.color.holo_red_dark,android.R.color.holo_orange_dark,android.R.color.holo_green_dark,android.R.color.holo_blue_dark );
+        view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "onRefresh");
+                getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, NewsListFragment.this);
+            }
+        });
+        ListView mListView = (ListView) view.findViewById(R.id.listView);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                showOtherTournamentFragment(l);
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -111,13 +134,12 @@ public class NewsListFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ApiObjectCursor> loader, ApiObjectCursor data) {
-
         mAdapter.swapCursor(data);
+        view.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<ApiObjectCursor> loader) {
-
     }
 }
 

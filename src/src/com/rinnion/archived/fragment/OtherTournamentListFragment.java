@@ -79,8 +79,8 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_layout, null, false);
-        ListView mListView = (ListView) view;
+        View view = inflater.inflate(R.layout.list_layout, container, false);
+        ListView mListView = (ListView) view.findViewById(R.id.listView);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         return view;
