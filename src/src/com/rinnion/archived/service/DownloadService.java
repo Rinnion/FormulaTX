@@ -93,8 +93,8 @@ public class DownloadService extends IntentService {
                 Log.w(TAG, "parse error" + ex.getMessage());
             }
 
-            FetchNewsForTournament(ao);
-            FetchSocialsForTournament(ao);
+            //FetchNewsForTournament(ao);
+            //FetchSocialsForTournament(ao);
             publishProgress((int)(startProgress + pr * i), null);
         }
         return tournamentList;

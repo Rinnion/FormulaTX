@@ -54,15 +54,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
         Bundle args = getArguments();
 
-        NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
-        NewsCursor newsCursor = null;
-        if (args != null){
-            String post_name = args.getString(TOURNAMENT_POST_NAME);
-            newsCursor = nh.getByParent(post_name);
-        }else{
-            newsCursor = nh.getAll();
-        }
-        mAdapter = new NewsAdapter(getActivity(), newsCursor);
+        mAdapter = new NewsAdapter(getActivity(), null);
         getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
         super.onCreate(savedInstanceState);
     }
@@ -129,7 +121,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
-        return new NewsAsyncLoader(getActivity());
+        return new NewsAsyncLoader(getActivity(), null);
     }
 
     @Override

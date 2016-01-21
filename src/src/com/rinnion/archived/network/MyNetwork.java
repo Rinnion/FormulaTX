@@ -159,9 +159,10 @@ public final class MyNetwork {
     public static Bundle queryTournamentNewsList(long id) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
 
+        IResponseHandler mHandler = new ApiObjectListHandler();
+
         if (Settings.NETDEBUG) {
-            String fileName = "json/" + String.valueOf(id) + "parent.json";
-            IResponseHandler mHandler = new ApiObjectListHandler();
+            String fileName = "json/" + String.valueOf(id) + "-news.json";
             Bundle result = processFile(fileName, mHandler);
             return result;
         }
@@ -171,9 +172,9 @@ public final class MyNetwork {
         HttpRequester fetcher = null;
         try {
             fetcher = builder.setName("queryTournamentNewsList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparent.getParent(id))
-                    .setHandler(new ApiObjectListHandler())
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.getParent(id))
+                    .setHandler(mHandler)
                     .create();
 
         } catch (UnsupportedEncodingException e) {
@@ -328,7 +329,7 @@ public final class MyNetwork {
                 handler = new TournamentHandler(new TournamentHelper(doh));
                 break;
             case ApiObjectTypes.EN_News:
-                handler = new NewsHandler(new NewsHelper(doh));
+                handler = new NewsHandler();
                 break;
             default:
                 handler = new ApiObjectHandler(new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper()), type);
@@ -443,6 +444,16 @@ public final class MyNetwork {
         CardHandler cardHandler = new CardHandler(new CardHelper(doh));
 
         return getObjectWithAdditionalFields(id, handlerObject, cardHandler);
+    }
+
+    public static void queryNews(int id) {
+        Log.d(TAG, String.format("query card"));
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_News);
+        NewsHandler cardHandler = new NewsHandler();
+
+        getObjectWithAdditionalFields(id, handlerObject, cardHandler);
     }
 
     private static Bundle getObjectWithAdditionalFields(int id, ApiObjectHandler handlerObject, JSONObjectHandler handlerProduct) {

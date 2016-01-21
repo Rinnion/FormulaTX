@@ -34,8 +34,7 @@ import java.util.Calendar;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class TodayFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<ApiObjectCursor>, AdapterView.OnItemClickListener {
+public class TodayFragment extends Fragment implements LoaderManager.LoaderCallbacks<ApiObjectCursor>, AdapterView.OnItemClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -82,10 +81,6 @@ public class TodayFragment extends Fragment implements
         tmpViewNews=view.findViewById(R.id.tl_lv_news);
 
         moveTracker=new MoveTracker();
-
-
-
-
 
         tmpView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -326,7 +321,6 @@ public class TodayFragment extends Fragment implements
         }
     }
 
-
     public void showNavigationFragment() {
         NavigationFragment mlf = new NavigationFragment();
         getFragmentManager()
@@ -356,7 +350,7 @@ public class TodayFragment extends Fragment implements
     public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
         //Создаем асинхронный загрузчик
-        return new NewsAsyncLoader(getActivity());
+        return new NewsAsyncLoader(getActivity(), null);
     }
 
 

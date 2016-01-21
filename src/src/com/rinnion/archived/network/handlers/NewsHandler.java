@@ -1,6 +1,7 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.NewsHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
@@ -16,11 +17,9 @@ import org.json.JSONObject;
 
 public class NewsHandler extends ApiObjectHandler {
 
-    private NewsHelper th;
 
-    public NewsHandler(NewsHelper th){
-        super(th, ApiObjectTypes.EN_News);
-        this.th = th;
+    public NewsHandler(){
+        super(new NewsHelper(ArchivedApplication.getDatabaseOpenHelper()), ApiObjectTypes.EN_News);
     }
 
     @Override
@@ -28,17 +27,15 @@ public class NewsHandler extends ApiObjectHandler {
         boolean status = object.getBoolean("status");
         if (status) {
             JSONArray message = object.getJSONArray("message");
-            if (message.length() != 1) throw new JSONException("Get message with not only one element" + message.length());
-
-            JSONObject obj = (JSONObject) message.get(0);
 
             Bundle bundle = new Bundle();
-            bundle.putString("ApiObject", obj.toString());
-            News ao = new News(obj);
-
-            ao.content = changeLinksWithinHtml(ao);
-
-            th.add(ao);
+            for (int i = 0; i < message.length(); i++) {
+                JSONObject obj = (JSONObject) message.get(i);
+                bundle.putString("ApiObject", obj.toString());
+                News ao = new News(obj);
+                ao.content = changeLinksWithinHtml(ao);
+                aoh.add(ao);
+            }
 
             return bundle;
         }

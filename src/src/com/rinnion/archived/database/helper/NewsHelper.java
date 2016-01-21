@@ -1,6 +1,8 @@
 package com.rinnion.archived.database.helper;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
+import com.rinnion.archived.network.handlers.TournamentHandler;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
@@ -18,30 +20,14 @@ public class NewsHelper extends ApiObjectHelper {
         super(doh);
     }
 
-    public NewsCursor getByParent(String parent) {
+    public NewsCursor getByParent(String[] parent) {
         Log.v(TAG, "getAll ()");
+
+        String in = "'" + TextUtils.join("','", parent) + "'";
 
         String sql = "SELECT " + ALL_COLUMNS +
                 " FROM " + DATABASE_TABLE +
-                " WHERE " + COLUMN_PARENT + "=? AND " + COLUMN_DISPLAY_METHOD + "=? " +
-                " ORDER BY " + COLUMN_DATE + " DESC";
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        NewsCursor c = (NewsCursor) d.rawQueryWithFactory(
-                new NewsCursor.Factory(),
-                sql,
-                new String[] {parent,String.valueOf(ApiObject.NEWS)},
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
-    public NewsCursor getAll() {
-        Log.v(TAG, "getAll ()");
-
-        String sql = "SELECT " + ALL_COLUMNS +
-                " FROM " + DATABASE_TABLE +
-                " WHERE " + COLUMN_DISPLAY_METHOD + "=? " +
+                " WHERE " + COLUMN_PARENT + " in (" + in + ") AND " + COLUMN_DISPLAY_METHOD + "=? " +
                 " ORDER BY " + COLUMN_DATE + " DESC";
 
         SQLiteDatabase d = doh.getReadableDatabase();

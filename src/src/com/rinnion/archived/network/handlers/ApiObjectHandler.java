@@ -22,7 +22,7 @@ public class ApiObjectHandler extends JSONObjectHandler {
     public static final String API_OBJECT = "ApiObject";
 
     Pattern ptrnImgSrc = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
-    private ApiObjectHelper aoh;
+    protected ApiObjectHelper aoh;
     private int type;
 
     public ApiObjectHandler(ApiObjectHelper aoh, int type){
