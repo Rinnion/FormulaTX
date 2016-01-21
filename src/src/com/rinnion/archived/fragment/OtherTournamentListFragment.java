@@ -126,7 +126,7 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
 
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_other_tounaments);
+            ab.setTitle(R.string.string_other_tournaments);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
     }

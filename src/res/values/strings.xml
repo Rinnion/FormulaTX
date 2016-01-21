@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FormulaTX</string>
+    <string name="app_name">Формула ТХ</string>
     <string name="title_photography">Фотография</string>
     <string name="message_cannot_take_photo">"Не возможно сфотографировать: "</string>
     <string name="intro_text">Правила пользования!\n Пока их нет.</string>
@@ -10,7 +10,7 @@
     <string name="string_tags">Тэги</string>
     <string name="string_profile">Профиль</string>
     <string name="string_stub">Заглушка</string>
-    <string name="string_other_tounaments">Другие турниры</string>
+    <string name="string_other_tournaments">Другие турниры</string>
     <string name="string_tournament_about">О турнире</string>
     <string name="string_tournament_gamers">Игроки</string>
     <string name="string_tournament_program">Программа</string>
