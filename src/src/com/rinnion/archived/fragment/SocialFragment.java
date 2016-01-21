@@ -91,6 +91,8 @@ public class SocialFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mViewTwitter.setRefreshing(true);
+                Bundle bundle = new Bundle();
+                getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
             }
         });
 
@@ -104,6 +106,7 @@ public class SocialFragment extends Fragment {
                 if (tabId.equals(TAB_TAG_TWITTER)){
                     Bundle bundle = new Bundle();
                     getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
+
                 }
             }
         });
@@ -179,7 +182,8 @@ public class SocialFragment extends Fragment {
     private class TwitterCallback implements android.app.LoaderManager.LoaderCallbacks<TwitterItemCursor> {
         @Override
         public Loader<TwitterItemCursor> onCreateLoader(int id, Bundle args) {
-            return new TwitterAsyncLoader(getActivity(), 205);
+            mViewTwitter.setRefreshing(true);
+            return new TwitterAsyncLoader(getActivity());
         }
 
         @Override

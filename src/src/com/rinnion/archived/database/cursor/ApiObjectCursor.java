@@ -64,7 +64,7 @@ public class ApiObjectCursor extends SQLiteCursor {
         return getString(getColumnIndexOrThrow(name));
     }
 
-    protected long getColId() {
+    public long getColId() {
         return getLong(getColumnIndexOrThrow(ApiObjectHelper._ID));
     }
 
