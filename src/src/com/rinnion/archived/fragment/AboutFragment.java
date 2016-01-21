@@ -16,10 +16,7 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.utils.Files;
-import com.rinnion.archived.utils.Log;
-import com.rinnion.archived.utils.MyWebViewClient;
-import com.rinnion.archived.utils.Network;
+import com.rinnion.archived.utils.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -67,7 +64,7 @@ public class AboutFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_layout, container, false);
-        final WebView myWebView = (WebView) view.findViewById(R.id.tv_about);
+        final WebViewWithCache myWebView = (WebViewWithCache) view.findViewById(R.id.tv_about);
 
         Bundle args = getArguments();
         String type = args.getString(TYPE);
@@ -76,151 +73,28 @@ public class AboutFragment extends Fragment  {
 
         mApiObject = th.getByPostName(type);
 
-        if (mApiObject == null) {
-            myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-        } else {
-            if (mApiObject.content.isEmpty()) {
-                myWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>", "text/html; charset=UTF-8", null);
-            } else {
-                ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
-                setWebViewSettings(myWebView);
-                loadFromCache(myWebView);
-                if (cm != null) {
+
+
+        String webHTML="<html><style>p {color:#FFF;}</style><body>" + (((mApiObject==null)||(mApiObject.content==null))?"":mApiObject.content) + "</body></html>";
+        String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
+        if (mApiObject.content.isEmpty())
+            webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>";
 
 
 
-                    NetworkInfo ani = cm.getActiveNetworkInfo();
+        myWebView.loadDataOrCache(getActivity(),mApiObject,webHTML,webHTMLEmpty);
 
-                    Log.d(TAG, "Online ani == " + String.valueOf(ani));
-                    if (ani != null && ani.isConnected()) {
-                        Network network=new Network(){
-                            @Override
-                            protected void onPostExecute(Boolean aBoolean) {
-                                super.onPostExecute(aBoolean);
-                                if(aBoolean)
-                                    loadDataToCache(myWebView);
-                                //else
-
-                            }
-                        };
-
-                        network.execute();
-
-                    }
-
-
-
-                    /*else{
-                        loadFromCache(myWebView);
-
-                    }*/
-                }
-               /* else{
-                    Log.d(TAG, "WORK OFFLINE");
-                    myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-                    myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-                }*/
-
-                /*loadDataToCache(myWebView);*/
-
-                /*myWebView.setWebViewClient(new MyWebViewClient());
-                myWebView.loadUrl("http://yandex.ru");
-                myWebView.requestFocus();
-                */
-
-            }
-
-        }
 
         myWebView.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 
-    private void loadDataToCache(WebView myWebView) {
-        Log.d(TAG, "getActiveNetworkInfo isConnected == true");
-        myWebView.stopLoading();
-
-        myWebView.setWebViewClient(new MyWebViewClient(getActivity()) {
-           @Override
-           public void onPageFinished(WebView view, String url) {
-               super.onPageFinished(view, url);
-
-               view.saveWebArchive(Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht"));
-           }
-       });
-
-        myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-    }
-
-
-    public byte[] getFileAllBytes(String filePath)
-    {
-        File file = new File(filePath);
-        int size = (int) file.length();
-        byte[] bytes = new byte[size];
-        try {
-            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
-            buf.read(bytes, 0, bytes.length);
-            buf.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return bytes;
-    }
-
-    private void loadFromCache(WebView myWebView) {
-        Log.d(TAG, "getActiveNetworkInfo isConnected == false or ani == null");
-        //myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        Log.d(TAG, "WebView set cache success");
-        String filePath= Files.getExternalDir("web", mApiObject.type + "." + mApiObject.id + ".mht");
-        File file=new File(filePath);
-        if(file.exists()) {
-            //myWebView.loadUrl("file:///" + filePath);
-            byte []fileBytes=getFileAllBytes(filePath);
-            String str = null;
-            try {
-                str = new String(fileBytes, "UTF-8");
-                if(str.startsWith("<?xml"))
-                    myWebView.loadData(str, "application/x-webarchive-xml", "UTF-8");
-                else
-                    myWebView.loadUrl("file:///" + filePath);
-                Log.d(TAG,"LoadData size: " + fileBytes.length);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                Log.e(TAG,"UnsupportedEncodingException",e);
-            }
-            /**/
-
-            //Map<String,String> map=new HashMap<String, String>();
-            //map.put("content-type","content=\"application/x-webarchive-xml\"");
-
-            //myWebView.loadUrl("file:///" + filePath,map);
-        }
-        else
-            myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-                    myWebView.loadData("<html><style>p {color:#FFF;}</style><body>" + mApiObject.content + "</body></html>", "text/html; charset=UTF-8", null);
-    }
-
-    private void setWebViewSettings(WebView myWebView) {
-        myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        WebSettings mWebViewSettings = myWebView.getSettings();
-        mWebViewSettings.setJavaScriptEnabled(true);
-        mWebViewSettings.setAllowFileAccess(true);
-        mWebViewSettings.setAppCacheEnabled(true);
-        if (Build.VERSION.SDK_INT < 18)
-            mWebViewSettings.setAppCacheMaxSize(8 * 1024 * 1024);
-        mWebViewSettings.setLoadsImagesAutomatically(true);
-        mWebViewSettings.setAppCachePath(Files.getCacheDir());
 
 
 
-        myWebView.setWebViewClient(new MyWebViewClient(getActivity()));
 
-    }
+
+
 
     @Override
     public void onStart() {
