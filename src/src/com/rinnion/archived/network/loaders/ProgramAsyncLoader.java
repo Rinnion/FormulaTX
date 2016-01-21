@@ -12,6 +12,7 @@ import com.rinnion.archived.fragment.ProgramFragment;
 import com.rinnion.archived.utils.Log;
 import org.lorecraft.phparser.SerializedPhpParser;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -109,7 +110,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
     private ProgramObject[] getProgram() {
         ProgramObject[] arr;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm", new Locale("ru", "RU"));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm");
             SerializedPhpParser php = new SerializedPhpParser(data);
             Map parse = (Map) php.parse();
             ArrayList<ProgramObject> apo = new ArrayList<ProgramObject>(parse.size());
@@ -119,7 +120,12 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
                 String time = event[1].toString();
                 String name = event[2].toString();
                 ProgramObject po = new ProgramObject();
-                po.fulldate = formatter.parse(date + " " + time).getTime();
+                try{
+                    po.fulldate = formatter.parse(date + " " + time).getTime();
+                }   catch(ParseException ex){
+                    SimpleDateFormat frmt2 = new SimpleDateFormat("dd MMMM yyyy h:mm");
+                    po.fulldate = frmt2.parse(date + " " + time).getTime();
+                }
                 po.time = time;
                 po.name = name;
                 po.date = date;

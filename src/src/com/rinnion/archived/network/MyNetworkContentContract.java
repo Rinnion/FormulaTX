@@ -80,7 +80,7 @@ public class MyNetworkContentContract {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentnews";
 
                 public static String getParent(long parent){
-                    return URL_METHOD + "?id="+String.valueOf(parent);
+                    return URL_METHOD + "&id="+String.valueOf(parent);
                 }
             }
 

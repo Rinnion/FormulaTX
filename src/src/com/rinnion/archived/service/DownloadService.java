@@ -30,9 +30,11 @@ public class DownloadService extends IntentService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         ArchivedApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_PROGRESS);
-        ArchivedApplication.setParameter(Settings.LOADING_PROGRESS, String.valueOf(0));
+        ArchivedApplication.setParameter(Settings.LOADING_PROGRESS, 0);
         ArchivedApplication.setParameter(Settings.LOADING_CUSTOM_MESSAGE, "");
+
         return super.onStartCommand(intent, flags, startId);
     }
 
