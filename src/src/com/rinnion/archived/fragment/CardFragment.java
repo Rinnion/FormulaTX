@@ -3,15 +3,22 @@ package com.rinnion.archived.fragment;
 import android.app.ActionBar;
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
+import android.widget.Toast;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.CardCursor;
 import com.rinnion.archived.database.cursor.ProductCursor;
+import com.rinnion.archived.database.helper.CardHelper;
+import com.rinnion.archived.database.model.ApiObjects.Card;
 import com.rinnion.archived.fragment.adapter.CardAdapter;
 import com.rinnion.archived.fragment.adapter.ProductAdapter;
 import com.rinnion.archived.network.loaders.CardAsyncLoader;
@@ -54,6 +61,16 @@ public class CardFragment extends ListFragment implements LoaderManager.LoaderCa
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        try {
+            CardHelper ch = new CardHelper(ArchivedApplication.getDatabaseOpenHelper());
+            Card card = ch.getCard(id);
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
+            startActivity(myIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), "No application can handle this request."
+                    + " Please install a webbrowser", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
         //TODO: open browser for card
         //super.onListItemClick(l, v, position, id);
     }
