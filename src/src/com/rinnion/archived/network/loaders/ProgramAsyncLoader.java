@@ -109,7 +109,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
     private ProgramObject[] getProgram() {
         ProgramObject[] arr;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm", new Locale("ru", "RU"));
             SerializedPhpParser php = new SerializedPhpParser(data);
             Map parse = (Map) php.parse();
             ArrayList<ProgramObject> apo = new ArrayList<ProgramObject>(parse.size());

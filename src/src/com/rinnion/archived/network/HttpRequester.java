@@ -34,6 +34,7 @@ public class HttpRequester {
     public static final String RESULT_HTTP = "HTTP";
     public static final String RESULT_HTTP_PARSE = "HTTP_PARSE";
     public static final String RESULT_EXCEPTION = "EXCEPTION";
+    private static final boolean L = false;
     private String mIdentity;
     private HttpUriRequest mRequest;
     private IResponseHandler mHandler;
@@ -75,7 +76,7 @@ public class HttpRequester {
             Log.d(TAG, mIdentity + ": success");
         } catch (Exception e) {
             Log.w(TAG, mIdentity + ": Exception: " + e.getMessage());
-            Log.d(TAG, mIdentity, e);
+            if (L) Log.v(TAG, mIdentity, e);
             result.putSerializable(RESULT, RESULT_EXCEPTION);
             result.putSerializable(RESULT_EXCEPTION, e);
         }

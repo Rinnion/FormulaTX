@@ -170,20 +170,12 @@ public final class MyNetwork {
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = null;
-        try {
-            fetcher = builder.setName("queryTournamentNewsList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.getParent(id))
-                    .setHandler(mHandler)
-                    .create();
 
-        } catch (UnsupportedEncodingException e) {
-            Log.d(TAG, "Error while server request", e);
-            Bundle bundle = new Bundle();
-            bundle.putString("RESULT", "EXCEPTION");
-            bundle.putSerializable("EXCEPTION", e);
-            return bundle;
-        }
+        fetcher = builder.setName("queryTournamentNewsList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.getParent(id))
+                .setHandler(mHandler)
+                .create();
+
 
         return fetcher.execute();
     }
@@ -191,7 +183,6 @@ public final class MyNetwork {
     //Загрузка списка новостей турнира
     public static Bundle queryGallery(long id) {
         Log.d(TAG, String.format("queryGallery"));
-        final DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher;

@@ -79,10 +79,8 @@ public class MyNetworkContentContract {
             {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentnews";
 
-                public static ArrayList<NameValuePair> getParent(long parent){
-                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
-                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(parent)));
-                    return dm_partner;
+                public static String getParent(long parent){
+                    return URL_METHOD + "?id="+String.valueOf(parent);
                 }
             }
 

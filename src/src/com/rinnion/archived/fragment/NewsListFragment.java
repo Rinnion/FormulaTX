@@ -36,6 +36,7 @@ import com.rinnion.archived.fragment.adapter.NewsAdapter;
  */
 public class NewsListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ApiObjectCursor> {
 
+    public static final boolean L = true;
     public static String TOURNAMENT_POST_NAME = "tournament id";
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -55,7 +56,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
         Bundle args = getArguments();
 
         mAdapter = new NewsAdapter(getActivity(), null);
-        getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.news_loader, args, this);
         super.onCreate(savedInstanceState);
     }
 
@@ -121,7 +122,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
-        return new NewsAsyncLoader(getActivity(), null);
+        return new NewsAsyncLoader(getActivity(), (getArguments()==null) ? null : getArguments().getString(TOURNAMENT_POST_NAME));
     }
 
     @Override
@@ -132,6 +133,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoaderReset(Loader<ApiObjectCursor> loader) {
+        if (L) Log.d(TAG, "onLoaderReset");
     }
 }
 

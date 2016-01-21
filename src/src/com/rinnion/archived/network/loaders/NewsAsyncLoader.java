@@ -45,8 +45,13 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
+        String[] tn;
+        tn = tournament_name == null
+                ? new String[]{TournamentHelper.TOURNAMENT_LADIES_TROPHY, TournamentHelper.TOURNAMENT_OPEN}
+                : new String[]{tournament_name};
+
         NewsHelper nh = new NewsHelper(ArchivedApplication.getDatabaseOpenHelper());
-        deliverResult(nh.getByParent(new String[]{tournament_name}));
+        deliverResult(nh.getByParent(tn));
     }
 
     @Override
