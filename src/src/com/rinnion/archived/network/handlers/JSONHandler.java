@@ -2,6 +2,7 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.network.IResponseHandler;
+import com.rinnion.archived.utils.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -15,6 +16,8 @@ import org.json.JSONException;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class JSONHandler implements IResponseHandler {
+
+    private static final String TAG = "JSONHandler";
 
     @Override
     public final Bundle Handle(HttpResponse response) throws Exception {
@@ -32,6 +35,10 @@ public abstract class JSONHandler implements IResponseHandler {
 
     @Override
     public final Bundle Handle(String string) throws Exception {
+        if (string == null) throw new IllegalArgumentException("string is null");
+
+        Log.d(TAG, "Handle: " + string.substring(1, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : ""));
+
         Bundle bundle = new Bundle();
 
         bundle.putAll(onStringHandle(string));

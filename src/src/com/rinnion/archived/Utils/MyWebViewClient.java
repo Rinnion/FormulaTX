@@ -21,8 +21,6 @@ public class MyWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         try {
-
-
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             mActivity.startActivity(i);
         }

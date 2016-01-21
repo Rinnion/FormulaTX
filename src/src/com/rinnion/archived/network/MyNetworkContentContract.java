@@ -175,6 +175,21 @@ public class MyNetworkContentContract {
             }
         }
 
+        public static class Parser {
+            public static final String URL = URL_API + "parsers";
+
+            public static class getparser
+            {
+                public static final String URL_METHOD = URL + "?method=getparsersbyid";
+
+                public static ArrayList<NameValuePair> getUrl(long id){
+                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
+                    return dm_partner;
+                }
+            }
+        }
+
         public static class Feedback {
             public static final String URL = URL_API + "feedback";
 

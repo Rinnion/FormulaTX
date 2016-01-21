@@ -25,7 +25,7 @@ public class WebViewWithCache extends WebView {
     private static final String TAG = "WebViewWithCache";
 
     private Activity activity;
-    private ApiObject apiObject;
+    private String mTempFileName;
     private String htmlData;
     private String htmlDataEmpty;
 
@@ -50,14 +50,14 @@ public class WebViewWithCache extends WebView {
         super(context, attrs, defStyle, privateBrowsing);
     }
 
-    private boolean loadFromCache(ApiObject apiObject) {
+    private boolean loadFromCache() {
         Log.d(TAG, "getActiveNetworkInfo isConnected == false or ani == null");
         //myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         Log.d(TAG, "WebView set cache success");
 
         WebView myWebView = this;
 
-        String filePath = Files.getExternalDir("web", apiObject.type + "." + apiObject.id + ".mht");
+        String filePath = Files.getExternalDir("web", mTempFileName + ".mht");
         File file = new File(filePath);
         if (file.exists()) {
             //myWebView.loadUrl("file:///" + filePath);
@@ -85,7 +85,7 @@ public class WebViewWithCache extends WebView {
 
 
     public void saveWebArchive() {
-        super.saveWebArchive(Files.getExternalDir("web", apiObject.type + "." + apiObject.id + ".mht"));
+        super.saveWebArchive(Files.getExternalDir("web", mTempFileName + ".mht"));
     }
 
     @Override
@@ -131,21 +131,27 @@ public class WebViewWithCache extends WebView {
 
 
     public void loadDataOrCache(Activity activity, ApiObject apiObject, String data, String emptyData) {
+        String tempFileName = apiObject.type + "." + apiObject.id;
+        loadDataOrCache(activity, tempFileName, apiObject.content, data, emptyData);
+    }
+
+
+    public void loadDataOrCache(Activity activity, String tempFileName, String content, String data, String emptyData) {
         setDefaultSettings();
 
-        this.activity = activity;
-        this.apiObject = apiObject;
+        this.activity= activity;
+        this.mTempFileName= tempFileName;
         this.htmlData=data;
         this.htmlDataEmpty=emptyData;
-        if (apiObject == null) {
+        if (content == null) {
             this.loadData(emptyData, "text/html; charset=UTF-8", "UTF-8");
         } else {
-            if (apiObject.content.isEmpty()) {
+            if (content.isEmpty()) {
                 this.loadData(emptyData, "text/html; charset=UTF-8", "UTF-8");
             } else {
                 ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Activity.CONNECTIVITY_SERVICE);
 
-                if (!loadFromCache(apiObject))
+                if (!loadFromCache())
                     this.loadData(data, "text/html; charset=UTF-8", "UTF-8");
 
                 if (cm != null) {

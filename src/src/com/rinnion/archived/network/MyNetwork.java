@@ -278,6 +278,7 @@ public final class MyNetwork {
     }
 
     private static Bundle processFile(String fileName, IResponseHandler mHandler) {
+        Log.d(TAG, "processFile: " + fileName);
         String response = getStringFromAsset(fileName);
         Bundle result = new Bundle();
         try {
@@ -296,6 +297,7 @@ public final class MyNetwork {
     }
 
     private static String getStringFromAsset(String fileName) {
+        Log.d(TAG, "getStringFromAsset: " + fileName);
         String string = null;
         try {
             InputStreamReader in = new InputStreamReader(ArchivedApplication.getAppContext().getAssets().open(fileName));
@@ -507,4 +509,35 @@ public final class MyNetwork {
         sender.execute();
     }
 
+    public static Bundle queryParser(int id) {
+        Log.d(TAG, String.format("queryParser"));
+
+        ParserHandler handler = new ParserHandler();
+
+        if (Settings.NETDEBUG) {
+            String fileName = "json/parsers-" + String.valueOf(id) + ".json";
+            processFile(fileName, handler);
+
+            return Bundle.EMPTY;
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+        try {
+            fetcher = builder.setName("queryParser")
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.Parser.getparser.URL_METHOD)
+                    .setContent(MyNetworkContentContract.FormulaTXApi.Parser.getparser.getUrl(id))
+                    .setHandler(handler)
+                    .create();
+
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Error while server request", e);
+            Bundle bundle = new Bundle();
+            bundle.putString("RESULT", "EXCEPTION");
+            bundle.putSerializable("EXCEPTION", e);
+            return bundle;
+        }
+
+        return fetcher.execute();
+    }
 }

@@ -9,5 +9,6 @@
     <item type="id" name="product_loader"/>
     <item type="id" name="profile_loader"/>
     <item type="id" name="program_loader"/>
+    <item type="id" name="tables_loader"/>
     <item type="id" name="loader"/>
 </resources>

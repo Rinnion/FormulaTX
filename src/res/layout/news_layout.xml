@@ -8,7 +8,6 @@
                                                      android:layout_width="match_parent"
                                                      android:layout_height="match_parent"
                                                      android:textAppearance="?android:attr/textAppearanceMedium"
-                                                     android:text="А здесь собственно весь контент большой и толстой новости об успехах наших теннисистов"
                                                      android:id="@+id/nl_tv_content" style="@style/main_text_small" android:paddingTop="15dp"/>
     </FrameLayout>
 

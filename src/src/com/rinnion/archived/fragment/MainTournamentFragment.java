@@ -129,7 +129,7 @@ public class MainTournamentFragment extends Fragment{
                 if (tag.equals(NEWS)) showNewsFragment();
                 if (tag.equals(GAMERS)) showGamersFragment();
                 if (tag.equals(PROGRAM)) showProgramFragment();
-                if (tag.equals(SCHEDULE)) showEmptyFragment();
+                if (tag.equals(SCHEDULE)) showTablesFragment();
                 if (tag.equals(GRIDS)) showEmptyFragment();
                 if (tag.equals(LIVESCORE)) showEmptyFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
@@ -199,6 +199,19 @@ public class MainTournamentFragment extends Fragment{
         GalleryFragment mlf = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showTablesFragment() {
+        TablesFragment mlf = new TablesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(TablesFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
