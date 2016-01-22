@@ -137,7 +137,15 @@ public class OtherTournamentFragment extends Fragment {
         return view;
     }
 
+    void openReader(String filepath)
+    {
+        File f=new File(filepath);
+        Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
+        i.setType("application/pdf");
 
+        getActivity().startActivity(i);
+
+    }
 
     private void showGridsFragment() {
         String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
@@ -174,20 +182,13 @@ public class OtherTournamentFragment extends Fragment {
 
                                                @Override
                                                public void onReceive(Context context, Intent intent) {
-                                                   String obj=(String)this.getObject();
-                                                   File f=new File(obj);
-                                                   Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
-                                                   i.setType("application/pdf");
-
-                                                   getActivity().startActivity(i);
+                                                   String filePath=(String)this.getObject();
+                                                   openReader(filePath);
                                                }
                                            },
                     new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
             );
 
-
-            //TODO: download file first;
-            //TODO: then open target
         }catch(Exception ex){
             Log.e(TAG, "ERROR", ex);
             showNoValueMessage();
