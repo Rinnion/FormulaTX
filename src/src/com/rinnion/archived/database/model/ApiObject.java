@@ -13,6 +13,7 @@ public class ApiObject implements Serializable{
     public static final String OBJECT = "object";
     public static final String PRODUCT = "product";
     public static final String CARD = "card";
+    public static final String AREA = "area";
     public final long id;
     public String user;
     public String date;
