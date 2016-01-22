@@ -1,12 +1,17 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.DownloadManager;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Utils;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
@@ -19,8 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.R;
+import com.rinnion.archived.utils.MyDownloadBroadcastReceiver;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.net.URI;
 
 /**
  * Created with IntelliJ IDEA.
@@ -125,6 +134,8 @@ public class OtherTournamentFragment extends Fragment {
         return view;
     }
 
+
+
     private void showGridsFragment() {
         String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
@@ -135,6 +146,35 @@ public class OtherTournamentFragment extends Fragment {
         try {
             JSONArray array = new JSONArray(t.files);
             String filename = Utils.fixUrlWithFullPath(array.getString(0));
+            Uri uri=Uri.parse(filename);
+
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
+
+            DownloadManager.Request rq=new DownloadManager.Request(uri);
+            rq.setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE));
+            rq.setAllowedOverRoaming(false);
+            File f=new File(filename);
+
+            rq.setTitle(f.getName());
+            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            rq.setDestinationInExternalPublicDir(path, f.getName());
+
+            getActivity().registerReceiver(new MyDownloadBroadcastReceiver(path) {
+
+                                               @Override
+                                               public void onReceive(Context context, Intent intent) {
+                                                   String obj=(String)this.getObject();
+                                                   File f=new File(obj);
+                                                   Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
+                                                   i.setType("application/pdf");
+
+                                                   getActivity().startActivity(i);
+                                               }
+                                           },
+                    new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            );
+
+
             //TODO: download file first;
             //TODO: then open target
         }catch(Exception ex){
