@@ -2,8 +2,6 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
@@ -22,14 +20,9 @@ import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.helper.GalleryHelper;
-import com.rinnion.archived.database.model.Comment;
 import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.network.loaders.GalleryContentAsyncLoader;
-import com.rinnion.archived.network.loaders.PodcastAsyncLoader;
 import com.rinnion.archived.utils.Log;
-
-import java.io.File;
-import java.net.URI;
 
 /**
  * Created with IntelliJ IDEA.
@@ -81,7 +74,7 @@ public class PodcastContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_layout, container, false);
+        View view = inflater.inflate(R.layout.refreshable_list_layout, container, false);
         ListView mListView = (ListView) view.findViewById(R.id.listView);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
