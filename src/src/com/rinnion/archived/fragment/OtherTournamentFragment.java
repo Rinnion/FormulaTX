@@ -27,6 +27,9 @@ import com.rinnion.archived.R;
 import com.rinnion.archived.utils.MyDownloadBroadcastReceiver;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.lorecraft.phparser.SerializedPhpParser;
+
+import java.util.Map;
 
 import java.io.File;
 import java.net.URI;
@@ -144,8 +147,16 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
-            JSONArray array = new JSONArray(t.files);
-            String filename = Utils.fixUrlWithFullPath(array.getString(0));
+            String string = String.valueOf(t.files);
+            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
+            SerializedPhpParser parser = new SerializedPhpParser(t.files);
+            Map obj = (Map) parser.parse();
+            if (!obj.containsKey(0)){
+                showNoValueMessage();
+                return;
+            }
+            String o = (String) obj.get(0);
+            String filename = Utils.fixUrlWithFullPath(o);
             Uri uri=Uri.parse(filename);
 
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
@@ -185,7 +196,7 @@ public class OtherTournamentFragment extends Fragment {
     }
 
     private void showNoValueMessage() {
-
+        Toast.makeText(getActivity(), "К сожалению ничего нет", Toast.LENGTH_LONG).show();
     }
 
     private void showScheduleFragment() {
@@ -196,8 +207,16 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
-            JSONArray array = new JSONArray(t.files);
-            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            String string = String.valueOf(t.files);
+            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
+            SerializedPhpParser parser = new SerializedPhpParser(t.files);
+            Map obj = (Map) parser.parse();
+            if (!obj.containsKey(1)){
+                showNoValueMessage();
+                return;
+            }
+            String o = (String) obj.get(1);
+            String filename = Utils.fixUrlWithFullPath(o);
             //TODO: download file first;
             //TODO: then open target
         }catch(Exception ex){

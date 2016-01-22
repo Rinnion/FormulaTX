@@ -95,6 +95,11 @@ public class SplashActivity extends Activity {
 
         tvProgress = (TextView)findViewById(R.id.sl_tv_progress);
         pbProgress = (ProgressBar)findViewById(R.id.progressBar);
+
+        ArchivedApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_PROGRESS);
+        ArchivedApplication.setParameter(Settings.LOADING_PROGRESS, 0);
+        ArchivedApplication.setParameter(Settings.LOADING_CUSTOM_MESSAGE, "");
+
         Intent intent = new Intent(this, DownloadService.class);
         startService(intent);
     }
