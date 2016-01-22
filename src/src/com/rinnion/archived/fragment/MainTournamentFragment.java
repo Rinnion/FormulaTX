@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -317,10 +318,11 @@ public class MainTournamentFragment extends Fragment{
         }
 
         try {
-            String uriString = "geo:0,0?q=" + String.valueOf(item.map) + "(" + String.valueOf(item.address) + ")";
+            //String uriString = "geo:0,0?q=" + String.valueOf(item.map) + "(" + Uri.encode(String.valueOf(item.address)) + ")";
+            String uriString = "geo:" + String.valueOf(item.map);
             Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
 
-            Uri uri = Uri.parse(Uri.encode(uriString));
+            Uri uri = Uri.parse(uriString);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } catch (ActivityNotFoundException e) {

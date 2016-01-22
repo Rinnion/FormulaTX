@@ -147,8 +147,14 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
+
             String string = String.valueOf(t.files);
-            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
+            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "..." : "") + "'");
+            JSONArray array = new JSONArray(string);
+            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            Log.d(TAG, "Handle file: '" + filename + "'");
+
+            /*
             SerializedPhpParser parser = new SerializedPhpParser(t.files);
             Map obj = (Map) parser.parse();
             if (!obj.containsKey(0)){
@@ -156,7 +162,7 @@ public class OtherTournamentFragment extends Fragment {
                 return;
             }
             String o = (String) obj.get(0);
-            String filename = Utils.fixUrlWithFullPath(o);
+            String filename = Utils.fixUrlWithFullPath(o);*/
             Uri uri=Uri.parse(filename);
 
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
