@@ -313,14 +313,20 @@ public class MainTournamentFragment extends Fragment{
 
         if (item == null){
             Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();
-
             return;
         }
 
         try {
+            String[] split = TextUtils.split(String.valueOf(item.map), ",");
+            if (split.length != 2 ){
+                Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
+                return;
+            }
+            String coords = split[1] + "," + split[0];
+            //String coords = String.valueOf(item.map);
 
-            //String uriString = "geo:0,0?q=" + String.valueOf(item.map) + "(" + Uri.encode(String.valueOf(item.address)) + ")";
-            String uriString = "geo:" + String.valueOf(item.map);
+            String uriString = "geo:"+ coords +"?q=" + coords + "(" + Uri.encode(String.valueOf(item.address)) + ")";
+            //String uriString = "geo:" + String.valueOf(item.map);
             Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
 
             Uri uri = Uri.parse(uriString);
