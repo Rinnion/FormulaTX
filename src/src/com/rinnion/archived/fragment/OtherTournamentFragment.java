@@ -1,12 +1,17 @@
 package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.DownloadManager;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Utils;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
@@ -19,11 +24,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.R;
+import com.rinnion.archived.utils.MyDownloadBroadcastReceiver;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lorecraft.phparser.SerializedPhpParser;
 
 import java.util.Map;
+
+import java.io.File;
+import java.net.URI;
 
 /**
  * Created with IntelliJ IDEA.
@@ -128,6 +137,16 @@ public class OtherTournamentFragment extends Fragment {
         return view;
     }
 
+    void openReader(String filepath)
+    {
+        File f=new File(filepath);
+        Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
+        i.setType("application/pdf");
+
+        getActivity().startActivity(i);
+
+    }
+
     private void showGridsFragment() {
         String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
         TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
@@ -136,8 +155,14 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
+
             String string = String.valueOf(t.files);
-            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
+            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "..." : "") + "'");
+            JSONArray array = new JSONArray(string);
+            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            Log.d(TAG, "Handle file: '" + filename + "'");
+
+            /*
             SerializedPhpParser parser = new SerializedPhpParser(t.files);
             Map obj = (Map) parser.parse();
             if (!obj.containsKey(0)){
@@ -145,9 +170,37 @@ public class OtherTournamentFragment extends Fragment {
                 return;
             }
             String o = (String) obj.get(0);
-            String filename = Utils.fixUrlWithFullPath(o);
-            //TODO: download file first;
-            //TODO: then open target
+            String filename = Utils.fixUrlWithFullPath(o);*/
+            Uri uri=Uri.parse(filename);
+            File f=new File(filename);
+            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
+
+            Log.d(TAG,"Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
+
+
+            DownloadManager.Request rq=new DownloadManager.Request(uri)
+                    .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
+                    .setAllowedOverRoaming(false)
+                    .setTitle(f.getName())
+                    .setDestinationInExternalFilesDir(ArchivedApplication.getAppContext(), Environment.DIRECTORY_DOWNLOADS, f.getName());
+
+                getActivity().registerReceiver(new MyDownloadBroadcastReceiver(path) {
+
+                                                       @Override
+                                                       public void onReceive(Context context, Intent intent) {
+                                                           String filePath=(String)this.getObject();
+                                                           openReader(filePath);
+                                                       }
+                                                   },
+                                                   new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+                                            );
+
+            DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            dwm.enqueue(rq);
+
+
         }catch(Exception ex){
             Log.e(TAG, "ERROR", ex);
             showNoValueMessage();

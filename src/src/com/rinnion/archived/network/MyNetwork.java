@@ -47,6 +47,10 @@ public final class MyNetwork {
         return queryApiObjectsList(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.DISPLAY_METHOD_OBJECT);
     }
 
+    public static Bundle queryAreasList() {
+        return queryApiObjectsList(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagebydisplaymethod.DISPLAY_METHOD_AREA);
+    }
+
     //Загрузка списка турниров
     public static Bundle queryApiObjectsList(ArrayList<NameValuePair> objectType) {
         Log.d(TAG, String.format("query tournaments"));
@@ -417,6 +421,16 @@ public final class MyNetwork {
         return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
     }
 
+    public static Bundle queryArea(int id) {
+        Log.d(TAG, String.format("query areas"));
+
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Area);
+        AreaHandler handlerGamer = new AreaHandler(new AreaHelper(doh));
+
+        return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
+    }
+
     public static Bundle queryProduct(int id) {
         Log.d(TAG, String.format("query product"));
 
@@ -473,8 +487,7 @@ public final class MyNetwork {
             fetcher.execute();
 
             fetcher = builder.setName("queryApiObject")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getUrl(id))
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getParent(id))
                     .setHandler(handlerProduct)
                     .create();
 

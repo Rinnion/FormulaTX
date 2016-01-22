@@ -8,6 +8,7 @@ import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TwitterHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
+import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
@@ -38,37 +39,34 @@ public class DownloadService extends IntentService {
         return super.onStartCommand(intent, flags, startId);
     }
 
-
-
     // will be called asynchronously by Android
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            publishProgress(10, null);
-            Bundle bundle = MyNetwork.queryTournamentList();
-            int[] intArray = MyNetwork.getIntArray(bundle);
-            if (intArray == null) {
-                publishError("Network error", (Settings.DEBUG) ? bundle.toString() : null);
+            if (!loadAbout(Settings.ABOUT_API_OBJECT)){
+                publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
                 return;
             }
 
-            publishProgress(15, null);
-            FetchTournamentsList(intArray, 15, 80);
+            FetchTournamentsList(10, 50);
+            FetchAreasList(50, 95);
 
-            loadAbout(Settings.ABOUT_API_OBJECT);
-            publishProgress(80, null);
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
             publishError("Error during network ", ex.getMessage());
         }
-
     }
 
-
-
-    private void loadAbout(int aboutApiObject) {
-        MyNetwork.queryApiObject(aboutApiObject, ApiObjectTypes.EN_About);
+    private boolean loadAbout(int aboutApiObject) {
+        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, ApiObjectTypes.EN_About);
+        String result = bundle.getString(HttpRequester.RESULT);
+        boolean equals = result.equals(HttpRequester.RESULT_HTTP);
+        if (!equals){
+            String mess = bundle.getString(result);
+            publishError("Network error", (Settings.DEBUG) ? mess : null);
+        }
+        return equals;
     }
 
     private ArrayList<ApiObject> FetchApiObjectsList(int[] intArray, int type) throws JSONException {
@@ -80,36 +78,45 @@ public class DownloadService extends IntentService {
 
     }
 
-    private ArrayList<ApiObject> FetchTournamentsList(int[] intArray, int startProgress, int endProgress) throws JSONException {
-        ArrayList<ApiObject> tournamentList = new ArrayList<ApiObject>(intArray.length);
+    private boolean FetchTournamentsList(int startProgress, int endProgress) throws JSONException {
+
+        final int firstStep = 5;
+
+        Bundle tournaments = MyNetwork.queryTournamentList();
+        int[] intArray = MyNetwork.getIntArray(tournaments);
+        startProgress += firstStep;
+        publishProgress(startProgress, null);
+        if (intArray == null) {
+            publishError("Network error", (Settings.DEBUG) ? tournaments.toString() : null);
+            return false;
+        }
+
         float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
         for (int i = 0; i < intArray.length; i++) {
             int id = intArray[i];
-            Bundle bundle = MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
-            ApiObject ao = MyNetwork.getApiObjectCasted(ApiObject.class, bundle);
-            try {
-                //SerializedPhpParser parser = new SerializedPhpParser(ao.tables);
-                //Object parse = parser.parse();
-                //Log.d(TAG, parse.toString());
-            }catch(Exception ex){
-                Log.w(TAG, "parse error" + ex.getMessage());
-            }
-
-            //FetchNewsForTournament(ao);
-            //FetchSocialsForTournament(ao);
+            MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
             publishProgress((int)(startProgress + pr * i), null);
         }
-        return tournamentList;
+        return true;
 
     }
 
-    private void FetchNewsForTournament(ApiObject ao) throws JSONException {
-        if (ao == null) return;
-        int[] iaNewsList = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(ao.id));
-        if (iaNewsList == null) {
-            return;
+    private boolean FetchAreasList(int startProgress, int endProgress) throws JSONException {
+        final int firstStep = 5;
+
+        Bundle areas = MyNetwork.queryAreasList();
+        int[] intArray = MyNetwork.getIntArray(areas);
+        startProgress += firstStep;
+        publishProgress(startProgress, null);
+
+        float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
+        for (int i = 0; i < intArray.length; i++) {
+            int id = intArray[i];
+            MyNetwork.queryArea(id);
+            publishProgress((int)(startProgress + pr * i), null);
         }
-        FetchApiObjectsList(iaNewsList, ApiObjectTypes.EN_News);
+
+        return true;
     }
 
     private void FetchSocialsForTournament(ApiObject ao) throws JSONException {

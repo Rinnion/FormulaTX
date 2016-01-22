@@ -33,6 +33,7 @@ public class SplashActivity extends Activity {
                     int anInt = bundle.getInt(Settings.LOADING_PROGRESS);
                     tvProgress.setText(String.valueOf(anInt));
                     pbProgress.setProgress(anInt);
+                    Log.d(TAG, Settings.LOADING_PROGRESS + ": " + anInt);
                     if (anInt == 100) {
                         new Handler().post(new Runnable() {
                             @Override

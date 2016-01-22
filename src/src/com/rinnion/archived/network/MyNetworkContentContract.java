@@ -38,11 +38,16 @@ public class MyNetworkContentContract {
 
                     ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
                     dm_partner.add(new BasicNameValuePair("display_method", "partner"));
-                    DISPLAY_METHOD_PARTNER = dm_object;
+                    DISPLAY_METHOD_PARTNER = dm_partner;
+
+                    ArrayList<NameValuePair> dm_area = new ArrayList<NameValuePair>(1);
+                    dm_area.add(new BasicNameValuePair("display_method", "area"));
+                    DISPLAY_METHOD_AREA = dm_area;
                 }
 
                 public static final String URL_METHOD = URL + "?method=getallstaticpagebydisplaymethod";
                 public static final ArrayList<NameValuePair> DISPLAY_METHOD_OBJECT;
+                public static final ArrayList<NameValuePair> DISPLAY_METHOD_AREA;
                 public static final ArrayList<NameValuePair> DISPLAY_METHOD_PARTNER;
             }
 
@@ -103,10 +108,8 @@ public class MyNetworkContentContract {
             {
                 public static final String URL_METHOD = URL + "?method=getadditionalfields";
 
-                public static ArrayList<NameValuePair> getUrl(long id){
-                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
-                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
-                    return dm_partner;
+                public static String getParent(long parent){
+                    return URL_METHOD + "&id="+String.valueOf(parent);
                 }
             }
 

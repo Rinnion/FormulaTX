@@ -2,12 +2,14 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +17,15 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.database.DatabaseOpenHelper;
+import com.rinnion.archived.database.cursor.AreaCursor;
+import com.rinnion.archived.database.helper.ApiObjectHelper;
+import com.rinnion.archived.database.helper.AreaHelper;
+import com.rinnion.archived.database.helper.CardHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.database.model.ApiObjects.Area;
+import com.rinnion.archived.database.model.ApiObjects.Card;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.utils.Log;
 
@@ -291,15 +300,43 @@ public class MainTournamentFragment extends Fragment{
     }
 
     private void showMapFragment() {
-        TournamentHelper th = new TournamentHelper(ArchivedApplication.getDatabaseOpenHelper());
-        final Tournament byPostName;
-        byPostName = th.getByPostName(getArguments().getString(MainTournamentFragment.TYPE));
+        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
+        TournamentHelper th = new TournamentHelper(doh);
+        Tournament trnmt = th.getByPostName(getArguments().getString(MainTournamentFragment.TYPE));
 
-        //TODO/ get additional fields
+        AreaHelper ah = new AreaHelper(doh);
+        AreaCursor area = ah.getAllByParent(trnmt.id);
 
-        Uri uri = Uri.parse("geo:47.6,-122.3?z=11");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        Area item = area.getItem();
+
+        //TODO: get additional fields
+
+        if (item == null){
+            Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        try {
+            String[] split = TextUtils.split(String.valueOf(item.map), ",");
+            if (split.length != 2 ){
+                Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
+                return;
+            }
+            String coords = split[1] + "," + split[0];
+            //String coords = String.valueOf(item.map);
+
+            String uriString = "geo:"+ coords +"?q=" + coords + "(" + Uri.encode(String.valueOf(item.address)) + ")";
+            //String uriString = "geo:" + String.valueOf(item.map);
+            Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
+
+            Uri uri = Uri.parse(uriString);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), "No application can handle this request."
+                    + " Please install a navigation app", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }
 
