@@ -318,6 +318,7 @@ public class MainTournamentFragment extends Fragment{
         }
 
         try {
+
             //String uriString = "geo:0,0?q=" + String.valueOf(item.map) + "(" + Uri.encode(String.valueOf(item.address)) + ")";
             String uriString = "geo:" + String.valueOf(item.map);
             Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();

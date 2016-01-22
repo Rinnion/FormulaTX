@@ -2,7 +2,6 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -18,13 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
-import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.NewsCursor;
-import com.rinnion.archived.database.cursor.TournamentCursor;
-import com.rinnion.archived.database.helper.NewsHelper;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.fragment.adapter.NewsAdapter;
 
 /**
@@ -72,7 +65,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (SwipeRefreshLayout) inflater.inflate(R.layout.list_layout, container, false);
+        view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
         view.setColorScheme(android.R.color.holo_red_dark,android.R.color.holo_orange_dark,android.R.color.holo_green_dark,android.R.color.holo_blue_dark );
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
