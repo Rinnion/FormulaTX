@@ -172,28 +172,34 @@ public class OtherTournamentFragment extends Fragment {
             String o = (String) obj.get(0);
             String filename = Utils.fixUrlWithFullPath(o);*/
             Uri uri=Uri.parse(filename);
+            File f=new File(filename);
+            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
 
-            DownloadManager.Request rq=new DownloadManager.Request(uri);
-            rq.setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE));
-            rq.setAllowedOverRoaming(false);
-            File f=new File(filename);
+            Log.d(TAG,"Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
 
-            rq.setTitle(f.getName());
-            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-            rq.setDestinationInExternalPublicDir(path, f.getName());
 
-            getActivity().registerReceiver(new MyDownloadBroadcastReceiver(path) {
+            DownloadManager.Request rq=new DownloadManager.Request(uri)
+                    .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
+                    .setAllowedOverRoaming(false)
+                    .setTitle(f.getName())
+                    .setDestinationInExternalFilesDir(ArchivedApplication.getAppContext(), Environment.DIRECTORY_DOWNLOADS, f.getName());
 
-                                               @Override
-                                               public void onReceive(Context context, Intent intent) {
-                                                   String filePath=(String)this.getObject();
-                                                   openReader(filePath);
-                                               }
-                                           },
-                    new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-            );
+                getActivity().registerReceiver(new MyDownloadBroadcastReceiver(path) {
+
+                                                       @Override
+                                                       public void onReceive(Context context, Intent intent) {
+                                                           String filePath=(String)this.getObject();
+                                                           openReader(filePath);
+                                                       }
+                                                   },
+                                                   new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+                                            );
+
+            DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            dwm.enqueue(rq);
+
 
         }catch(Exception ex){
             Log.e(TAG, "ERROR", ex);
