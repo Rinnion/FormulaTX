@@ -312,11 +312,15 @@ public class MainTournamentFragment extends Fragment{
 
         if (item == null){
             Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();
+
             return;
         }
 
         try {
-            Uri uri = Uri.parse("geo:0,0?q=" + String.valueOf(item.map) + "(" + String.valueOf(item.address+ ")"));
+            String uriString = "geo:0,0?q=" + String.valueOf(item.map) + "(" + String.valueOf(item.address) + ")";
+            Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
+
+            Uri uri = Uri.parse(Uri.encode(uriString));
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } catch (ActivityNotFoundException e) {

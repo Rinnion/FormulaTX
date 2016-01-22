@@ -46,8 +46,8 @@ public class DownloadService extends IntentService {
                 return;
             }
 
-            FetchTournamentsList(10, 60);
-            FetchAreasList(60, 80);
+            FetchTournamentsList(10, 50);
+            FetchAreasList(50, 95);
 
             publishProgress(100, null);
         } catch (Exception ex) {
