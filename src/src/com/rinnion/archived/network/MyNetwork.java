@@ -487,8 +487,7 @@ public final class MyNetwork {
             fetcher.execute();
 
             fetcher = builder.setName("queryApiObject")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getUrl(id))
+                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getParent(id))
                     .setHandler(handlerProduct)
                     .create();
 

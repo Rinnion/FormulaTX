@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.rinnion.archived.utils.Files;
@@ -15,6 +16,7 @@ import com.rinnion.archived.database.helper.SettingsHelper;
 import com.rinnion.archived.utils.MyLocale;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by tretyakov on 08.05.2014.
