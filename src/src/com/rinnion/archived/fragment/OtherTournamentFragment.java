@@ -141,8 +141,8 @@ public class OtherTournamentFragment extends Fragment {
     {
         File f=new File(filepath);
         Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
-        i.setType("application/pdf");
-
+        //i.setType("application/pdf");
+        Log.d(TAG,"Full path: " + f.getAbsolutePath());
         getActivity().startActivity(i);
 
     }
@@ -172,21 +172,24 @@ public class OtherTournamentFragment extends Fragment {
             String o = (String) obj.get(0);
             String filename = Utils.fixUrlWithFullPath(o);*/
             Uri uri=Uri.parse(filename);
-            File f=new File(filename);
             String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+            File f=new File(filename);
+            File file=new File(path,f.getName());
 
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
 
-            Log.d(TAG,"Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
+            //Environment.getE (Environment.DIRECTORY_DOWNLOADS).mkdirs();
+
+            Log.d(TAG, "Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
 
 
             DownloadManager.Request rq=new DownloadManager.Request(uri)
             .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
                     .setAllowedOverRoaming(false)
                     .setTitle(f.getName())
-                    .setDestinationInExternalFilesDir(ArchivedApplication.getAppContext(), Environment.DIRECTORY_DOWNLOADS, f.getName());
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName());
 
-                getActivity().registerReceiver(new MyDownloadBroadcastReceiver(path) {
+
+                getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
 
                                                        @Override
                                                        public void onReceive(Context context, Intent intent) {
