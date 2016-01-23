@@ -38,8 +38,8 @@ public final class Settings {
     public static final int OUT_DATE_TIME_OWN_DEFAULT = 5 * 24 * 60 * 60 * 1000; //5 days
     public static final int OUT_DATE_TIME_ASSIGNED_DEFAULT = 24 * 60 * 60 * 1000; // 1 day
     public static final long UPDATE_TIME = 60000; //60 sec
-    public static final String VERSION_NUMBER = "0.5.1";
-    public static final String VERSION_BUILD_TIME = "0907";
+    public static final String VERSION_NUMBER = "0.8.2.2301";
+    public static final String VERSION_BUILD_TIME = "2237";
     public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
 
