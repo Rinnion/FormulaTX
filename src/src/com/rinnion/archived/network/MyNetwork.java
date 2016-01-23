@@ -416,7 +416,7 @@ public final class MyNetwork {
 
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
         ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Gamer);
-        GamerHandler handlerGamer = new GamerHandler(new GamerHelper(doh));
+        GamerHandler handlerGamer = new GamerHandler(new GamerHelper());
 
         return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
     }

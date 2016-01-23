@@ -2,7 +2,6 @@ package com.rinnion.archived.fragment.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import com.rinnion.archived.utils.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,9 +26,23 @@ public class GamerAdapter extends SimpleCursorAdapter {
             R.id.inl_tv_caption,
             R.id.inl_tv_data
     };
+    private final View.OnClickListener clickEvent;
+    private GamerOnClickListener mListener;
 
-    public GamerAdapter(Context context, NewsCursor mc) {
+    public GamerAdapter(Context context, NewsCursor mc, GamerOnClickListener listener) {
         super(context, R.layout.item_gamer_layout, mc, fromSpinner, toSpinner, 0);
+        mListener = listener;
+        clickEvent = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Gamer gamer = (Gamer) view.getTag(R.id.tag_gamer_object);
+                if (mListener != null) mListener.likeClick(gamer);
+            }
+        };
+    }
+
+    public interface GamerOnClickListener{
+        void likeClick(Gamer gamer);
     }
 
     @Override
@@ -43,8 +56,6 @@ public class GamerAdapter extends SimpleCursorAdapter {
         final ImageView tvFavorite = (ImageView) view.findViewById(R.id.igl_iv_like);
 
         Gamer item = ((GamerCursor) cursor).getItem();
-
-        //imlThumb.getScaleX()
 
         try {
             Picasso.with(context)
@@ -60,6 +71,10 @@ public class GamerAdapter extends SimpleCursorAdapter {
         tvName.setText(item.full_name);
         tvCountry.setText(item.country);
         tvRating.setText(String.valueOf(item.rating));
-        tvFavorite.setImageResource(R.drawable.like_noselected_icon);
+
+        tvFavorite.setImageResource(item.favorite ? R.drawable.like_selected_icon : R.drawable.like_noselected_icon);
+
+        tvFavorite.setTag(R.id.tag_gamer_object, item);
+        tvFavorite.setOnClickListener(clickEvent);
     }
 }

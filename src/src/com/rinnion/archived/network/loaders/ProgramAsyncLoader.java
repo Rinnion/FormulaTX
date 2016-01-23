@@ -110,7 +110,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
     private ProgramObject[] getProgram() {
         ProgramObject[] arr;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm", new Locale("ru", "RU"));
             SerializedPhpParser php = new SerializedPhpParser(data);
             Map parse = (Map) php.parse();
             ArrayList<ProgramObject> apo = new ArrayList<ProgramObject>(parse.size());
@@ -123,7 +123,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
                 try{
                     po.fulldate = formatter.parse(date + " " + time).getTime();
                 }   catch(ParseException ex){
-                    SimpleDateFormat frmt2 = new SimpleDateFormat("dd MMMM yyyy h:mm");
+                    SimpleDateFormat frmt2 = new SimpleDateFormat("dd MMMM yyyy h:mm", new Locale("ru", "RU"));
                     po.fulldate = frmt2.parse(date + " " + time).getTime();
                 }
                 po.time = time;

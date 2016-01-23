@@ -37,8 +37,7 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        GamerHelper aoh=new GamerHelper(doh);
+        GamerHelper aoh=new GamerHelper();
         deliverResult(aoh.getAllByParent(parent));
     }
 
@@ -51,8 +50,7 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
                 MyNetwork.queryGamer(i);
             }
         }
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        GamerHelper aoh=new GamerHelper(doh);
+        GamerHelper aoh=new GamerHelper();
         return aoh.getAllByParent(parent);
     }
 

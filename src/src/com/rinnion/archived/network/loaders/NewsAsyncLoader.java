@@ -66,20 +66,22 @@ public class NewsAsyncLoader extends AsyncTaskLoader<ApiObjectCursor> {
             Tournament ladies = th.getByPostName(TournamentHelper.TOURNAMENT_LADIES_TROPHY);
             Tournament open = th.getByPostName(TournamentHelper.TOURNAMENT_OPEN);
 
-            int[] iaLadiesNews = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(ladies.id));
-            int[] iaOpenNews = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(open.id));
+            int[] iaLadiesNews = (ladies == null ) ? new int[0] : MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(ladies.id));
+            int[] iaOpenNews = (open == null ) ? new int[0] : MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(open.id));
 
             ints = Arrays.copyOf(iaLadiesNews, iaLadiesNews.length + iaOpenNews.length);
 
             System.arraycopy(iaOpenNews, 0, ints, iaLadiesNews.length, iaOpenNews.length);
 
-            tn = new String[] {ladies.post_name, open.post_name};
+            tn = new String[]{TournamentHelper.TOURNAMENT_LADIES_TROPHY, TournamentHelper.TOURNAMENT_OPEN};
+
 
         }else{
             TournamentHelper th = new TournamentHelper(doh);
             Tournament tournament = th.getByPostName(tournament_name);
-            ints = MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(tournament.id));
+            ints = tournament != null ? MyNetwork.getIntArray(MyNetwork.queryTournamentNewsList(tournament.id)) : new int[0];
         }
+
 
         for (int i : ints) {
             MyNetwork.queryNews(i);

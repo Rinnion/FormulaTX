@@ -57,11 +57,13 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/igl_iv_like" android:src="@drawable/like_noselected_icon"/>
+                android:id="@+id/igl_iv_like" android:src="@drawable/like_noselected_icon"
+                android:clickable="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="285"
-                android:id="@+id/igl_tv_like_count" android:textSize="10sp" android:paddingTop="8sp"/>
+                android:id="@+id/igl_tv_like_count" android:textSize="10sp" android:paddingTop="8sp"
+                android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

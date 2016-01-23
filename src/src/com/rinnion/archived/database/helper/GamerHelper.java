@@ -5,6 +5,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GamerCursor;
@@ -32,8 +33,8 @@ public class GamerHelper implements BaseColumns {
     private final ApiObjectHelper aoh;
     private DatabaseOpenHelper doh;
 
-    public GamerHelper(DatabaseOpenHelper doh) {
-        this.doh = doh;
+    public GamerHelper() {
+        this.doh = ArchivedApplication.getDatabaseOpenHelper();
         aoh = new ApiObjectHelper(doh);
     }
 

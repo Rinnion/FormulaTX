@@ -322,10 +322,14 @@ public class MainTournamentFragment extends Fragment{
                 Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
                 return;
             }
-            String coords = split[1] + "," + split[0];
+            Float lat = Float.parseFloat(split[0])/2;
+            Float lng = Float.parseFloat(split[1])/2;
+
+            String coords = String.valueOf(lat) + "," + String.valueOf(lng);
             //String coords = String.valueOf(item.map);
 
-            String uriString = "geo:"+ coords +"?q=" + coords + "(" + Uri.encode(String.valueOf(item.address)) + ")";
+            //String uriString = "geo:"+ coords +"?q=" + coords + "(" + Uri.encode(String.valueOf(item.address)) + ")";
+            String uriString = "geo:0,0?q=" + Uri.encode(item.address);
             //String uriString = "geo:" + String.valueOf(item.map);
             Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
 

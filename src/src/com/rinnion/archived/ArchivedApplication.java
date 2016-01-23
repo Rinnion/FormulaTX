@@ -97,8 +97,12 @@ public class ArchivedApplication extends Application {
         Log.Initialize();
         MyLocale.Initialize();
 
-        Parse.initialize(this, "reX8ztBii9yEqZF5lxjTnOK4k3R2AHteA4rfu69x", "pEGaA2qIqCmEsCEwejFxNyGs1bPUBLXeqDMOcwxs");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        Parse.initialize(this, "b51B16Td0EF2fQFsXYIKPoQv49047k2AiI9pEg41", "DVRPRwdQnlUnelGBXHA7bVqqfmUYHqC45zdXGbcV");
+
+        ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
+        currentInstallation.saveInBackground();
+
+
 
         Log.i(TAG, "onCreate");
     }

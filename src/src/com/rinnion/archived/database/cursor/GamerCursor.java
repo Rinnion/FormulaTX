@@ -26,7 +26,7 @@ public class GamerCursor extends SQLiteCursor {
     public Gamer getItem() {
         long id = getColId();
         Gamer gamer = new Gamer(id);
-        gamer.favorite = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_NAME));
+        gamer.favorite = getInt(getColumnIndexOrThrow(GamerHelper.COLUMN_FAVORITE)) == 1;
         gamer.name = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_NAME));
         gamer.surname = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_SURNAME));
         gamer.full_name = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_FULL_NAME));

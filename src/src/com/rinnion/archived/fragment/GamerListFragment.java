@@ -5,14 +5,17 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
-import com.rinnion.archived.database.model.ApiObject;
+import com.rinnion.archived.database.helper.GamerHelper;
+import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.rinnion.archived.fragment.adapter.GamerAdapter;
 import com.rinnion.archived.network.loaders.GamerAsyncLoader;
 import com.rinnion.archived.utils.Log;
@@ -42,7 +45,30 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new GamerAdapter(getActivity(), null);
+        mAdapter = new GamerAdapter(getActivity(), null, new GamerAdapter.GamerOnClickListener() {
+            @Override
+            public void likeClick(final Gamer gamer) {
+                Log.d(TAG, String.valueOf(gamer));
+                String channel = "gamer-" + String.valueOf(gamer.id);
+                if (!gamer.favorite) {
+                    Log.d(TAG, "Subscribe to '" + channel + "'");
+                    ParsePush.subscribeInBackground(channel);
+                }else{
+                    Log.d(TAG, "Unsubscribe to '" + channel + "'");
+                    ParsePush.unsubscribeInBackground(channel);
+                }
+                Method(gamer, !gamer.favorite);
+            }
+
+            private void Method(Gamer gamer, boolean b) {
+                gamer.favorite = b;
+                GamerHelper gh = new GamerHelper();
+                gh.merge(gamer);
+                long type = getArguments().getLong(TOURNAMENT_ID);
+                GamerCursor allByParent = gh.getAllByParent(type);
+                mAdapter.swapCursor(allByParent);
+            }
+        });
 
         setListAdapter(mAdapter);
 
