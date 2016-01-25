@@ -37,4 +37,6 @@
     <string name="string_about_default">Error?</string>
     <string name="string_instagram">Instagram</string>
     <string name="string_twitter">Twitter</string>
+    <string name="weather_not_available">Not available</string>
+    <string name="string_navigation_partners">Partners</string>
 </resources>

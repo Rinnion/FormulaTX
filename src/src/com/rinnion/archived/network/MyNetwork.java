@@ -86,7 +86,7 @@ public final class MyNetwork {
 
     //Загрузка списка турниров
     public static Bundle queryGamerList(long id) {
-        Log.d(TAG, String.format("query queryGamerList"));
+        Log.d(TAG, String.format("queryGamerList"));
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
@@ -100,7 +100,7 @@ public final class MyNetwork {
 
         HttpRequester fetcher = null;
         try {
-            fetcher = builder.setName("queryTournamentNewsList")
+            fetcher = builder.setName("queryGamerList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.getGamer(id))
                     .setHandler(handler)

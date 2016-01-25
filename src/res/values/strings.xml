@@ -44,4 +44,6 @@
     <string name="string_about_default">Ошибка?</string>
     <string name="string_instagram">Instagram</string>
     <string name="string_twitter">Twitter</string>
+    <string name="weather_not_available">Прогноз погоды не доступен</string>
+    <string name="string_navigation_partners">Партнеры</string>
 </resources>

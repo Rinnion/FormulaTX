@@ -41,11 +41,6 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     @Override
     public WeatherCursor loadInBackground() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         MyNetwork.queryWeather(WeatherCursor.MOSCOW);
         MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
         WeatherCursor mc = getWeatherCursor();
@@ -54,20 +49,15 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     public WeatherCursor getWeatherCursor(){
         WeatherCursor wc = new WeatherCursor();
-        FitWeather(wc.Moscow, WeatherCursor.MOSCOW );
-        FitWeather(wc.Peter, WeatherCursor.PETERSBURG);
+        if (!FitWeather(wc.Moscow, WeatherCursor.MOSCOW ) || !FitWeather(wc.Peter, WeatherCursor.PETERSBURG)) return null;
         return wc;
     }
 
-    private void FitWeather(WeatherCursor.City city, String name) {
+    private boolean FitWeather(WeatherCursor.City city, String name) {
         SettingsHelper sh = new SettingsHelper(ArchivedApplication.getDatabaseOpenHelper());
         String weather = sh.getStringParameter(name);
         if (weather == null){
-            WeatherCursor wc = new WeatherCursor();
-            city.main = "empty";
-            city.temp = "e";
-            city.icon = R.drawable.ic_action_help;
-            return;
+            return false;
         }
 
         try{
@@ -79,21 +69,21 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
             city.temp=temp;
             city.main=main;
             city.icon = getWeatherIcon(icon.substring(0, 2));
+            return true;
 
         } catch (Exception e) {
-            city.main = "empty";
-            city.temp = "e";
-            city.icon = R.drawable.ic_action_help;
+            return false;
         }
 
     }
 
     private int getWeatherIcon(String icon) {
         int iIcon = Integer.parseInt(icon.substring(0, 2));
+        String sIcon = icon.substring(2, 1);
         int drIcon;
         switch (iIcon) {
             case 1:
-                drIcon = R.drawable.weather_sunshine_icon;
+                drIcon = (sIcon.equals("d")) ? R.drawable.weather_sunshine_icon : R.drawable.weather_moon_icon;
                 break;
             case 2:
                 drIcon = R.drawable.weather_sun_icon;
