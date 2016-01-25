@@ -87,6 +87,16 @@
                     style="@style/menu_item_caption_padded"/>
         </LinearLayout>
 
+        <LinearLayout style="@style/menu_item_row" android:id="@+id/nav_partners"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:gravity="center_vertical">
+            <ImageView style="@style/menu_item_icon_size" android:src="@drawable/partner_icon"
+                       android:contentDescription="@string/string_other_tournament" android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+            <TextView style="@style/menu_item_caption_padded" android:layout_width="0dp"
+                      android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:text="@string/string_navigation_partners" android:layout_weight="1"/>
+        </LinearLayout>
         <LinearLayout android:id="@+id/nav_tickets"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent" android:gravity="center_vertical"
