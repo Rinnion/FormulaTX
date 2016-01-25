@@ -227,114 +227,13 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.menu_icon);
 
-        //MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        //mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        //mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
-
         ListView mListView = (ListView) view.findViewById(R.id.tl_lv_news);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
-        //mAdapter.swapCursor(mc);
-
-        //LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
-        //LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
 
         return view;
     }
-
-    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String city) {
-        String weather = ArchivedApplication.getStringParameter("weather_" + city);
-        if (weather != null) {
-            try{
-                JSONObject json = new JSONObject(weather);
-                if (json.getLong("time")+1800000<Calendar.getInstance().getTimeInMillis()){
-                    RunWeatherLoader(pbTemp, pbMain, pbIcon, city);
-                    ShowProgressView(pbTemp, pbMain, pbIcon, city);
-                }else{
-                    FitWeather(pbTemp, pbMain, pbIcon, json);
-                }
-            }catch (Exception ignored){
-
-            }
-        }else {
-            RunWeatherLoader(pbTemp, pbMain, pbIcon, city);
-            ShowProgressView(pbTemp, pbMain, pbIcon, city);
-        }
-    }
-
-    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String city) {
-        AsyncTask<Void, Void, Bundle> at = new AsyncTask<Void, Void, Bundle>() {
-            @Override
-            protected Bundle doInBackground(Void... params) {
-                return MyNetwork.queryWeather(city);
-            }
-
-            @Override
-            protected void onPostExecute(Bundle aBundle) {
-                String string = aBundle.getString(HttpRequester.RESULT);
-                if (string.equals(HttpRequester.RESULT_HTTP)) {
-                    LoadWeather(pbTemp, pbMain, pbIcon, city);
-                }else{
-                    ShowErrorView(pbTemp, pbMain, pbIcon, city);
-                }
-            }
-        };
-        at.execute();
-    }
-
-    private void ShowProgressView(TextView pbTemp, TextView pbMain, ImageView pbIcon, String city) {
-        //TODO: show progress view while loading
-    }
-
-    private void ShowErrorView(TextView pbTemp, TextView pbMain, ImageView pbIcon, String city) {
-        //TODO: Show error dialog
-    }
-
-    private void FitWeather(TextView pbTemp, TextView pbMain, ImageView pbIcon, JSONObject jsonPetersburg) throws JSONException {
-        String main = jsonPetersburg.getString("main");
-        int temp = (int) Math.round(jsonPetersburg.getDouble("temp"));
-
-        pbTemp.setText(String.valueOf(temp));
-        pbMain.setText(String.valueOf(main));
-
-        //FIXME: should work as described link
-        //http://openweathermap.org/weather-conditions
-        try {
-            String strIcon = jsonPetersburg.getString("icon");
-            int iIcon = Integer.parseInt(strIcon.substring(0, 2));
-            switch (iIcon) {
-                case 1:
-                    pbIcon.setImageResource(R.drawable.weather_sunshine_icon);
-                    break;
-                case 2:
-                    pbIcon.setImageResource(R.drawable.weather_sun_icon);
-                    break;
-                case 3:
-                case 4:
-                    pbIcon.setImageResource(R.drawable.weather_cloud_icon);
-                    break;
-                case 9:
-                case 10:
-                case 11:
-                    pbIcon.setImageResource(R.drawable.weather_rain_icon);
-                    break;
-                case 13:
-                    pbIcon.setImageResource(R.drawable.weather_snow_icon);
-                    break;
-                case 50:
-                    pbIcon.setImageResource(R.drawable.weather_fog_icon);
-                    break;
-                default:
-                    pbIcon.setImageResource(R.drawable.ic_action_help);
-                    break;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "error parse weather image", ex);
-            pbIcon.setImageResource(R.drawable.ic_action_help);
-        }
-    }
-
     public void showNavigationFragment() {
         NavigationFragment mlf = new NavigationFragment();
         getFragmentManager()

@@ -79,10 +79,11 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     private int getWeatherIcon(String icon) {
         int iIcon = Integer.parseInt(icon.substring(0, 2));
+        String sIcon = icon.substring(2, 1);
         int drIcon;
         switch (iIcon) {
             case 1:
-                drIcon = R.drawable.weather_sunshine_icon;
+                drIcon = (sIcon.equals("d")) ? R.drawable.weather_sunshine_icon : R.drawable.weather_moon_icon;
                 break;
             case 2:
                 drIcon = R.drawable.weather_sun_icon;
