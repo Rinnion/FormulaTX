@@ -10,8 +10,9 @@ import android.util.TypedValue;
 import android.view.*;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import com.rinnion.archived.network.loaders.WeatherAsyncLoader;
+import com.rinnion.archived.network.loaders.cursor.WeatherCursor;
 import com.rinnion.archived.utils.Log;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
@@ -52,6 +53,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter = new NewsAdapter(getActivity(), null);
 
         getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.weather_loader, Bundle.EMPTY, new WeatherLoader());
 
         super.onCreate(savedInstanceState);
     }
@@ -235,46 +237,58 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
         //mAdapter.swapCursor(mc);
 
-        LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
-        LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
+        //LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
+        //LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
 
         return view;
     }
 
-    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
-        String weather_petersburg = ArchivedApplication.getStringParameter("weather_" + petersburg);
-        if (weather_petersburg != null) {
+    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String city) {
+        String weather = ArchivedApplication.getStringParameter("weather_" + city);
+        if (weather != null) {
             try{
-                JSONObject jsonPetersburg = new JSONObject(weather_petersburg);
-                if (jsonPetersburg.getLong("time")+1800000<Calendar.getInstance().getTimeInMillis()){
-                    RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
-                }else {
-                    FitWeather(pbTemp, pbMain, pbIcon, jsonPetersburg);
+                JSONObject json = new JSONObject(weather);
+                if (json.getLong("time")+1800000<Calendar.getInstance().getTimeInMillis()){
+                    RunWeatherLoader(pbTemp, pbMain, pbIcon, city);
+                    ShowProgressView(pbTemp, pbMain, pbIcon, city);
+                }else{
+                    FitWeather(pbTemp, pbMain, pbIcon, json);
                 }
             }catch (Exception ignored){
 
             }
         }else {
-            RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
+            RunWeatherLoader(pbTemp, pbMain, pbIcon, city);
+            ShowProgressView(pbTemp, pbMain, pbIcon, city);
         }
     }
 
-    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
+    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String city) {
         AsyncTask<Void, Void, Bundle> at = new AsyncTask<Void, Void, Bundle>() {
             @Override
             protected Bundle doInBackground(Void... params) {
-                return MyNetwork.queryWeather(petersburg);
+                return MyNetwork.queryWeather(city);
             }
 
             @Override
             protected void onPostExecute(Bundle aBundle) {
                 String string = aBundle.getString(HttpRequester.RESULT);
                 if (string.equals(HttpRequester.RESULT_HTTP)) {
-                    LoadWeather(pbTemp, pbMain, pbIcon, petersburg);
+                    LoadWeather(pbTemp, pbMain, pbIcon, city);
+                }else{
+                    ShowErrorView(pbTemp, pbMain, pbIcon, city);
                 }
             }
         };
         at.execute();
+    }
+
+    private void ShowProgressView(TextView pbTemp, TextView pbMain, ImageView pbIcon, String city) {
+        //TODO: show progress view while loading
+    }
+
+    private void ShowErrorView(TextView pbTemp, TextView pbMain, ImageView pbIcon, String city) {
+        //TODO: Show error dialog
     }
 
     private void FitWeather(TextView pbTemp, TextView pbMain, ImageView pbIcon, JSONObject jsonPetersburg) throws JSONException {
@@ -382,5 +396,36 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public class WeatherLoader implements LoaderManager.LoaderCallbacks<WeatherCursor>{
+
+        @Override
+        public Loader<WeatherCursor> onCreateLoader(int i, Bundle bundle) {
+             return new WeatherAsyncLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<WeatherCursor> loader, WeatherCursor weatherCursor) {
+            View view = getView();
+            final TextView pbTemp = (TextView) view.findViewById(R.id.tl_tv_peter_temp);
+            final TextView pbMain = (TextView) view.findViewById(R.id.tl_tv_peter_main);
+            final ImageView pbIcon = (ImageView) view.findViewById(R.id.tl_iv_peter);
+            final TextView mosTemp = (TextView) view.findViewById(R.id.tl_tv_moscow_temp);
+            final TextView mosMain = (TextView) view.findViewById(R.id.tl_tv_moscow_main);
+            final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
+
+            pbTemp.setText(String.valueOf(weatherCursor.Peter.temp));
+            pbMain.setText(String.valueOf(weatherCursor.Peter.main));
+            pbIcon.setImageResource(weatherCursor.Peter.icon);
+            mosTemp.setText(String.valueOf(weatherCursor.Moscow.temp));
+            mosMain.setText(String.valueOf(weatherCursor.Moscow.main));
+            mosIcon.setImageResource(weatherCursor.Moscow.icon);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<WeatherCursor> loader) {
+
+        }
     }
 }

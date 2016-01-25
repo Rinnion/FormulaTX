@@ -11,6 +11,7 @@ import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.fragment.adapter.ProgramAdapter;
 import com.rinnion.archived.network.loaders.ProgramAsyncLoader;
+import com.rinnion.archived.network.loaders.cursor.ProgramCursor;
 import com.rinnion.archived.utils.Log;
 import android.view.MenuItem;
 import android.widget.ResourceCursorAdapter;

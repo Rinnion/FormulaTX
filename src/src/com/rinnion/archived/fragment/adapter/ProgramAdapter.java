@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
-import com.rinnion.archived.fragment.ProgramCursor;
+import com.rinnion.archived.network.loaders.cursor.ProgramCursor;
 import com.rinnion.archived.utils.Log;
 
 public class ProgramAdapter extends SimpleCursorAdapter {
