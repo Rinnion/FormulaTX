@@ -10,8 +10,9 @@ import android.util.TypedValue;
 import android.view.*;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import com.rinnion.archived.network.loaders.WeatherAsyncLoader;
+import com.rinnion.archived.network.loaders.cursor.WeatherCursor;
 import com.rinnion.archived.utils.Log;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
@@ -52,6 +53,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter = new NewsAdapter(getActivity(), null);
 
         getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.weather_loader, Bundle.EMPTY, new WeatherLoader());
 
         super.onCreate(savedInstanceState);
     }
@@ -225,102 +227,13 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         getActivity().getActionBar().setTitle(R.string.string_today);
         getActivity().getActionBar().setIcon(R.drawable.menu_icon);
 
-        //MatrixCursor mc = new MatrixCursor(NewsAdapter.fromSpinner);
-        //mc.addRow(new Object[]{1, null, "Шарапова встретилась с друзьями", "14 декабря, 10:57"});
-        //mc.addRow(new Object[]{2, null, "Раонич и Гаске снялись с IPTL из-за травм спины", "14 декабря, 10:17"});
-
         ListView mListView = (ListView) view.findViewById(R.id.tl_lv_news);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
-        //mAdapter.swapCursor(mc);
-
-        LoadWeather(pbTemp, pbMain, pbIcon, "petersburg");
-        LoadWeather(mosTemp, mosMain, mosIcon, "moscow");
 
         return view;
     }
-
-    private void LoadWeather(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
-        String weather_petersburg = ArchivedApplication.getStringParameter("weather_" + petersburg);
-        if (weather_petersburg != null) {
-            try{
-                JSONObject jsonPetersburg = new JSONObject(weather_petersburg);
-                if (jsonPetersburg.getLong("time")+1800000<Calendar.getInstance().getTimeInMillis()){
-                    RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
-                }else {
-                    FitWeather(pbTemp, pbMain, pbIcon, jsonPetersburg);
-                }
-            }catch (Exception ignored){
-
-            }
-        }else {
-            RunWeatherLoader(pbTemp, pbMain, pbIcon, petersburg);
-        }
-    }
-
-    private void RunWeatherLoader(final TextView pbTemp, final TextView pbMain, final ImageView pbIcon, final String petersburg) {
-        AsyncTask<Void, Void, Bundle> at = new AsyncTask<Void, Void, Bundle>() {
-            @Override
-            protected Bundle doInBackground(Void... params) {
-                return MyNetwork.queryWeather(petersburg);
-            }
-
-            @Override
-            protected void onPostExecute(Bundle aBundle) {
-                String string = aBundle.getString(HttpRequester.RESULT);
-                if (string.equals(HttpRequester.RESULT_HTTP)) {
-                    LoadWeather(pbTemp, pbMain, pbIcon, petersburg);
-                }
-            }
-        };
-        at.execute();
-    }
-
-    private void FitWeather(TextView pbTemp, TextView pbMain, ImageView pbIcon, JSONObject jsonPetersburg) throws JSONException {
-        String main = jsonPetersburg.getString("main");
-        int temp = (int) Math.round(jsonPetersburg.getDouble("temp"));
-
-        pbTemp.setText(String.valueOf(temp));
-        pbMain.setText(String.valueOf(main));
-
-        //FIXME: should work as described link
-        //http://openweathermap.org/weather-conditions
-        try {
-            String strIcon = jsonPetersburg.getString("icon");
-            int iIcon = Integer.parseInt(strIcon.substring(0, 2));
-            switch (iIcon) {
-                case 1:
-                    pbIcon.setImageResource(R.drawable.weather_sunshine_icon);
-                    break;
-                case 2:
-                    pbIcon.setImageResource(R.drawable.weather_sun_icon);
-                    break;
-                case 3:
-                case 4:
-                    pbIcon.setImageResource(R.drawable.weather_cloud_icon);
-                    break;
-                case 9:
-                case 10:
-                case 11:
-                    pbIcon.setImageResource(R.drawable.weather_rain_icon);
-                    break;
-                case 13:
-                    pbIcon.setImageResource(R.drawable.weather_snow_icon);
-                    break;
-                case 50:
-                    pbIcon.setImageResource(R.drawable.weather_fog_icon);
-                    break;
-                default:
-                    pbIcon.setImageResource(R.drawable.ic_action_help);
-                    break;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "error parse weather image", ex);
-            pbIcon.setImageResource(R.drawable.ic_action_help);
-        }
-    }
-
     public void showNavigationFragment() {
         NavigationFragment mlf = new NavigationFragment();
         getFragmentManager()
@@ -382,5 +295,48 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public class WeatherLoader implements LoaderManager.LoaderCallbacks<WeatherCursor>{
+
+        @Override
+        public Loader<WeatherCursor> onCreateLoader(int i, Bundle bundle) {
+             return new WeatherAsyncLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<WeatherCursor> loader, WeatherCursor weatherCursor) {
+            View view = getView();
+            if (weatherCursor != null) {
+                View vWeather = view.findViewById(R.id.tf_ll_weather_nest);
+                vWeather.setVisibility(View.VISIBLE);
+                View tvNotAvailable = view.findViewById(R.id.tf_tv_not_available);
+                tvNotAvailable.setVisibility(View.GONE);
+
+                final TextView pbTemp = (TextView) view.findViewById(R.id.tl_tv_peter_temp);
+                final TextView pbMain = (TextView) view.findViewById(R.id.tl_tv_peter_main);
+                final ImageView pbIcon = (ImageView) view.findViewById(R.id.tl_iv_peter);
+                final TextView mosTemp = (TextView) view.findViewById(R.id.tl_tv_moscow_temp);
+                final TextView mosMain = (TextView) view.findViewById(R.id.tl_tv_moscow_main);
+                final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
+
+                pbTemp.setText(String.valueOf(weatherCursor.Peter.temp));
+                pbMain.setText(String.valueOf(weatherCursor.Peter.main));
+                pbIcon.setImageResource(weatherCursor.Peter.icon);
+                mosTemp.setText(String.valueOf(weatherCursor.Moscow.temp));
+                mosMain.setText(String.valueOf(weatherCursor.Moscow.main));
+                mosIcon.setImageResource(weatherCursor.Moscow.icon);
+            }else{
+                View vWeather = view.findViewById(R.id.tf_ll_weather_nest);
+                vWeather.setVisibility(View.GONE);
+                View tvNotAvailable = view.findViewById(R.id.tf_tv_not_available);
+                tvNotAvailable.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<WeatherCursor> loader) {
+
+        }
     }
 }

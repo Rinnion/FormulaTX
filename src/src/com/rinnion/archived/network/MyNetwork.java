@@ -86,7 +86,7 @@ public final class MyNetwork {
 
     //Загрузка списка турниров
     public static Bundle queryGamerList(long id) {
-        Log.d(TAG, String.format("query queryGamerList"));
+        Log.d(TAG, String.format("queryGamerList"));
 
         ApiObjectListHandler handler = new ApiObjectListHandler();
 
@@ -100,7 +100,7 @@ public final class MyNetwork {
 
         HttpRequester fetcher = null;
         try {
-            fetcher = builder.setName("queryTournamentNewsList")
+            fetcher = builder.setName("queryGamerList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.getGamer(id))
                     .setHandler(handler)
@@ -187,14 +187,21 @@ public final class MyNetwork {
     //Загрузка списка новостей турнира
     public static Bundle queryGallery(long id) {
         Log.d(TAG, String.format("queryGallery"));
-        HttpRequester.Builder builder = new HttpRequester.Builder();
+        GalleryHandler handler = new GalleryHandler(id);
 
+        if (Settings.NETDEBUG) {
+            String fileName = "json/gallery-" + String.valueOf(id) + ".json";
+            Bundle result = processFile(fileName, handler);
+            return result;
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
         try {
             fetcher = builder.setName("queryTournamentNewsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
-                    .setHandler(new GalleryHandler(id))
+                    .setHandler(handler)
                     .create();
 
         } catch (UnsupportedEncodingException e) {
@@ -211,12 +218,20 @@ public final class MyNetwork {
     //Загрузка списка галлерей турнира
     public static int[] queryGalleryList() {
         Log.d(TAG, String.format("queryGalleryList"));
-        HttpRequester.Builder builder = new HttpRequester.Builder();
 
+        ApiObjectListHandler handler = new ApiObjectListHandler();
+
+        if (Settings.NETDEBUG) {
+            String fileName = "json/gallery-getlistgallery-gallery.json";
+            Bundle result = processFile(fileName, handler);
+            return MyNetwork.getIntArray(result);
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
         fetcher = builder.setName("queryGalleryList")
                 .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_GALLERY)
-                .setHandler(new ApiObjectListHandler())
+                .setHandler(handler)
                 .create();
 
         Bundle execute = fetcher.execute();
@@ -226,13 +241,21 @@ public final class MyNetwork {
 
     //Загрузка списка галлерей турнира
     public static int[] queryPodcastList() {
-        Log.d(TAG, String.format("queryGalleryList"));
+        Log.d(TAG, String.format("queryPodcastList"));
+
+        ApiObjectListHandler handler = new ApiObjectListHandler();
+        if (Settings.NETDEBUG) {
+            String fileName = "json/gallery-getlistgallery-podcast.json";
+            Bundle result = processFile(fileName, handler);
+            return MyNetwork.getIntArray(result);
+        }
+
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher;
         fetcher = builder.setName("queryGalleryList")
                 .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getListGallery.URL_PODCAST)
-                .setHandler(new ApiObjectListHandler())
+                .setHandler(handler)
                 .create();
 
         Bundle execute = fetcher.execute();

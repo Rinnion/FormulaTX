@@ -95,6 +95,12 @@ public class NavigationFragment extends Fragment {
                 showOtherTournmentFragment();
             }
         });
+        view.findViewById(R.id.nav_partners).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPartnersFragment();
+            }
+        });
         view.findViewById(R.id.nav_photogallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +164,16 @@ public class NavigationFragment extends Fragment {
 
     private void showCardFragment() {
         CardFragment mlf = new CardFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void showPartnersFragment() {
+        PartnersFragment mlf = new PartnersFragment();
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)

@@ -1,4 +1,4 @@
-package com.rinnion.archived.fragment;
+package com.rinnion.archived.network.loaders.cursor;
 
 import android.database.MatrixCursor;
 import android.provider.BaseColumns;
