@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.rinnion.archived.utils.Files;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -98,11 +99,9 @@ public class ArchivedApplication extends Application {
         MyLocale.Initialize();
 
         Parse.initialize(this, "b51B16Td0EF2fQFsXYIKPoQv49047k2AiI9pEg41", "DVRPRwdQnlUnelGBXHA7bVqqfmUYHqC45zdXGbcV");
-
         ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
         currentInstallation.saveInBackground();
-
-
+        ParsePush.subscribeInBackground("formula");
 
         Log.i(TAG, "onCreate");
     }
