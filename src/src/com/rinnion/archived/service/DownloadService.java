@@ -10,6 +10,7 @@ import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.network.loaders.cursor.WeatherCursor;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
 import org.lorecraft.phparser.SerializedPhpParser;
@@ -43,12 +44,18 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+            publishProgress(5, null);
+            MyNetwork.queryWeather(WeatherCursor.MOSCOW);
+            publishProgress(10, null);
+            MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
+
             if (!loadAbout(Settings.ABOUT_API_OBJECT)){
                 publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
                 return;
             }
+            publishProgress(20, null);
 
-            FetchTournamentsList(10, 50);
+            FetchTournamentsList(20, 50);
             FetchAreasList(50, 95);
 
             publishProgress(100, null);

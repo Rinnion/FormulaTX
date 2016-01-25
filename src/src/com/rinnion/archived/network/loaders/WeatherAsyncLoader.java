@@ -41,11 +41,6 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     @Override
     public WeatherCursor loadInBackground() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         MyNetwork.queryWeather(WeatherCursor.MOSCOW);
         MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
         WeatherCursor mc = getWeatherCursor();
