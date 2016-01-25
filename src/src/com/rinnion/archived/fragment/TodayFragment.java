@@ -408,19 +408,31 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         public void onLoadFinished(Loader<WeatherCursor> loader, WeatherCursor weatherCursor) {
             View view = getView();
-            final TextView pbTemp = (TextView) view.findViewById(R.id.tl_tv_peter_temp);
-            final TextView pbMain = (TextView) view.findViewById(R.id.tl_tv_peter_main);
-            final ImageView pbIcon = (ImageView) view.findViewById(R.id.tl_iv_peter);
-            final TextView mosTemp = (TextView) view.findViewById(R.id.tl_tv_moscow_temp);
-            final TextView mosMain = (TextView) view.findViewById(R.id.tl_tv_moscow_main);
-            final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
+            if (weatherCursor != null) {
+                View vWeather = view.findViewById(R.id.tf_ll_weather_nest);
+                vWeather.setVisibility(View.VISIBLE);
+                View tvNotAvailable = view.findViewById(R.id.tf_tv_not_available);
+                tvNotAvailable.setVisibility(View.GONE);
 
-            pbTemp.setText(String.valueOf(weatherCursor.Peter.temp));
-            pbMain.setText(String.valueOf(weatherCursor.Peter.main));
-            pbIcon.setImageResource(weatherCursor.Peter.icon);
-            mosTemp.setText(String.valueOf(weatherCursor.Moscow.temp));
-            mosMain.setText(String.valueOf(weatherCursor.Moscow.main));
-            mosIcon.setImageResource(weatherCursor.Moscow.icon);
+                final TextView pbTemp = (TextView) view.findViewById(R.id.tl_tv_peter_temp);
+                final TextView pbMain = (TextView) view.findViewById(R.id.tl_tv_peter_main);
+                final ImageView pbIcon = (ImageView) view.findViewById(R.id.tl_iv_peter);
+                final TextView mosTemp = (TextView) view.findViewById(R.id.tl_tv_moscow_temp);
+                final TextView mosMain = (TextView) view.findViewById(R.id.tl_tv_moscow_main);
+                final ImageView mosIcon = (ImageView) view.findViewById(R.id.tl_iv_moscow);
+
+                pbTemp.setText(String.valueOf(weatherCursor.Peter.temp));
+                pbMain.setText(String.valueOf(weatherCursor.Peter.main));
+                pbIcon.setImageResource(weatherCursor.Peter.icon);
+                mosTemp.setText(String.valueOf(weatherCursor.Moscow.temp));
+                mosMain.setText(String.valueOf(weatherCursor.Moscow.main));
+                mosIcon.setImageResource(weatherCursor.Moscow.icon);
+            }else{
+                View vWeather = view.findViewById(R.id.tf_ll_weather_nest);
+                vWeather.setVisibility(View.GONE);
+                View tvNotAvailable = view.findViewById(R.id.tf_tv_not_available);
+                tvNotAvailable.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

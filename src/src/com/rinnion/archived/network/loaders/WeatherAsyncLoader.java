@@ -54,20 +54,15 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     public WeatherCursor getWeatherCursor(){
         WeatherCursor wc = new WeatherCursor();
-        FitWeather(wc.Moscow, WeatherCursor.MOSCOW );
-        FitWeather(wc.Peter, WeatherCursor.PETERSBURG);
+        if (!FitWeather(wc.Moscow, WeatherCursor.MOSCOW ) || !FitWeather(wc.Peter, WeatherCursor.PETERSBURG)) return null;
         return wc;
     }
 
-    private void FitWeather(WeatherCursor.City city, String name) {
+    private boolean FitWeather(WeatherCursor.City city, String name) {
         SettingsHelper sh = new SettingsHelper(ArchivedApplication.getDatabaseOpenHelper());
         String weather = sh.getStringParameter(name);
         if (weather == null){
-            WeatherCursor wc = new WeatherCursor();
-            city.main = "empty";
-            city.temp = "e";
-            city.icon = R.drawable.ic_action_help;
-            return;
+            return false;
         }
 
         try{
@@ -79,11 +74,10 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
             city.temp=temp;
             city.main=main;
             city.icon = getWeatherIcon(icon.substring(0, 2));
+            return true;
 
         } catch (Exception e) {
-            city.main = "empty";
-            city.temp = "e";
-            city.icon = R.drawable.ic_action_help;
+            return false;
         }
 
     }
