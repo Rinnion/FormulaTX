@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+              android:layout_height="@android:dimen/app_icon_size" android:orientation="vertical">
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="@android:dimen/app_icon_size"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/itl_tv_text"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+      />
+</LinearLayout>

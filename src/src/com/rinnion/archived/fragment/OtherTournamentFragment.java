@@ -181,7 +181,7 @@ public class OtherTournamentFragment extends Fragment {
 
 
             DownloadManager.Request rq=new DownloadManager.Request(uri)
-                    .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
+            .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
                     .setAllowedOverRoaming(false)
                     .setTitle(f.getName())
                     .setDestinationInExternalFilesDir(ArchivedApplication.getAppContext(), Environment.DIRECTORY_DOWNLOADS, f.getName());
