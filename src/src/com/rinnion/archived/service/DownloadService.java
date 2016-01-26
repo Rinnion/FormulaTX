@@ -49,10 +49,8 @@ public class DownloadService extends IntentService {
             publishProgress(10, null);
             MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
 
-            if (!loadAbout(Settings.ABOUT_API_OBJECT)){
-                publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
-                return;
-            }
+            //loadAbout(Settings.ABOUT_API_OBJECT);
+            //publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
             publishProgress(20, null);
 
             FetchTournamentsList(20, 50);

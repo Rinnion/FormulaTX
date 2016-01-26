@@ -55,6 +55,7 @@ public class MyNetworkContentContract {
             {
                 public static final String URL_METHOD = URL + "?method=getpage";
 
+                /*
                 public static ArrayList<NameValuePair> getObject(String id) {
                     ArrayList<NameValuePair> dm_object = new ArrayList<NameValuePair>(1);
                     dm_object.add(new BasicNameValuePair("display_method", "object"));
@@ -62,6 +63,11 @@ public class MyNetworkContentContract {
                     dm_object.add(new BasicNameValuePair(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.ID,id));
                     dm_object.add(new BasicNameValuePair(LANG, MyLocale.getCurrent()));
                     return dm_object;
+                }
+                */
+
+                public static String getObject(long id){
+                    return URL_METHOD + "&id=" + String.valueOf(id) + "&lang="+MyLocale.getCurrent();
                 }
 
                 public static final String ID = "id";
