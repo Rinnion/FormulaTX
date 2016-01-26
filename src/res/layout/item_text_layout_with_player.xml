@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <TextView
+        android:layout_width="0dp"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/itl_tv_text"
+        android:layout_weight="1"/>
+        <ImageView
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:id="@+id/playImage" android:src="@drawable/play_media_icon" android:scaleType="center"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:visibility="visible" android:layout_weight="1">
+        <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/musicProgress"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:visibility="invisible" android:layout_weight="1"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="00:00:00"
+                android:id="@+id/timeTextView" android:paddingRight="5dp" android:gravity="center"
+                android:visibility="invisible"/>
+    </LinearLayout>
+</LinearLayout>

@@ -57,6 +57,11 @@ public class SettingsHelper implements BaseColumns {
         if (parameter == null) return i;
         return Integer.parseInt(parameter);
     }
+    public long getLongParameter(String parameterName, long i) {
+        String parameter = getParameter(parameterName, "l");
+        if (parameter == null) return i;
+        return Long.parseLong(parameter);
+    }
 
     public double getDoubleParameter(String parameterName, double d) {
         String parameter = getParameter(parameterName, "d");
@@ -74,6 +79,10 @@ public class SettingsHelper implements BaseColumns {
 
     public void setParameter(String paramName, double paramValue) {
         setTypedParameter(paramName, String.valueOf(paramValue), "d");
+    }
+
+    public void setParameter(String paramName, long paramValue) {
+        setTypedParameter(paramName, String.valueOf(paramValue), "l");
     }
 
     protected void setTypedParameter(String paramName, String paramValue, String type) {

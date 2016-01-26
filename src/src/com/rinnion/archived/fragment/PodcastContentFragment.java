@@ -9,10 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
@@ -37,16 +34,22 @@ import java.io.IOException;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class PodcastContentFragment extends Fragment implements MediaController.MediaPlayerControl, MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener {
+public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener {
 
     public static String TOURNAMENT_POST_NAME = "tournament id";
     public static String PODCAST = "podcast";
     public static final String GALLERY = GalleryContentAsyncLoader.GALLERY;
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
-    private MediaController controller;
+
     private MediaPlayer player;
-    private int seek_position = 0;
+    private ListView mListView;
+    private TextView timeTextView;
+
+    private SeekBar musicBar=null;
+    private MusicController musicProgressController;
+    private ImageView playButton=null;
+    private int posId=-1;
 
     private boolean isPaused = false; // If the player was paused before being stopped.
     @Override
@@ -61,7 +64,7 @@ public class PodcastContentFragment extends Fragment implements MediaController.
         setHasOptionsMenu(true);
         String[] names = new String[]{GalleryHelper._ID};
         int[] to = new int[]{R.id.itl_tv_text};
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_text_layout, null, names, to, 0);
+        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_text_layout_with_player, null, names, to, 0);
         getLoaderManager().initLoader(R.id.gallery_loader, getArguments(), new PodcastLoaderCallback());
         super.onCreate(savedInstanceState);
     }
@@ -82,22 +85,46 @@ public class PodcastContentFragment extends Fragment implements MediaController.
         super.onResume();
     }
 
+    private void play()
+    {
+
+    }
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_layout_podcast, container, false);
-         controller = (MediaController)view.findViewById(R.id.mediaController);
-        ListView mListView = (ListView) view.findViewById(R.id.listView);
+
+        //mediaPlayerLayout = (LinearLayout)view.findViewById(R.id.mediaPlayerLayout);
+        //controller = (MediaController)view.findViewById(R.id.mediaController);
+         mListView = (ListView) view.findViewById(R.id.listView);
         mListView.setAdapter(mAdapter);
+
+        ArchivedApplication.setParameter("PodcastAudioId", 0L);
+
 
         player=new MediaPlayer();
         player.setOnPreparedListener(this);
 
-        //controller=new MusicController(getActivity());
-        //controller.set
-        controller.setMediaPlayer(this);
-      //controller.setAnchorView(mListView);
-        controller.setEnabled(true);
+         musicProgressController=new MusicController(getActivity(),player);
 
+
+
+       // controller=new MusicController(getActivity());
+        //controller.set
+        //controller=new MediaController(getActivity());
+        //controller.set
+        //controller=new MediaController(getActivity());
+        //controller.setMediaPlayer(this);
+
+        //controller.setFocusable(false);
+        //controller.setFocusableInTouchMode(false);
+      //controller.setAnchorView(mListView);
+        //controller.setEnabled(true);
+        //controller.setFocusable(false);
+        //controller.setFocusableInTouchMode(false);
 
 
 
@@ -105,24 +132,93 @@ public class PodcastContentFragment extends Fragment implements MediaController.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-                GalleryHelper gh = new GalleryHelper(doh);
+                 GalleryHelper gh = new GalleryHelper(doh);
                 GalleryItem item = gh.getItem(l);
                 if (item == null) return;
 
 
+                long podcastAudioId= ArchivedApplication.getLongParameter("PodcastAudioId", 0);
+
+
+
+
+
+
+                    if (playButton != null) {
+                        playButton.setImageResource(R.drawable.play_media_icon);
+                        if(podcastAudioId!=l) {
+
+                            if(musicBar!=null)
+                            musicBar.setVisibility(View.INVISIBLE);
+                            if(timeTextView!=null)
+                                timeTextView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                musicBar = (SeekBar) view.findViewById(R.id.musicProgress);
+                timeTextView=(TextView)view.findViewById(R.id.timeTextView);
+
+                musicProgressController.SetBar(musicBar, timeTextView);
+
+
+                    playButton = (ImageView) view.findViewById(R.id.playImage);
+
+
+
+
+
+
+
+
+
+
+
+                if(podcastAudioId==l) {
+
+                    if(!player.isPlaying()) {
+                        player.start();
+                        if (playButton != null)
+                            playButton.setImageResource(R.drawable.pause_media_icon);
+                    }
+                    else {
+                        player.pause();
+                        if (playButton != null)
+                            playButton.setImageResource(R.drawable.play_media_icon);
+                    }
+                    musicProgressController.Refresh();
+
+                    musicBar.setVisibility(View.VISIBLE);
+                    timeTextView.setVisibility(View.VISIBLE);
+                    return;
+                }
+                ArchivedApplication.setParameter("PodcastAudioId", l);
+                //musicBar.setMax();
+
                 try {
                     String file = Files.getExternalDir("Kalimba.mp3");
+
 
                     if(player.isPlaying()) {
                         player.stop();
                         player.seekTo(0);
                     }
+                    else
+                    {
+                        player.stop();
+                        player.seekTo(0);
+                    }
                     //Uri tmpUri=Uri.parse(item.link);
                     Uri tmpUri=Uri.fromFile(new File(file));
-                    player.setDataSource(getActivity(),tmpUri);
+                    player.setDataSource(getActivity(), tmpUri);
                     player.prepare();
                     //controller.show();
+
                     player.start();
+                    playButton.setImageResource(R.drawable.pause_media_icon);
+                    musicProgressController.Refresh();
+
+                    musicBar.setVisibility(View.VISIBLE);
+                    timeTextView.setVisibility(View.VISIBLE);
 
                 } catch (IOException e) {
                     Log.d(TAG, "MediaPlayer", e);
@@ -163,108 +259,74 @@ public class PodcastContentFragment extends Fragment implements MediaController.
         }
     }
 
-    @Override
-    public void start() {
-        player.start();
-        this.isPaused=false;
-    }
-
-    @Override
-    public void pause() {
-        player.pause();
-        this.isPaused=true;
-
-    }
-
-    @Override
-    public int getDuration() {
-        return player.getDuration();
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        try {
-
-
-            return player.getCurrentPosition();
-        }
-        catch (Exception ex){}
-        return 0;
-    }
-
-    @Override
-    public void seekTo(int pos) {
-        player.seekTo(pos);
-    }
-
-    @Override
-    public boolean isPlaying() {
-        return player.isPlaying();
-    }
-
-    @Override
-    public int getBufferPercentage() {
-        return 0;
-    }
 
     @Override
     public void onStop() {
         super.onStop();
-        controller.hide(); // So you don't get the "Leaked activity..." message.
+       //controller.hide(); // So you don't get the "Leaked activity..." message.
         player.stop();
 
+        if(playButton!=null)
+        playButton.setImageResource(R.drawable.play_media_icon);
+
+
+
+
 
     }
 
-    @Override
-    public boolean canPause() {
-        return true;
-    }
 
-    @Override
-    public boolean canSeekBackward() {
-        return false;
-    }
-
-    @Override
-    public boolean canSeekForward() {
-        return false;
-    }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
         //controller.setMediaPlayer(this);
         Log.d(TAG, "onPrepared");
-        controller.setMediaPlayer(this);
-        //mediaController.setAnchorView(findViewById(R.id.main_audio_view));
 
 
+//        controller.setAnchorView(mediaPlayerLayout);
+        musicBar.setMax(player.getDuration());
+        musicProgressController.StartTimer();
+        /*
         new Handler().post(new Runnable() {
             public void run() {
-                controller.setEnabled(true);
-                controller.show(10000);
+
+
+
+                //controller.setEnabled(true);
+                //controller.show(0);
+                //controller.invalidate();
             }
         });
-
+*/
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-
+        player.pause();
+        if(playButton!=null)
+            playButton.setImageResource(R.drawable.play_media_icon);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        controller.hide();
+
         player.stop();
         player.release();
     }
 
+
+
+
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+        if(mp.isPlaying())
+        {
+            mp.stop();
+            if(playButton!=null)
+                playButton.setImageResource(R.drawable.play_media_icon);
+        }
         return true;
     }
 

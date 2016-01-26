@@ -55,6 +55,10 @@ public class ArchivedApplication extends Application {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
         return sh.getIntParameter(parameter, i);
     }
+    public static long getLongParameter(String parameter, long l) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        return sh.getLongParameter(parameter, l);
+    }
 
     public static double getDoubleParameter(String parameter, double d) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
@@ -72,6 +76,11 @@ public class ArchivedApplication extends Application {
     }
 
     public static void setParameter(String parameter, double value) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        sh.setParameter(parameter, value);
+    }
+
+    public static void setParameter(String parameter, long value) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
         sh.setParameter(parameter, value);
     }
