@@ -186,13 +186,15 @@ public class OtherTournamentFragment extends Fragment {
             .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
                     .setAllowedOverRoaming(false)
                     .setTitle(f.getName())
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName());
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName())
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
 
 
                 getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
 
                                                        @Override
                                                        public void onReceive(Context context, Intent intent) {
+                                                           getActivity().unregisterReceiver(this);
                                                            String filePath=(String)this.getObject();
                                                            openReader(filePath);
                                                        }
@@ -223,7 +225,7 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
-            String string = String.valueOf(t.files);
+            /*String string = String.valueOf(t.files);
             Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
             SerializedPhpParser parser = new SerializedPhpParser(t.files);
             Map obj = (Map) parser.parse();
@@ -233,8 +235,50 @@ public class OtherTournamentFragment extends Fragment {
             }
             String o = (String) obj.get(1);
             String filename = Utils.fixUrlWithFullPath(o);
-            //TODO: download file first;
-            //TODO: then open target
+            /**/
+
+            String string = String.valueOf(t.files);
+            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "..." : "") + "'");
+            JSONArray array = new JSONArray(string);
+            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            Log.d(TAG, "Handle file: '" + filename + "'");
+
+
+            Uri uri=Uri.parse(filename);
+            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+            File f=new File(filename);
+            File file=new File(path,f.getName());
+
+
+            //Environment.getE (Environment.DIRECTORY_DOWNLOADS).mkdirs();
+
+            Log.d(TAG, "Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
+
+
+            DownloadManager.Request rq=new DownloadManager.Request(uri)
+                    .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
+                    .setAllowedOverRoaming(false)
+                    .setTitle(f.getName())
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName())
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+
+
+            getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
+
+                                               @Override
+                                               public void onReceive(Context context, Intent intent) {
+                                                   getActivity().unregisterReceiver(this);
+                                                   String filePath=(String)this.getObject();
+                                                   openReader(filePath);
+                                               }
+                                           },
+                    new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            );
+
+            DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            dwm.enqueue(rq);
+
+
         }catch(Exception ex){
             Log.e(TAG, "ERROR", ex);
             showNoValueMessage();
