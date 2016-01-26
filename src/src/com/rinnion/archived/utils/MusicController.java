@@ -30,6 +30,7 @@ public class MusicController {
 
     private TextView textView;
 
+    private boolean downTouch=false;
 
     public MusicController(Activity activity,  MediaPlayer player) {
         mediaPlayer=player;
@@ -103,12 +104,14 @@ public class MusicController {
     public void Refresh()
     {
         synchronized (syncObject) {
-            int position=mediaPlayer.getCurrentPosition();
-            if (seekBar != null) {
-                seekBar.setProgress(position);
+            if (!downTouch) {
+                int position = mediaPlayer.getCurrentPosition();
+                if (seekBar != null) {
+                    seekBar.setProgress(position);
+                }
+                if (textView != null)
+                    textView.setText(getPositionInTimeFormat(position, mediaPlayer.getDuration()));
             }
-            if(textView!=null)
-                textView.setText(getPositionInTimeFormat(position,mediaPlayer.getDuration()));
         }
     }
 
@@ -124,18 +127,25 @@ public class MusicController {
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                        if(fromUser) {
+                            synchronized (syncObject) {
+                                mediaPlayer.seekTo(progress);
+                            }
+                        }
                     }
 
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
-
+                        synchronized (syncObject) {
+                            downTouch=true;
+                        }
                     }
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         synchronized (syncObject) {
-                            mediaPlayer.seekTo(seekBar.getProgress());
+                            downTouch=false;
+
                             //if(!mediaPlayer.isPlaying())
                             //mediaPlayer.start();
                         }
