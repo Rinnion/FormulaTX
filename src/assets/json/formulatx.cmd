@@ -112,8 +112,10 @@ node get 210en.json "http://app.formulatx.com/api/static_page?method=getpage&id=
 node get 210add.json "http://app.formulatx.com/api/static_page?method=getadditionalfields&id=210"
 node get 266add.json "http://app.formulatx.com/api/static_page?method=getadditionalfields&id=266"
 
-
-
-
-
-
+rem parsers example
+node get parsers-19.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=19"
+node get parsers-20.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=20"
+node get parsers-22.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=22"
+node get  parsers-23.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=23"
+node get  parsers-30.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=30"
+node get  parsers-31.json "http://app.formulatx.com/api/parsers?method=getparsersbyid&id=31"

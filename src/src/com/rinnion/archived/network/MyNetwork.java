@@ -367,20 +367,11 @@ public final class MyNetwork {
         Log.d(TAG, String.format("query tournament"));
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
-        try {
 
-            fetcher = builder.setName("queryApiObject")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(String.valueOf(id)))
-                    .setHandler(handler)
-                    .create();
-        } catch (UnsupportedEncodingException e) {
-            Log.d(TAG, "Error while server request", e);
-            Bundle bundle = new Bundle();
-            bundle.putString("RESULT", "EXCEPTION");
-            bundle.putSerializable("EXCEPTION", e);
-            return bundle;
-        }
+        fetcher = builder.setName("queryApiObject")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(id))
+                .setHandler(handler)
+                .create();
 
         return fetcher.execute();
     }
@@ -502,8 +493,7 @@ public final class MyNetwork {
         try {
 
             fetcher = builder.setName("queryApiObject")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(String.valueOf(id)))
+                    .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getpage.getObject(id))
                     .setHandler(handlerObject)
                     .create();
 

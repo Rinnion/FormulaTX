@@ -55,7 +55,7 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     private boolean FitWeather(WeatherCursor.City city, String name) {
         SettingsHelper sh = new SettingsHelper(ArchivedApplication.getDatabaseOpenHelper());
-        String weather = sh.getStringParameter(name);
+        String weather = sh.getStringParameter("weather_" + name);
         if (weather == null){
             return false;
         }
@@ -68,7 +68,7 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
             city.temp=temp;
             city.main=main;
-            city.icon = getWeatherIcon(icon.substring(0, 2));
+            city.icon = getWeatherIcon(icon);
             return true;
 
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     private int getWeatherIcon(String icon) {
         int iIcon = Integer.parseInt(icon.substring(0, 2));
-        String sIcon = icon.substring(2, 1);
+        String sIcon = icon.substring(2, 3);
         int drIcon;
         switch (iIcon) {
             case 1:
@@ -113,11 +113,11 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     public WeatherCursor getProgressWeather() {
         WeatherCursor wc = new WeatherCursor();
-        wc.Moscow.main = "main";
+        wc.Moscow.main = "";
         wc.Moscow.temp = "?";
         wc.Moscow.icon = R.drawable.weather_sun_icon;
 
-        wc.Peter.main = "petr";
+        wc.Peter.main = "";
         wc.Peter.temp = "?";
         wc.Peter.icon = R.drawable.weather_sun_icon;
         return wc;
