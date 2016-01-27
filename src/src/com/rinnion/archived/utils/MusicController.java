@@ -145,9 +145,6 @@ public class MusicController {
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         synchronized (syncObject) {
                             downTouch=false;
-
-                            //if(!mediaPlayer.isPlaying())
-                            //mediaPlayer.start();
                         }
                     }
                 });
