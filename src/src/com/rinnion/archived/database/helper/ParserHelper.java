@@ -25,6 +25,7 @@ public class ParserHelper implements BaseColumns {
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_SYSTEM = "system";
+    public static final String COLUMN_SETTINGS= "settings";
 
     public static String DATABASE_TABLE = "parsers";
     public static String[] COLS;
@@ -37,6 +38,7 @@ public class ParserHelper implements BaseColumns {
                 COLUMN_DATE,
                 COLUMN_DATA,
                 COLUMN_SYSTEM,
+                COLUMN_SETTINGS,
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
@@ -175,6 +177,7 @@ public class ParserHelper implements BaseColumns {
         map.put(COLUMN_DATE, comment.date);
         map.put(COLUMN_DATA, comment.data);
         map.put(COLUMN_SYSTEM, comment.system);
+        map.put(COLUMN_SETTINGS, comment.settings);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);

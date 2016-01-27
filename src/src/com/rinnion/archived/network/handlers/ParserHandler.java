@@ -26,8 +26,9 @@ public class ParserHandler extends FormulaTXObjectResponseHandler {
         String date = message.getString("date");
         String data = message.getString("data");
         String system = message.getString("system");
+        String settings = message.getString("settings");
 
-        Parser parser = new Parser(id, title, date, data, system);
+        Parser parser = new Parser(id, title, date, data, system, settings);
         ph.merge(parser);
 
         return bundle;

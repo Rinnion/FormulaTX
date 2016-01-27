@@ -29,7 +29,8 @@ public class ParserCursor extends SQLiteCursor {
         String date = getString(getColumnIndexOrThrow(ParserHelper.COLUMN_DATE));
         String data = getString(getColumnIndexOrThrow(ParserHelper.COLUMN_DATA));
         String system = getString(getColumnIndexOrThrow(ParserHelper.COLUMN_SYSTEM));
-        return new Parser(id, title, date, data, system);
+        String settings = getString(getColumnIndexOrThrow(ParserHelper.COLUMN_SETTINGS));
+        return new Parser(id, title, date, data, system, settings);
     }
 
     public int getColId() {
