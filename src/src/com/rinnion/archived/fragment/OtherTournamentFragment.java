@@ -1,12 +1,7 @@
 package com.rinnion.archived.fragment;
 
-import android.app.ActionBar;
-import android.app.DownloadManager;
-import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.app.*;
+import android.content.*;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -17,14 +12,13 @@ import com.rinnion.archived.Utils;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
-import com.rinnion.archived.utils.Log;
+import com.rinnion.archived.utils.*;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.R;
-import com.rinnion.archived.utils.MyDownloadBroadcastReceiver;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lorecraft.phparser.SerializedPhpParser;
@@ -41,7 +35,7 @@ import java.net.URI;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class OtherTournamentFragment extends Fragment {
+public class OtherTournamentFragment  extends Fragment implements AlertDialogDownloadInterface {
 
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     public static final String ABOUT = "ABOUT";
@@ -52,7 +46,10 @@ public class OtherTournamentFragment extends Fragment {
     public static final String FINDWAY = "FINDWAY";
 
     private String TAG = getClass().getCanonicalName();
-
+    private AlertDialogDownload alertDialogDownload;
+    private String fileName;
+    ProgressDialog pd;
+    long downloadId;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
@@ -93,6 +90,10 @@ public class OtherTournamentFragment extends Fragment {
             Tournament t = th.getByPostName(post_name);
             ab.setTitle(t.title);
         }
+
+        alertDialogDownload=new AlertDialogDownload(getActivity(),"Загрузка данных","Хотите загрузить данные повторно?","Да, загрузить","Нет, открыть существуюший");
+        alertDialogDownload.SetListener(this);
+
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
         String[] names = new String[]{"resource", "text", "type"};
@@ -140,11 +141,64 @@ public class OtherTournamentFragment extends Fragment {
     void openReader(String filepath)
     {
         File f=new File(filepath);
+
+        if(!f.exists())
+        {
+            Log.d(TAG, "Full path: " + f.getAbsolutePath() + ", file not found");
+            showNoValueMessage();
+            return;
+        }
+
+
         Intent i = new Intent(Intent.ACTION_VIEW,  Uri.fromFile(f));
         //i.setType("application/pdf");
-        Log.d(TAG,"Full path: " + f.getAbsolutePath());
+        Log.d(TAG, "Full path: " + f.getAbsolutePath());
         getActivity().startActivity(i);
 
+    }
+
+
+    private void prepareOpenAction()
+    {
+
+
+
+        new NetworkConnectionCheck(getActivity()){
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                Log.d(TAG, "NetworkConnectionCheck, onPostExecute: " + String.valueOf(aBoolean));
+                if(aBoolean)
+                {
+
+                    prepareDownloadAction();
+                }
+                else
+                {
+
+                    OnNegativeButton();
+
+                }
+            }
+        }.execute();
+
+    }
+
+    private void prepareDownloadAction()
+    {
+        File f=new File(fileName);
+        String path=getActivity().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+        File file=new File(path,f.getName());
+
+        if(file.exists())
+        {
+            alertDialogDownload.Show();
+        }
+        else
+        {
+            OnPositiveButton();
+        }
     }
 
     private void showGridsFragment() {
@@ -159,51 +213,15 @@ public class OtherTournamentFragment extends Fragment {
             String string = String.valueOf(t.files);
             Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "..." : "") + "'");
             JSONArray array = new JSONArray(string);
-            String filename = Utils.fixUrlWithFullPath(array.getString(1));
+            String filename = Utils.fixUrlWithFullPath(array.getString(0));
             Log.d(TAG, "Handle file: '" + filename + "'");
 
-            /*
-            SerializedPhpParser parser = new SerializedPhpParser(t.files);
-            Map obj = (Map) parser.parse();
-            if (!obj.containsKey(0)){
-                showNoValueMessage();
-                return;
-            }
-            String o = (String) obj.get(0);
-            String filename = Utils.fixUrlWithFullPath(o);*/
-            Uri uri=Uri.parse(filename);
-            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-            File f=new File(filename);
-            File file=new File(path,f.getName());
+
+            this.fileName=filename;
+
+            prepareOpenAction();
 
 
-            //Environment.getE (Environment.DIRECTORY_DOWNLOADS).mkdirs();
-
-            Log.d(TAG, "Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
-
-
-            DownloadManager.Request rq=new DownloadManager.Request(uri)
-            .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
-                    .setAllowedOverRoaming(false)
-                    .setTitle(f.getName())
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName())
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-
-
-                getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
-
-                                                       @Override
-                                                       public void onReceive(Context context, Intent intent) {
-                                                           getActivity().unregisterReceiver(this);
-                                                           String filePath=(String)this.getObject();
-                                                           openReader(filePath);
-                                                       }
-                                                   },
-                                                   new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-                                            );
-
-            DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-            dwm.enqueue(rq);
 
 
         }catch(Exception ex){
@@ -225,58 +243,18 @@ public class OtherTournamentFragment extends Fragment {
             showNoValueMessage();
         }
         try {
-            /*String string = String.valueOf(t.files);
-            Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "... " : "") + "'");
-            SerializedPhpParser parser = new SerializedPhpParser(t.files);
-            Map obj = (Map) parser.parse();
-            if (!obj.containsKey(1)){
-                showNoValueMessage();
-                return;
-            }
-            String o = (String) obj.get(1);
-            String filename = Utils.fixUrlWithFullPath(o);
-            /**/
-
             String string = String.valueOf(t.files);
             Log.d(TAG, "Handle: '" + string.substring(0, (string.length() > 25) ? 25 : string.length()) + ((string.length() > 25) ? "..." : "") + "'");
             JSONArray array = new JSONArray(string);
+
+
             String filename = Utils.fixUrlWithFullPath(array.getString(1));
             Log.d(TAG, "Handle file: '" + filename + "'");
 
 
-            Uri uri=Uri.parse(filename);
-            String path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-            File f=new File(filename);
-            File file=new File(path,f.getName());
+            this.fileName=filename;
 
-
-            //Environment.getE (Environment.DIRECTORY_DOWNLOADS).mkdirs();
-
-            Log.d(TAG, "Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
-
-
-            DownloadManager.Request rq=new DownloadManager.Request(uri)
-                    .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
-                    .setAllowedOverRoaming(false)
-                    .setTitle(f.getName())
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName())
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-
-
-            getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
-
-                                               @Override
-                                               public void onReceive(Context context, Intent intent) {
-                                                   getActivity().unregisterReceiver(this);
-                                                   String filePath=(String)this.getObject();
-                                                   openReader(filePath);
-                                               }
-                                           },
-                    new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-            );
-
-            DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-            dwm.enqueue(rq);
+            prepareOpenAction();
 
 
         }catch(Exception ex){
@@ -317,6 +295,104 @@ public class OtherTournamentFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+    private boolean validDownload(long downloadId) {
 
+        Log.d(TAG,"Checking download status for id: " + downloadId);
+
+        //Verify if download is a success
+        DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        Cursor c= dwm.query(new DownloadManager.Query().setFilterById(downloadId));
+
+        if(c.moveToFirst()){
+            int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+
+            if(status == DownloadManager.STATUS_SUCCESSFUL){
+                return true; //Download is valid, celebrate
+            }else{
+                int reason = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON));
+                Log.d(TAG, "Download not correct, status [" + status + "] reason [" + reason + "]");
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void OnPositiveButton() {
+
+        Uri uri=Uri.parse(fileName);
+        File f=new File(fileName);
+        String path=getActivity().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+        File file=new File(path,f.getName());
+
+
+
+        Log.d(TAG, "Environment.getExternalStoragePublicDirectory: " + path + ", f.getName(): " + f.getName());
+
+
+        DownloadManager.Request rq=new DownloadManager.Request(uri)
+                .setAllowedNetworkTypes((DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE))
+                .setAllowedOverRoaming(false)
+                .setTitle(f.getName())
+                .setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_DOWNLOADS, f.getName())
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+
+        //.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, f.getName())
+
+        getActivity().registerReceiver(new MyDownloadBroadcastReceiver(file.getAbsolutePath()) {
+
+                                           @Override
+                                           public void onReceive(Context context, Intent intent) {
+                                               getActivity().unregisterReceiver(this);
+                                               String filePath = (String) this.getObject();
+
+                                               pd.dismiss();
+                                               if(validDownload(downloadId))
+                                                   openReader(filePath);
+                                               else
+                                                   showNoValueMessage();
+
+                                           }
+                                       },
+                new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        );
+
+
+
+        DownloadManager dwm=(DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+
+
+        pd=new ProgressDialog(getActivity());
+        pd.setTitle("Загрузка файла...");
+        pd.setMessage("Идет загрузка файла");
+
+        pd.setButton(Dialog.BUTTON_NEGATIVE, "Отмена", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DownloadManager dwm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+                dwm.remove(downloadId);
+                pd.dismiss();
+            }
+        });
+
+
+        pd.show();
+        downloadId=dwm.enqueue(rq);
+    }
+
+    @Override
+    public void OnNegativeButton() {
+        File f=new File(fileName);
+        String path=getActivity().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+        File file=new File(path,f.getName());
+        openReader(file.getAbsolutePath());
+    }
+
+    @Override
+    public void OnCancel() {
+
+    }
 }
 

@@ -167,6 +167,7 @@ public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPr
                     }
 
                 musicBar = (SeekBar) view.findViewById(R.id.musicProgress);
+
                 timeTextView=(TextView)view.findViewById(R.id.timeTextView);
 
                 musicProgressController.SetBar(musicBar, timeTextView);
@@ -206,7 +207,7 @@ public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPr
                 //musicBar.setMax();
 
                 try {
-                    String file = Files.getExternalDir("Kalimba.mp3");
+                    //String file = Files.getExternalDir("Kalimba.mp3");
 
 
                     if(player.isPlaying()) {
@@ -218,8 +219,8 @@ public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPr
                         player.stop();
                         player.seekTo(0);
                     }
-                    //Uri tmpUri=Uri.parse(item.link);
-                    Uri tmpUri=Uri.fromFile(new File(file));
+                    Uri tmpUri=Uri.parse(item.link);
+                    //Uri tmpUri=Uri.fromFile(new File(file));
                     player.setDataSource(getActivity(), tmpUri);
                     player.prepare();
                     //controller.show();
@@ -232,11 +233,13 @@ public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPr
                     timeTextView.setVisibility(View.VISIBLE);
 
                 } catch (IOException e) {
+                    musicBar.setMax(0);
                     Log.d(TAG, "MediaPlayer", e);
                     e.printStackTrace();
                 }
                 catch (Exception _ex)
                 {
+                    musicBar.setMax(0);
                     Log.e(TAG,"Error prepare MediaPlayer",_ex);
 
                 }

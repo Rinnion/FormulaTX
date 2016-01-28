@@ -10,6 +10,7 @@ import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.Settings;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -87,18 +88,11 @@ public class MusicController {
                         new Runnable() {
                             @Override
                             public void run() {
-                                try {
-
-
-
-                                       Refresh();
-
-                                }
-                                catch (Exception ex){}
+                                try {Refresh();} catch (Exception ex){}
                             }
                         });
             }
-        },0,500);
+        },0, Settings.REFRESH_AUDION_POSITION_TIME);
     }
 
     public void Refresh()

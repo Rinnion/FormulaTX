@@ -90,7 +90,7 @@ public class NewsFragment extends Fragment {
 
 
 
-Display display=getActivity().getWindowManager().getDefaultDisplay();
+//Display display=getActivity().getWindowManager().getDefaultDisplay();
 
 
         String webHTML=prepateHtml(apiObject);

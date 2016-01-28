@@ -56,17 +56,6 @@ public class Files {
 
 
 
-    public static String getTmpFile(String combinedString)
-    {
-
-        File file= null;
-        try {
-            file = File.createTempFile(combinedString, ".log");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return  file.getPath();
-    }
 
     public  static String getExternalDir(String filename)
     {
@@ -75,40 +64,21 @@ public class Files {
 
     public  static String getExternalDir(String path, String filename)
     {
-
-
         File fileDir=new File(mFileExternal,Settings.EXTERNAL_PATH + ((path==null || path.isEmpty())? "": (File.separatorChar + path))) ;
-
-
-
-
         fileDir.mkdir();
-
         File file=new File(fileDir, filename);
-
-
-        /*if(createSuccess)*/
-
-        /*else
-            file= new File(mFileExternal, combinedString);*/
-
         return  file.getAbsolutePath();
     }
 
     public  static String getExternalDir()
     {
         File fileDir=new File(mFileExternal, Settings.EXTERNAL_PATH);
-
-
-
         fileDir.mkdir();
         return  fileDir.getAbsolutePath();
     }
 
     public static String getFilesDir(String combinedString)
     {
-
-
 
         File file = new File(mFileDir, combinedString);
         return  file.getPath();
