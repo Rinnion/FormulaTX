@@ -1,5 +1,6 @@
 package com.rinnion.archived.parsers;
 
+import com.rinnion.archived.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,5 +33,13 @@ public class Gamer {
         gamer.put("name", name);
         gamer.put("cc", cc);
         return gamer;
+    }
+
+    public static Gamer parseJSONObject(JSONObject in) throws JSONException {
+        String photo = Utils.getStringOrNull(in, "photo");
+        String name = Utils.getStringOrNull(in, "name");
+        String cc = Utils.getStringOrNull(in, "cc");
+
+        return new Gamer(name, cc, photo);
     }
 }

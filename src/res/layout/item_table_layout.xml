@@ -14,13 +14,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Матч 1"
-                android:id="@+id/textView" android:layout_gravity="left" android:layout_alignParentLeft="true"
+                android:id="@+id/itl_tv_match" android:layout_gravity="left" android:layout_alignParentLeft="true"
                 android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Центральный корт"
-                android:id="@+id/textView2"
+                android:id="@+id/itl_tv_header"
                 android:layout_alignParentTop="true" android:layout_marginTop="0dp"
                 android:layout_alignParentRight="true"/>
     </RelativeLayout>
@@ -28,78 +28,8 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:paddingTop="10dp" android:paddingBottom="10dp">
-        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-                      android:layout_height="wrap_content" android:id="@+id/ipel_ll_link" android:paddingLeft="15dp"
-                      android:paddingRight="15dp">
-            <TextView style="@style/main_text" android:layout_width="wrap_content"
-                      android:layout_height="@dimen/match_table_score_size" android:text="Игрок 1"
-                      android:id="@+id/textView11" android:layout_alignParentTop="true"
-                      android:textColor="#3bc31e" android:gravity="center"/>
-            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-                          android:layout_height="fill_parent" android:gravity="center_vertical|right">
-                <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:id="@+id/imageView" android:src="@android:drawable/ic_menu_mapmode"/>
-                <TextView android:layout_width="@dimen/match_table_score_size"
-                          android:layout_height="@dimen/match_table_score_size"
-                           android:text="2"
-                          android:id="@+id/textView12"
-                          android:gravity="center"
-                          android:layout_alignParentTop="true" android:layout_marginLeft="15dp"
-                          android:background="@drawable/white_background_10"/>
-                <TextView android:layout_width="@dimen/match_table_score_size"
-                          android:layout_height="@dimen/match_table_score_size"
-                          android:text="2"
-                          android:id="@+id/textView13"
-                          android:layout_alignBottom="@+id/textView5"
-                          android:gravity="center" android:layout_marginLeft="7dp"/>
-                <TextView android:layout_width="@dimen/match_table_score_size"
-                          android:layout_height="@dimen/match_table_score_size"
-                          android:text="2"
-                          android:id="@+id/textView14"
-                          android:gravity="center"
-                          android:layout_marginLeft="7dp" android:background="@drawable/white_background_10"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:paddingRight="15dp" android:paddingLeft="15dp"
-                android:layout_marginTop="10dp">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/match_table_score_size"
-                    android:text="Игрок 2"
-                    android:id="@+id/textView3"
-                    style="@style/main_text"
-                    android:gravity="center"/>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" android:gravity="center_vertical|right">
-                <ImageView android:layout_width="12dp" android:layout_height="12dp" android:id="@+id/imageView2"
-                           android:src="@android:drawable/ic_menu_mapmode"/>
-                <TextView android:layout_width="@dimen/match_table_score_size"
-                          android:layout_height="@dimen/match_table_score_size"
-                          android:text="2"
-                          android:id="@+id/textView9"
-                          android:gravity="center"
-                          android:layout_marginLeft="15dp"/>
-                <TextView android:layout_width="@dimen/match_table_score_size"
-                          android:layout_height="@dimen/match_table_score_size"
-                          android:text="2"
-                          android:id="@+id/textView8"
-                          android:gravity="center" android:layout_marginLeft="7dp"
-                          android:background="@drawable/white_background_10"/>
-                <TextView
-                        android:layout_width="@dimen/match_table_score_size"
-                        android:layout_height="@dimen/match_table_score_size"
-                        android:text="2"
-                        android:id="@+id/textView4" android:layout_alignParentTop="true"
-                        android:gravity="center"
-                        android:layout_marginLeft="7dp"/>
-            </LinearLayout>
-        </LinearLayout>
+        <include layout="@layout/team_describer" android:id="@+id/itl_ll_team_1"/>
+        <include layout="@layout/team_describer" android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_2" android:layout_marginTop="10dp"/>
     </LinearLayout>
 </LinearLayout>

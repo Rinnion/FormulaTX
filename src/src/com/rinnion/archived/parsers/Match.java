@@ -21,4 +21,13 @@ public class Match {
         return match;
     }
 
+    public static Match parseJSONObject(JSONObject in) throws JSONException {
+        Match match = new Match();
+        match.type = in.has("type") ? in.getString("type") : null;
+        match.header = in.has("header") ? in.getString("header") : null;
+        match.team1 = in.has("team1") ? Team.parseJSONObject(in.getJSONObject("team1")) : null;
+        match.team2 = in.has("team2") ? Team.parseJSONObject(in.getJSONObject("team2")) : null;
+        return match;
+    }
+
 }

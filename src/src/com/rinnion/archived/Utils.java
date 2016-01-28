@@ -379,5 +379,13 @@ public class Utils {
         if (url.startsWith("/")) url = MyNetworkContentContract.URL + url.substring(1);
         return url;
     }
+
+    public static String getStringOrNull(JSONObject in, String key) throws JSONException {
+        return in.has(key) ? in.getString(key) : null;
+    }
+
+    public static Boolean getBooleanOrNull(JSONObject in, String key) throws JSONException {
+        return in.has(key) ? in.getBoolean(key) : null;
+    }
 }
 

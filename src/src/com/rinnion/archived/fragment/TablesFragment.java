@@ -5,13 +5,13 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.Loader;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
+import android.widget.ListView;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.DatabaseOpenHelper;
@@ -20,7 +20,9 @@ import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.database.model.Parser;
+import com.rinnion.archived.fragment.adapter.TableAdapter;
 import com.rinnion.archived.network.loaders.ParserAsyncLoader;
+import com.rinnion.archived.network.loaders.cursor.TableCursor;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.utils.WebViewWithCache;
 import org.lorecraft.phparser.SerializedPhpParser;
@@ -39,7 +41,8 @@ public class TablesFragment extends Fragment {
 
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
-    private WebViewWithCache webView;
+    private TableAdapter mAdapter;
+    private SwipeRefreshLayout view;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,13 +72,27 @@ public class TablesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        webView = (WebViewWithCache) inflater.inflate(R.layout.webview_layout, container, false);
-        webView.setBackgroundColor(Color.TRANSPARENT);
+        view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.listView);
 
-        Bundle bundle = getArguments();
-        getLoaderManager().initLoader(R.id.tables_loader, bundle, new ParserLoaderCallback());
+        mAdapter = new TableAdapter(getActivity(), null);
 
-        return webView;
+        listView.setAdapter(mAdapter);
+        listView.setDivider(null);
+
+        getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
+
+        view.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
+        view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                view.setRefreshing(true);
+                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
+
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -88,9 +105,10 @@ public class TablesFragment extends Fragment {
         }
     }
 
-    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<ParserCursor> {
+    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<TableCursor> {
         @Override
-        public Loader<ParserCursor> onCreateLoader(int id, Bundle args) {
+        public Loader<TableCursor> onCreateLoader(int id, Bundle args) {
+            Log.d(TAG, "onCreateLoader");
             int[] ints = getParsersArrayFromTournament(args);
             return new ParserAsyncLoader(getActivity(), ints);
         }
@@ -125,29 +143,14 @@ public class TablesFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<ParserCursor> loader, ParserCursor data) {
-            if (data.getCount() == 0) {
-                webView.loadData("<html><body>empty</body></html>", "text/html; charset=UTF-8", null);
-                return;
-            }
-            StringBuilder sb = new StringBuilder();
-            while (!data.isAfterLast()){
-                Parser item = data.getItem();
-                sb.append(item.data);
-                data.moveToNext();
-            }
-            String htmlData = sb.toString();
-            String html = "<html>" +
-                    "<style>" +
-                    "body, table {width:100%;}" +
-                    "table {border:1px solid red;}" +
-                    "</style><body width='100%'>" + htmlData +"</body></html>";
-            String filename = getArguments().getString(TOURNAMENT_POST_NAME);
-            webView.loadDataOrCache(getActivity(), "parser-" + filename, htmlData, html, "<html><body>empty</body></html>");
+        public void onLoadFinished(Loader<TableCursor> loader, TableCursor data) {
+            Log.d(TAG, "onLoadFinished");
+            mAdapter.swapCursor(data);
+            view.setRefreshing(false);
         }
 
         @Override
-        public void onLoaderReset(Loader<ParserCursor> loader) {
+        public void onLoaderReset(Loader<TableCursor> loader) {
 
         }
     }

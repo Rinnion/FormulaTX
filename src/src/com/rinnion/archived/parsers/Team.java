@@ -1,5 +1,6 @@
 package com.rinnion.archived.parsers;
 
+import com.rinnion.archived.Utils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,32 @@ public class Team {
         line.put("r2", r2);
         line.put("r3", r3);
         return line;
+    }
+
+    public static Team parseJSONObject(JSONObject in) throws JSONException {
+        Team match = new Team();
+        match.extra = Utils.getStringOrNull(in, "extra");
+        match.gamers = getGamers(in, "gamers");
+        match.shot = Utils.getBooleanOrNull(in, "shot");
+        match.count = Utils.getStringOrNull(in, "count");
+        match.r1 = Utils.getStringOrNull(in, "r1");
+        match.r2 = Utils.getStringOrNull(in, "r3");
+        match.r3 = Utils.getStringOrNull(in, "r3");
+
+        return match;
+    }
+
+    private static ArrayList<Gamer> getGamers(JSONObject in, String key) throws JSONException {
+        ArrayList<Gamer> ret = new ArrayList<Gamer>();
+        if (!in.has(key)) {
+            return ret;
+        }
+        JSONArray arr = in.getJSONArray(key);
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject o = arr.getJSONObject(i);
+            ret.add(Gamer.parseJSONObject(o));
+        }
+        return ret;
     }
 
 }
