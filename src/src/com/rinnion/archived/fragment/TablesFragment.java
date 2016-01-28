@@ -88,7 +88,6 @@ public class TablesFragment extends Fragment {
             public void onRefresh() {
                 view.setRefreshing(true);
                 getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
-
             }
         });
 
@@ -109,37 +108,7 @@ public class TablesFragment extends Fragment {
         @Override
         public Loader<TableCursor> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
-            int[] ints = getParsersArrayFromTournament(args);
-            return new ParserAsyncLoader(getActivity(), ints);
-        }
-
-        private int[] getParsersArrayFromTournament(Bundle args) {
-            if (args == null) return null;
-            String post_name = args.getString(TOURNAMENT_POST_NAME);
-            DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-            TournamentHelper th = new TournamentHelper(doh);
-            Tournament tournament = th.getByPostName(post_name);
-            ArrayList<Long> intArray = new ArrayList<Long>();
-            if (tournament != null) {
-                try {
-                    String gallery_include = tournament.parsers_include;
-                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-                    Map parse = (Map) php.parse();
-                    for (Object item : parse.keySet()) {
-                        long l = Long.parseLong(parse.get(item).toString());
-                        intArray.add(l);
-                    }
-                } catch (Exception ignored) {
-                    Log.w(TAG, ignored.getMessage());
-                }
-            }
-
-            int[] ret = new int[intArray.size()];
-            for (int i = 0; i < intArray.size(); i++) {
-                ret[i] = intArray.get(i).intValue();
-            }
-
-            return ret;
+            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live");
         }
 
         @Override

@@ -9,7 +9,7 @@
         <item>"CREATE TABLE products (_id INTEGER PRIMARY KEY, price TEXT, top TEXT );"</item>
         <item>"CREATE TABLE cards (_id INTEGER PRIMARY KEY, status TEXT, link TEXT );"</item>
         <item>"CREATE TABLE parsers (_id INTEGER PRIMARY KEY, title TEXT, date TEXT, data TEXT, system TEXT, settings TEXT );"</item>
-        <item>"CREATE TABLE parser_matches (_id INTEGER PRIMARY KEY, page TEXT, number INTEGER, data TEXT, type TEXT );"</item>
+        <item>"CREATE TABLE parser_matches (_id INTEGER PRIMARY KEY, parser INTEGER, page TEXT, number INTEGER, data TEXT, type TEXT );"</item>
 
         <item>"CREATE TABLE api_object_gallery (api_object_id INTEGER, gallery_id_link INTEGER);"</item>
         <item>"CREATE TABLE gallery (_id INTEGER PRIMARY KEY, gallery_id INTEGER, type TEXT, picture TEXT, link TEXT );"</item>

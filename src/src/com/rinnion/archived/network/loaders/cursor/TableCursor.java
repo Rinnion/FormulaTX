@@ -1,12 +1,15 @@
 package com.rinnion.archived.network.loaders.cursor;
 
+import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteCursorDriver;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQuery;
 import android.provider.BaseColumns;
-import com.rinnion.archived.database.model.Parser;
-import com.rinnion.archived.parsers.Match;
+import com.rinnion.archived.database.helper.ParserMatchHelper;
+import com.rinnion.archived.database.model.Table;
 import com.rinnion.archived.utils.Log;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -14,22 +17,23 @@ import java.util.Arrays;
  * Created by tretyakov on 15.01.2016.
  * represents program cursor
  */
-public class TableCursor extends MatrixCursor{
+public class TableCursor extends SQLiteCursor {
 
     public static final String _ID = BaseColumns._ID;
-    public static final String PAGE = "page";
-    public static final String NUMBER = "number";
-    public static final String DATA = "data";
-    public static final String TYPE = "type";
+    public static final String PAGE = ParserMatchHelper.COLUMN_PAGE;
+    public static final String NUMBER = ParserMatchHelper.COLUMN_NUMBER;
+    public static final String DATA = ParserMatchHelper.COLUMN_DATA;
+    public static final String TYPE = ParserMatchHelper.COLUMN_TYPE;
+    public static final String PARSER = ParserMatchHelper.COLUMN_PARSER;
 
     private static final String TAG = "TableCursor";
 
     private static String[] names = new String[]{PAGE, NUMBER, DATA, TYPE};
     private static String[] columns = new String[]{_ID, PAGE, NUMBER, DATA, TYPE};
 
-    public TableCursor() {
-        super(columns);
-    }
+    public TableCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+        super(db, driver, editTable, query);             }
+
 
     public long getId(){
         return getLong(getColumnIndexOrThrow(_ID));
@@ -51,20 +55,28 @@ public class TableCursor extends MatrixCursor{
         return getString(getColumnIndexOrThrow(DATA));
     }
 
-    public void addRow(String page, int number, String type, String data) {
-        int count = getCount();
-        Object[] columnValues = {count + 1, page, number, data, type};
-        Log.d(TAG, Arrays.toString(columnValues));
-        super.addRow(columnValues);
+    public long getParser() {
+        return getLong(getColumnIndexOrThrow(DATA));
     }
 
-    public Match getMatch() {
-        try {
-            Match match = null;
-            match = Match.parseJSONObject(new JSONObject(getData()));
-            return match;
-        } catch (JSONException e) {
-            return null;
+    public Table getItem() {
+        Table table = new Table();
+        table.id = getId();
+        table.page = getPage();
+        table.number = getNumber();
+        table.data = getData();
+        table.type = getType();
+        table.parser = getParser();
+        return table;
+    }
+
+    public static class Factory implements SQLiteDatabase.CursorFactory {
+
+        @Override
+        public Cursor newCursor(SQLiteDatabase sqLiteDatabase, SQLiteCursorDriver sqLiteCursorDriver, String s, SQLiteQuery sqLiteQuery) {
+            TableCursor c = new TableCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
+            return c;
         }
     }
+
 }

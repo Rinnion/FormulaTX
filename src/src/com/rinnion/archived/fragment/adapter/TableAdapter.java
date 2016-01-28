@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
+import com.rinnion.archived.Utils;
 import com.rinnion.archived.network.loaders.cursor.ProgramCursor;
 import com.rinnion.archived.network.loaders.cursor.TableCursor;
 import com.rinnion.archived.parsers.Gamer;
@@ -42,7 +43,7 @@ public class TableAdapter extends SimpleCursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        Match match = ((TableCursor)cursor).getMatch();
+        Match match = ((TableCursor)cursor).getItem().getMatch();
         if (match == null) return;
 
         TextView tv = (TextView) view.findViewById(R.id.itl_tv_match);
@@ -54,6 +55,32 @@ public class TableAdapter extends SimpleCursorAdapter {
         fitTeam(t1, match.team1);
         fitTeam(t2, match.team2);
 
+        fitTeamBest(t1,t2,match.team1, match.team2);
+
+    }
+
+    private void fitTeamBest(View t1, View t2, Team team1, Team team2) {
+        TextView r11 = (TextView) t1.findViewById(R.id.itl_tv_round_1);
+        TextView r12 = (TextView) t1.findViewById(R.id.itl_tv_round_2);
+        TextView r13 = (TextView) t1.findViewById(R.id.itl_tv_round_3);
+        TextView r21 = (TextView) t2.findViewById(R.id.itl_tv_round_1);
+        TextView r22 = (TextView) t2.findViewById(R.id.itl_tv_round_2);
+        TextView r23 = (TextView) t2.findViewById(R.id.itl_tv_round_3);
+
+        int i11 = Utils.parseWithDefault(team1.r1, 0);
+        int i12 = Utils.parseWithDefault(team1.r2, 0);
+        int i13 = Utils.parseWithDefault(team1.r3, 0);
+        int i21 = Utils.parseWithDefault(team2.r1, 0);
+        int i22 = Utils.parseWithDefault(team2.r2, 0);
+        int i23 = Utils.parseWithDefault(team2.r3, 0);
+
+        r11.setBackgroundResource(i11 > i21 ? R.drawable.white_background_10 : android.R.color.transparent);
+        r12.setBackgroundResource(i12 > i22 ? R.drawable.white_background_10 : android.R.color.transparent);
+        r13.setBackgroundResource(i13 > i23 ? R.drawable.white_background_10 : android.R.color.transparent);
+
+        r21.setBackgroundResource(i11 < i21 ? R.drawable.white_background_10 : android.R.color.transparent);
+        r22.setBackgroundResource(i12 < i22 ? R.drawable.white_background_10 : android.R.color.transparent);
+        r23.setBackgroundResource(i13 < i23 ? R.drawable.white_background_10 : android.R.color.transparent);
     }
 
     private void fitTeam(View view, Team team) {
@@ -76,7 +103,6 @@ public class TableAdapter extends SimpleCursorAdapter {
         r11.setText(team.r1);
         r12.setText(team.r2);
         r13.setText(team.r3);
-
     }
 
     private void fitGamer(View v1, Gamer gamer) {

@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.GalleryItemCursor;
 import com.rinnion.archived.database.cursor.ParserCursor;
-import com.rinnion.archived.database.model.GalleryItem;
 import com.rinnion.archived.database.model.Parser;
+import com.rinnion.archived.database.model.Table;
+import com.rinnion.archived.network.loaders.cursor.TableCursor;
 import com.rinnion.archived.utils.Log;
 
 
@@ -20,25 +20,25 @@ import com.rinnion.archived.utils.Log;
  * Time: 16:13
  * To change this template use File | Settings | File Templates.
  */
-public class ParserHelper implements BaseColumns {
-    public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_DATE = "date";
+public class ParserMatchHelper implements BaseColumns {
+    public static final String COLUMN_PAGE = "page";
+    public static final String COLUMN_NUMBER = "number";
     public static final String COLUMN_DATA = "data";
-    public static final String COLUMN_SYSTEM = "system";
-    public static final String COLUMN_SETTINGS= "settings";
+    public static final String COLUMN_TYPE= "type";
+    public static final String COLUMN_PARSER= "parser";
 
-    public static String DATABASE_TABLE = "parsers";
+    public static String DATABASE_TABLE = "parser_matches";
     public static String[] COLS;
     public static String ALL_COLUMNS;
 
     static {
         COLS = new String[]{
                 _ID,
-                COLUMN_TITLE,
-                COLUMN_DATE,
+                COLUMN_PAGE,
+                COLUMN_NUMBER,
                 COLUMN_DATA,
-                COLUMN_SYSTEM,
-                COLUMN_SETTINGS,
+                COLUMN_TYPE,
+                COLUMN_PARSER,
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
@@ -47,27 +47,13 @@ public class ParserHelper implements BaseColumns {
 
     private DatabaseOpenHelper doh;
 
-    public ParserHelper(DatabaseOpenHelper doh) {
+    public ParserMatchHelper(DatabaseOpenHelper doh) {
         this.doh = doh;
     }
 
-    public ParserCursor getAll() {
-        Log.v(TAG, "getAll ()");
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " ORDER BY _id";
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
-                new ParserCursor.Factory(),
-                sql,
-                null,
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
-    public ParserCursor getAllWithSystemAndSettings(int[] range, String System, String settings) {
-        Log.v(TAG, "getAllWithyustemAndSettings ()");
+    public TableCursor getAll(int[] range, String type, String settings, String page) {
+        Log.d(TAG, "getAll("+String.valueOf(range) +","+String.valueOf(page)+")");
 
         if (range == null) range = new int[0];
         StringBuilder sb = new StringBuilder();
@@ -77,57 +63,32 @@ public class ParserHelper implements BaseColumns {
         String in = sb.toString();
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE +
-                " WHERE " + _ID + " in (" + in + ") AND " + COLUMN_SYSTEM + "=? AND " + COLUMN_SETTINGS + "=? " +
+                " WHERE " + COLUMN_PARSER + " in (" + in + ") AND " + COLUMN_PAGE + "=?" +
                 " ORDER BY _id";
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
-                new ParserCursor.Factory(),
+        TableCursor c = (TableCursor) d.rawQueryWithFactory(
+                new TableCursor.Factory(),
                 sql,
-                new String[]{System, settings},
+                new String[]{page},
                 null);
         c.moveToFirst();
         return c;
     }
 
+    public TableCursor getAll() {
+        Log.d(TAG, "getAll()");
 
-    public ParserCursor getAll(int[] range) {
-        Log.v(TAG, "getAllGalleries ()");
-
-        if (range == null) range = new int[0];
-        StringBuilder sb = new StringBuilder();
-        for (int i : range) {
-            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
-        }
-        String in = sb.toString();
-
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE +
-                " WHERE " + _ID + " in (" + in + ") " +
-                " ORDER BY _id";
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE;
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
-                new ParserCursor.Factory(),
+        TableCursor c = (TableCursor) d.rawQueryWithFactory(
+                new TableCursor.Factory(),
                 sql,
                 null,
                 null);
         c.moveToFirst();
         return c;
-    }
-
-    public Parser get(int id) {
-        Log.d(TAG, "getLocation (" + id + ")");
-
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE + " WHERE _id = ?";
-        SQLiteDatabase d = doh.getReadableDatabase();
-        ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
-                new ParserCursor.Factory(),
-                sql,
-                new String[]{Integer.toString(id)},
-                null);
-        if (c.getCount() == 0) return null;
-        c.moveToFirst();
-        return c.getItem();
     }
 
     public boolean clear() {
@@ -142,7 +103,6 @@ public class ParserHelper implements BaseColumns {
             return false;
         }
     }
-
 
     public boolean isItemPresent(long id) {
         Log.d(TAG, "isItemPresent (" + id + ")");
@@ -162,22 +122,21 @@ public class ParserHelper implements BaseColumns {
                 null);
     }
 
-    public boolean merge(Parser item){
+    public boolean merge(Table item){
         if (isItemPresent(item.id)) delete(item.id);
         return add(item);
     }
 
-    public boolean add(Parser comment) {
-        Log.d(TAG, "addLocation(" + String.valueOf(comment) + ")");
+    public boolean add(Table table) {
+        Log.d(TAG, "addLocation(" + String.valueOf(table) + ")");
 
         ContentValues map;
         map = new ContentValues();
-        map.put(_ID, comment.id);
-        map.put(COLUMN_TITLE, comment.title);
-        map.put(COLUMN_DATE, comment.date);
-        map.put(COLUMN_DATA, comment.data);
-        map.put(COLUMN_SYSTEM, comment.system);
-        map.put(COLUMN_SETTINGS, comment.settings);
+        map.put(COLUMN_PAGE, table.page);
+        map.put(COLUMN_NUMBER, table.number);
+        map.put(COLUMN_DATA, table.data);
+        map.put(COLUMN_TYPE, table.type);
+        map.put(COLUMN_PARSER, table.parser);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);
@@ -191,12 +150,12 @@ public class ParserHelper implements BaseColumns {
     public void delete(long id) {
         Log.d(TAG, "delete (" + id + ")");
         try {
-            Log.d(TAG, "Delete self location: " + id);
+            Log.d(TAG, "Delete parser table: " + id);
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {String.valueOf(id)};
             db.delete(DATABASE_TABLE, _ID + "=?", args);
         } catch (SQLException ex) {
-            Log.e(TAG, "Error delete self location", ex);
+            Log.e(TAG, "Delete parser table", ex);
         }
     }
 }

@@ -12,9 +12,12 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import com.rinnion.archived.network.MyNetworkContentContract;
+import com.rinnion.archived.network.loaders.GridsAsyncLoader;
 import com.rinnion.archived.utils.Log;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.lorecraft.phparser.SerializedPhpParser;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -386,6 +389,57 @@ public class Utils {
 
     public static Boolean getBooleanOrNull(JSONObject in, String key) throws JSONException {
         return in.has(key) ? in.getBoolean(key) : null;
+    }
+
+    public static int[] getIntListFromJSONArray(String array) {
+        ArrayList<Long> intArray = new ArrayList<Long>();
+
+            try {
+                JSONArray jsonArray = new JSONArray((array));
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Long o = jsonArray.getLong(i);
+                    intArray.add(o);
+                }
+            } catch (Exception ignored) {
+                Log.e(TAG, ignored.getMessage());
+            }
+
+        int[] ret = new int[intArray.size()];
+        for (int i = 0; i < intArray.size(); i++) {
+            ret[i] = intArray.get(i).intValue();
+        }
+
+        return ret;
+    }
+
+    public static int[] getIntListFromPhpSerializedArray(String array) {
+        ArrayList<Long> intArray = new ArrayList<Long>();
+
+            try {
+                SerializedPhpParser php = new SerializedPhpParser(array);
+                Map parse = (Map) php.parse();
+                for (Object item : parse.keySet()) {
+                    long l = Long.parseLong(parse.get(item).toString());
+                    intArray.add(l);
+                }
+            } catch (Exception ignored) {
+                Log.e(TAG, ignored.getMessage());
+            }
+
+        int[] ret = new int[intArray.size()];
+        for (int i = 0; i < intArray.size(); i++) {
+            ret[i] = intArray.get(i).intValue();
+        }
+
+        return ret;
+    }
+
+    public static int parseWithDefault(String number, int defaultVal) {
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            return defaultVal;
+        }
     }
 }
 

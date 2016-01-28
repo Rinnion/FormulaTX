@@ -13,20 +13,15 @@ import java.io.InputStreamReader;
  */
 public class ParserFactory {
 
-    public Match[] parse(String filename) {
+    public Match[] parse(String parse) {
         try {
-            JSONObject obj = getJsonObject(filename);
-            String status = String.valueOf(obj.get("status"));
-            if (status.equalsIgnoreCase(String.valueOf(Boolean.TRUE))) {
-                JSONObject message = obj.getJSONObject("message");
-                String system = message.getString("system");
-                String settings = message.getString("settings");
-                String data = getHtmlData(message);
-                IHtmlParser parser = getProperParser(system, settings);
-                Match[] ret = parser.parse(data);
-                return ret;
-            }
-            return null;
+            JSONObject message = new JSONObject(parse);
+            String system = message.getString("system");
+            String settings = message.getString("settings");
+            String data = getHtmlData(message);
+            IHtmlParser parser = getProperParser(system, settings);
+            Match[] ret = parser.parse(data);
+            return ret;
         } catch (Exception ex) {
             return null;
         }

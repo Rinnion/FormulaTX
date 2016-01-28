@@ -34,7 +34,11 @@ public class ParserCursor extends SQLiteCursor {
     }
 
     public int getColId() {
-        return getInt(getColumnIndexOrThrow(CommentHelper._ID));
+        return getInt(getColumnIndexOrThrow(ParserHelper._ID));
+    }
+
+    public String getData() {
+        return getString(getColumnIndexOrThrow(ParserHelper.COLUMN_DATA));
     }
 
     public static class Factory implements SQLiteDatabase.CursorFactory {
