@@ -106,6 +106,17 @@ public class PodcastContentFragment extends Fragment implements MediaPlayer.OnPr
 
 
         player=new MediaPlayer();
+
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if(!mp.isPlaying())
+                {
+                    if (playButton != null)
+                        playButton.setImageResource(R.drawable.play_media_icon);
+                }
+            }
+        });
         player.setOnPreparedListener(this);
 
          musicProgressController=new MusicController(getActivity(),player);
