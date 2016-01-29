@@ -12,23 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.DatabaseOpenHelper;
-import com.rinnion.archived.database.cursor.ParserCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.database.model.Parser;
-import com.rinnion.archived.fragment.adapter.TableAdapter;
+import com.rinnion.archived.fragment.adapter.ScheduleAdapter;
 import com.rinnion.archived.network.loaders.ParserAsyncLoader;
-import com.rinnion.archived.network.loaders.cursor.TableCursor;
+import com.rinnion.archived.network.loaders.cursor.ParserDataCursor;
 import com.rinnion.archived.utils.Log;
-import com.rinnion.archived.utils.WebViewWithCache;
-import org.lorecraft.phparser.SerializedPhpParser;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,11 +27,11 @@ import java.util.Map;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class TablesFragment extends Fragment {
+public class ScheduleFragment extends Fragment {
 
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
-    private TableAdapter mAdapter;
+    private ScheduleAdapter mAdapter;
     private SwipeRefreshLayout view;
 
     @Override
@@ -75,10 +65,10 @@ public class TablesFragment extends Fragment {
         view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
         ListView listView = (ListView) view.findViewById(R.id.listView);
 
-        mAdapter = new TableAdapter(getActivity(), null);
+        mAdapter = new ScheduleAdapter(getActivity(), null);
 
-        listView.setAdapter(mAdapter);
-        listView.setDivider(null);
+        //listView.setAdapter(mAdapter);
+        //listView.setDividerHeight(20);
 
         getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
 
@@ -104,22 +94,22 @@ public class TablesFragment extends Fragment {
         }
     }
 
-    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<TableCursor> {
+    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<ParserDataCursor> {
         @Override
-        public Loader<TableCursor> onCreateLoader(int id, Bundle args) {
+        public Loader<ParserDataCursor> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
             return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live");
         }
 
         @Override
-        public void onLoadFinished(Loader<TableCursor> loader, TableCursor data) {
+        public void onLoadFinished(Loader<ParserDataCursor> loader, ParserDataCursor data) {
             Log.d(TAG, "onLoadFinished");
             mAdapter.swapCursor(data);
             view.setRefreshing(false);
         }
 
         @Override
-        public void onLoaderReset(Loader<TableCursor> loader) {
+        public void onLoaderReset(Loader<ParserDataCursor> loader) {
 
         }
     }
