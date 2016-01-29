@@ -7,9 +7,8 @@ import android.provider.BaseColumns;
 import android.text.TextUtils;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.ParserCursor;
-import com.rinnion.archived.database.model.Parser;
 import com.rinnion.archived.database.model.Table;
-import com.rinnion.archived.network.loaders.cursor.TableCursor;
+import com.rinnion.archived.network.loaders.cursor.ParserDataCursor;
 import com.rinnion.archived.utils.Log;
 
 
@@ -52,7 +51,7 @@ public class ParserMatchHelper implements BaseColumns {
     }
 
 
-    public TableCursor getAll(int[] range, String type, String settings, String page) {
+    public ParserDataCursor getAll(int[] range, String type, String settings, String page) {
         Log.d(TAG, "getAll("+String.valueOf(range) +","+String.valueOf(page)+")");
 
         if (range == null) range = new int[0];
@@ -67,8 +66,8 @@ public class ParserMatchHelper implements BaseColumns {
                 " ORDER BY _id";
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        TableCursor c = (TableCursor) d.rawQueryWithFactory(
-                new TableCursor.Factory(),
+        ParserDataCursor c = (ParserDataCursor) d.rawQueryWithFactory(
+                new ParserDataCursor.Factory(),
                 sql,
                 new String[]{page},
                 null);
@@ -76,14 +75,14 @@ public class ParserMatchHelper implements BaseColumns {
         return c;
     }
 
-    public TableCursor getAll() {
+    public ParserDataCursor getAll() {
         Log.d(TAG, "getAll()");
 
         String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE;
 
         SQLiteDatabase d = doh.getReadableDatabase();
-        TableCursor c = (TableCursor) d.rawQueryWithFactory(
-                new TableCursor.Factory(),
+        ParserDataCursor c = (ParserDataCursor) d.rawQueryWithFactory(
+                new ParserDataCursor.Factory(),
                 sql,
                 null,
                 null);

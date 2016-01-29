@@ -1,7 +1,6 @@
 package com.rinnion.archived.network.loaders.cursor;
 
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,15 +8,12 @@ import android.database.sqlite.SQLiteQuery;
 import android.provider.BaseColumns;
 import com.rinnion.archived.database.helper.ParserMatchHelper;
 import com.rinnion.archived.database.model.Table;
-import com.rinnion.archived.utils.Log;
-
-import java.util.Arrays;
 
 /**
  * Created by tretyakov on 15.01.2016.
  * represents program cursor
  */
-public class TableCursor extends SQLiteCursor {
+public class ParserDataCursor extends SQLiteCursor {
 
     public static final String _ID = BaseColumns._ID;
     public static final String PAGE = ParserMatchHelper.COLUMN_PAGE;
@@ -31,7 +27,7 @@ public class TableCursor extends SQLiteCursor {
     private static String[] names = new String[]{PAGE, NUMBER, DATA, TYPE};
     private static String[] columns = new String[]{_ID, PAGE, NUMBER, DATA, TYPE};
 
-    public TableCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+    public ParserDataCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
         super(db, driver, editTable, query);             }
 
 
@@ -74,7 +70,7 @@ public class TableCursor extends SQLiteCursor {
 
         @Override
         public Cursor newCursor(SQLiteDatabase sqLiteDatabase, SQLiteCursorDriver sqLiteCursorDriver, String s, SQLiteQuery sqLiteQuery) {
-            TableCursor c = new TableCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
+            ParserDataCursor c = new ParserDataCursor(sqLiteDatabase, sqLiteCursorDriver, s, sqLiteQuery);
             return c;
         }
     }
