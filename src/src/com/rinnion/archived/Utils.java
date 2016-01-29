@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import com.rinnion.archived.network.MyNetworkContentContract;
-import com.rinnion.archived.network.loaders.GridsAsyncLoader;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -398,6 +397,27 @@ public class Utils {
                 JSONArray jsonArray = new JSONArray((array));
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Long o = jsonArray.getLong(i);
+                    intArray.add(o);
+                }
+            } catch (Exception ignored) {
+                Log.e(TAG, ignored.getMessage());
+            }
+
+        int[] ret = new int[intArray.size()];
+        for (int i = 0; i < intArray.size(); i++) {
+            ret[i] = intArray.get(i).intValue();
+        }
+
+        return ret;
+    }
+
+    public static int[] getIntListFromJSONObject(String array) {
+        ArrayList<Long> intArray = new ArrayList<Long>();
+
+            try {
+                JSONObject jsonObject = new JSONObject((array));
+                for (int i = 0; i < jsonObject.length(); i++) {
+                    Long o = jsonObject.getLong(String.valueOf(i));
                     intArray.add(o);
                 }
             } catch (Exception ignored) {

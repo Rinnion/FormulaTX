@@ -145,7 +145,7 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
         if(!f.exists())
         {
             Log.d(TAG, "Full path: " + f.getAbsolutePath() + ", file not found");
-            showNoValueMessage();
+            showNetworkNotAvailable();
             return;
         }
 
@@ -234,6 +234,20 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
     private void showNoValueMessage() {
         Toast.makeText(getActivity(), "К сожалению ничего нет", Toast.LENGTH_LONG).show();
     }
+
+    private void showNetworkDownloadError() {
+
+        Toast.makeText(getActivity(),"Ошибка загрузки файла. Проверьте соединение с сетью.", Toast.LENGTH_LONG).show();
+    }
+
+    private void showNetworkNotAvailable() {
+
+        Toast.makeText(getActivity(),"К сожалению сеть недоступна", Toast.LENGTH_LONG).show();
+    }
+    private void showUserCancel() {
+        Toast.makeText(getActivity(), "Загрузка отменена пользователем", Toast.LENGTH_LONG).show();
+    }
+
 
     private void showScheduleFragment() {
         String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
@@ -347,11 +361,18 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
                                                getActivity().unregisterReceiver(this);
                                                String filePath = (String) this.getObject();
 
-                                               pd.dismiss();
-                                               if(validDownload(downloadId))
+
+                                               if(validDownload(downloadId)) {
+
+                                                   pd.dismiss();
                                                    openReader(filePath);
-                                               else
-                                                   showNoValueMessage();
+                                               }
+                                                else
+                                               {
+                                                   pd.dismiss();
+                                                   showNetworkDownloadError();
+                                               }
+
 
                                            }
                                        },
@@ -371,8 +392,10 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DownloadManager dwm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-                dwm.remove(downloadId);
+
                 pd.dismiss();
+                showUserCancel();
+                dwm.remove(downloadId);
             }
         });
 
