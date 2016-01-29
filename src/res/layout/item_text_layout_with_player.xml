@@ -26,7 +26,9 @@
                 android:id="@+id/musicProgress"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:visibility="invisible" android:layout_weight="1"/>
+                android:visibility="invisible" android:layout_weight="1"
+
+                />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
