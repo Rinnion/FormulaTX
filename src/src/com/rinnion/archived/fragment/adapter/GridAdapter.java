@@ -58,6 +58,12 @@ public class GridAdapter extends SimpleCursorAdapter {
     }
 
     private void fitTeam(View view, Team team) {
+        if (team == null){
+            view.setVisibility(View.GONE);
+            return;
+        }
+
+        view.setVisibility(View.VISIBLE);
         View g1 = view.findViewById(R.id.td_rl_gamer_1);
         View g2 = view.findViewById(R.id.td_rl_gamer_2);
 
@@ -69,6 +75,10 @@ public class GridAdapter extends SimpleCursorAdapter {
         else{
             g2.setVisibility(View.GONE);
         }
+
+
+        TextView extra = (TextView) view.findViewById(R.id.tdg_tv_extra);
+        extra.setText(team.extra);
 
         TextView r11 = (TextView) view.findViewById(R.id.itl_tv_round_1);
         TextView r12 = (TextView) view.findViewById(R.id.itl_tv_round_2);

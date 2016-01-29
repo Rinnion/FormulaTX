@@ -27,6 +27,6 @@
             android:id="@+id/ipl_tv_price"
             android:textColor="#FFB500" style="@style/main_text_small"/>
     <TextView style="@style/main_text_small" android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:text="Р" android:id="@+id/textView"
+              android:layout_height="wrap_content" android:text="Р" android:id="@+id/gd_tv_extra"
               android:textColor="#FFB500"/>
 </LinearLayout>

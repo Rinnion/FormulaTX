@@ -3,20 +3,18 @@ package com.rinnion.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
+import android.widget.TabHost;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.Parser;
 import com.rinnion.archived.fragment.adapter.GridAdapter;
-import com.rinnion.archived.fragment.adapter.ScheduleAdapter;
 import com.rinnion.archived.network.loaders.ParserAsyncLoader;
 import com.rinnion.archived.network.loaders.cursor.ParserDataCursor;
 import com.rinnion.archived.utils.Log;
@@ -33,7 +31,8 @@ public class GridsFragment extends Fragment {
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
     private GridAdapter mAdapter;
-    private SwipeRefreshLayout view;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TabHost mTabHost;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -63,8 +62,12 @@ public class GridsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listView);
+        View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mTabHost = (TabHost)view.findViewById(R.id.tabHost);
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
+        ListView listView = (ListView) mSwipeRefreshLayout.findViewById(R.id.listView);
 
         mAdapter = new GridAdapter(getActivity(), null);
 
@@ -72,14 +75,16 @@ public class GridsFragment extends Fragment {
 
         getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
 
-        view.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
-        view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                view.setRefreshing(true);
+                mSwipeRefreshLayout.setRefreshing(true);
                 getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
             }
         });
+
+
 
         return view;
     }
@@ -98,14 +103,14 @@ public class GridsFragment extends Fragment {
         @Override
         public Loader<ParserDataCursor> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
-            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_DRAWS, Parser.SPBOPEN_DRAWS_QUALIFICATION, "Первый");
+            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_DRAWS, Parser.SPBOPEN_DRAWS_QUALIFICATION, "Финал");
         }
 
         @Override
         public void onLoadFinished(Loader<ParserDataCursor> loader, ParserDataCursor data) {
             Log.d(TAG, "onLoadFinished");
             mAdapter.swapCursor(data);
-            view.setRefreshing(false);
+            mSwipeRefreshLayout.setRefreshing(false);
         }
 
         @Override
@@ -113,6 +118,5 @@ public class GridsFragment extends Fragment {
 
         }
     }
-
 }
 

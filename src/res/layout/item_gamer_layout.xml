@@ -42,7 +42,7 @@
                 android:layout_height="fill_parent">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:text="Рейтинг: "
-                      android:id="@+id/textView" android:textColor="#FFB500"
+                      android:id="@+id/gd_tv_extra" android:textColor="#FFB500"
                       android:paddingTop="8dp" style="@style/main_text_small"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:text="90"

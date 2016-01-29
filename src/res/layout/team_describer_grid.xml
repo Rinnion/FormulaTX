@@ -3,6 +3,9 @@
               android:orientation="horizontal" android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               tools:showIn="@layout/item_grid_layout">
+    <TextView android:layout_width="@dimen/match_table_score_size" android:layout_height="match_parent" android:text="2"
+              android:id="@+id/tdg_tv_extra" android:gravity="center" android:layout_alignParentTop="true"
+              android:background="@drawable/white_background_10"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
