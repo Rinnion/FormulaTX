@@ -2,12 +2,10 @@ package com.rinnion.archived.database.helper;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import com.rinnion.archived.network.handlers.TournamentHandler;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.NewsCursor;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 
 /**
  * Helper for working with News repository

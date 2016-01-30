@@ -1,6 +1,8 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
+import com.rinnion.archived.ArchivedApplication;
+import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.network.MyNetworkContentContract;
@@ -23,11 +25,9 @@ public class ApiObjectHandler extends JSONObjectHandler {
 
     Pattern ptrnImgSrc = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
     protected ApiObjectHelper aoh;
-    private int type;
 
-    public ApiObjectHandler(ApiObjectHelper aoh, int type){
-        this.aoh = aoh;
-        this.type = type;
+    public ApiObjectHandler(){
+        aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ApiObjectHandler extends JSONObjectHandler {
             Bundle bundle = new Bundle();
             bundle.putString("ApiObject", message.get(0).toString());
 
-            ApiObject ao = new ApiObject((JSONObject) message.get(0), type);
+            ApiObject ao = new ApiObject((JSONObject) message.get(0));
 
             ao.content = changeLinksWithinHtml(ao);
 

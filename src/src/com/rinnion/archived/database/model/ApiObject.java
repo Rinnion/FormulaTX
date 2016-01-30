@@ -42,15 +42,15 @@ public class ApiObject implements Serializable{
     public String parsers_include;
     public String login;
     public long update_time;
-    public int objType;
+    //public int objType;
 
-    public ApiObject(long id,int objType) {
+    public ApiObject(long id) {
         this.id = id;
-        this.objType=objType;
+        //this.objType=objType;
     }
 
-    public ApiObject(JSONObject jsonObject, int objType) throws JSONException {
-        this.objType = objType;
+    public ApiObject(JSONObject jsonObject) throws JSONException {
+        //this.objType = objType;
         id = jsonObject.getLong("id");
         user = jsonObject.getString("user");
         date = jsonObject.getString("date");

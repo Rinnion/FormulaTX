@@ -205,7 +205,6 @@ public class ApiObjectHelper implements BaseColumns {
         map.put(COLUMN_PARSERS_INCLUDE, apiObject.parsers_include);
         map.put(COLUMN_LOGIN, apiObject.login);
         map.put(COLUMN_UPDATE_TIME, apiObject.update_time);
-        map.put(COLUMN_OBJ_TYPE,apiObject.objType);
 
         try {
             SQLiteDatabase db = doh.getWritableDatabase();

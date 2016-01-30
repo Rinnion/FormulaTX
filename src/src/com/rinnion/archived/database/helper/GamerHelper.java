@@ -10,7 +10,6 @@ import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
 
 /**

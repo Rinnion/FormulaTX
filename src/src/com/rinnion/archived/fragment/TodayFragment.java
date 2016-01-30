@@ -262,7 +262,6 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader");
-        //Создаем асинхронный загрузчик
         return new NewsAsyncLoader(getActivity(), null);
     }
 
@@ -270,7 +269,6 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<ApiObjectCursor> loader, ApiObjectCursor data) {
         Log.d(TAG, "onLoadFinished");
-        //Присваиваем результат в адаптер для отображения
         mAdapter.swapCursor(data);
 
     }

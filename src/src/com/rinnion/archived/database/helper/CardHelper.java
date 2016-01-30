@@ -5,6 +5,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.CardCursor;
 import com.rinnion.archived.database.cursor.ProductCursor;
@@ -30,8 +31,8 @@ public class CardHelper implements BaseColumns {
     private final ApiObjectHelper aoh;
     private DatabaseOpenHelper doh;
 
-    public CardHelper(DatabaseOpenHelper doh) {
-        this.doh = doh;
+    public CardHelper() {
+        this.doh = ArchivedApplication.getDatabaseOpenHelper();
         aoh = new ApiObjectHelper(doh);
     }
 

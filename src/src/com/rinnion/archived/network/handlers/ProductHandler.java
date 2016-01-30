@@ -1,6 +1,7 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.GamerHelper;
 import com.rinnion.archived.database.helper.ProductHelper;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
@@ -17,8 +18,8 @@ public class ProductHandler extends JSONObjectHandler {
 
     private ProductHelper th;
 
-    public ProductHandler(ProductHelper th){
-        this.th = th;
+    public ProductHandler(){
+        this.th = new ProductHelper(ArchivedApplication.getDatabaseOpenHelper());
     }
 
     @Override

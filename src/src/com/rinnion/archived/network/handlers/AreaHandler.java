@@ -1,6 +1,7 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
+import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.database.helper.AreaHelper;
 import com.rinnion.archived.database.helper.GamerHelper;
 import com.rinnion.archived.database.model.ApiObjects.Area;
@@ -17,8 +18,8 @@ public class AreaHandler extends JSONObjectHandler {
 
     private AreaHelper th;
 
-    public AreaHandler(AreaHelper th){
-        this.th = th;
+    public AreaHandler(){
+        this.th = new AreaHelper(ArchivedApplication.getDatabaseOpenHelper());
     }
 
     @Override

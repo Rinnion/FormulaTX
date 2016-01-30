@@ -23,14 +23,12 @@ public class ApiObjectCursor extends SQLiteCursor {
 
     public ApiObject getItem() {
         long id = getColId();
-        int objType=getColType();
-        ApiObject apiObject = new ApiObject(id,objType);
+        ApiObject apiObject = new ApiObject(id);
         fillApiObject(apiObject);
         return apiObject;
     }
 
     protected void fillApiObject(ApiObject apiObject) {
-        apiObject.objType = getColType();
         apiObject.comment_status = getColByName(ApiObjectHelper.COLUMN_COMMENT_STATUS);
         apiObject.user = getColByName(ApiObjectHelper.COLUMN_USER);
         apiObject.date = getColByName(ApiObjectHelper.COLUMN_DATE);

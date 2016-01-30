@@ -31,8 +31,7 @@ public class CardAsyncLoader extends AsyncTaskLoader<CardCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        CardHelper aoh=new CardHelper(doh);
+        CardHelper aoh=new CardHelper();
         deliverResult(aoh.getAll());
     }
 
@@ -45,8 +44,7 @@ public class CardAsyncLoader extends AsyncTaskLoader<CardCursor> {
                 MyNetwork.queryCard(i);
             }
         }
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        CardHelper aoh=new CardHelper(doh);
+        CardHelper aoh=new CardHelper();
         return aoh.getAll();
     }
 

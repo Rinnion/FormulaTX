@@ -7,15 +7,15 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.helper.TwitterHelper;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.HttpRequester;
 import com.rinnion.archived.network.MyNetwork;
+import com.rinnion.archived.network.handlers.NewsHandler;
+import com.rinnion.archived.network.handlers.TournamentHandler;
 import com.rinnion.archived.network.loaders.cursor.WeatherCursor;
 import com.rinnion.archived.utils.Log;
 import org.json.JSONException;
 import org.lorecraft.phparser.SerializedPhpParser;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class DownloadService extends IntentService {
@@ -64,7 +64,7 @@ public class DownloadService extends IntentService {
     }
 
     private boolean loadAbout(int aboutApiObject) {
-        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, ApiObjectTypes.EN_About);
+        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, new NewsHandler());
         String result = bundle.getString(HttpRequester.RESULT);
         boolean equals = result.equals(HttpRequester.RESULT_HTTP);
         if (!equals){
@@ -72,15 +72,6 @@ public class DownloadService extends IntentService {
             publishError("Network error", (Settings.DEBUG) ? mess : null);
         }
         return equals;
-    }
-
-    private ArrayList<ApiObject> FetchApiObjectsList(int[] intArray, int type) throws JSONException {
-        ArrayList<ApiObject> tournamentList = new ArrayList<ApiObject>(intArray.length);
-        for (int anIntArray : intArray) {
-            MyNetwork.queryApiObject(anIntArray, type);
-        }
-        return tournamentList;
-
     }
 
     private boolean FetchTournamentsList(int startProgress, int endProgress) throws JSONException {
@@ -99,7 +90,7 @@ public class DownloadService extends IntentService {
         float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
         for (int i = 0; i < intArray.length; i++) {
             int id = intArray[i];
-            MyNetwork.queryApiObject(id, ApiObjectTypes.EN_Object);
+            MyNetwork.queryApiObject(id, new TournamentHandler());
             publishProgress((int)(startProgress + pr * i), null);
         }
         return true;

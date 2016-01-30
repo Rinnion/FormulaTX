@@ -17,8 +17,8 @@ public class CardHandler extends JSONObjectHandler {
 
     private CardHelper th;
 
-    public CardHandler(CardHelper th){
-        this.th = th;
+    public CardHandler(){
+        this.th = new CardHelper();
     }
 
     @Override

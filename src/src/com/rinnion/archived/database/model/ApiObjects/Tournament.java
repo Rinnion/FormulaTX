@@ -9,11 +9,11 @@ import org.json.JSONObject;
  */
 public class Tournament extends ApiObject {
     public Tournament(long id) {
-        super(id, ApiObjectTypes.EN_Object);
+        super(id);
     }
 
     public Tournament(JSONObject jsonObject) throws JSONException {
-       super(jsonObject,ApiObjectTypes.EN_Object);
+       super(jsonObject);
 
     }
 

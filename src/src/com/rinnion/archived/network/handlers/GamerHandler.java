@@ -15,8 +15,8 @@ public class GamerHandler extends JSONObjectHandler {
 
     private GamerHelper th;
 
-    public GamerHandler(GamerHelper th){
-        this.th = th;
+    public GamerHandler(){
+        this.th = new GamerHelper();
     }
 
     @Override

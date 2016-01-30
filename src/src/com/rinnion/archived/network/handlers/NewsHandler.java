@@ -1,12 +1,7 @@
 package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
-import com.rinnion.archived.ArchivedApplication;
-import com.rinnion.archived.database.helper.NewsHelper;
-import com.rinnion.archived.database.helper.TournamentHelper;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.database.model.ApiObjects.News;
-import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,11 +11,6 @@ import org.json.JSONObject;
  */
 
 public class NewsHandler extends ApiObjectHandler {
-
-
-    public NewsHandler(){
-        super(new NewsHelper(ArchivedApplication.getDatabaseOpenHelper()), ApiObjectTypes.EN_News);
-    }
 
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {

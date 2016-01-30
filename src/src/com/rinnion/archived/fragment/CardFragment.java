@@ -62,7 +62,7 @@ public class CardFragment extends ListFragment implements LoaderManager.LoaderCa
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         try {
-            CardHelper ch = new CardHelper(ArchivedApplication.getDatabaseOpenHelper());
+            CardHelper ch = new CardHelper();
             Card card = ch.getCard(id);
             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
             startActivity(myIntent);

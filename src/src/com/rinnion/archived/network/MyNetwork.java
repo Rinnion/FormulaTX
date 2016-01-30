@@ -1,13 +1,11 @@
 package com.rinnion.archived.network;
 
 import android.os.Bundle;
-import com.rinnion.archived.database.helper.*;
 import com.rinnion.archived.utils.Log;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.Settings;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.model.ApiObject;
-import com.rinnion.archived.database.model.ApiObjects.ApiObjectTypes;
 import com.rinnion.archived.network.handlers.*;
 import com.rinnion.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
@@ -164,6 +162,7 @@ public final class MyNetwork {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
 
         IResponseHandler mHandler = new ApiObjectListHandler();
+        //IResponseHandler mHandler = new ApiObjectHandler();
 
         if (Settings.NETDEBUG) {
             String fileName = "json/" + String.valueOf(id) + "-news.json";
@@ -337,25 +336,6 @@ public final class MyNetwork {
         return string;
     }
 
-    //Загрузка объектов
-    public static Bundle queryApiObject(int id, int type) {
-
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handler = null;
-        switch (type) {
-            case ApiObjectTypes.EN_Object:
-                handler = new TournamentHandler(new TournamentHelper(doh));
-                break;
-            case ApiObjectTypes.EN_News:
-                handler = new NewsHandler();
-                break;
-            default:
-                handler = new ApiObjectHandler(new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper()), type);
-        }
-
-        return queryApiObject(id, handler);
-    }
-
     public static Bundle queryApiObject(int id, ApiObjectHandler handler) {
 
         if (Settings.NETDEBUG) {
@@ -428,56 +408,46 @@ public final class MyNetwork {
     public static Bundle queryGamer(int id) {
         Log.d(TAG, String.format("query gamer"));
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Gamer);
-        GamerHandler handlerGamer = new GamerHandler(new GamerHelper());
+        GamerHandler handlerGamer = new GamerHandler();
 
-        return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
+        return getObjectWithAdditionalFields(id,  handlerGamer);
     }
 
     public static Bundle queryArea(int id) {
         Log.d(TAG, String.format("query areas"));
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Area);
-        AreaHandler handlerGamer = new AreaHandler(new AreaHelper(doh));
+        AreaHandler handlerGamer = new AreaHandler();
 
-        return getObjectWithAdditionalFields(id, handlerObject, handlerGamer);
+        return getObjectWithAdditionalFields(id, handlerGamer);
     }
 
     public static Bundle queryProduct(int id) {
         Log.d(TAG, String.format("query product"));
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Product);
-        ProductHandler productHandler = new ProductHandler(new ProductHelper(doh));
-
-        return getObjectWithAdditionalFields(id, handlerObject, productHandler);
+        ProductHandler productHandler = new ProductHandler();
+        return getObjectWithAdditionalFields(id, productHandler);
     }
 
     public static Bundle queryCard(int id) {
         Log.d(TAG, String.format("query card"));
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_Card);
-        CardHandler cardHandler = new CardHandler(new CardHelper(doh));
+        CardHandler cardHandler = new CardHandler();
 
-        return getObjectWithAdditionalFields(id, handlerObject, cardHandler);
+        return getObjectWithAdditionalFields(id,  cardHandler);
     }
 
     public static void queryNews(int id) {
         Log.d(TAG, String.format("query card"));
 
-        DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
-        ApiObjectHandler handlerObject = new ApiObjectHandler(new ApiObjectHelper(doh), ApiObjectTypes.EN_News);
-        NewsHandler cardHandler = new NewsHandler();
+        NewsHandler additionalHandler = new NewsHandler();
 
-        getObjectWithAdditionalFields(id, handlerObject, cardHandler);
+        getObjectWithAdditionalFields(id, additionalHandler);
     }
 
-    private static Bundle getObjectWithAdditionalFields(int id, ApiObjectHandler handlerObject, JSONObjectHandler handlerProduct) {
+    private static Bundle getObjectWithAdditionalFields(int id, JSONObjectHandler handlerProduct) {
         Log.d(TAG, String.format("query object with additional fields"));
 
+        ApiObjectHandler handlerObject = new ApiObjectHandler();
         if (Settings.NETDEBUG) {
             String fileName = "json/" + String.valueOf(id) + "ru.json";
             processFile(fileName, handlerObject);
