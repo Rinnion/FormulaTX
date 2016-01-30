@@ -19,13 +19,10 @@ import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.AreaCursor;
-import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.AreaHelper;
-import com.rinnion.archived.database.helper.CardHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.Area;
-import com.rinnion.archived.database.model.ApiObjects.Card;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 import com.rinnion.archived.utils.Log;
 
@@ -218,9 +215,9 @@ public class MainTournamentFragment extends Fragment{
     }
 
     public void showTablesFragment() {
-        TablesFragment mlf = new TablesFragment();
+        ScheduleFragment mlf = new ScheduleFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(TablesFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
@@ -233,7 +230,7 @@ public class MainTournamentFragment extends Fragment{
     public void showGridsFragment() {
         GridsFragment mlf = new GridsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(TablesFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

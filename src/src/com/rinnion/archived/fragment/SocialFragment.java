@@ -72,7 +72,6 @@ public class SocialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TabHost tabHost = (TabHost) inflater.inflate(R.layout.social_tabs_layout, container, false);
         tabHost.setup();
-
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег

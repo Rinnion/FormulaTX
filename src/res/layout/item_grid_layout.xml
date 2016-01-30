@@ -9,7 +9,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:paddingLeft="15dp"
-            android:paddingRight="15dp" android:paddingTop="10dp" android:paddingBottom="10dp">
+            android:paddingRight="15dp" android:paddingTop="10dp" android:paddingBottom="10dp"
+            android:visibility="gone">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,12 +28,18 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:paddingTop="10dp" android:paddingBottom="10dp"
-            android:paddingRight="5dp" android:paddingLeft="5dp">
-        <include layout="@layout/team_describer" android:layout_width="match_parent"
-                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_1"
-                />
-        <include layout="@layout/team_describer" android:layout_width="match_parent"
-                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_2" android:layout_marginTop="5dp"/>
+            android:layout_height="fill_parent" android:paddingTop="10dp" android:paddingBottom="10dp">
+        <include layout="@layout/team_describer_grid" android:layout_width="match_parent"
+                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_1" android:layout_marginLeft="5dp"
+                 android:layout_marginRight="5dp"/>
+        <include layout="@layout/team_describer_grid" android:layout_width="match_parent"
+                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_2" android:layout_marginTop="10dp"
+                 android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+        <include layout="@layout/team_describer_grid" android:layout_width="match_parent"
+                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_3" android:layout_marginTop="10dp"
+                 android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+        <include layout="@layout/team_describer_grid" android:layout_width="match_parent"
+                 android:layout_height="wrap_content" android:id="@+id/itl_ll_team_4" android:layout_marginTop="10dp"
+                 android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
     </LinearLayout>
 </LinearLayout>

@@ -3,23 +3,19 @@ package com.rinnion.archived.fragment.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.rinnion.archived.R;
 import com.rinnion.archived.Utils;
 import com.rinnion.archived.network.loaders.cursor.ProgramCursor;
-import com.rinnion.archived.network.loaders.cursor.TableCursor;
+import com.rinnion.archived.network.loaders.cursor.ParserDataCursor;
 import com.rinnion.archived.parsers.Gamer;
 import com.rinnion.archived.parsers.Match;
 import com.rinnion.archived.parsers.Team;
-import com.rinnion.archived.utils.Log;
 
-public class TableAdapter extends SimpleCursorAdapter {
+public class ScheduleAdapter extends SimpleCursorAdapter {
     private final String TAG = getClass().getSimpleName();
     private final Activity activity;
     public static String[] fromSpinner = {
@@ -34,7 +30,7 @@ public class TableAdapter extends SimpleCursorAdapter {
             R.id.itl_tv_caption
     };
 
-    public TableAdapter(Activity activity, ProgramCursor mc) {
+    public ScheduleAdapter(Activity activity, ProgramCursor mc) {
         super(activity, R.layout.item_table_layout, mc, fromSpinner, toSpinner, 0);
         this.activity = activity;
     }
@@ -43,7 +39,7 @@ public class TableAdapter extends SimpleCursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        Match match = ((TableCursor)cursor).getItem().getMatch();
+        Match match = ((ParserDataCursor)cursor).getItem().getMatch();
         if (match == null) return;
 
         TextView tv = (TextView) view.findViewById(R.id.itl_tv_match);

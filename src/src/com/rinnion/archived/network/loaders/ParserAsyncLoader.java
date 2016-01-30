@@ -10,10 +10,9 @@ import com.rinnion.archived.database.helper.ParserHelper;
 import com.rinnion.archived.database.helper.ParserMatchHelper;
 import com.rinnion.archived.database.helper.TournamentHelper;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
-import com.rinnion.archived.database.model.Parser;
 import com.rinnion.archived.database.model.Table;
 import com.rinnion.archived.network.MyNetwork;
-import com.rinnion.archived.network.loaders.cursor.TableCursor;
+import com.rinnion.archived.network.loaders.cursor.ParserDataCursor;
 import com.rinnion.archived.parsers.Match;
 import com.rinnion.archived.parsers.ParserFactory;
 import com.rinnion.archived.utils.Log;
@@ -22,7 +21,7 @@ import org.json.JSONException;
 /**
  * Created by tretyakov on 08.07.2015.
  */
-public class ParserAsyncLoader extends AsyncTaskLoader<TableCursor> {
+public class ParserAsyncLoader extends AsyncTaskLoader<ParserDataCursor> {
 
     private final Context context;
     private final String post_name;
@@ -69,14 +68,14 @@ public class ParserAsyncLoader extends AsyncTaskLoader<TableCursor> {
         } else {
             int[] ints = getParsersArrayFromTournament();
             ParserMatchHelper pmh = new ParserMatchHelper(doh);
-            TableCursor all = pmh.getAll(ints, type, settings, page);
+            ParserDataCursor all = pmh.getAll(ints, type, settings, page);
             deliverResult(all);
             return;
         }
     }
 
     @Override
-    public TableCursor loadInBackground() {
+    public ParserDataCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
         //FIXME: Load only parser that matches type, settings
         DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
@@ -100,7 +99,7 @@ public class ParserAsyncLoader extends AsyncTaskLoader<TableCursor> {
                     try {
                         table.data = p.getJSONObject().toString();
                         table.number = i++;
-                        table.page = p.type;
+                        table.page = p.header;
                         table.type = p.type;
                         table.parser = pc.getColId();
                     } catch (JSONException e) {
@@ -111,7 +110,7 @@ public class ParserAsyncLoader extends AsyncTaskLoader<TableCursor> {
                 }
                 pc.moveToNext();
             }
-            TableCursor all = pmh.getAll(ints, type, settings, page);
+            ParserDataCursor all = pmh.getAll(ints, type, settings, page);
             return all;
         }
         return null;
