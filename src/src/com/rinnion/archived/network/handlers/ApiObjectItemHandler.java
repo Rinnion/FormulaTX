@@ -2,7 +2,6 @@ package com.rinnion.archived.network.handlers;
 
 import android.os.Bundle;
 import com.rinnion.archived.ArchivedApplication;
-import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.network.MyNetworkContentContract;
@@ -17,35 +16,34 @@ import java.util.regex.Pattern;
  * Created by alekseev on 29.12.2015.
  */
 
-public class ApiObjectHandler extends JSONObjectHandler {
+public class ApiObjectItemHandler extends JSONObjectHandler {
 
     public static final String OBJECT = "object";
-    public static final String API_OBJECT = "ApiObject";
 
     Pattern ptrnImgSrc = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
     protected ApiObjectHelper aoh;
+    private String defaultMethod;
 
-    public ApiObjectHandler(){
+    public ApiObjectItemHandler(String defaultMethod){
+        this.defaultMethod = defaultMethod;
         aoh = new ApiObjectHelper(ArchivedApplication.getDatabaseOpenHelper());
     }
 
+    public void onBeforeSaveObject(ApiObject ao){}
+
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
-        boolean status = object.getBoolean("status");
-        if (status) {
-            JSONArray message = object.getJSONArray("message");
+        Bundle bundle = new Bundle();
+        bundle.putString("ApiObject", object.toString());
 
-            Bundle bundle = new Bundle();
-            bundle.putString("ApiObject", message.get(0).toString());
+        ApiObject ao = new ApiObject(object);
+        if (ao.display_method == null) ao.display_method = defaultMethod;
+        onBeforeSaveObject(ao);
+        ao.content = changeLinksWithinHtml(ao);
+        aoh.add(ao);
+        bundle.putSerializable(OBJECT, ao);
 
-            ApiObject ao = new ApiObject((JSONObject) message.get(0));
-            ao.content = changeLinksWithinHtml(ao);
-            aoh.add(ao);
-            bundle.putSerializable(OBJECT, ao);
-
-            return bundle;
-        }
-        return Bundle.EMPTY;
+        return super.Handle(object);
     }
 
     protected String changeLinksWithinHtml(ApiObject ao) {

@@ -64,7 +64,7 @@ public class DownloadService extends IntentService {
     }
 
     private boolean loadAbout(int aboutApiObject) {
-        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, new NewsHandler());
+        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, null);
         String result = bundle.getString(HttpRequester.RESULT);
         boolean equals = result.equals(HttpRequester.RESULT_HTTP);
         if (!equals){

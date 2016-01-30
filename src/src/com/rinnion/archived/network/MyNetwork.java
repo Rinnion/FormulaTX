@@ -158,10 +158,10 @@ public final class MyNetwork {
     }
 
     //Загрузка списка новостей турнира
-    public static Bundle queryTournamentNewsList(long id) {
+    public static Bundle queryTournamentNewsList(long id, String parent) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
 
-        IResponseHandler mHandler = new ApiObjectListHandler(new ApiObjectHandler());
+        IResponseHandler mHandler = new NewsHandler(parent);
 
         if (Settings.NETDEBUG) {
             String fileName = "json/" + String.valueOf(id) + "-news.json";
@@ -425,12 +425,6 @@ public final class MyNetwork {
         Log.d(TAG, String.format("query card"));
         CardHandler cardHandler = new CardHandler();
         return getObjectWithAdditionalFields(id,  cardHandler);
-    }
-
-    public static void queryNews(int id) {
-        Log.d(TAG, String.format("query news"));
-        NewsHandler additionalHandler = new NewsHandler();
-        getObjectWithAdditionalFields(id, additionalHandler);
     }
 
     private static Bundle getObjectWithAdditionalFields(int id, JSONObjectHandler additionalHandler) {
