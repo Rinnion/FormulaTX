@@ -27,10 +27,10 @@ public class Main {
         //InputStream resource = classLoader.getResourceAsStream(filename);
 
         pf = new ParserFactory();
-        parseFile("parsers-19.json");
-        parseFile("parsers-20.json");
+        parseFile("parsers-37.json");
+        //parseFile("parsers-20.json");
         //parseFile("parsers-22.json");
-        parseFile("parsers-23.json");
+        //parseFile("parsers-23.json");
         //parse = pf.parse("parsers-19.json"); System.out.println(parse);
         //parse = pf.parse("parsers-20.json"); System.out.println(parse);
         //parse = pf.parse("parsers-22.json"); System.out.println(parse);

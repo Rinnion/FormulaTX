@@ -30,11 +30,7 @@
                     android:id="@+id/stl_tab_twitter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:orientation="vertical">
                     <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_twitter"/>
-                </LinearLayout>
             </android.support.v4.widget.SwipeRefreshLayout>
         </FrameLayout>
     </LinearLayout>

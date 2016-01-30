@@ -40,11 +40,8 @@ public class ApiObjectHandler extends JSONObjectHandler {
             bundle.putString("ApiObject", message.get(0).toString());
 
             ApiObject ao = new ApiObject((JSONObject) message.get(0));
-
             ao.content = changeLinksWithinHtml(ao);
-
             aoh.add(ao);
-
             bundle.putSerializable(OBJECT, ao);
 
             return bundle;

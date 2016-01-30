@@ -161,8 +161,7 @@ public final class MyNetwork {
     public static Bundle queryTournamentNewsList(long id) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
 
-        IResponseHandler mHandler = new ApiObjectListHandler();
-        //IResponseHandler mHandler = new ApiObjectHandler();
+        IResponseHandler mHandler = new ApiObjectListHandler(new ApiObjectHandler());
 
         if (Settings.NETDEBUG) {
             String fileName = "json/" + String.valueOf(id) + "-news.json";
@@ -172,9 +171,7 @@ public final class MyNetwork {
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
-        HttpRequester fetcher = null;
-
-        fetcher = builder.setName("queryTournamentNewsList")
+        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
                 .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentnews.getParent(id))
                 .setHandler(mHandler)
                 .create();
@@ -265,9 +262,10 @@ public final class MyNetwork {
     //Загрузка списка новостей турнира
     public static Bundle queryTwitter(long id) {
 
+        TwitterHandler mHandler = new TwitterHandler(id);
+
         if (Settings.NETDEBUG) {
             String fileName = "json/references-57-1.json";
-            TwitterHandler mHandler = new TwitterHandler(id);
             Bundle result = processFile(fileName, mHandler);
             return result;
         }
@@ -281,7 +279,7 @@ public final class MyNetwork {
             fetcher = builder.setName("queryTournamentNewsList")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.URL_METHOD)
                     .setContent(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl(id, 1))
-                    .setHandler(new TwitterHandler(id))
+                    .setHandler(mHandler)
                     .create();
 
         } catch (UnsupportedEncodingException e) {
@@ -407,44 +405,35 @@ public final class MyNetwork {
 
     public static Bundle queryGamer(int id) {
         Log.d(TAG, String.format("query gamer"));
-
         GamerHandler handlerGamer = new GamerHandler();
-
         return getObjectWithAdditionalFields(id,  handlerGamer);
     }
 
     public static Bundle queryArea(int id) {
         Log.d(TAG, String.format("query areas"));
-
         AreaHandler handlerGamer = new AreaHandler();
-
         return getObjectWithAdditionalFields(id, handlerGamer);
     }
 
     public static Bundle queryProduct(int id) {
         Log.d(TAG, String.format("query product"));
-
         ProductHandler productHandler = new ProductHandler();
         return getObjectWithAdditionalFields(id, productHandler);
     }
 
     public static Bundle queryCard(int id) {
         Log.d(TAG, String.format("query card"));
-
         CardHandler cardHandler = new CardHandler();
-
         return getObjectWithAdditionalFields(id,  cardHandler);
     }
 
     public static void queryNews(int id) {
-        Log.d(TAG, String.format("query card"));
-
+        Log.d(TAG, String.format("query news"));
         NewsHandler additionalHandler = new NewsHandler();
-
         getObjectWithAdditionalFields(id, additionalHandler);
     }
 
-    private static Bundle getObjectWithAdditionalFields(int id, JSONObjectHandler handlerProduct) {
+    private static Bundle getObjectWithAdditionalFields(int id, JSONObjectHandler additionalHandler) {
         Log.d(TAG, String.format("query object with additional fields"));
 
         ApiObjectHandler handlerObject = new ApiObjectHandler();
@@ -453,7 +442,7 @@ public final class MyNetwork {
             processFile(fileName, handlerObject);
 
             fileName = "json/" + String.valueOf(id) + "add.json";
-            processFile(fileName, handlerProduct);
+            processFile(fileName, additionalHandler);
             return Bundle.EMPTY;
         }
 
@@ -471,7 +460,7 @@ public final class MyNetwork {
 
             fetcher = builder.setName("queryApiObject")
                     .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getadditionalfields.getParent(id))
-                    .setHandler(handlerProduct)
+                    .setHandler(additionalHandler)
                     .create();
 
             fetcher.execute();

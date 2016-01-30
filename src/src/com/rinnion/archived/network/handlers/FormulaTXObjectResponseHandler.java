@@ -21,6 +21,10 @@ public abstract class FormulaTXObjectResponseHandler extends JSONObjectHandler{
         JSONObject message = object.getJSONObject("message");
         Bundle bundle = new Bundle();
         bundle.putBoolean(STATUS, status);
-        if (status) { return onTrueStatus(message, bundle); }else{return onErrorStatus(message, bundle);}
+        if (status) {
+            return onTrueStatus(message, bundle);
+        } else {
+            return onErrorStatus(message, bundle);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.rinnion.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import com.rinnion.archived.Utils;
 import com.rinnion.archived.database.cursor.ApiObjectCursor;
 import com.rinnion.archived.database.cursor.TournamentCursor;
 import com.rinnion.archived.database.model.ApiObject;
@@ -57,21 +58,12 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
             ApiObject tournament = all.getItem();
             Log.d(TAG, String.valueOf(tournament));
             if (tournament != null) {
+                aoh.detachAllReferences(tournament.id);
                 try {
-                    String references_include = tournament.references_include;
-                    Log.d(TAG, String.valueOf(references_include));
-                    SerializedPhpParser php = new SerializedPhpParser(references_include);
-                    Map parse = (Map) php.parse();
-                    for (Object item : parse.keySet()) {
-                        Log.d(TAG, "key:'" + String.valueOf(item) + "'");
-                        try {
-                            String value = parse.get(item).toString();
-                            Log.d(TAG, "value:'" + String.valueOf(value) + "'");
-                            long l = Long.parseLong(value);
-                            MyNetwork.queryTwitter(l);
-                            aoh.attachReference(tournament.id, l);
-                        } catch (Exception ignored) {
-                        }
+                    int[] ints = Utils.getIntListFromJSONArray(tournament.references_include);
+                    for (int i : ints) {
+                        aoh.attachReference(tournament.id,i);
+                        MyNetwork.queryTwitter(i);
                     }
                 }catch (Exception ignored){
                     Log.d(TAG, "Couldn't parse references for " + tournament + ". " + ignored.getMessage());
@@ -79,7 +71,7 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
             }
             all.moveToNext();
         }
-        TwitterItemCursor cursor = null;
+        TwitterItemCursor cursor;
         cursor = aoh.getAllItems();
         return cursor;
     }

@@ -1,5 +1,6 @@
 package com.rinnion.archived.database.model;
 
+import com.rinnion.archived.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,42 +43,39 @@ public class ApiObject implements Serializable{
     public String parsers_include;
     public String login;
     public long update_time;
-    //public int objType;
 
     public ApiObject(long id) {
         this.id = id;
-        //this.objType=objType;
     }
 
     public ApiObject(JSONObject jsonObject) throws JSONException {
-        //this.objType = objType;
         id = jsonObject.getLong("id");
-        user = jsonObject.getString("user");
-        date = jsonObject.getString("date");
-        modified = jsonObject.getString("modified");
-        content = jsonObject.getString("content");
-        title = jsonObject.getString("title");
-        status = jsonObject.getString("status");
-        comment_status = jsonObject.getString("comment_status");
-        password = jsonObject.getString("password");
-        post_name = jsonObject.getString("post_name");
-        link = jsonObject.getString("link");
-        type = jsonObject.getString("type");
-        parent = jsonObject.getString("parent");
-        meta_title = jsonObject.getString("meta_title");
-        meta_description = jsonObject.getString("meta_description");
-        meta_keywords = jsonObject.getString("meta_keywords");
-        display_method = jsonObject.getString("display_method");
-        rss = jsonObject.getString("rss");
-        files = jsonObject.getString("files");
-        thumb = jsonObject.getString("thumb");
-        lang = jsonObject.getString("lang");
-        lang_id = jsonObject.getString("lang_id");
-        references_include = jsonObject.getString("references_include");
-        gallery_include = jsonObject.getString("gallery_include");
-        tables = jsonObject.getString("tables");
-        parsers_include = jsonObject.getString("parsers_include");
-        login = jsonObject.getString("login");
+        user = Utils.getStringOrNull(jsonObject, "user");
+        date = Utils.getStringOrNull(jsonObject, "date");
+        modified = Utils.getStringOrNull(jsonObject, "modified");
+        content = Utils.getStringOrNull(jsonObject, "content");
+        title = Utils.getStringOrNull(jsonObject, "title");
+        status = Utils.getStringOrNull(jsonObject, "status");
+        comment_status = Utils.getStringOrNull(jsonObject, "comment_status");
+        password = Utils.getStringOrNull(jsonObject, "password");
+        post_name = Utils.getStringOrNull(jsonObject, "post_name");
+        link = Utils.getStringOrNull(jsonObject, "link");
+        type = Utils.getStringOrNull(jsonObject, "type");
+        parent = Utils.getStringOrNull(jsonObject, "parent");
+        meta_title = Utils.getStringOrNull(jsonObject, "meta_title");
+        meta_description = Utils.getStringOrNull(jsonObject, "meta_description");
+        meta_keywords = Utils.getStringOrNull(jsonObject, "meta_keywords");
+        display_method = Utils.getStringOrNull(jsonObject, "display_method");
+        rss = Utils.getStringOrNull(jsonObject, "rss");
+        files = Utils.getStringOrNull(jsonObject, "files");
+        thumb = Utils.getStringOrNull(jsonObject, "thumb");
+        lang = Utils.getStringOrNull(jsonObject, "lang");
+        lang_id = Utils.getStringOrNull(jsonObject, "lang_id");
+        references_include = Utils.getStringOrNull(jsonObject, "references_include");
+        gallery_include = Utils.getStringOrNull(jsonObject, "gallery_include");
+        tables = Utils.getStringOrNull(jsonObject, "tables");
+        parsers_include = Utils.getStringOrNull(jsonObject, "parsers_include");
+        login = Utils.getStringOrNull(jsonObject, "login");
     }
 
     @Override

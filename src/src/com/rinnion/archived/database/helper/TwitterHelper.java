@@ -190,4 +190,18 @@ public class TwitterHelper implements BaseColumns {
             Log.e(TAG, "Error detaching reference", ex);
         }
     }
+
+    public void detachAllReferences(long api_object_id){
+        Log.d(TAG, "detachReference(api_object:" + String.valueOf(api_object_id) + ")");
+        try {
+            Log.d(TAG, "Delete ALL references from apiObject: " + String.valueOf(api_object_id));
+            SQLiteDatabase db = doh.getWritableDatabase();
+            String[] args = {String.valueOf(api_object_id), TYPE};
+            db.delete(DATABASE_TABLE_API_OBJECT_LINK,
+                    COLUMN_API_OBJECT_ID + "=? AND " + COLUMN_API_OBJECT_REFERENCE_TYPE + "=?",
+                    args);
+        } catch (SQLException ex) {
+            Log.e(TAG, "Error detaching reference", ex);
+        }
+    }
 }
