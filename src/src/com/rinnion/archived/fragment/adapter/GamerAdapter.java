@@ -54,6 +54,7 @@ public class GamerAdapter extends SimpleCursorAdapter {
         final TextView tvCountry = (TextView) view.findViewById(R.id.igl_tv_country);
         final TextView tvRating = (TextView) view.findViewById(R.id.igl_tv_rating);
         final ImageView tvFavorite = (ImageView) view.findViewById(R.id.igl_iv_like);
+        final ImageView ivFlag = (ImageView) view.findViewById(R.id.igl_iv_flag);
 
         Gamer item = ((GamerCursor) cursor).getItem();
 
@@ -67,8 +68,22 @@ public class GamerAdapter extends SimpleCursorAdapter {
                     .into(imlThumb);
         }catch(Exception ignore){
             Log.e(TAG, ignore.getLocalizedMessage());
+            imlThumb.setImageDrawable(null);
         }
-        tvName.setText(item.full_name);
+
+        try {
+            Picasso.with(context)
+                    .load(item.thumb)
+                    .placeholder(R.drawable.logo_splash_screen)
+                    .error(R.drawable.logo_splash_screen)
+                    .resize(80, 80)
+                    .centerCrop()
+                    .into(ivFlag);
+        }catch(Exception ignore){
+            Log.e(TAG, ignore.getLocalizedMessage());
+            ivFlag.setImageDrawable(null);
+        }
+        tvName.setText(item.title);
         tvCountry.setText(item.country);
         tvRating.setText(String.valueOf(item.rating));
 

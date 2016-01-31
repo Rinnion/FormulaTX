@@ -157,6 +157,27 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    public static Bundle queryPartnerList() {
+        Log.d(TAG, String.format("queryPartnerList"));
+
+        IResponseHandler mHandler = new PartnerHandler();
+
+        if (Settings.NETDEBUG) {
+            String fileName = "json/0-partners.json";
+            return processFile(fileName, mHandler);
+        }
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentpartner.URL_METHOD)
+                .setHandler(mHandler)
+                .create();
+
+
+        return fetcher.execute();
+    }
+
     //Загрузка списка новостей турнира
     public static Bundle queryTournamentNewsList(long id, String parent) {
         Log.d(TAG, String.format("query queryTournamentNewsList"));
@@ -424,6 +445,12 @@ public final class MyNetwork {
     public static Bundle queryCard(int id) {
         Log.d(TAG, String.format("query card"));
         CardHandler cardHandler = new CardHandler();
+        return getObjectWithAdditionalFields(id,  cardHandler);
+    }
+
+    public static Bundle queryPartner(int id) {
+        Log.d(TAG, String.format("query partner"));
+        PartnerHandler cardHandler = new PartnerHandler();
         return getObjectWithAdditionalFields(id,  cardHandler);
     }
 

@@ -33,12 +33,12 @@ public class WeatherHandler extends JSONObjectHandler {
             JSONObject item = (JSONObject)weather.get(0);
 
             int id = item.getInt("id");
-            String itemmain = item.getString("description");
+            String itemMain = item.getString("description");
             String description = item.getString("description");
             String icon = item.getString("icon");
 
             bundle.putInt("id", id);
-            bundle.putString("main", itemmain);
+            bundle.putString("main", itemMain);
             bundle.putString("description", description);
             bundle.putString("icon", icon);
             bundle.putDouble("temp", temp);
@@ -46,7 +46,7 @@ public class WeatherHandler extends JSONObjectHandler {
 
             JSONObject dbObject = new JSONObject();
             dbObject.put("id", id);
-            dbObject.put("main", itemmain);
+            dbObject.put("main", itemMain);
             dbObject.put("description", description);
             dbObject.put("icon", icon);
             dbObject.put("temp", temp);

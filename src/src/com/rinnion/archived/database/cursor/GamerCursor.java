@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
 import com.rinnion.archived.database.helper.GamerHelper;
+import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
 import com.rinnion.archived.database.model.ApiObjects.Tournament;
 
@@ -34,6 +35,7 @@ public class GamerCursor extends SQLiteCursor {
         gamer.country = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_COUNTRY));
         gamer.flag = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_FLAG));
         gamer.thumb = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_THUMB));
+        gamer.title = getString(getColumnIndexOrThrow(ApiObjectHelper.COLUMN_TITLE));
         return gamer;
     }
 

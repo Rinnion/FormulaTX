@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
+import com.rinnion.archived.Utils;
 import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GalleryDescriptionCursor;
 import com.rinnion.archived.database.helper.ApiObjectHelper;
@@ -227,27 +228,7 @@ public class GalleryFragment extends Fragment {
             DatabaseOpenHelper doh = ArchivedApplication.getDatabaseOpenHelper();
             TournamentHelper th = new TournamentHelper(doh);
             Tournament tournament = th.getByPostName(post_name);
-            ArrayList<Long> intArray = new ArrayList<Long>();
-            if (tournament != null) {
-                try {
-                    String gallery_include = tournament.gallery_include;
-                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-                    Map parse = (Map) php.parse();
-                    for (Object item : parse.keySet()) {
-                        long l = Long.parseLong(parse.get(item).toString());
-                        intArray.add(l);
-                    }
-                } catch (Exception ignored) {
-                    Log.w(TAG, ignored.getMessage());
-                }
-            }
-
-            int[] ret = new int[intArray.size()];
-            for (int i = 0; i < intArray.size(); i++) {
-                ret[i] = intArray.get(i).intValue();
-            }
-
-            return ret;
+            return Utils.getIntListFromJSONArray(tournament.gallery_include);
         }
 
         @Override

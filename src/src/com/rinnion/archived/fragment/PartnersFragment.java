@@ -13,13 +13,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.Toast;
-import com.rinnion.archived.ArchivedApplication;
 import com.rinnion.archived.R;
-import com.rinnion.archived.database.cursor.CardCursor;
+import com.rinnion.archived.database.cursor.PartnerCursor;
 import com.rinnion.archived.database.helper.CardHelper;
+import com.rinnion.archived.database.helper.PartnerHelper;
 import com.rinnion.archived.database.model.ApiObjects.Card;
-import com.rinnion.archived.fragment.adapter.CardAdapter;
-import com.rinnion.archived.network.loaders.CardAsyncLoader;
+import com.rinnion.archived.database.model.ApiObjects.Partner;
+import com.rinnion.archived.fragment.adapter.PartnerAdapter;
+import com.rinnion.archived.network.loaders.PartnerAsyncLoader;
 import com.rinnion.archived.utils.Log;
 
 /**
@@ -29,7 +30,7 @@ import com.rinnion.archived.utils.Log;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class PartnersFragment extends ListFragment implements LoaderManager.LoaderCallbacks<CardCursor> {
+public class PartnersFragment extends ListFragment implements LoaderManager.LoaderCallbacks<PartnerCursor> {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
@@ -38,7 +39,7 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new CardAdapter(getActivity(), null);
+        mAdapter = new PartnerAdapter(getActivity(), null);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(R.id.card_loader, Bundle.EMPTY, this);
@@ -59,8 +60,8 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         try {
-            CardHelper ch = new CardHelper();
-            Card card = ch.getCard(id);
+            PartnerHelper ch = new PartnerHelper();
+            Partner card = ch.getPartner(id);
             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
             startActivity(myIntent);
         } catch (ActivityNotFoundException e) {
@@ -87,17 +88,17 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public Loader<CardCursor> onCreateLoader(int id, Bundle args) {
-        return new CardAsyncLoader(getActivity());
+    public Loader<PartnerCursor> onCreateLoader(int id, Bundle args) {
+        return new PartnerAsyncLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<CardCursor> loader, CardCursor data) {
+    public void onLoadFinished(Loader<PartnerCursor> loader, PartnerCursor data) {
         mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<CardCursor> loader) {
+    public void onLoaderReset(Loader<PartnerCursor> loader) {
 
     }
 }

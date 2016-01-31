@@ -46,11 +46,13 @@ public class GamerHandler extends JSONObjectHandler {
                 if (key.equals("Surname")) {
                     ao.surname = value;
                 }
+                if (key.equals("Flag")) {
+                    ao.flag = value;
+                }
             }
 
             if (ao == null) return Bundle.EMPTY;
 
-            ao.flag = "ru";
             ao.full_name = String.valueOf(ao.name) + " " + String.valueOf(ao.surname);
 
             th.merge(ao);

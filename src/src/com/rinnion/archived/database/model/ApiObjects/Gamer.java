@@ -16,6 +16,7 @@ public class Gamer {
     public String name;
     public String surname;
     public String full_name;
+    public String title;
     public float rating;
     public String country;
     public String flag;

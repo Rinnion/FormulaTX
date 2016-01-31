@@ -11,6 +11,7 @@ import com.rinnion.archived.database.DatabaseOpenHelper;
 import com.rinnion.archived.database.cursor.GamerCursor;
 import com.rinnion.archived.database.model.ApiObject;
 import com.rinnion.archived.database.model.ApiObjects.Gamer;
+import com.rinnion.archived.utils.MyLocale;
 
 /**
  * Helper for working with News repository
@@ -120,18 +121,18 @@ public class GamerHelper implements BaseColumns {
     public GamerCursor getAllByParent(long parent) {
         Log.v(TAG, "getAllByParent ()");
 
-        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao.title title, ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +
-                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? AND p." + ApiObjectHelper._ID + "=? " +
+                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? AND p." + ApiObjectHelper._ID + "=? AND ao." + ApiObjectHelper.COLUMN_LANG + "=?" +
                 " ORDER BY g." + COLUMN_RATING + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
                 new GamerCursor.Factory(),
                 sql,
-                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(parent)},
+                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(parent), MyLocale.getCurrent()},
                 null);
         c.moveToFirst();
         return c;

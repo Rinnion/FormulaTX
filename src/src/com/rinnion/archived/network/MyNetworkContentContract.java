@@ -105,6 +105,11 @@ public class MyNetworkContentContract {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentcard";
             }
 
+            public static class getallstaticpagefromparentpartner
+            {
+                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentpartner";
+            }
+
             public static class getallstaticpagefromparentradio
             {
                 public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentradio";

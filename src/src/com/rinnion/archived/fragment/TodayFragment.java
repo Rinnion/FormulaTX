@@ -299,7 +299,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
         @Override
         public Loader<WeatherCursor> onCreateLoader(int i, Bundle bundle) {
-             return new WeatherAsyncLoader(getActivity());
+            return new WeatherAsyncLoader(getActivity());
         }
 
         @Override

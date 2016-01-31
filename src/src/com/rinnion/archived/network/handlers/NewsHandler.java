@@ -36,9 +36,6 @@ public class NewsHandler extends FormulaTXArrayResponseHandler {
     public Bundle onErrorStatus(JSONObject message, Bundle bundle) {
         return Bundle.EMPTY;
     }
-
-
-
 }
 
 

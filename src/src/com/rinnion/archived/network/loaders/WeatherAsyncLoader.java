@@ -36,7 +36,9 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        deliverResult(getProgressWeather());
+        WeatherCursor wc = getWeatherCursor();
+        if (wc == null) wc = getProgressWeather();
+        deliverResult(wc);
     }
 
     @Override
