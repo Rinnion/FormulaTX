@@ -4,8 +4,10 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.hardware.display.DisplayManagerCompat;
 import android.util.TypedValue;
 import android.view.*;
 import android.view.animation.AccelerateInterpolator;
@@ -130,14 +132,19 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
                        // tmpViewTest.setVisibility(View.VISIBLE);
                         //tmpViewTest.requestLayout();
+                        Point point=new Point();
 
-                        int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
+                        DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
+
+                        tmpViewNews.getLayoutParams().height=point.y;
+
+                        //int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
 
                         /*tmpViewNews.getLayoutParams().height=tmpViewNews.getLayoutParams().height+specH;*/
 
-                    Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
+                    //Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
 
-                        tmpViewTest.getLayoutParams().height=specH;
+                      //  tmpViewTest.getLayoutParams().height=specH;
                         isUpped = true;
                         //tmpViewTest.requestLayout();
                         //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
