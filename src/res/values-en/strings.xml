@@ -11,7 +11,7 @@
     <string name="string_tournament_grids">Grids</string>
     <string name="string_tournament_liveScore">Livescore</string>
     <string name="string_tournament_photoGallery">Gallery</string>
-    <string name="string_tournament_findway">Как добраться</string>
+    <string name="string_tournament_findway">Map</string>
     <string name="string_tournament_news">News</string>
     <string name="string_tournament_contacts">Contacts</string>
     <string name="string_today">Home</string>
@@ -39,4 +39,7 @@
     <string name="string_twitter">Twitter</string>
     <string name="weather_not_available">Not available</string>
     <string name="string_navigation_partners">Partners</string>
+    <string name="string_no_area_found">No areas found.</string>
+    <string name="string_no_installer_map_app">No application can handle this request. Please install a navigation app</string>
+    <string name="string_connection_error">Network error</string>
 </resources>

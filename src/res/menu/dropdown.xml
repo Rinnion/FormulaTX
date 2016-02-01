@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Сетки"
+          android:id="@+id/drop_down_menu"
+          android:showAsAction="always"
+          android:actionLayout="@layout/drop_dow_spinner">
+
+    </item>
+</menu>
