@@ -20,19 +20,19 @@
                 android:name="com.rinnion.archived.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.rinnion.archived.permission.C2D_MESSAGE" />
 
-    <application android:name=".ArchivedApplication" android:label="@string/app_name"
+    <application android:name="com.formulatx.archived.FormulaTXApplication" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher">
-        <activity android:name=".activity.MainActivity" android:label="@string/app_name"
+        <activity android:name="com.formulatx.archived.activity.MainActivity" android:label="@string/app_name"
                   android:theme="@style/FormulaTXTheme">
         </activity>
-        <activity android:name=".activity.SplashActivity" android:label="@string/app_name"
+        <activity android:name="com.formulatx.archived.activity.SplashActivity" android:label="@string/app_name"
                   android:theme="@style/FormulaTXTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".service.DownloadService"/>
+        <service android:name="com.formulatx.archived.service.DownloadService"/>
 
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParsePushBroadcastReceiver"
