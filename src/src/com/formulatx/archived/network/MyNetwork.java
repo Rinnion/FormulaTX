@@ -10,6 +10,7 @@ import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Describes all Network operations
@@ -318,6 +320,7 @@ public final class MyNetwork {
         Log.d(TAG, "processFile: " + fileName);
         String response = getStringFromAsset(fileName);
         Bundle result = new Bundle();
+
         try {
             Bundle bundle = new Bundle();
             bundle.putInt(HttpRequester.STATUS_CODE, 200);
@@ -548,4 +551,5 @@ public final class MyNetwork {
 
         return fetcher.execute();
     }
+
 }

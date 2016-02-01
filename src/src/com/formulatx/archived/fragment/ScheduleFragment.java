@@ -89,7 +89,7 @@ public class ScheduleFragment extends Fragment {
         super.onStart();
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_gallery);
+            ab.setTitle(R.string.string_tournament_schedule);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
     }
@@ -98,7 +98,7 @@ public class ScheduleFragment extends Fragment {
         @Override
         public Loader<ParserDataCursor> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
-            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live");
+            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live", false);
         }
 
         @Override

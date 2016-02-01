@@ -3,10 +3,14 @@ package com.formulatx.archived.database.helper;
 import android.content.ContentValues;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.util.Base64;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.SettingCursor;
 import com.formulatx.archived.utils.Log;
+import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by tretyakov on 06.07.2015.

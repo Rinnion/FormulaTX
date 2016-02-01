@@ -24,6 +24,8 @@ public class ParserHelper implements BaseColumns {
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_SYSTEM = "system";
     public static final String COLUMN_SETTINGS= "settings";
+    public static final String COLUMN_DOWNLOADED= "downloaded";
+    public static final String COLUMN_PARSED= "parsed";
 
     public static String DATABASE_TABLE = "parsers";
     public static String[] COLS;
@@ -37,6 +39,8 @@ public class ParserHelper implements BaseColumns {
                 COLUMN_DATA,
                 COLUMN_SYSTEM,
                 COLUMN_SETTINGS,
+                COLUMN_DOWNLOADED,
+                COLUMN_PARSED,
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
     }
@@ -64,8 +68,8 @@ public class ParserHelper implements BaseColumns {
         return c;
     }
 
-    public ParserCursor getAllWithSystemAndSettings(int[] range, String System, String settings) {
-        Log.v(TAG, "getAllWithyustemAndSettings ()");
+    public ParserCursor getAllWithSystemAndSettings(int[] range, String system, String settings) {
+        Log.v(TAG, "getAllWithSystemAndSettings ()");
 
         if (range == null) range = new int[0];
         StringBuilder sb = new StringBuilder();
@@ -82,7 +86,31 @@ public class ParserHelper implements BaseColumns {
         ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
                 new ParserCursor.Factory(),
                 sql,
-                new String[]{System, settings},
+                new String[]{system, settings},
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public ParserCursor getAllWithSystem(int[] range, String system) {
+        Log.v(TAG, "getAllWithSystem ()");
+
+        if (range == null) range = new int[0];
+        StringBuilder sb = new StringBuilder();
+        for (int i : range) {
+            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
+        }
+        String in = sb.toString();
+
+        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE +
+                " WHERE " + _ID + " in (" + in + ") AND " + COLUMN_SYSTEM + "=? " +
+                " ORDER BY _id";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        ParserCursor c = (ParserCursor) d.rawQueryWithFactory(
+                new ParserCursor.Factory(),
+                sql,
+                new String[]{system},
                 null);
         c.moveToFirst();
         return c;
@@ -176,6 +204,8 @@ public class ParserHelper implements BaseColumns {
         map.put(COLUMN_DATA, comment.data);
         map.put(COLUMN_SYSTEM, comment.system);
         map.put(COLUMN_SETTINGS, comment.settings);
+        map.put(COLUMN_DOWNLOADED, comment.downloaded);
+        map.put(COLUMN_PARSED, comment.parsed);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             db.insert(DATABASE_TABLE, null, map);

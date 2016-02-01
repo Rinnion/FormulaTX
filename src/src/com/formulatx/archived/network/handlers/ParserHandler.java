@@ -7,6 +7,8 @@ import com.formulatx.archived.database.model.Parser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 /**
  * Created by tretyakov on 07.07.2015.
  */
@@ -21,8 +23,9 @@ public class ParserHandler extends FormulaTXObjectResponseHandler {
         String data = message.getString("data");
         String system = message.getString("system");
         String settings = message.getString("settings");
+        long downloaded = Calendar.getInstance().getTimeInMillis();
 
-        Parser parser = new Parser(id, title, date, message.toString(), system, settings);
+        Parser parser = new Parser(id, title, date, message.toString(), system, settings, downloaded);
         ph.merge(parser);
 
         return bundle;

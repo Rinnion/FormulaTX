@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;

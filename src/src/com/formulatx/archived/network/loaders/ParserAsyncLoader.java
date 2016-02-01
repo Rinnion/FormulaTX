@@ -1,11 +1,14 @@
 package com.formulatx.archived.network.loaders;
 
+import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.ParserHelper;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
+import com.formulatx.archived.database.model.Parser;
 import com.formulatx.archived.database.model.Table;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.database.DatabaseOpenHelper;
@@ -18,26 +21,48 @@ import com.formulatx.archived.parsers.ParserFactory;
 import com.formulatx.archived.utils.Log;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  * Created by tretyakov on 08.07.2015.
  */
 public class ParserAsyncLoader extends AsyncTaskLoader<ParserDataCursor> {
 
+    public static final String TYPE = "TYPE";
+    public static final String SETTING = "SETTING";
+    public static final String PAGE = "PAGE";
+    public static final String FORCED = "FORCED";
+
     private final Context context;
     private final String post_name;
     private final String type;
     private final String settings;
+    private final boolean forced;
     private String page;
     private String TAG = getClass().getSimpleName();
 
-    public ParserAsyncLoader(Context context, String post_name, String type, String settings, String page) {
+    public ParserAsyncLoader(Context context, String post_name, String type, String settings, String page, boolean forced) {
         super(context);
         this.context = context;
         this.post_name = post_name;
         this.type = type;
         this.settings = settings;
         this.page = page;
+        this.forced = forced;
         Log.d(TAG, ".ctor");
+    }
+
+    public ParserAsyncLoader(Activity activity, String post_name, Bundle args) {
+        super(activity);
+        this.context = activity;
+        this.post_name = post_name;
+        this.type = args.getString(TYPE);
+        this.settings = args.getString(SETTING);
+        this.page = args.getString(PAGE);
+        this.forced = args.getBoolean(FORCED);
+        Log.d(TAG, ".ctor with bundle");
+
     }
 
     @Override
@@ -83,37 +108,39 @@ public class ParserAsyncLoader extends AsyncTaskLoader<ParserDataCursor> {
         Tournament t = th.getByPostName(post_name);
         if (t != null) {
             int[] ints = getParsersArrayFromTournament();
-            for (int gid : ints) {
-                MyNetwork.queryParser(gid);
-            }
             ParserHelper ph = new ParserHelper(doh);
-            ParserCursor pc = ph.getAllWithSystemAndSettings(ints, type, settings);
-            ParserMatchHelper pmh = new ParserMatchHelper(doh);
-            pmh.clear();
-            ParserFactory pf =new ParserFactory();
-            int i = 1;
-            while (!pc.isAfterLast()){
-                Match[] parse = pf.parse(pc.getData());
-                for (Match p:parse){
-                    Table table = new Table();
-                    try {
-                        table.data = p.getJSONObject().toString();
-                        table.number = i++;
-                        table.page = p.header;
-                        table.type = p.type;
-                        table.parser = pc.getColId();
-                    } catch (JSONException e) {
-                        Log.e(TAG, "wrong data");
-                        continue;
-                    }
-                    pmh.add(table);
+            for (int gid : ints) {
+                Parser parser = ph.get(gid);
+                if (parser == null || (parser.system.equals(type) && parser.settings.equals(settings)  && (forced || parser.isOutOfDate()))) {
+                    MyNetwork.queryParser(gid);
                 }
+            }
+            ParserCursor pc = ph.getAllWithSystemAndSettings(ints, type, settings);
+            ParserFactory pf =new ParserFactory();
+            ParserMatchHelper pmh = new ParserMatchHelper(doh);
+
+            ArrayList<Parser> prs = new ArrayList<Parser>();
+            while (!pc.isAfterLast()) {
+                Parser item = pc.getItem();
+                prs.add(item);
                 pc.moveToNext();
             }
+
+            for (Parser parser: prs){
+                if (!parser.isOutOfDateParsed()) continue;
+                Match[] parse = pf.parse(parser.data);
+                long pid = parser.id;
+                pmh.add(parse, pid);
+                parser.parsed = Calendar.getInstance().getTimeInMillis();
+                ph.merge(parser);
+                pc.moveToNext();
+                if (page == null) page = parse[0].header;
+            }
+
             ParserDataCursor all = pmh.getAll(ints, type, settings, page);
             return all;
         }
         return null;
-
     }
+
 }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.parse.ParsePush;
 import com.rinnion.archived.R;
@@ -43,30 +45,8 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mAdapter = new GamerAdapter(getActivity(), null, new GamerAdapter.GamerOnClickListener() {
-            @Override
-            public void likeClick(final Gamer gamer) {
-                Log.d(TAG, String.valueOf(gamer));
-                String channel = "gamer-" + String.valueOf(gamer.id);
-                if (!gamer.favorite) {
-                    Log.d(TAG, "Subscribe to '" + channel + "'");
-                    ParsePush.subscribeInBackground(channel);
-                }else{
-                    Log.d(TAG, "Unsubscribe to '" + channel + "'");
-                    ParsePush.unsubscribeInBackground(channel);
-                }
-                Method(gamer, !gamer.favorite);
-            }
+        mAdapter = new GamerAdapter(getActivity(), null, null);
 
-            private void Method(Gamer gamer, boolean b) {
-                gamer.favorite = b;
-                GamerHelper gh = new GamerHelper();
-                gh.merge(gamer);
-                long type = getArguments().getLong(TOURNAMENT_ID);
-                GamerCursor allByParent = gh.getAllByParent(type);
-                mAdapter.swapCursor(allByParent);
-            }
-        });
 
         setListAdapter(mAdapter);
 
@@ -91,6 +71,32 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
                 Log.d(TAG, "onOptionsItemSelected: default section");
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        GamerHelper gh = new GamerHelper();
+
+        Gamer gamer = gh.getGamer(id);
+
+        Log.d(TAG, String.valueOf(gamer.id));
+
+        String channel = "gamer-" + String.valueOf(gamer.id);
+        if (!gamer.favorite) {
+            Log.d(TAG, "Subscribe to '" + channel + "'");
+            ParsePush.subscribeInBackground(channel);
+        }else{
+            Log.d(TAG, "Unsubscribe to '" + channel + "'");
+            ParsePush.unsubscribeInBackground(channel);
+        }
+
+        gamer.favorite = !gamer.favorite;
+        gh.merge(gamer);
+        long type = getArguments().getLong(TOURNAMENT_ID);
+        GamerCursor allByParent = gh.getAllByParent(type);
+        mAdapter.swapCursor(allByParent);
+
+        super.onListItemClick(l, v, position, id);
     }
 
     @Override

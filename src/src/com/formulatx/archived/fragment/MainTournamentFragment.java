@@ -26,6 +26,8 @@ import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.database.model.ApiObjects.Area;
 import com.formulatx.archived.utils.Log;
 
+import java.text.Normalizer;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Lenovo
@@ -85,16 +87,20 @@ public class MainTournamentFragment extends Fragment{
 
         ActionBar ab = getActivity().getActionBar();
 
-        ab.setIcon(R.drawable.ic_action_previous_item);
+        if (ab != null){
+            ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            ab.setIcon(R.drawable.ic_action_previous_item);
+        }
+
 
         if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)) {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
             tv.setText(R.string.st_lady_title);
-            ab.setTitle(R.string.st_lady_title);
+            if (ab != null) ab.setTitle(R.string.st_lady_title);
         } else {
             view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_open_bg);
             tv.setText(R.string.st_open_title);
-            ab.setTitle(R.string.st_open_title);
+            if (ab != null) ab.setTitle(R.string.st_open_title);
         }
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
@@ -317,7 +323,11 @@ public class MainTournamentFragment extends Fragment{
         AreaHelper ah = new AreaHelper(doh);
         AreaCursor area = ah.getAllByParent(trnmt.id);
 
-        Area item = area.getItem();
+        if (area.getCount() == 0) {
+            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_area_found), Toast.LENGTH_LONG).show();
+            return;
+        }
+         Area item = area.getItem();
 
         //TODO: get additional fields
 
@@ -348,8 +358,7 @@ public class MainTournamentFragment extends Fragment{
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(), "No application can handle this request."
-                    + " Please install a navigation app", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_installer_map_app), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

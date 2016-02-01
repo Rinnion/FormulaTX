@@ -5,11 +5,14 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.ParserCursor;
 import com.formulatx.archived.database.model.Table;
 import com.formulatx.archived.network.loaders.cursor.ParserDataCursor;
+import com.formulatx.archived.parsers.Match;
 import com.formulatx.archived.utils.Log;
+import org.json.JSONException;
 
 
 /**
@@ -23,12 +26,13 @@ public class ParserMatchHelper implements BaseColumns {
     public static final String COLUMN_PAGE = "page";
     public static final String COLUMN_NUMBER = "number";
     public static final String COLUMN_DATA = "data";
-    public static final String COLUMN_TYPE= "type";
-    public static final String COLUMN_PARSER= "parser";
+    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_PARSER = "parser";
 
     public static String DATABASE_TABLE = "parser_matches";
     public static String[] COLS;
     public static String ALL_COLUMNS;
+    public static String ALL_COLUMNS_WITH_ALIAS;
 
     static {
         COLS = new String[]{
@@ -40,7 +44,9 @@ public class ParserMatchHelper implements BaseColumns {
                 COLUMN_PARSER,
         };
         ALL_COLUMNS = TextUtils.join(",", COLS);
+        ALL_COLUMNS_WITH_ALIAS = "pm." + TextUtils.join(",pm.", COLS);
     }
+
 
     private final String TAG = "CommentHelper";
 
@@ -51,8 +57,8 @@ public class ParserMatchHelper implements BaseColumns {
     }
 
 
-    public ParserDataCursor getAll(int[] range, String type, String settings, String page) {
-        Log.d(TAG, "getAll(" + String.valueOf(range) + "," + String.valueOf(page) + ")");
+    public ParserDataCursor getAll(int[] range, String system, String settings, String page) {
+        Log.d(TAG, String.format("getPages( %s, %s, %s, %s)", String.valueOf(range), system, settings, page));
 
         if (range == null) range = new int[0];
         StringBuilder sb = new StringBuilder();
@@ -61,15 +67,49 @@ public class ParserMatchHelper implements BaseColumns {
         }
         String in = sb.toString();
 
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE +
-                " WHERE " + COLUMN_PARSER + " in (" + in + ") AND " + COLUMN_PAGE + "=?" +
-                " ORDER BY _id";
+        String sql = "SELECT " + ALL_COLUMNS_WITH_ALIAS + " FROM " + DATABASE_TABLE + " pm " +
+                " LEFT JOIN " + ParserHelper.DATABASE_TABLE + " p ON p._id=pm." + COLUMN_PARSER +
+                " WHERE " +
+                " pm." + COLUMN_PARSER + " in (" + in + ") AND " +
+                " p." + ParserHelper.COLUMN_SYSTEM + "=? AND " +
+                " p." + ParserHelper.COLUMN_SETTINGS + "=? AND " +
+                " pm." + COLUMN_PAGE + ((page == null) ? " is null " : "=?") +
+                " ORDER BY pm._id";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         ParserDataCursor c = (ParserDataCursor) d.rawQueryWithFactory(
                 new ParserDataCursor.Factory(),
                 sql,
-                new String[]{page},
+                (page == null) ? new String[]{system, settings} : new String[]{system, settings, page},
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
+    public ParserDataCursor getPages(int[] range, String system, String settings) {
+        Log.d(TAG, String.format("getPages( %s, %s, %s )", String.valueOf(range), system, settings));
+
+        if (range == null) range = new int[0];
+        StringBuilder sb = new StringBuilder();
+        for (int i : range) {
+            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
+        }
+        String in = sb.toString();
+
+        String sql = "SELECT " + ALL_COLUMNS_WITH_ALIAS + " FROM " + DATABASE_TABLE + " pm " +
+                " LEFT JOIN " + ParserHelper.DATABASE_TABLE + " p ON p._id=" + COLUMN_PARSER +
+                " WHERE " +
+                " pm." + COLUMN_PARSER + " in (" + in + ") AND " +
+                " p." + ParserHelper.COLUMN_SYSTEM + "=? AND " +
+                " p." + ParserHelper.COLUMN_SETTINGS + "=? " +
+                " GROUP BY pm." + COLUMN_PAGE + " " +
+                " ORDER BY pm._id ";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        ParserDataCursor c = (ParserDataCursor) d.rawQueryWithFactory(
+                new ParserDataCursor.Factory(),
+                sql,
+                new String[]{system, settings},
                 null);
         c.moveToFirst();
         return c;
@@ -90,11 +130,11 @@ public class ParserMatchHelper implements BaseColumns {
         return c;
     }
 
-    public boolean clear() {
+    public boolean clear(long id) {
         Log.d(TAG, "clear()");
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
-            db.delete(DATABASE_TABLE, null, null);
+            db.delete(DATABASE_TABLE, "_id=?", new String[]{String.valueOf(id)});
             Log.d(TAG, "success");
             return true;
         } catch (SQLException e) {
@@ -121,7 +161,7 @@ public class ParserMatchHelper implements BaseColumns {
                 null);
     }
 
-    public boolean merge(Table item){
+    public boolean merge(Table item) {
         if (isItemPresent(item.id)) delete(item.id);
         return add(item);
     }
@@ -155,6 +195,36 @@ public class ParserMatchHelper implements BaseColumns {
             db.delete(DATABASE_TABLE, _ID + "=?", args);
         } catch (SQLException ex) {
             Log.e(TAG, "Delete parser table", ex);
+        }
+    }
+
+    public void add(Match[] parse, long pid) {
+        int i = 1;
+        SQLiteDatabase db = doh.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            Log.d(TAG, "Delete parser table: " + pid);
+            int delete = db.delete(DATABASE_TABLE, COLUMN_PARSER + "=?", new String[]{String.valueOf(pid)});
+
+            for (Match p : parse) {
+                ContentValues map;
+                map = new ContentValues();
+                map.put(COLUMN_DATA, p.getJSONObject().toString());
+                map.put(COLUMN_NUMBER, i++);
+                map.put(COLUMN_PAGE, p.header);
+                map.put(COLUMN_TYPE, p.type);
+                map.put(COLUMN_PARSER, pid);
+                try {
+                    db.insert(DATABASE_TABLE, null, map);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Error table", e);
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }finally {
+            db.endTransaction();
         }
     }
 }

@@ -49,7 +49,7 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
     public void onResume() {
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
-            ab.setTitle(R.string.string_tickets);
+            ab.setTitle(R.string.string_navigation_partners);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
         super.onResume();

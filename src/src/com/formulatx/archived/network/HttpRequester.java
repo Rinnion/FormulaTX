@@ -1,6 +1,8 @@
 package com.formulatx.archived.network;
 
 import android.os.Bundle;
+import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.Settings;
 import com.formulatx.archived.utils.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -83,6 +85,38 @@ public class HttpRequester {
 
         return result;
     }
+
+    public static Bundle CASHED;
+
+    static{
+        CASHED = new Bundle();
+        CASHED.putString(HttpRequester.RESULT, HttpRequester.RESULT_HTTP);
+        Bundle bundle = new Bundle();
+        bundle.putInt(HttpRequester.STATUS_CODE, 304);
+        CASHED.putBundle(HttpRequester.RESULT_HTTP, bundle);
+    }
+
+    public Bundle executeWithCache(String cache, boolean forced) {
+
+        if (!forced){
+            long data = FormulaTXApplication.getLongParameter(cache, 0);
+            if (data > Calendar.getInstance().getTimeInMillis() + Settings.OUT_DATE_TIME_QUERY_PARSER_ID) {
+                Log.d(TAG, "executeWithCache return cashed");
+                return CASHED;
+            }
+        }
+
+        Bundle execute = execute();
+
+        if (execute.getString(RESULT).equals(RESULT_HTTP)){
+            long date = Calendar.getInstance().getTimeInMillis();
+            FormulaTXApplication.setParameter(mIdentity, date);
+        }
+
+        return execute;
+    }
+
+
 
     public static class Builder {
         private String mIdentity;

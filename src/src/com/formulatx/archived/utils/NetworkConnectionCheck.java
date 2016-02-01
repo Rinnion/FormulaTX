@@ -1,6 +1,7 @@
 package com.formulatx.archived.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -17,7 +18,7 @@ import org.apache.http.params.HttpParams;
  */
 public class NetworkConnectionCheck extends AsyncTask<Void,Void,Boolean> {
     private static final String TAG="NetworkConnectionCheck";
-    private Activity activity;
+    private Context activity;
 
     public boolean checkConnection() {
 
@@ -33,7 +34,7 @@ public class NetworkConnectionCheck extends AsyncTask<Void,Void,Boolean> {
         return false;
     }
 
-    public NetworkConnectionCheck(Activity activity)
+    public NetworkConnectionCheck(Context activity)
     {
             this.activity=activity;
     }

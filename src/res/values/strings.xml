@@ -46,4 +46,7 @@
     <string name="string_twitter">Twitter</string>
     <string name="weather_not_available">Прогноз погоды не доступен</string>
     <string name="string_navigation_partners">Партнеры</string>
+    <string name="string_no_area_found">Площадки не найдены.</string>
+    <string name="string_no_installer_map_app">Нетп приложения, которое может обработать приложение.</string>
+    <string name="string_connection_error">Ошибка при соединение с сервером</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import com.formulatx.archived.network.loaders.cursor.ProgramCursor;
 import com.formulatx.archived.utils.Log;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.lorecraft.phparser.SerializedPhpParser;
 
 import java.text.ParseException;
@@ -50,6 +52,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
         public String date;
         public String time;
         public String name;
+        public boolean marked;
     }
 
     private ProgramCursor getProgramCursor() {
@@ -85,15 +88,26 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
     private ProgramObject[] getProgram() {
         ProgramObject[] arr;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm", new Locale("ru", "ru"));
-            SerializedPhpParser php = new SerializedPhpParser(data);
-            Map parse = (Map) php.parse();
-            ArrayList<ProgramObject> apo = new ArrayList<ProgramObject>(parse.size());
-            for (Object item : parse.keySet()) {
-                Object[] event = ((LinkedHashMap) (parse.get(item))).values().toArray();
-                String date = event[0].toString();
-                String time = event[1].toString();
-                String name = event[2].toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd h:mm", new Locale("ru", "ru"));
+
+            JSONArray array = new JSONArray(data);
+            ArrayList<ProgramObject> apo = new ArrayList<ProgramObject>(array.length()-1);
+            ProgramObject marked = new ProgramObject();
+            JSONArray arrObj = array.getJSONArray(0);
+            try {
+                marked.date = arrObj.getString(0);
+                marked.time = arrObj.getString(1);
+                marked.name = arrObj.getString(2);
+                marked.fulldate = formatter.parse(marked.date + " " + marked.time).getTime();
+            }catch (Exception ignored){
+                Log.w(TAG, "couldn't create marked item. " + ignored.getMessage());
+            }
+
+            for (int i = 1; i<array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                String date = obj.getString(String.valueOf(i*3+0));
+                String time = obj.getString(String.valueOf(i * 3 + 1));
+                String name = obj.getString(String.valueOf(i * 3 + 2));
                 ProgramObject po = new ProgramObject();
                 try{
                     po.fulldate = formatter.parse(date + " " + time).getTime();
@@ -104,6 +118,7 @@ public class ProgramAsyncLoader extends AsyncTaskLoader<ProgramCursor> {
                 po.time = time;
                 po.name = name;
                 po.date = date;
+                po.marked = po.fulldate == marked.fulldate;
                 apo.add(po);
             }
             arr = apo.toArray(new ProgramObject[apo.size()]);

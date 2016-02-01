@@ -4,14 +4,19 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.TournamentHelper;
+import com.formulatx.archived.database.model.ApiObjects.Tournament;
 import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
+import com.formulatx.archived.network.handlers.ApiObjectHandler;
 import com.formulatx.archived.network.handlers.TournamentHandler;
 import com.formulatx.archived.network.loaders.cursor.WeatherCursor;
 import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.helper.TwitterHelper;
 import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.utils.Log;
+import com.formulatx.archived.utils.NetworkConnectionCheck;
+import com.rinnion.archived.R;
 import org.json.JSONException;
 import org.lorecraft.phparser.SerializedPhpParser;
 
@@ -43,32 +48,61 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+
             publishProgress(5, null);
             MyNetwork.queryWeather(WeatherCursor.MOSCOW);
             publishProgress(10, null);
             MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
 
-            //loadAbout(Settings.ABOUT_API_OBJECT);
+            loadAbout(Settings.ABOUT_API_OBJECT);
             //publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
             publishProgress(20, null);
 
-            FetchTournamentsList(20, 50);
-            FetchAreasList(50, 95);
+            if (!FetchTournamentsList(20, 50)) {
+                return;
+            }
+            if (FetchAreasList(50, 70)){
+                return;
+            }
+            if (PreLoadNews(70, 95)){
+                return;
+            }
+
+
 
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
-            publishError("Error during network ", ex.getMessage());
+            publishError(getString(R.string.string_connection_error), ex.getMessage());
         }
     }
 
-    private boolean loadAbout(int aboutApiObject) {
-        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, null);
+    private boolean PreLoadNews(int i, int i1) {
+        return fetchTournamentNews(TournamentHelper.TOURNAMENT_LADIES_TROPHY) && fetchTournamentNews(TournamentHelper.TOURNAMENT_OPEN);
+    }
+
+    private boolean fetchTournamentNews(String tn) {
+        Bundle bundle;
+        TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
+        Tournament ladies = th.getByPostName(tn);
+        bundle = MyNetwork.queryTournamentNewsList(ladies.id, ladies.post_name);
         String result = bundle.getString(HttpRequester.RESULT);
         boolean equals = result.equals(HttpRequester.RESULT_HTTP);
         if (!equals){
             String mess = bundle.getString(result);
-            publishError("Network error", (Settings.DEBUG) ? mess : null);
+            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? mess : null);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadAbout(int aboutApiObject) {
+        Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, new ApiObjectHandler());
+        String result = bundle.getString(HttpRequester.RESULT);
+        boolean equals = result.equals(HttpRequester.RESULT_HTTP);
+        if (!equals){
+            String mess = bundle.getString(result);
+            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? mess : null);
         }
         return equals;
     }
@@ -82,7 +116,7 @@ public class DownloadService extends IntentService {
         startProgress += firstStep;
         publishProgress(startProgress, null);
         if (intArray == null) {
-            publishError("Network error", (Settings.DEBUG) ? tournaments.toString() : null);
+            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? tournaments.toString() : null);
             return false;
         }
 
