@@ -124,15 +124,16 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
                        // tmpViewTest.setVisibility(View.VISIBLE);
                         //tmpViewTest.requestLayout();
-                        Point point=new Point();
+                        //Point point=new Point();
 
-                        DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
+                        //DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
 
-                        tmpViewNews.getLayoutParams().height=point.y;
+                        //tmpViewNews.getLayoutParams().height=point.y;
 
                         //int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
 
                         /*tmpViewNews.getLayoutParams().height=tmpViewNews.getLayoutParams().height+specH;*/
+                        tmpViewNews.invalidate();
 
                     //Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
 
