@@ -30,7 +30,12 @@ public class PartnerAsyncLoader extends AsyncTaskLoader<PartnerCursor> {
     protected void onForceLoad() {
         super.onForceLoad();
         PartnerHelper aoh=new PartnerHelper();
-        deliverResult(aoh.getAllPartner());
+        PartnerCursor allPartner = aoh.getAllPartner();
+        if (allPartner.getCount() == 0){
+            deliverResult(null);
+            return;
+        }
+        deliverResult(allPartner);
     }
 
     @Override
