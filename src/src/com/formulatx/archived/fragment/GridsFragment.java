@@ -49,6 +49,8 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private TabHost mTabHost;
     private SimpleCursorAdapter mSpinnerAdapter;
+    private View mProgresView;
+    private View mEmptyView;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -85,6 +87,9 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mProgresView = view.findViewById(R.id.progressView);
+        mEmptyView = view.findViewById(R.id.emptyView);
+
         mTabHost = (TabHost)view.findViewById(R.id.tabHost);
         mTabHost.setOnTabChangedListener(this);
 
@@ -206,10 +211,21 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
         @Override
         public void onLoadFinished(Loader<ParserDataCursor> loader, ParserDataCursor data) {
             Log.d(TAG, "onLoadFinished");
-            FitSpinner();
-            FitTabHost();
-            mAdapter.swapCursor(data);
-            mSwipeRefreshLayout.setRefreshing(false);
+            if (data == null) {
+                mProgresView.setVisibility(View.VISIBLE);
+                mEmptyView.setVisibility(View.GONE);
+            }else{
+                mProgresView.setVisibility(View.GONE);
+                if (data.getCount()==0){
+                    mEmptyView.setVisibility(View.VISIBLE);
+                }else{
+                    mEmptyView.setVisibility(View.GONE);
+                }
+                FitSpinner();
+                FitTabHost();
+                mAdapter.swapCursor(data);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         }
 
         @Override
