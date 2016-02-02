@@ -73,7 +73,7 @@ public class GamerAdapter extends SimpleCursorAdapter {
 
         try {
             Picasso.with(context)
-                    .load(item.thumb)
+                    .load(item.flag)
                     .placeholder(R.drawable.logo_splash_screen)
                     .error(R.drawable.logo_splash_screen)
                     .resize(80, 80)

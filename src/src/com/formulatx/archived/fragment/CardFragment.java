@@ -64,8 +64,6 @@ public class CardFragment extends Fragment implements LoaderManager.LoaderCallba
 
         mAdapter = new CardAdapter(getActivity(), null);
 
-        getLoaderManager().initLoader(R.id.card_loader, Bundle.EMPTY, this);
-
         super.onCreate(savedInstanceState);
     }
 

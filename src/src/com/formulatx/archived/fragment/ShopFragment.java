@@ -46,7 +46,7 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
         mEmptyView = view.findViewById(R.id.emptyView);
         mProgresView = view.findViewById(R.id.progressView);
 
-        getLoaderManager().initLoader(R.id.card_loader, Bundle.EMPTY, this);
+        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
 
         return view;
     }
@@ -56,8 +56,6 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
         setHasOptionsMenu(true);
 
         mAdapter = new ProductAdapter(getActivity(), null);
-
-        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }

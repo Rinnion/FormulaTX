@@ -60,9 +60,16 @@ public class GamerHelper implements BaseColumns {
 
         //FIXME: Нужно переделать на update/merge
         ApiObject apiObject = aoh.get(gamer.id);
+        if (apiObject== null)
+        {
+            Log.e(TAG, "Api object is null while insert gamer");
+            return false;
+        }
 
         delete(gamer.id);
-        apiObject.thumb = gamer.thumb;
+        if (apiObject.thumb == null) {
+            apiObject.thumb = gamer.thumb;
+        }
         aoh.add(apiObject);
 
         ContentValues map;
