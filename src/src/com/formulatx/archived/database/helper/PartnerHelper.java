@@ -49,10 +49,11 @@ public class PartnerHelper extends ApiObjectHelper {
 
         //FIXME: Нужно переделать на update/merge
         ApiObject apiObject = super.get(card.id);
-
-        delete(card.id);
-        apiObject.thumb = card.thumb;
-        super.add(apiObject);
+        if (apiObject != null) {
+            delete(card.id);
+            apiObject.thumb = card.thumb;
+            super.add(apiObject);
+        }
 
         ContentValues map;
         map = new ContentValues();

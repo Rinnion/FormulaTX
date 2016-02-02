@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.Toast;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.helper.PartnerHelper;
 import com.formulatx.archived.database.model.ApiObjects.Partner;
 import com.formulatx.archived.fragment.adapter.PartnerAdapter;
@@ -63,8 +64,7 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
             startActivity(myIntent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(), "No application can handle this request."
-                    + " Please install a webbrowser", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_webbrowser), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
         //TODO: open browser for card

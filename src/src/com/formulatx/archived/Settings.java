@@ -39,7 +39,7 @@ public final class Settings {
     public static final int OUT_DATE_TIME_ASSIGNED_DEFAULT = 24 * 60 * 60 * 1000; // 1 day
     public static final long UPDATE_TIME = 60000; //60 sec
     public static final int REFRESH_AUDION_POSITION_TIME=500;
-    public static final String VERSION_NUMBER = "0.8.2.2301";
+    public static final String VERSION_NUMBER = "0.9.0.0201";
     public static final String VERSION_BUILD_TIME = "2237";
     public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";

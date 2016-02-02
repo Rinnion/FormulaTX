@@ -85,7 +85,7 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
             ab.setIcon(R.drawable.ic_action_previous_item);
             ab.setHomeButtonEnabled(true);
 
-            String post_name = getArguments().getString(OtherTournamentFragment.TOURNAMENT_POST_NAME);
+            String post_name = getArguments().getString(TOURNAMENT_POST_NAME);
             TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
             Tournament t = th.getByPostName(post_name);
             ab.setTitle(t.title);
@@ -280,7 +280,7 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
     public void showGalleryFragment() {
         GalleryFragment mlf = new GalleryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        bundle.putString(GalleryFragment.TOURNAMENT_POST_NAME, getArguments().getString(TOURNAMENT_POST_NAME));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

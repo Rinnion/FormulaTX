@@ -48,7 +48,8 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
 
     public WeatherCursor getWeatherCursor(){
         WeatherCursor wc = new WeatherCursor();
-        if (!FitWeather(wc.Moscow, WeatherCursor.MOSCOW ) || !FitWeather(wc.Peter, WeatherCursor.PETERSBURG)) return null;
+        FitWeather(wc.Moscow, WeatherCursor.MOSCOW);
+        FitWeather(wc.Peter, WeatherCursor.PETERSBURG);
         return wc;
     }
 
@@ -56,6 +57,9 @@ public class WeatherAsyncLoader extends AsyncTaskLoader<WeatherCursor> {
         SettingsHelper sh = new SettingsHelper(FormulaTXApplication.getDatabaseOpenHelper());
         String weather = sh.getStringParameter("weather_" + name);
         if (weather == null){
+            city.main = "не доступно";
+            city.temp = "?";
+            city.icon = R.drawable.ic_action_help;
             return false;
         }
 

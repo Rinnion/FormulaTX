@@ -40,6 +40,7 @@
     <string name="weather_not_available">Not available</string>
     <string name="string_navigation_partners">Partners</string>
     <string name="string_no_area_found">No areas found.</string>
-    <string name="string_no_installer_map_app">No application can handle this request. Please install a navigation app</string>
+    <string name="string_no_installer_map_app">No application can handle this request. Please install a navigation app.</string>
     <string name="string_connection_error">Network error</string>
+    <string name="string_no_webbrowser">No application can handle this request. Please install a web browser.</string>
 </resources>

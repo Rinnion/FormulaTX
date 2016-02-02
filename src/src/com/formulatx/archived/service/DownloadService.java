@@ -61,10 +61,10 @@ public class DownloadService extends IntentService {
             if (!FetchTournamentsList(20, 50)) {
                 return;
             }
-            if (FetchAreasList(50, 70)){
+            if (!FetchAreasList(50, 70)){
                 return;
             }
-            if (PreLoadNews(70, 95)){
+            if (!PreLoadNews(70, 95)){
                 return;
             }
 
