@@ -33,21 +33,26 @@ public class ProductAsyncLoader extends AsyncTaskLoader<ProductCursor> {
         super.onForceLoad();
         DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
         ProductHelper aoh=new ProductHelper(doh);
-        deliverResult(aoh.getAll());
+        ProductCursor all = aoh.getAll();
+        if (all.getCount() == 0)
+        {
+            deliverResult(null);
+            return;
+        }
+        deliverResult(all);
     }
 
     @Override
     public ProductCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
+        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
+        ProductHelper aoh=new ProductHelper(doh);
         int[] iaProductList = MyNetwork.getIntArray(MyNetwork.queryProductList());
         if (iaProductList != null) {
             for (int i : iaProductList) {
                 MyNetwork.queryProduct(i);
-                //MyNetwork.queryGamer(i);
             }
         }
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        ProductHelper aoh=new ProductHelper(doh);
         return aoh.getAll();
     }
 

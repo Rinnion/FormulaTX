@@ -44,9 +44,7 @@ public class PartnersFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         mAdapter = new PartnerAdapter(getActivity(), null);
-
         super.onCreate(savedInstanceState);
     }
 
