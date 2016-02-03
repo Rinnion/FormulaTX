@@ -63,21 +63,17 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listView);
 
         mAdapter = new ScheduleAdapter(getActivity(), null);
 
-        //listView.setAdapter(mAdapter);
-        //listView.setDividerHeight(20);
-
-        getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
+        getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ScheduleLoaderCallBack());
 
         view.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 view.setRefreshing(true);
-                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
+                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ScheduleLoaderCallBack());
             }
         });
 
@@ -94,22 +90,27 @@ public class ScheduleFragment extends Fragment {
         }
     }
 
-    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<ParserDataCursor> {
+    private class ScheduleLoaderCallBack implements android.app.LoaderManager.LoaderCallbacks<Schedule> {
         @Override
-        public Loader<ParserDataCursor> onCreateLoader(int id, Bundle args) {
+        public Loader<Schedule> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
-            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live", false);
+            return new ScheduleAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME));
         }
 
         @Override
-        public void onLoadFinished(Loader<ParserDataCursor> loader, ParserDataCursor data) {
+        public void onLoadFinished(Loader<Schedule> loader, Schedule data) {
             Log.d(TAG, "onLoadFinished");
-            mAdapter.swapCursor(data);
-            view.setRefreshing(false);
+            if (data == null) {
+                view.setRefreshing(true);
+            }
+            else {
+                //mAdapter.swapCursor(data.data);
+                view.setRefreshing(false);
+            }
         }
 
         @Override
-        public void onLoaderReset(Loader<ParserDataCursor> loader) {
+        public void onLoaderReset(Loader<Schedule> loader) {
 
         }
     }

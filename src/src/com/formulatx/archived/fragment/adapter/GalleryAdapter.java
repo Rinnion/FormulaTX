@@ -19,9 +19,11 @@ import com.squareup.picasso.Picasso;
 public class GalleryAdapter extends SimpleCursorAdapter {
     private static final String TAG = "GalleryAdapter";
     private final int mWidth;
+    private boolean mShadowed;
 
-    public GalleryAdapter(Activity activity, String[] names, int[] to, final Cursor cursor) {
+    public GalleryAdapter(Activity activity, String[] names, int[] to, final Cursor cursor, boolean mShadowed) {
         super(activity, R.layout.image_layout, cursor, names, to, 0);
+        this.mShadowed = mShadowed;
         DisplayMetrics dm = FormulaTXApplication.getAppContext().getResources().getDisplayMetrics();
         Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
         mWidth = Math.abs(dm.widthPixels / 2);
@@ -34,10 +36,12 @@ public class GalleryAdapter extends SimpleCursorAdapter {
         ViewGroup.LayoutParams lp = iv.getLayoutParams();
         lp.height= mWidth;
         lp.width= mWidth;
-        View v = view.findViewById(R.id.il_v_shadow);
-        lp = v.getLayoutParams();
-        lp.height= mWidth;
-        lp.width= mWidth;
+        if (mShadowed) {
+            View v = view.findViewById(R.id.il_v_shadow);
+            lp = v.getLayoutParams();
+            lp.height = mWidth;
+            lp.width = mWidth;
+        }
         return view;
     }
 

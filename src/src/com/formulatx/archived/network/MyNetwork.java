@@ -2,6 +2,7 @@ package com.formulatx.archived.network;
 
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.fragment.Schedule;
 import com.formulatx.archived.network.handlers.*;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.Settings;
@@ -552,4 +553,23 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    public static Bundle getLadiesSchedule() {
+        Log.d(TAG, String.format("queryParser"));
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("queryParser")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getLadies())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenSchedule() {
+        return Bundle.EMPTY;
+    }
 }

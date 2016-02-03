@@ -145,7 +145,7 @@ public class MainTournamentFragment extends Fragment{
                 if (tag.equals(NEWS)) showNewsFragment();
                 if (tag.equals(GAMERS)) showGamersFragment();
                 if (tag.equals(PROGRAM)) showProgramFragment();
-                if (tag.equals(SCHEDULE)) showTablesFragment();
+                if (tag.equals(SCHEDULE)) showScheduleFragment();
                 if (tag.equals(GRIDS)) showGridsFragment();
                 if (tag.equals(LIVESCORE)) showEmptyFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
@@ -224,7 +224,7 @@ public class MainTournamentFragment extends Fragment{
                 .commit();
     }
 
-    public void showTablesFragment() {
+    public void showScheduleFragment() {
         ScheduleFragment mlf = new ScheduleFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));

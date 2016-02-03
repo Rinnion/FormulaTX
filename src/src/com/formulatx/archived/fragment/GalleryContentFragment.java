@@ -117,14 +117,14 @@ public class GalleryContentFragment extends Fragment {
         Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels,dm.density ,2));
         final int width = Math.abs(dm.widthPixels / 2);
         Log.i(TAG, String.valueOf(width));
-        mPhotoAdapter = new GalleryAdapter(getActivity(), names, to, null);
+        mPhotoAdapter = new GalleryAdapter(getActivity(), names, to, null, false);
 
         gvPhoto.setAdapter(mPhotoAdapter);
 
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
 
-        mVideoAdapter = new GalleryAdapter(getActivity(), names, to, null);
+        mVideoAdapter = new GalleryAdapter(getActivity(), names, to, null, false);
 
         gvVideo.setAdapter(mVideoAdapter);
 

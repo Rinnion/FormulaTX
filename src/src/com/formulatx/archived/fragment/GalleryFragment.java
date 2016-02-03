@@ -115,7 +115,7 @@ public class GalleryFragment extends Fragment {
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
-        mPhotoAdapter = new GalleryAdapter(getActivity(), names, to, null);
+        mPhotoAdapter = new GalleryAdapter(getActivity(), names, to, null, true);
 
         gvPhoto.setAdapter(mPhotoAdapter);
         gvPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,7 +138,7 @@ public class GalleryFragment extends Fragment {
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
 
-        mVideoAdapter = new  GalleryAdapter(getActivity(), names, to, null);
+        mVideoAdapter = new  GalleryAdapter(getActivity(), names, to, null, true);
 
         gvVideo.setAdapter(mVideoAdapter);
         gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -243,6 +243,14 @@ public class MyNetworkContentContract {
                 }
             }
         }
+
+        public static  class Schedules {
+            private static final String ladies = "http://parser.formulatx.com/ladies/order/%s/";
+
+            public static String getLadies() {
+                return String.format(ladies, MyLocale.getCurrent());
+            }
+        }
     }
 
 }
