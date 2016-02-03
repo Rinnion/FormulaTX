@@ -17,7 +17,7 @@ public class Schedule {
         return object;
     }
 
-    private class Cort {
+    public class Cort {
         public String cortName;
 
         public Cort(String name) {
@@ -32,5 +32,9 @@ public class Schedule {
             return object;
         }
 
+        public Match addMatch(Match match) {
+            Matches.add(match);
+            return match;
+        }
     }
 }

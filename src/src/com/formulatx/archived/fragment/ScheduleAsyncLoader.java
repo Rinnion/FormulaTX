@@ -13,7 +13,9 @@ import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONObjectHandler;
 import com.formulatx.archived.network.handlers.TournamentHandler;
+import com.formulatx.archived.parsers.Match;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,12 +48,10 @@ public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
     @Override
     public Schedule loadInBackground() {
         if (string.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)){
-            Schedule scheculde = unWrapSchedule(MyNetwork.getLadiesSchedule());
-            return scheculde;
+            return unWrapSchedule(MyNetwork.getLadiesSchedule());
         }
-        if (string.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)){
-            MyNetwork.getOpenSchedule();
-            return new Schedule();
+        if (string.equals(TournamentHelper.TOURNAMENT_OPEN)){
+            return unWrapSchedule(MyNetwork.getOpenSchedule());
         }
         return new Schedule();
     }
@@ -66,12 +66,20 @@ public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
         try {
             JSONObject json = new JSONObject(string);
             Schedule schedule = new Schedule();
-            //schedule.
-            //json.getJSONArray("corts").getJSONObject(0).getJSONObject("1").getJSONObject("teams").getJSONObject("team1");
+            JSONArray corts = json.getJSONArray("corts");
+            for (int i =0; i<corts.length(); i++) {
+                JSONObject jsonCort = corts.getJSONObject(0);
+                Schedule.Cort cort = schedule.addCort(jsonCort.getString("cortName"));
+                for(int k=0; k<jsonCort.length()-1; k++){
+                    Match match = Match.parseJSONObject(jsonCort.getJSONObject(String.valueOf(k)).getJSONObject("teams"));
+                    cort.addMatch(match);
+                }
+            }
+            return schedule;
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-                 return null;
+        return null;
     }
 }

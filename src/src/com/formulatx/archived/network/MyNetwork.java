@@ -554,7 +554,7 @@ public final class MyNetwork {
     }
 
     public static Bundle getLadiesSchedule() {
-        Log.d(TAG, String.format("queryParser"));
+        Log.d(TAG, String.format("getLadiesSchedule"));
 
         JSONObjectHandler handler = new JSONObjectHandler();
 
@@ -570,6 +570,18 @@ public final class MyNetwork {
     }
 
     public static Bundle getOpenSchedule() {
-        return Bundle.EMPTY;
+        Log.d(TAG, String.format("getOpenSchedule"));
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getOpenSchedule")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getOpen())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
     }
 }
