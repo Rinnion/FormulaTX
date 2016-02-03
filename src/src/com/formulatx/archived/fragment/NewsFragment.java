@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.FrameLayout;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.formulatx.archived.utils.WebViewWithCache;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
@@ -52,8 +53,6 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
-
     private String prepateHtml(ApiObject apiObject)
     {
         if(apiObject==null)
@@ -88,17 +87,10 @@ public class NewsFragment extends Fragment {
 
         WebViewWithCache myWebView = (WebViewWithCache) view.findViewById(R.id.nl_tv_content);
 
-
-
-//Display display=getActivity().getWindowManager().getDefaultDisplay();
-
-
         String webHTML=prepateHtml(apiObject);
         String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
         if (apiObject.content.isEmpty())
             webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + apiObject.title + "</h2>Нет описания</body></html>";
-
-
 
         myWebView.loadDataOrCache(getActivity(), apiObject, webHTML, webHTMLEmpty);
 
@@ -109,15 +101,11 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_layout, container, false);
 
-
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_news);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
-
- //       date.setText(apiObject.date);
-   //     title.setText(apiObject.title);
-
+        //BackgroundSelector.setProperBackground(view, type);
 
         return view;
     }

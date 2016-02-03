@@ -5,11 +5,29 @@
         <item name="android:actionBarStyle">@style/FormulaTXTheme.Widget.ActionBar</item>
     </style>
 
+    <style name="FormulaTXTheme.Ladies" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@drawable/st_lady_bg</item>
+        <item name="android:actionBarStyle">@style/FormulaTXTheme.Widget.ActionBar.Ladies</item>
+    </style>
+
+    <style name="FormulaTXTheme.Open" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@drawable/st_open_bg</item>
+        <item name="android:actionBarStyle">@style/FormulaTXTheme.Widget.ActionBar.Open</item>
+    </style>
+
     <style name="FormulaTXTheme.NoActionBar" parent="android:Theme.Holo.NoActionBar">
     </style>
 
     <style name="FormulaTXTheme.Widget.ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@color/action_bar_color</item>
+    </style>
+
+    <style name="FormulaTXTheme.Widget.ActionBar.Ladies" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/action_bar_color_ladies</item>
+    </style>
+
+    <style name="FormulaTXTheme.Widget.ActionBar.Open" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/action_bar_color_open</item>
     </style>
 
     <style name="left_menu_row">

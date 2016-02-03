@@ -16,17 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.activity.MainLadiesActivity;
+import com.formulatx.archived.activity.MainOpenActivity;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.AreaCursor;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
+import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.rinnion.archived.R;
 import com.formulatx.archived.database.helper.AreaHelper;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.database.model.ApiObjects.Area;
 import com.formulatx.archived.utils.Log;
-
-import java.text.Normalizer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,7 +63,13 @@ public class MainTournamentFragment extends Fragment{
         switch (item.getItemId()) {
             case android.R.id.home:
                 Log.d(TAG, "onOptionsItemSelected: 'home' selected");
-                getActivity().getFragmentManager().popBackStack();
+                if (getActivity().getFragmentManager().getBackStackEntryCount() == 0){
+                    if (getActivity() instanceof MainLadiesActivity || getActivity() instanceof MainOpenActivity){
+                        getActivity().finish();
+                    }
+                }else {
+                    getActivity().getFragmentManager().popBackStack();
+                }
                 return true;
             default:
                 Log.d(TAG, "onOptionsItemSelected: default section");
@@ -90,17 +97,15 @@ public class MainTournamentFragment extends Fragment{
         if (ab != null){
             ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             ab.setIcon(R.drawable.ic_action_previous_item);
+            ab.setTitle(R.string.string_turnir);
         }
 
+        //BackgroundSelector.setProperBackground(view.findViewById(R.id.mtl_ll_background), type);
 
-        if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)) {
-            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
-            tv.setText(R.string.st_lady_title);
-            if (ab != null) ab.setTitle(R.string.st_lady_title);
-        } else {
-            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_open_bg);
-            tv.setText(R.string.st_open_title);
-            if (ab != null) ab.setTitle(R.string.st_open_title);
+        TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
+        Tournament trnmt = th.getByPostName(type);
+        if(trnmt!=null) {
+            tv.setText(trnmt.title);
         }
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};

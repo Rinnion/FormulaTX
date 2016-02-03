@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.formulatx.archived.database.cursor.ApiObjectCursor;
 import com.formulatx.archived.fragment.adapter.NewsAdapter;
+import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.network.loaders.NewsAsyncLoader;
 import android.view.MenuItem;
@@ -46,10 +47,8 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        Bundle args = getArguments();
-
         mAdapter = new NewsAdapter(getActivity(), null);
-        getLoaderManager().initLoader(R.id.news_loader, args, this);
+        getLoaderManager().initLoader(R.id.news_loader, getArguments(), this);
         super.onCreate(savedInstanceState);
     }
 
@@ -67,11 +66,13 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
         view.setColorScheme(android.R.color.holo_red_dark,android.R.color.holo_orange_dark,android.R.color.holo_green_dark,android.R.color.holo_blue_dark );
+        String type = getArguments().getString(TOURNAMENT_POST_NAME);
+        //BackgroundSelector.setProperBackground(view, type);
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Log.d(TAG, "onRefresh");
-                getLoaderManager().initLoader(R.id.news_loader, Bundle.EMPTY, NewsListFragment.this);
+                getLoaderManager().initLoader(R.id.news_loader, getArguments(), NewsListFragment.this);
             }
         });
         ListView mListView = (ListView) view.findViewById(R.id.listView);
@@ -115,7 +116,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<ApiObjectCursor> onCreateLoader(int id, Bundle args) {
-        return new NewsAsyncLoader(getActivity(), (getArguments()==null) ? null : getArguments().getString(TOURNAMENT_POST_NAME));
+        return new NewsAsyncLoader(getActivity(), (getArguments()==null) ? null : args.getString(TOURNAMENT_POST_NAME));
     }
 
     @Override
