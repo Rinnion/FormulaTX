@@ -55,9 +55,11 @@ public class Main {
 
         System.out.println(m.getJSONObject());
 
-        //parseFile("parsers-20.json");
         //parseFile("parsers-22.json");
-        //parseFile("parsers-23.json");
+        parseFile("parsers-23.json");
+        parseFile("parsers-30.json");
+        parseFile("parsers-31.json");
+
         //parse = pf.parse("parsers-19.json"); System.out.println(parse);
         //parse = pf.parse("parsers-20.json"); System.out.println(parse);
         //parse = pf.parse("parsers-22.json"); System.out.println(parse);

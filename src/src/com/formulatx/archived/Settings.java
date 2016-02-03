@@ -8,8 +8,8 @@ package com.formulatx.archived;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG = false;
-    public static final boolean DEBUG = false;
+    public static final boolean NETDEBUG =true;
+    public static final boolean DEBUG = true;
 
     public static final int ABOUT_API_OBJECT = 201;
     public static final String ABOUT_API_OBJECT_ALIAS = "about";
@@ -48,6 +48,7 @@ public final class Settings {
     public static final String LOADING_PROGRESS = "preloading_progress";
     public static final String LOADING_ERROR = "preloading_error";
     public static final String LOADING_CUSTOM_MESSAGE = "preloading_custom_message";
+
     public static final long OUT_DATE_TIME_QUERY_PARSER_ID = 24 * 60 * 60 * 1000; //one day
     public static final long OUT_DATE_TIME_QUERY_PARSER_PARSED = 1 * 60 * 60 * 1000; //one hour
 

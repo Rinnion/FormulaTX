@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TabHost;
 import com.formulatx.archived.FormulaTXApplication;
@@ -123,6 +124,15 @@ public class GalleryContentFragment extends Fragment {
 
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
+        gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String link=((GalleryItemCursor) parent.getAdapter().getItem(position)).getItem().link;
+                        GalleryHelper gh = new GalleryHelper(FormulaTXApplication.getDatabaseOpenHelper());
+
+                String link1=gh.getItem(id).link;
+            }
+        });
 
         mVideoAdapter = new GalleryAdapter(getActivity(), names, to, null, false);
 
