@@ -75,15 +75,16 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         tmpViewWeather=view.findViewById(R.id.weather);
         tmpViewEvents=view.findViewById(R.id.events);
         tmpViewNews=view.findViewById(R.id.tl_lv_news);
-
+/*
         moveTracker=new MoveTracker();
+
 
         tmpView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                /*if (currentState != State.EDIT_MOVE) return false;*/
 
-                //LinearLayout params = (FrameLayout.LayoutParams) view.getLayoutParams();
+
+
                 if(mHeight==0) {
                     mHeight = tmpViewWeather.getMeasuredHeight();
 
@@ -112,7 +113,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                     public void onAnimationEnd(Animation animation) {
                         // tmpViewTest.setEnabled(true)
                          tmpView.clearAnimation();
-                       tmpViewTest.setTranslationY(-mHeight);
+                       //tmpViewTest.setTranslationY(-mHeight);
 
                        // tmpView.clearAnimation();
                         //tmpViewTest.requestLayout();
@@ -124,20 +125,21 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
                        // tmpViewTest.setVisibility(View.VISIBLE);
                         //tmpViewTest.requestLayout();
-                        //Point point=new Point();
+                      //  Point point=new Point();
 
-                        //DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
+                      //  DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
 
-                        //tmpViewNews.getLayoutParams().height=point.y;
+                      //  tmpViewEvents.getLayoutParams().height=point.y;
 
                         //int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
 
-                        /*tmpViewNews.getLayoutParams().height=tmpViewNews.getLayoutParams().height+specH;*/
-                        tmpViewNews.invalidate();
+
+                        //tmpViewEvents.invalidate();
 
                     //Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
 
                       //  tmpViewTest.getLayoutParams().height=specH;
+                        tmpViewWeather.setVisibility(View.GONE);
                         isUpped = true;
                         //tmpViewTest.requestLayout();
                         //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
@@ -160,18 +162,19 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                 translateAnimationDown.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        //tmpViewTest.setEnabled(false);
+                        tmpViewTest.setEnabled(false);
                         tmpViewTest.setTranslationY(0);
                         tmpViewTest.setVisibility(View.GONE);
+                        tmpViewWeather.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        //tmpViewTest.setEnabled(true);
+                        tmpViewTest.setEnabled(true);
                         tmpViewTest.setTranslationY(0);
                         tmpView.clearAnimation();
 
-
+                        //tmpViewWeather.setVisibility(View.GONE);
                         tmpViewTest.setVisibility(View.VISIBLE);
                         isUpped=false;
                         // tmpViewTest.requestLayout();
@@ -186,15 +189,12 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
 
                 ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
-                /*if (view.getId() != R.id.weather) return false;*/
+
 
                 switch (event.getAction()) {
 
 
                     case MotionEvent.ACTION_UP:
-                        /*params.height = (int) event.getRawY() - view.getHeight();
-
-                        linearLayout.setLayoutParams(params);*/
 
                         if (moveTracker.Up(event) == MoveTracker.MoveUp) {
                             if(!isUpped)
@@ -213,7 +213,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
 
                     case MotionEvent.ACTION_DOWN:
                         moveTracker.Down(event);
-                        /*linearLayout.setLayoutParams(params);*/
+
                         Log.d(TAG, "MotionEvent.ACTION_DOWN");
                         break;
                 }
@@ -221,7 +221,7 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
                 return true;
             }
         });
-
+/**/
 
 
         getActivity().getActionBar().setTitle(R.string.string_today);
