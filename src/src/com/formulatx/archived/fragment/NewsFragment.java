@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.FrameLayout;
 import com.formulatx.archived.FormulaTXApplication;
-import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.formulatx.archived.utils.WebViewWithCache;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;

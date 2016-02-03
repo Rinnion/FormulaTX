@@ -21,7 +21,6 @@ import com.formulatx.archived.activity.MainOpenActivity;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.AreaCursor;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
-import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.rinnion.archived.R;
 import com.formulatx.archived.database.helper.AreaHelper;
 import com.formulatx.archived.database.helper.TournamentHelper;

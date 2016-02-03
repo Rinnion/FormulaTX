@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/il_iv_image"
             android:scaleType="fitXY"
             android:src="@drawable/logo_splash_screen">
 
     </ImageView>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/il_tv_text"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+    <View android:background="@android:color/black" android:alpha="0.4"
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          android:id="@+id/il_v_shadow"
+          android:layout_centerVertical="true"
+          android:layout_centerHorizontal="true"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:textAppearance="?android:attr/textAppearanceMedium"
+              android:id="@+id/il_tv_text"
+              android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true"/>
 </RelativeLayout>

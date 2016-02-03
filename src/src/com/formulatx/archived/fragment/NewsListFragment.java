@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.formulatx.archived.database.cursor.ApiObjectCursor;
 import com.formulatx.archived.fragment.adapter.NewsAdapter;
-import com.formulatx.archived.fragment.utils.BackgroundSelector;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.network.loaders.NewsAsyncLoader;
 import android.view.MenuItem;

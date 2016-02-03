@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TabHost;
 import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.Utils;
@@ -23,12 +21,12 @@ import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.GalleryDescriptionCursor;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
+import com.formulatx.archived.fragment.adapter.GalleryAdapter;
 import com.rinnion.archived.R;
 import com.formulatx.archived.database.helper.GalleryHelper;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.network.loaders.GalleryAsyncLoader;
 import com.formulatx.archived.utils.Log;
-import com.squareup.picasso.Picasso;
 import org.lorecraft.phparser.SerializedPhpParser;
 
 import java.util.ArrayList;
@@ -117,25 +115,8 @@ public class GalleryFragment extends Fragment {
 
 
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
-        DisplayMetrics dm = FormulaTXApplication.getAppContext().getResources().getDisplayMetrics();
-        //FIXME: hardcoded values...
-        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
-        final int width = Math.abs(dm.widthPixels / 2);
-        Log.i(TAG, String.valueOf(width));
-        mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
-            @Override
-            public void setViewImage(ImageView v, String value) {
-                try {
-                    Picasso.with(getActivity())
-                            .load(value)
-                            .resize(width, width).centerCrop()
-                            .placeholder(R.drawable.logo_splash_screen)
-                            .into(v);
-                }catch(Exception ignored){
-                    Log.e(TAG, ignored.getMessage());
-                }
-            }
-        };
+        mPhotoAdapter = new GalleryAdapter(getActivity(), names, to, null);
+
         gvPhoto.setAdapter(mPhotoAdapter);
         gvPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -157,20 +138,8 @@ public class GalleryFragment extends Fragment {
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
 
-        mVideoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
-            @Override
-            public void setViewImage(ImageView v, String value) {
-                try {
-                    Picasso.with(getActivity())
-                        .load(value)
-                        .resize(width, width).centerCrop()
-                        .placeholder(R.drawable.logo_splash_screen)
-                        .into(v);
-            }catch(Exception ignored){
-                Log.e(TAG, ignored.getMessage());
-            }
-            }
-        };
+        mVideoAdapter = new  GalleryAdapter(getActivity(), names, to, null);
+
         gvVideo.setAdapter(mVideoAdapter);
         gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
