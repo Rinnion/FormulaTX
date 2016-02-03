@@ -48,7 +48,7 @@ public class ProductAdapter extends SimpleCursorAdapter {
                     .load(item.thumb)
                     .placeholder(R.drawable.logo_splash_screen)
                     .error(R.drawable.logo_splash_screen)
-                    .resize(75, 75)
+                    .resize(200, 200)
                     .centerCrop()
                     .into(imlThumb);
         }catch(Exception ignore){

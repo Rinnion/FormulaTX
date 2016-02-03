@@ -46,8 +46,8 @@ public class CardAdapter extends SimpleCursorAdapter {
                     .load(item.thumb)
                     .placeholder(R.drawable.logo_splash_screen)
                     .error(R.drawable.logo_splash_screen)
-                    .resize(75, 75)
-                    .centerCrop()
+                    .resize(200, 200)
+                    .centerInside()
                     .into(imlThumb);
         }catch(Exception ignore){
             Log.e(TAG, ignore.getLocalizedMessage());

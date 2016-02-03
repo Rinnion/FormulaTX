@@ -50,4 +50,15 @@
     <string name="string_no_installer_map_app">Нет приложения, которое может обработать запрос.</string>
     <string name="string_connection_error">Ошибка при соединение с сервером</string>
     <string name="string_no_webbrowser">Нет приложения которое может открыть ссылку.</string>
+
+    <string name="string_address">Адрес:</string>
+    <string name="string_address_content">Санкт-Петербург, Футбольная аллея, дом 8</string>
+    <string name="string_phone">Телефон:</string>
+    <string name="string_email" translatable="false">e-mail: info@formulatx.com</string>
+    <string name="string_you_comment">Ваш отзыв</string>
+    <string name="string_what_is_you_name">Как вас зовут?</string>
+    <string name="string_what_is_your_email">Введите ваш e-mail</string>
+    <string name="string_write_your_comment">Оставьте ваш отзыв</string>
+    <string name="string_send_comment">ОСТАВИТЬ ОТЗЫВ</string>
+    <string name="string_phone_number" translatable="false">+7 (965) 299–99–82</string>
 </resources>
