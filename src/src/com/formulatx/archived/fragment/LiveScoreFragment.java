@@ -35,6 +35,9 @@ public class LiveScoreFragment extends Fragment {
     private ScheduleAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private MatchCursor mSchedule;
+    private View mProgresView;
+    private View mEmptyView;
+    private View mErrorView;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,6 +68,9 @@ public class LiveScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mProgresView = view.findViewById(R.id.progressView);
+        mEmptyView = view.findViewById(R.id.emptyView);
+        mErrorView = view.findViewById(R.id.errorView);
         mTabHost = (TabHost) view.findViewById(R.id.tabHost);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
 
@@ -79,7 +85,7 @@ public class LiveScoreFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new LiveScoreLoaderCallBack());
+                getLoaderManager().restartLoader(R.id.tables_loader, Bundle.EMPTY, new LiveScoreLoaderCallBack());
             }
         });
 
@@ -120,9 +126,13 @@ public class LiveScoreFragment extends Fragment {
     private void UpdateSchedule() {
         if (mSchedule == null) {
             mSwipeRefreshLayout.setRefreshing(true);
+            mEmptyView.setVisibility(View.GONE);
         } else {
             mAdapter.swapCursor(mSchedule);
             mSwipeRefreshLayout.setRefreshing(false);
+            if (mSchedule.getCount() == 0){
+                mEmptyView.setVisibility(View.VISIBLE);
+            }
         }
 
     }

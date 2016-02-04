@@ -20,7 +20,6 @@ import org.json.JSONObject;
  */
 public class LiveAsyncLoader extends AsyncTaskLoader<MatchCursor> {
     private final String string;
-    private Schedule cursor;
 
     public LiveAsyncLoader(Activity activity, String string) {
         super(activity);
@@ -51,22 +50,23 @@ public class LiveAsyncLoader extends AsyncTaskLoader<MatchCursor> {
     }
 
     private MatchCursor unWrapSchedule(Bundle ladiesSchedule) {
-        if (ladiesSchedule == null) return null;
+
+        if (ladiesSchedule == null) return new MatchCursor();
         Bundle http = ladiesSchedule.getBundle(HttpRequester.RESULT_HTTP);
-        if (http == null) return null;
+        if (http == null) return new MatchCursor();
         Bundle parse = http.getBundle(HttpRequester.RESULT_HTTP_PARSE);
-        if (parse == null) return null;
+        if (parse == null) return new MatchCursor();
         Parcelable[] array = parse.getParcelableArray(JSONArrayHandler.EXTRA_ARRAY);
         if (array == null) return new MatchCursor();
         try {
             MatchCursor mc = new MatchCursor();
             for (int i = 0; i < array.length; i++) {
+                if (isAbandoned()) return new MatchCursor();
                 String string = ((Bundle) array[i]).getString(JSONObjectHandler.VALUE);
                 Match match = Match.parseJSONObject(new JSONObject(string));
                 mc.add("", i, match.getJSONObject().toString(), "", "");
             }
             return mc;
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
