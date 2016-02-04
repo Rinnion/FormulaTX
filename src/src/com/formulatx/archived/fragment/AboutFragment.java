@@ -64,9 +64,9 @@ public class AboutFragment extends Fragment  {
 
         mApiObject = th.getByPostName(type);
 
+        String thumb =(mApiObject.thumb.isEmpty())?"":"<div><img src='"+ mApiObject.thumb + "' style=\"width: 100%; height: auto;\"></div>";
 
-
-        String webHTML="<html><style>p {color:#FFF;}</style><body>" + (((mApiObject==null)||(mApiObject.content==null))?"":mApiObject.content) + "</body></html>";
+        String webHTML="<html><style>p {color:#FFF;}</style><body>" + thumb + (((mApiObject==null)||(mApiObject.content==null))?"":mApiObject.content) + "</body></html>";
         String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
         if (mApiObject.content.isEmpty())
             webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>";
