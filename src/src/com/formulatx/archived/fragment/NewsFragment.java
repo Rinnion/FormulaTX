@@ -64,14 +64,14 @@ public class NewsFragment extends Fragment {
         String thumb =(apiObject.thumb.isEmpty())?"":"<div><img src='"+ apiObject.thumb + "' style=\"width: 100%; height: auto;\"></div>";
 
 
-        String title=(apiObject.title.isEmpty())?"":"<p style=\"color: #ffffff; font-size: 17sp; font-face: Roboto-Medium\">" + apiObject.title + "</p>";
-        String date=(apiObject.date.isEmpty())?"":"<div style=\"color: #929292; font-size: 12sp; font-face: Roboto-Regular\">" + apiObject.date + "</div>";
+        String title=(apiObject.title.isEmpty())?"":"<div style=\"color: #ffffff; font-size: 14pt; font-face: Roboto-Medium\">" + apiObject.title + "</div>";
+        String date=(apiObject.date.isEmpty())?"":"<div style=\"color: #929292; font-size: 11pt; font-face: Roboto-Regular\">" + apiObject.date + "</div>";
         String content=(apiObject.content.isEmpty())?"":apiObject.content;
 
         Log.d(TAG,String.format("Thumb: %s\nTitle: %s\nDate: %s\nContent: %s\n\n",thumb,title,date,content));
 
 
-        String strHtml="<html><style>body {padding:0px; color:#FFF;}</style><body>" + thumb + title  + date + "<div style=\"color: #EBEAEA; font-size: 14sp; font-face: Roboto-Regular\">" + content + "</div></body></html>";
+        String strHtml="<html><style>body {padding:0px; color:#FFF;}</style><body>" + thumb + "<p>" + title  + date + "</p><div style=\"color: #EBEAEA; font-size: 12pt; font-face: Roboto-Regular\">" + content + "</div></body></html>";
         return strHtml;
     }
 

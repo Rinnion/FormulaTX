@@ -5,7 +5,10 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
+import android.provider.MediaStore;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -80,7 +83,7 @@ public class GalleryContentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TabHost tabHost = (TabHost) inflater.inflate(R.layout.gallery_tabs_layout, container, false);
         tabHost.setup();
 
@@ -116,7 +119,7 @@ public class GalleryContentFragment extends Fragment {
         GridView gvPhoto = (GridView) tabHost.findViewById(R.id.gtl_gv_photo);
         DisplayMetrics dm = FormulaTXApplication.getAppContext().getResources().getDisplayMetrics();
         //FIXME: hardcoded values...
-        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels,dm.density ,2));
+        Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
         final int width = Math.abs(dm.widthPixels / 2);
         Log.i(TAG, String.valueOf(width));
         mPhotoAdapter = new SimpleCursorAdapter(getActivity(), R.layout.image_layout, null, names, to, 0) {
@@ -131,15 +134,45 @@ public class GalleryContentFragment extends Fragment {
         };
         gvPhoto.setAdapter(mPhotoAdapter);
 
+        gvPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String link1=((GalleryItemCursor) parent.getAdapter().getItem(position)).getItem().url;
+
+                Log.d(TAG,String.format("gvPhoto Link1: %s",link1) );
+
+                Uri intentUri= Uri.parse(link1);
+
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+
+                intent.setData(intentUri);
+                startActivity(intent);
+            }
+        });
+
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
         gvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String link=((GalleryItemCursor) parent.getAdapter().getItem(position)).getItem().link;
-                        GalleryHelper gh = new GalleryHelper(FormulaTXApplication.getDatabaseOpenHelper());
+                String link1=((GalleryItemCursor) parent.getAdapter().getItem(position)).getItem().link;
+                //GalleryHelper gh = new GalleryHelper(FormulaTXApplication.getDatabaseOpenHelper());
+                //String link2=gh.getItem(id).link;
 
-                String link1=gh.getItem(id).link;
+                Log.d(TAG,String.format("gvVideo Link1: %s",link1) );
+
+                Uri intentUri= Uri.parse(link1);
+
+                Intent intent=new Intent();
+
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(intentUri);
+
+                getActivity().startActivity(intent);
+
+
+
             }
         });
 

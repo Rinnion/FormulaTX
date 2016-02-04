@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
+import android.widget.LinearLayout;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.utils.WebViewWithCache;
 import com.rinnion.archived.R;
@@ -57,14 +59,25 @@ public class AboutFragment extends Fragment  {
         View view = inflater.inflate(R.layout.about_layout, container, false);
         final WebViewWithCache myWebView = (WebViewWithCache) view.findViewById(R.id.tv_about);
 
+        // myWebView = (WebViewWithCache) view.findViewById(R.id.tv_about);
+
         Bundle args = getArguments();
         String type = args.getString(TYPE);
+
+        if(type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY))
+        {
+            LinearLayout linearLayout=(LinearLayout) view.findViewById(R.id.logo_icons);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+
 
         ApiObjectHelper th = new ApiObjectHelper(FormulaTXApplication.getDatabaseOpenHelper());
 
         mApiObject = th.getByPostName(type);
 
         String thumb =(mApiObject.thumb.isEmpty())?"":"<div><img src='"+ mApiObject.thumb + "' style=\"width: 100%; height: auto;\"></div>";
+
+        Log.d(TAG,String.format("Thumb: %s\n\n",thumb));
 
         String webHTML="<html><style>p {color:#FFF;}</style><body>" + thumb + (((mApiObject==null)||(mApiObject.content==null))?"":mApiObject.content) + "</body></html>";
         String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";

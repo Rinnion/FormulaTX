@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
 
-<com.formulatx.archived.utils.WebViewWithCache xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical">
+<com.formulatx.archived.utils.WebViewWithCache
          android:layout_width="match_parent"
-         android:layout_height="match_parent" android:text="Описание турнира" android:id="@+id/tv_about" android:background="@drawable/general_bg">
+         android:layout_height="0dp" android:text="Описание турнира" android:id="@+id/tv_about" android:background="@drawable/general_bg"
+         android:layout_weight="1">
 
 </com.formulatx.archived.utils.WebViewWithCache>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_weight="0" android:gravity="center_horizontal"
+            android:visibility="gone" android:focusableInTouchMode="false" android:id="@+id/logo_icons">
+        <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/imageView3" android:src="@drawable/st_open" android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
+        <ImageView android:layout_width="75dp" android:layout_height="75dp"
+                   android:id="@+id/imageView4" android:src="@drawable/Bitmap" android:layout_marginRight="15dp"/>
+        <ImageView android:layout_width="75dp" android:layout_height="75dp"
+                   android:id="@+id/imageView5" android:src="@drawable/st_pet2" android:layout_marginRight="15dp"/>
+        <ImageView android:layout_width="75dp" android:layout_height="75dp"
+                   android:id="@+id/imageView6" android:src="@drawable/wta_logo" android:layout_marginRight="15dp"/>
+    </LinearLayout>
+</LinearLayout>
