@@ -2,6 +2,7 @@ package com.formulatx.archived.fragment;
 
 import android.database.Cursor;
 import com.formulatx.archived.parsers.Match;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -20,21 +21,25 @@ public class Schedule {
     public class Cort {
         public String cortName;
 
+        MatchCursor Cursor;
+
         public Cort(String name) {
             cortName = name;
+            Cursor = new MatchCursor();
         }
 
         public ArrayList<Match> Matches = new ArrayList<Match>();
 
-        public Match addMatch(){
-            Match object = new Match();
-            Matches.add(object);
-            return object;
-        }
-
         public Match addMatch(Match match) {
-            Matches.add(match);
+            try {
+                Cursor.add(cortName, Matches.size()+1, match.getJSONObject().toString(), "", "");
+                Matches.add(match);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             return match;
         }
+
     }
+
 }

@@ -231,16 +231,27 @@ public class MyNetworkContentContract {
 
         public static class Schedules {
             private static final String ladies = "http://parser.formulatx.com/ladies/order/%s/";
-            private static final String open = "http://parser.formulatx.com/order/%s/";
+            private static final String open = "http://parser.formulatx.com/spbopen/order/%s/";
 
             public static String getLadies() {
                 return String.format(ladies, MyLocale.getCurrent());
             }
 
             public static String getOpen() {
-                {
-                    return String.format(open, MyLocale.getCurrent());
-                }
+                return String.format(open, MyLocale.getCurrent());
+            }
+        }
+
+        public static class LiveScores {
+            private static final String ladies = "http://parser.formulatx.com/ladies/live/%s/";
+            private static final String open = "http://parser.formulatx.com/spbopen/live/%s/";
+
+            public static String getLadies() {
+                return String.format(ladies, MyLocale.getCurrent());
+            }
+
+            public static String getOpen() {
+                return String.format(open, MyLocale.getCurrent());
             }
         }
     }

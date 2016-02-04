@@ -2,20 +2,13 @@ package com.formulatx.archived.fragment;
 
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.MatrixCursor;
 import android.os.Bundle;
-import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.TournamentHelper;
-import com.formulatx.archived.database.model.ApiObjects.Tournament;
 import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONObjectHandler;
-import com.formulatx.archived.network.handlers.TournamentHandler;
 import com.formulatx.archived.parsers.Match;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +16,11 @@ import org.json.JSONObject;
 /**
  * Created by Lenovo on 03.02.2016.
  */
-public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
+public class LiveAsyncLoader extends AsyncTaskLoader<Schedule> {
     private final String string;
     private Schedule cursor;
 
-    public ScheduleAsyncLoader(Activity activity, String string) {
+    public LiveAsyncLoader(Activity activity, String string) {
         super(activity);
         this.string = string;
     }
