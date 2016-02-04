@@ -48,7 +48,7 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-                    /*
+
             publishProgress(5, null);
             MyNetwork.queryWeather(WeatherCursor.MOSCOW);
             publishProgress(10, null);

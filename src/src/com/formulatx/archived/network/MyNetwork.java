@@ -617,4 +617,65 @@ public final class MyNetwork {
 
         return fetcher.execute();
     }
+
+    public static Bundle getLadiesGrids(int i) {
+        Log.d(TAG, "getLadiesGrids");
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        String url;
+        switch (i){
+            case MyNetworkContentContract.FormulaTXApi.Grids.QUALIFICATION:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesQulification();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.MAIN_EVENT:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesMainEvent();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.DOUBLES:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesDoubles();
+                break;
+            default: return null;
+        }
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(url)
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenGrids(int i) {
+        Log.d(TAG, "getOpenGrids");
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        String url;
+        switch (i){
+            case MyNetworkContentContract.FormulaTXApi.Grids.QUALIFICATION:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenQulification();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.MAIN_EVENT:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenMainEvent();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.DOUBLES:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenDoubles();
+                break;
+            default: return null;
+        }
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(url)
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
 }

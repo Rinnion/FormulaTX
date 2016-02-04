@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeListener {
 
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
@@ -83,6 +83,8 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
+        mTabHost.setOnTabChangedListener(this);
+
         return view;
     }
 
@@ -93,6 +95,13 @@ public class ScheduleFragment extends Fragment {
         if (ab != null) {
             ab.setTitle(R.string.string_tournament_schedule);
             ab.setIcon(R.drawable.ic_action_previous_item);
+        }
+    }
+
+    @Override
+    public void onTabChanged(String s) {
+        if (mSchedule != null){
+            mAdapter.swapCursor(mSchedule.Corts.get(mSchedule.Corts.indexOf(s)).Cursor);
         }
     }
 
@@ -129,6 +138,7 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void FitTabs(ArrayList<Schedule.Cort> corts) {
+        mTabHost.setOnTabChangedListener(null);
         mTabHost.setup();
         mTabHost.clearAllTabs();
         for (Schedule.Cort cort:corts){
@@ -142,6 +152,7 @@ public class ScheduleFragment extends Fragment {
             });
             mTabHost.addTab(tabSpec);
         }
+        mTabHost.setOnTabChangedListener(this);
     }
 
 }

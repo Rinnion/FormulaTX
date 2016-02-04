@@ -254,5 +254,45 @@ public class MyNetworkContentContract {
                 return String.format(open, MyLocale.getCurrent());
             }
         }
+
+        public static class Grids {
+
+            public static final int QUALIFICATION = 0;
+            public static final int MAIN_EVENT = 1;
+            public static final int DOUBLES = 2;
+
+            private static final String ladies_qualification = "http://parser.formulatx.com/ladies/draw/%s/";
+            private static final String ladies_main_event = "http://parser.formulatx.com/ladies/draw/2/%s";
+            private static final String ladies_doubles = "http://parser.formulatx.com/ladies/draw/1/%s";
+
+            private static final String open_qualification = "http://parser.formulatx.com/spbopen/draw/%s/";
+            private static final String open_main_event = "http://parser.formulatx.com/spbopen/draw/2/%s";
+            private static final String open_doubles = "http://parser.formulatx.com/spbopen/draw/1/%s";
+
+            public static String getLadiesQulification() {
+                return String.format(ladies_qualification, MyLocale.getCurrent());
+            }
+
+            public static String getLadiesMainEvent() {
+                return String.format(ladies_main_event, MyLocale.getCurrent());
+            }
+
+            public static String getLadiesDoubles() {
+                return String.format(ladies_doubles, MyLocale.getCurrent());
+            }
+
+            public static String getOpenQulification() {
+                return String.format(open_qualification, MyLocale.getCurrent());
+            }
+
+            public static String getOpenMainEvent() {
+                return String.format(open_main_event, MyLocale.getCurrent());
+            }
+
+            public static String getOpenDoubles() {
+                return String.format(open_doubles, MyLocale.getCurrent());
+            }
+
+        }
     }
 }

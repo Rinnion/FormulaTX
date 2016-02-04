@@ -99,12 +99,14 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
         String[] names = new String[]{"resource", "text", "type"};
         String[] columns = new String[]{"_id", "resource", "text", "type"};
         MatrixCursor mc = new MatrixCursor(columns);
-        mc.addRow(new Object[]{1, android.R.drawable.stat_sys_warning,  getResources().getString(R.string.string_tournament_about), ABOUT});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_schedule), SCHEDULE});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_grids), GRIDS});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_liveScore), LIVESCORE});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_photogallery), VIDEO});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_findway), FINDWAY});
+
+        mc.addRow(new Object[]{1, R.drawable.match_about_icon,  getResources().getString(R.string.string_tournament_about), ABOUT});
+        mc.addRow(new Object[]{5, R.drawable.match_table_icon,  getResources().getString(R.string.string_tournament_schedule), SCHEDULE});
+        mc.addRow(new Object[]{6, R.drawable.match_grids_icon,  getResources().getString(R.string.string_tournament_grids), GRIDS});
+        mc.addRow(new Object[]{7, R.drawable.match_livescore_icon,  getResources().getString(R.string.string_tournament_liveScore), LIVESCORE});
+        mc.addRow(new Object[]{8, R.drawable.match_media_icon,  getResources().getString(R.string.string_photogallery), VIDEO});
+        mc.addRow(new Object[]{9, R.drawable.match_map_icon,  getResources().getString(R.string.string_tournament_findway), FINDWAY});
+
         ListView listView = (ListView) view.findViewById(R.id.mtl_lv_menu);
         SimpleCursorAdapter sca = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_menu_layout, mc, names, ints, 0){
             @Override
