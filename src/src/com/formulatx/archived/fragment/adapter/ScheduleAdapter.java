@@ -94,10 +94,16 @@ public class ScheduleAdapter extends SimpleCursorAdapter {
         TextView r11 = (TextView) view.findViewById(R.id.itl_tv_round_1);
         TextView r12 = (TextView) view.findViewById(R.id.itl_tv_round_2);
         TextView r13 = (TextView) view.findViewById(R.id.itl_tv_round_3);
+        TextView c = (TextView) view.findViewById(R.id.itl_tv_count);
+        View iv = view.findViewById(R.id.itl_iv_shot);
 
         r11.setText(team.r1);
         r12.setText(team.r2);
         r13.setText(team.r3);
+        c.setText(team.count == null ? "" : String.valueOf(team.count));
+        c.setVisibility(team.count == null ? View.GONE : View.VISIBLE);
+        iv.setVisibility(team.shot == null || !team.shot ? View.GONE : View.VISIBLE);
+
     }
 
     private void fitGamer(View v1, Gamer gamer) {

@@ -388,7 +388,12 @@ public class Utils {
     }
 
     public static Boolean getBooleanOrNull(JSONObject in, String key) throws JSONException {
-        return in.has(key) ? in.getBoolean(key) : null;
+
+
+        if (in.has(key))
+            return Boolean.parseBoolean(in.getString("shot")) || in.getString("shot").equals("1");
+        else
+            return null;
     }
 
     public static int[] getIntListFromJSONArray(String array) {

@@ -147,7 +147,7 @@ public class MainTournamentFragment extends Fragment{
                 if (tag.equals(PROGRAM)) showProgramFragment();
                 if (tag.equals(SCHEDULE)) showScheduleFragment();
                 if (tag.equals(GRIDS)) showGridsFragment();
-                if (tag.equals(LIVESCORE)) showEmptyFragment();
+                if (tag.equals(LIVESCORE)) showLiveScoreFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
                 if (tag.equals(FINDWAY)) showMapFragment();
             }
@@ -209,6 +209,19 @@ public class MainTournamentFragment extends Fragment{
 //        });
 
         return view;
+    }
+
+    private void showLiveScoreFragment() {
+        LiveScoreFragment mlf = new LiveScoreFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void showGalleryFragment() {

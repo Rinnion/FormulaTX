@@ -13,14 +13,30 @@
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content"
                   android:layout_height="fill_parent" android:gravity="center_vertical|right"
-                  android:minHeight="@dimen/match_table_score_size">
+                  android:minHeight="@dimen/match_table_score_size"
+    >
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itl_iv_shot"
+                android:src="@drawable/tennis_ball_icon"/>
+
+        <TextView
+                android:layout_width="@dimen/match_table_score_size"
+                android:layout_height="match_parent"
+                android:text="2"
+                android:id="@+id/itl_tv_count"
+                android:gravity="center"
+                android:layout_alignParentTop="true"/>
+
         <TextView android:layout_width="@dimen/match_table_score_size"
                   android:layout_height="match_parent"
                   android:text="2"
                   android:id="@+id/itl_tv_round_1"
                   android:gravity="center"
                   android:layout_alignParentTop="true"
-                />
+                  android:layout_marginLeft="7dp"/>
         <TextView android:layout_width="@dimen/match_table_score_size"
                   android:layout_height="match_parent"
                   android:text="2"
@@ -33,5 +49,6 @@
                   android:id="@+id/itl_tv_round_3"
                   android:gravity="center"
                   android:layout_marginLeft="7dp"/>
+
     </LinearLayout>
 </LinearLayout>

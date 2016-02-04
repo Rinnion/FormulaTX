@@ -561,7 +561,7 @@ public final class MyNetwork {
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
 
-        fetcher = builder.setName("queryParser")
+        fetcher = builder.setName("getLadiesSchedule")
                 .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getLadies())
                 .setHandler(handler)
                 .create();
@@ -579,6 +579,39 @@ public final class MyNetwork {
 
         fetcher = builder.setName("getOpenSchedule")
                 .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getOpen())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getLadiesLiveScore() {
+        Log.d(TAG, String.format("getLadiesLiveScore"));
+
+        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.LiveScores.getLadies())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenLiveScore() {
+        Log.d(TAG, String.format("getOpenLiveScore"));
+
+        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getOpenLiveScore")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.LiveScores.getOpen())
                 .setHandler(handler)
                 .create();
 
