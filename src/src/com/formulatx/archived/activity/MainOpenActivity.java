@@ -3,6 +3,8 @@ package com.formulatx.archived.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import com.formulatx.archived.fragment.MainTournamentFragment;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
@@ -26,6 +28,13 @@ public class MainOpenActivity extends Activity {
         ab.setHomeButtonEnabled(true);
 
         showTodayFragment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_tournir, menu);
+        return true;
     }
 
     public void showTodayFragment() {

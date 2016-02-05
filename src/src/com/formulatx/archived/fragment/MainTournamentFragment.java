@@ -99,7 +99,18 @@ public class MainTournamentFragment extends Fragment{
             ab.setTitle(R.string.string_turnir);
         }
 
-        //BackgroundSelector.setProperBackground(view.findViewById(R.id.mtl_ll_background), type);
+        ImageView iv1 = (ImageView) view.findViewById(R.id.mtl_iv_partner_1);
+        ImageView iv2 = (ImageView) view.findViewById(R.id.mtl_iv_partner_2);
+        if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)){
+             iv1.setImageResource(R.drawable.st_pet2);
+            iv2.setImageResource(R.drawable.wta_logo);
+        }
+        if (type.equals(TournamentHelper.TOURNAMENT_OPEN)){
+            iv1.setImageResource(R.drawable.st_open);
+            iv2.setImageResource(R.drawable.bitmap);
+        }
+
+
 
         TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
         Tournament trnmt = th.getByPostName(type);

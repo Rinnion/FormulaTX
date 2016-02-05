@@ -15,10 +15,9 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
+import com.formulatx.archived.network.loaders.LiveAsyncLoader;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package com.formulatx.archived.fragment;
+package com.formulatx.archived.network.loaders;
 
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.TournamentHelper;
+import com.formulatx.archived.fragment.MatchCursor;
 import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONArrayHandler;

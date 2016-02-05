@@ -65,8 +65,6 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
         view.setColorScheme(android.R.color.holo_red_dark,android.R.color.holo_orange_dark,android.R.color.holo_green_dark,android.R.color.holo_blue_dark );
-        String type = getArguments().getString(TOURNAMENT_POST_NAME);
-        //BackgroundSelector.setProperBackground(view, type);
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

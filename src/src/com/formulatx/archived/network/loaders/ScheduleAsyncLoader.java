@@ -1,4 +1,4 @@
-package com.formulatx.archived.fragment;
+package com.formulatx.archived.network.loaders;
 
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
@@ -10,6 +10,7 @@ import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
+import com.formulatx.archived.fragment.Schedule;
 import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONObjectHandler;
@@ -56,11 +57,11 @@ public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
     }
 
     private Schedule unWrapSchedule(Bundle ladiesSchedule) {
-        if (ladiesSchedule == null) return null;
+        if (ladiesSchedule == null) return new Schedule();
         Bundle http = ladiesSchedule.getBundle(HttpRequester.RESULT_HTTP);
-        if (http == null) return null;
+        if (http == null) return new Schedule();
         Bundle parse = http.getBundle(HttpRequester.RESULT_HTTP_PARSE);
-        if (parse == null) return null;
+        if (parse == null) return new Schedule();
         String string = parse.getString(JSONObjectHandler.VALUE);
         try {
             JSONObject json = new JSONObject(string);
@@ -82,6 +83,6 @@ public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return new Schedule();
     }
 }

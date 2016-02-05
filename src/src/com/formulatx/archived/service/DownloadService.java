@@ -15,7 +15,6 @@ import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.helper.TwitterHelper;
 import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.utils.Log;
-import com.formulatx.archived.utils.NetworkConnectionCheck;
 import com.rinnion.archived.R;
 import org.json.JSONException;
 import org.lorecraft.phparser.SerializedPhpParser;
@@ -50,26 +49,18 @@ public class DownloadService extends IntentService {
         try {
 
             publishProgress(5, null);
-            MyNetwork.queryWeather(WeatherCursor.MOSCOW);
+            MyNetwork.isRequestSuccess(MyNetwork.queryWeather(WeatherCursor.MOSCOW));
             publishProgress(10, null);
             MyNetwork.queryWeather(WeatherCursor.PETERSBURG);
 
             loadAbout(Settings.ABOUT_API_OBJECT);
-            //publishError("Network error", (Settings.DEBUG) ? "Couldn't load about" : null);
             publishProgress(20, null);
 
-            if (!FetchTournamentsList(20, 50)) {
-                return;
-            }
-            if (!FetchAreasList(50, 70)){
-                return;
-            }
-            if (!PreLoadNews(70, 95)){
-                return;
-            }
+            FetchTournamentsList(20, 50);
+            FetchAreasList(50, 70);
+            PreLoadNews(70, 95);
 
-
-                                       /**/
+            /**/
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
@@ -77,51 +68,37 @@ public class DownloadService extends IntentService {
         }
     }
 
-    private boolean PreLoadNews(int i, int i1) {
+    private boolean PreLoadNews(int i, int i1) throws Exception {
         fetchTournamentNews(TournamentHelper.TOURNAMENT_LADIES_TROPHY);
         publishProgress(i+(i1-i)/2, "");
         fetchTournamentNews(TournamentHelper.TOURNAMENT_OPEN);
         return true;
     }
 
-    private boolean fetchTournamentNews(String tn) {
+    private void fetchTournamentNews(String tn) throws Exception {
         Bundle bundle;
         TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
         Tournament ladies = th.getByPostName(tn);
         bundle = MyNetwork.queryTournamentNewsList(ladies.id, ladies.post_name);
-        String result = bundle.getString(HttpRequester.RESULT);
-        boolean equals = result.equals(HttpRequester.RESULT_HTTP);
-        if (!equals){
-            String mess = bundle.getString(result);
-            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? mess : null);
-            return false;
-        }
-        return true;
+        if (MyNetwork.hasException(bundle)) MyNetwork.throwException(bundle);
     }
 
-    private boolean loadAbout(int aboutApiObject) {
+    private void loadAbout(int aboutApiObject) throws Exception {
         Bundle bundle = MyNetwork.queryApiObject(aboutApiObject, new ApiObjectHandler());
-        String result = bundle.getString(HttpRequester.RESULT);
-        boolean equals = result.equals(HttpRequester.RESULT_HTTP);
-        if (!equals){
-            String mess = bundle.getString(result);
-            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? mess : null);
-        }
-        return equals;
+        if (MyNetwork.hasException(bundle)) MyNetwork.throwException(bundle);
     }
 
-    private boolean FetchTournamentsList(int startProgress, int endProgress) throws JSONException {
+    private void FetchTournamentsList(int startProgress, int endProgress) throws Exception {
 
         final int firstStep = 5;
 
         Bundle tournaments = MyNetwork.queryTournamentList();
+        if (MyNetwork.hasException(tournaments)) MyNetwork.throwException(tournaments);
+
         int[] intArray = MyNetwork.getIntArray(tournaments);
+        if (intArray == null) {throw new Exception("empty intArray");       }
         startProgress += firstStep;
         publishProgress(startProgress, null);
-        if (intArray == null) {
-            publishError(getString(R.string.string_connection_error), (Settings.DEBUG) ? tournaments.toString() : null);
-            return false;
-        }
 
         float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
         for (int i = 0; i < intArray.length; i++) {
@@ -129,15 +106,17 @@ public class DownloadService extends IntentService {
             MyNetwork.queryApiObject(id, new TournamentHandler());
             publishProgress((int)(startProgress + pr * i), null);
         }
-        return true;
-
     }
 
-    private boolean FetchAreasList(int startProgress, int endProgress) throws JSONException {
+    private boolean FetchAreasList(int startProgress, int endProgress) throws Exception {
         final int firstStep = 5;
 
         Bundle areas = MyNetwork.queryAreasList();
+        if (MyNetwork.hasException(areas)) MyNetwork.throwException(areas);
+
         int[] intArray = MyNetwork.getIntArray(areas);
+        if (intArray == null) {throw new Exception("empty intArray");       }
+
         startProgress += firstStep;
         publishProgress(startProgress, null);
 

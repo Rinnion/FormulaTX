@@ -21,6 +21,7 @@ import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.helper.ParserHelper;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
 import com.formulatx.archived.network.MyNetworkContentContract;
+import com.formulatx.archived.network.loaders.GridsAsyncLoader;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
 
@@ -42,6 +43,7 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Grids mSchedule;
     private ArrayAdapter<String> mSpinnerAdapter;
+    private View mEmptyView;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -72,6 +74,7 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mEmptyView = view.findViewById(R.id.emptyView);
         mTabHost = (TabHost) view.findViewById(R.id.tabHost);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
 
@@ -195,10 +198,17 @@ public class GridsFragment extends Fragment implements ActionBar.OnNavigationLis
     private void UpdateSchedule(int index) {
         if (mSchedule == null) {
             mSwipeRefreshLayout.setRefreshing(true);
+            mEmptyView.setVisibility(View.GONE);
+
         } else {
-            FitTabs(mSchedule.Rounds);
-            onTabChanged(mTabHost.getCurrentTabTag());
             mSwipeRefreshLayout.setRefreshing(false);
+
+            FitTabs(mSchedule.Rounds);
+            if (mSchedule.Rounds.size()==0) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else {
+                mAdapter.swapCursor(mSchedule.Rounds.get(0).Cursor);
+            }
         }
 
     }

@@ -16,11 +16,26 @@
                 android:layout_height="150sp" android:layout_gravity="center_horizontal"
                 android:gravity="center">
 
-            <HorizontalScrollView
+            <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/horizontalScrollView" android:layout_gravity="center_vertical"
-                    />
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:id="@+id/mtl_iv_partner_1"
+                        android:scaleType="fitCenter"/>
+
+                <ImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:id="@+id/mtl_iv_partner_2"
+                        android:layout_marginLeft="40dp"
+                        android:scaleType="fitCenter"/>
+            </LinearLayout>
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

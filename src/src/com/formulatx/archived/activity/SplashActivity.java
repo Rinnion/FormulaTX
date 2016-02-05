@@ -57,7 +57,7 @@ public class SplashActivity extends Activity {
                             Log.d(TAG, "create dialog: ");
                             try {
                                 AlertDialog.Builder ab = new AlertDialog.Builder(SplashActivity.this);
-                                ab.setTitle("Error");
+                                ab.setTitle(R.string.string_alert_loading_error);
                                 ab.setMessage(error);
                                 ab.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override

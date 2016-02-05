@@ -57,7 +57,7 @@ public class EmptyFragment extends Fragment {
         ab.setTitle(R.string.string_stub);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
-        mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>Заглушка</h2>Здесь пока ничего нет</body></html>", "text/html; charset=UTF-8", null);
+        mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>Раздел подготавливается</h2></body></html>", "text/html; charset=UTF-8", null);
         mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
 
         return view;

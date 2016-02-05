@@ -678,4 +678,20 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    public static boolean isRequestSuccess(Bundle bundle) {
+        return bundle.getString(HttpRequester.RESULT).equals(HttpRequester.RESULT_HTTP);
+    }
+
+    public static boolean hasException(Bundle bundle) {
+        return bundle.getString(HttpRequester.RESULT).equals(HttpRequester.RESULT_EXCEPTION);
+    }
+
+    public static void throwException(Bundle bundle) throws Exception {
+        String result = bundle.getString(HttpRequester.RESULT);
+        if (result !=null && result.equals(HttpRequester.RESULT_EXCEPTION)){
+            Exception exception = (Exception) bundle.getSerializable(HttpRequester.RESULT_EXCEPTION);
+            throw exception;
+        }
+
+    }
 }

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TabHost;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
+import com.formulatx.archived.network.loaders.ScheduleAsyncLoader;
 import com.rinnion.archived.R;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.utils.Log;
@@ -35,6 +36,8 @@ public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeLis
     private ScheduleAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Schedule mSchedule;
+    private View mEmptyView;
+    private View mErrorView;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,6 +68,8 @@ public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mEmptyView = view.findViewById(R.id.emptyView);
+        mErrorView = view.findViewById(R.id.errorView);
         mTabHost = (TabHost) view.findViewById(R.id.tabHost);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
 
@@ -129,10 +134,15 @@ public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeLis
     private void UpdateSchedule() {
         if (mSchedule == null) {
             mSwipeRefreshLayout.setRefreshing(true);
+            mEmptyView.setVisibility(View.GONE);
         } else {
-            FitTabs(mSchedule.Corts);
-            mAdapter.swapCursor(mSchedule.Corts.get(0).Cursor);
             mSwipeRefreshLayout.setRefreshing(false);
+            FitTabs(mSchedule.Corts);
+            if (mSchedule.Corts.size()==0) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else {
+                mAdapter.swapCursor(mSchedule.Corts.get(0).Cursor);
+            }
         }
 
     }

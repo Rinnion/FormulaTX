@@ -65,7 +65,7 @@ public class AboutFragment extends Fragment  {
         String type = args.getString(TYPE);
         //BackgroundSelector.setProperBackground(view, type);
 
-        if(type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY))
+        if(type.equals("about"))
         {
             LinearLayout linearLayout=(LinearLayout) view.findViewById(R.id.logo_icons);
             linearLayout.setVisibility(View.VISIBLE);
