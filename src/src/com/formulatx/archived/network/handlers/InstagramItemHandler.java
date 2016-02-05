@@ -1,21 +1,22 @@
 package com.formulatx.archived.network.handlers;
 
 import android.os.Bundle;
-import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.InstagramHelper;
 import com.formulatx.archived.database.helper.TwitterHelper;
+import com.formulatx.archived.database.model.InstagramItem;
 import com.formulatx.archived.database.model.TwitterItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TwitterItemHandler extends JSONObjectHandler {
+public class InstagramItemHandler extends JSONObjectHandler {
 
     private static final String TAG = "TwitterHandler";
-    private final TwitterHelper gh;
+    private final InstagramHelper gh;
     private long mId;
 
-    public TwitterItemHandler(long id) {
+    public InstagramItemHandler(long id) {
         mId = id;
-        gh = new TwitterHelper();
+        gh = new InstagramHelper();
     }
 
     @Override
@@ -27,7 +28,7 @@ public class TwitterItemHandler extends JSONObjectHandler {
         String link = object.getString("link");
         String date = object.getString("date");
         long id = object.getLong("id");
-        TwitterItem ti = new TwitterItem(id, mId, text, link, date);
+        InstagramItem ti = new InstagramItem(id, mId, text, link, date);
         gh.merge(ti);
 
         return super.Handle(object);

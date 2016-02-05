@@ -282,37 +282,17 @@ public final class MyNetwork {
 
         return getIntArray(execute);
     }
+    public static Bundle queryTwitter(int page) {
+        Log.d(TAG, "queryGallery");
 
-    //Загрузка списка новостей турнира
-    public static Bundle queryTwitter(long id) {
-
-        TwitterHandler mHandler = new TwitterHandler(id);
-
-        if (Settings.NETDEBUG) {
-            String fileName = "json/references-57-1.json";
-            Bundle result = processFile(fileName, mHandler);
-            return result;
-        }
-
-        Log.d(TAG, String.format("queryGallery"));
-        final DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
+        TwitterHandler mHandler = new TwitterHandler(0);
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher;
-        try {
-            fetcher = builder.setName("queryTournamentNewsList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl(id, 1))
-                    .setHandler(mHandler)
-                    .create();
-
-        } catch (UnsupportedEncodingException e) {
-            Log.d(TAG, "Error while server request", e);
-            Bundle bundle = new Bundle();
-            bundle.putString("RESULT", "EXCEPTION");
-            bundle.putSerializable("EXCEPTION", e);
-            return bundle;
-        }
+        fetcher = builder.setName("queryTournamentNewsList")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl("twitter", page))
+                .setHandler(mHandler)
+                .create();
 
         return fetcher.execute();
     }
@@ -694,4 +674,21 @@ public final class MyNetwork {
         }
 
     }
+
+    //Загрузка списка новостей турнира
+    public static Bundle queryInstagram(int page) {
+        Log.d(TAG, "queryInstagram");
+
+        InstagramHandler mHandler = new InstagramHandler(1);
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryInstagram")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl("instagram", page))
+                .setHandler(mHandler)
+                .create();
+
+        return fetcher.execute();
+    }
+
 }

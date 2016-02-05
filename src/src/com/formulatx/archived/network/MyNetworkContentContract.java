@@ -215,16 +215,20 @@ public class MyNetworkContentContract {
             public static final String URL = URL_API + "references";
 
             public static class getreferencebyidapproved {
-                public static final String URL_METHOD = URL + "?method=getreferencebyidapproved";
 
-                public static ArrayList<NameValuePair> getUrl(long id, long page) {
-                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(5);
-                    dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
-                    dm_partner.add(new BasicNameValuePair("page", String.valueOf(page)));
-                    dm_partner.add(new BasicNameValuePair("num_rec", String.valueOf(10)));
-                    dm_partner.add(new BasicNameValuePair("sort_by", "date"));
-                    dm_partner.add(new BasicNameValuePair("sort_method", "desc"));
-                    return dm_partner;
+                public String SYSTEM_TWITTER = "twitter";
+                public String SYSTEM_INSTAGRAM = "instagram";
+                public static final String URL_METHOD = URL + "?method=getReferenceBySystemApproved";
+
+                public static String getUrl(String type, long page) {
+                    StringBuffer sb = new StringBuffer(URL_METHOD);
+                    sb.append("&system=").append(type);
+                    sb.append("&page=").append(String.valueOf(page));
+                    sb.append("&num_rec=").append(10);
+                    sb.append("&sort_by=").append("date");
+                    sb.append("&sort_method=").append("DESC");
+                    sb.append("&field_list=").append("id,date,description,link");
+                    return sb.toString();
                 }
             }
         }

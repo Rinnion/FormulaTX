@@ -5,9 +5,14 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
+import com.formulatx.archived.database.cursor.InstagramItemCursor;
+import com.formulatx.archived.database.helper.InstagramHelper;
+import com.formulatx.archived.database.model.TwitterItem;
+import com.formulatx.archived.network.loaders.InstagramAsyncLoader;
 import com.formulatx.archived.utils.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -41,6 +46,7 @@ public class SocialFragment extends Fragment {
     private SimpleCursorAdapter mTwitterAdapter;
     private SimpleCursorAdapter mInstagramAdapter;
     private SwipeRefreshLayout mViewTwitter;
+    private SwipeRefreshLayout mViewInstaram;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,45 +81,57 @@ public class SocialFragment extends Fragment {
         TabHost.TabSpec tabSpec;
 
         // создаем вкладку и указываем тег
-        //tabSpec = tabHost.newTabSpec(TAB_TAG_INSTAGRAM);
-        //tabSpec.setIndicator(getString(R.string.string_instagram));
-        //tabSpec.setContent(R.id.stl_tab_instagram);
-        //tabHost.addTab(tabSpec);
+        tabSpec = tabHost.newTabSpec(TAB_TAG_INSTAGRAM);
+        tabSpec.setIndicator(getString(R.string.string_instagram));
+        tabSpec.setContent(R.id.stl_tab_instagram);
+        tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec(TAB_TAG_TWITTER);
         tabSpec.setIndicator(getString(R.string.string_twitter));
         tabSpec.setContent(R.id.stl_tab_twitter);
         tabHost.addTab(tabSpec);
+
+        tabHost.setCurrentTabByTag(TAB_TAG_TWITTER);
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (tabId.equals(TAB_TAG_INSTAGRAM)){
+                    mViewInstaram.setRefreshing(true);
+                    getLoaderManager().restartLoader(INSTAGRAM_LOADER, Bundle.EMPTY, new InstagramCallback());
+                }
+                if (tabId.equals(TAB_TAG_TWITTER)){
+                    mViewTwitter.setRefreshing(true);
+                    getLoaderManager().restartLoader(TWITTER_LOADER, Bundle.EMPTY, new TwitterCallback());
+
+                }
+            }
+        });
+
+
         mViewTwitter = (SwipeRefreshLayout) tabHost.findViewById(R.id.stl_tab_twitter);
         mViewTwitter.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
         mViewTwitter.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mViewTwitter.setRefreshing(true);
-                Bundle bundle = new Bundle();
-                getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
+                getLoaderManager().restartLoader(TWITTER_LOADER, Bundle.EMPTY, new TwitterCallback());
             }
         });
 
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        mViewInstaram = (SwipeRefreshLayout) tabHost.findViewById(R.id.stl_tab_instagram);
+        mViewInstaram.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
+        mViewInstaram.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onTabChanged(String tabId) {
-                if (tabId.equals(TAB_TAG_INSTAGRAM)){
-                    Bundle bundle = new Bundle();
-                    getLoaderManager().initLoader(INSTAGRAM_LOADER, bundle, new InstagramCallback());
-                }
-                if (tabId.equals(TAB_TAG_TWITTER)){
-                    Bundle bundle = new Bundle();
-                    getLoaderManager().initLoader(TWITTER_LOADER, bundle, new TwitterCallback());
-
-                }
+            public void onRefresh() {
+                mViewInstaram.setRefreshing(true);
+                getLoaderManager().restartLoader(INSTAGRAM_LOADER, Bundle.EMPTY, new InstagramCallback());
             }
         });
 
-        tabHost.setCurrentTabByTag(TAB_TAG_TWITTER);
 
-        String[] names = new String[]{TwitterHelper.COLUMN_TEXT, TwitterHelper.ALIAS_API_OBJECT_TITLE, TwitterHelper.COLUMN_DATE};
-        int[] to = new int[] {R.id.sitl_tv_text, R.id.sitl_tv_caption, R.id.sitl_tv_date};
+        String[] names = new String[]{TwitterHelper.COLUMN_TEXT, TwitterHelper.COLUMN_DATE};
+        int[] to = new int[] {R.id.sitl_tv_text, R.id.sitl_tv_date};
 
         ListView lvTwitter = (ListView) tabHost.findViewById(R.id.stl_lv_twitter);
         mTwitterAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_social_twitter_layout, null, names, to, 0) {};
@@ -121,13 +139,15 @@ public class SocialFragment extends Fragment {
         lvTwitter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getActivity(), "pressed", Toast.LENGTH_SHORT).show();
-                //Object item = parent.getAdapter().getItem(position);
-                //Log.d(TAG, "pos:" +position);
+                TwitterItem item = ((TwitterItemCursor) parent.getItemAtPosition(position)).getItem();
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.link));
+                startActivity(myIntent);
             }
         });
 
 
+        names = new String[]{InstagramHelper.COLUMN_TEXT, InstagramHelper.COLUMN_LINK};
+        to = new int[] {R.id.siil_tv_text, R.id.siil_iv_image};
         ListView lvInstagram = (ListView) tabHost.findViewById(R.id.stl_lv_instagram);
         mInstagramAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_social_instagram_layout, null, names, to, 0) {
             @Override
@@ -160,20 +180,21 @@ public class SocialFragment extends Fragment {
     }
 
 
-    private class InstagramCallback implements android.app.LoaderManager.LoaderCallbacks<GalleryItemCursor> {
+    private class InstagramCallback implements android.app.LoaderManager.LoaderCallbacks<InstagramItemCursor> {
         @Override
-        public Loader<GalleryItemCursor> onCreateLoader(int id, Bundle args) {
-            return null;
-            //return new GalleryAsyncLoader(getActivity(), 205, GalleryHelper.TYPE_PICTURE);
+        public Loader<InstagramItemCursor> onCreateLoader(int id, Bundle args) {
+            mViewInstaram.setRefreshing(true);
+            return new InstagramAsyncLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<GalleryItemCursor> loader, GalleryItemCursor data) {
+        public void onLoadFinished(Loader<InstagramItemCursor> loader, InstagramItemCursor data) {
             mInstagramAdapter.swapCursor(data);
+            mViewInstaram.setRefreshing(false);
         }
 
         @Override
-        public void onLoaderReset(Loader<GalleryItemCursor> loader) {
+        public void onLoaderReset(Loader<InstagramItemCursor> loader) {
 
         }
     }

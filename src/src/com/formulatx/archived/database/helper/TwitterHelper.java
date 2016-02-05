@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.CommentCursor;
 import com.formulatx.archived.database.model.TwitterItem;
@@ -55,10 +56,11 @@ public class TwitterHelper implements BaseColumns {
 
     private DatabaseOpenHelper doh;
 
-    public TwitterHelper(DatabaseOpenHelper doh) {
-        this.doh = doh;
+    public TwitterHelper() {
+        this.doh = FormulaTXApplication.getDatabaseOpenHelper();
     }
 
+    /*
     public TwitterItemCursor getAllItems() {
         Log.v(TAG, "getAllItems ()");
 
@@ -75,6 +77,23 @@ public class TwitterHelper implements BaseColumns {
                 new TwitterItemCursor.Factory(),
                 sql,
                 new String[]{TYPE},
+                null);
+        c.moveToFirst();
+        return c;
+    }
+    */
+
+    public TwitterItemCursor getAllItems() {
+        Log.v(TAG, "getAllItems ()");
+
+        String sql = "SELECT " + ALL_COLUMNS +
+                " FROM " + DATABASE_TABLE + "";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        TwitterItemCursor c = (TwitterItemCursor) d.rawQueryWithFactory(
+                new TwitterItemCursor.Factory(),
+                sql,
+                null,
                 null);
         c.moveToFirst();
         return c;

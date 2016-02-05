@@ -130,31 +130,6 @@ public class DownloadService extends IntentService {
         return true;
     }
 
-    private void FetchSocialsForTournament(ApiObject ao) throws JSONException {
-        if (ao == null) return;
-        try {
-            String references_include = ao.references_include;
-            Log.d(TAG, String.valueOf(references_include));
-            SerializedPhpParser php = new SerializedPhpParser(references_include);
-            Map parse = (Map) php.parse();
-            TwitterHelper aoh = new TwitterHelper(FormulaTXApplication.getDatabaseOpenHelper());
-            for (Object item : parse.keySet()) {
-                Log.d(TAG, "key:'" + String.valueOf(item) + "'");
-                try {
-                    String value = parse.get(item).toString();
-                    Log.d(TAG, "value:'" + String.valueOf(value) + "'");
-                    long l = Long.parseLong(value);
-                    MyNetwork.queryTwitter(l);
-                    aoh.attachReference(ao.id, l);
-                } catch (Exception ignored) {
-                    Log.d(TAG, "skip item " + String.valueOf(item));
-                }
-            }
-        }catch(Exception ex){
-            Log.d(TAG, "FetchSocialsForTournament exception:", ex);
-        }
-    }
-
     private void publishError(String error, String custom_message) {
         Log.d(TAG, "publishError: " + error);
         FormulaTXApplication.setParameter(Settings.LOADING_TYPE, Settings.LOADING_ERROR);

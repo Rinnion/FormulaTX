@@ -31,8 +31,7 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        TwitterHelper aoh=new TwitterHelper(doh);
+        TwitterHelper aoh=new TwitterHelper();
         deliverResult(aoh.getAllItems());
     }
 
@@ -40,29 +39,11 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
     public TwitterItemCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        TwitterHelper aoh = new TwitterHelper(doh);
-        TournamentHelper th = new TournamentHelper(doh);
-        ApiObjectCursor all = th.getAll();
-        while (!all.isAfterLast()) {
-            ApiObject tournament = all.getItem();
-            Log.d(TAG, String.valueOf(tournament));
-            if (tournament != null) {
-                aoh.detachAllReferences(tournament.id);
-                try {
-                    int[] ints = Utils.getIntListFromJSONArray(tournament.references_include);
-                    for (int i : ints) {
-                        aoh.attachReference(tournament.id,i);
-                        MyNetwork.queryTwitter(i);
-                    }
-                }catch (Exception ignored){
-                    Log.d(TAG, "Couldn't parse references for " + tournament + ". " + ignored.getMessage());
-                }
-            }
-            all.moveToNext();
-        }
+        MyNetwork.queryTwitter(0);
+
+        TwitterHelper th = new TwitterHelper();
         TwitterItemCursor cursor;
-        cursor = aoh.getAllItems();
+        cursor = th.getAllItems();
         return cursor;
     }
 }

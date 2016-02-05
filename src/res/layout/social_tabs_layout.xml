@@ -15,17 +15,12 @@
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <LinearLayout
+            <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/stl_tab_instagram"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_horizontal">
+                    android:layout_height="match_parent">
                 <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stl_lv_instagram"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/stl_tv_no_photo" android:visibility="gone"/>
-            </LinearLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
             <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/stl_tab_twitter"
                     android:layout_width="match_parent"
