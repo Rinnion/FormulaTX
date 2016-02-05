@@ -4,5 +4,5 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:textAppearance="?android:attr/textAppearanceMedium"
-                                             android:id="@+id/nl_tv_content" style="@style/main_text_small" android:paddingTop="15dp"/>
+                                             android:id="@+id/wl_webview" style="@style/main_text_small" android:paddingTop="15dp"/>
 

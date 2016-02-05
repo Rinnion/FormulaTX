@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.SimpleCursorAdapter;
@@ -15,6 +16,7 @@ import com.rinnion.archived.R;
 import com.formulatx.archived.database.cursor.GalleryDescriptionCursor;
 import com.formulatx.archived.database.helper.GalleryHelper;
 import com.formulatx.archived.utils.Log;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,10 +43,29 @@ public class PodcastFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        String[] names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE};
-        int[] to = new int[]{R.id.itl_tv_text};
+        //COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO
+        String[] names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE,GalleryHelper.COLUMN_GALLERY_DESCRIPTION_PICTURE };
+        int[] to = new int[]{R.id.ipl_text_title,R.id.imgLogo};
 
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_text_layout, null, names, to, 0);
+        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_podcast_layout, null, names, to, 0){
+            @Override
+            public void setViewImage(ImageView v, String value) {
+                try {
+
+                    Log.d(TAG,String.format("Picasso try load: %s",value));
+                    Picasso.with(getActivity())
+                            .load(value)
+                            .placeholder(R.drawable.logo_splash_screen)
+                            .error(R.drawable.logo_splash_screen)
+                            .resize(75,75)
+                            .into(v);
+                }
+                catch (Exception ex)
+                {
+                    Log.d(TAG,"Picasso",ex);
+                }
+            }
+        };
 
         setListAdapter(mAdapter);
         getLoaderManager().initLoader(R.id.gallery_loader, Bundle.EMPTY, new PodcastLoaderCallback());
@@ -74,6 +95,7 @@ public class PodcastFragment extends ListFragment {
                 .replace(R.id.fragment_container, pcf)
                 .addToBackStack(null)
                 .commit();
+
     }
 
     @Override
