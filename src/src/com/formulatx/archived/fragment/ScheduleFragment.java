@@ -12,13 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.formulatx.archived.database.model.Parser;
+import android.widget.TabHost;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
-import com.formulatx.archived.network.loaders.ParserAsyncLoader;
 import com.rinnion.archived.R;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
-import com.formulatx.archived.network.loaders.cursor.ParserDataCursor;
 import com.formulatx.archived.utils.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,12 +27,14 @@ import com.formulatx.archived.utils.Log;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.                                                              np:\\.\pipe\LOCALDB#C9D6BA74\tsql\query
  */
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeListener {
 
     public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
+    private TabHost mTabHost;
     private ScheduleAdapter mAdapter;
-    private SwipeRefreshLayout view;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Schedule mSchedule;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -62,24 +64,26 @@ public class ScheduleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (SwipeRefreshLayout) inflater.inflate(R.layout.refreshable_list_layout, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listView);
+        View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
+        mTabHost = (TabHost) view.findViewById(R.id.tabHost);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
 
+        ListView mListView = (ListView) mSwipeRefreshLayout.findViewById(R.id.listView);
         mAdapter = new ScheduleAdapter(getActivity(), null);
+        mListView.setAdapter(mAdapter);
 
-        //listView.setAdapter(mAdapter);
-        //listView.setDividerHeight(20);
+        getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ScheduleLoaderCallBack());
 
-        getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
-
-        view.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
-        view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout.setColorScheme(android.R.color.holo_red_dark, android.R.color.holo_orange_dark, android.R.color.holo_green_dark, android.R.color.holo_blue_dark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                view.setRefreshing(true);
-                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ParserLoaderCallback());
+                mSwipeRefreshLayout.setRefreshing(true);
+                getLoaderManager().initLoader(R.id.tables_loader, Bundle.EMPTY, new ScheduleLoaderCallBack());
             }
         });
+
+        mTabHost.setOnTabChangedListener(this);
 
         return view;
     }
@@ -94,24 +98,61 @@ public class ScheduleFragment extends Fragment {
         }
     }
 
-    private class ParserLoaderCallback implements android.app.LoaderManager.LoaderCallbacks<ParserDataCursor> {
+    @Override
+    public void onTabChanged(String s) {
+        if (mSchedule != null){
+            mAdapter.swapCursor(mSchedule.Corts.get(mSchedule.Corts.indexOf(s)).Cursor);
+        }
+    }
+
+    private class ScheduleLoaderCallBack implements android.app.LoaderManager.LoaderCallbacks<Schedule> {
         @Override
-        public Loader<ParserDataCursor> onCreateLoader(int id, Bundle args) {
+        public Loader<Schedule> onCreateLoader(int id, Bundle args) {
             Log.d(TAG, "onCreateLoader");
-            return new ParserAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME), Parser.SPBOPEN_TIMETABLE, "pyatnica-25-09-2015", "live", false);
+            return new ScheduleAsyncLoader(getActivity(), getArguments().getString(TOURNAMENT_POST_NAME));
         }
 
         @Override
-        public void onLoadFinished(Loader<ParserDataCursor> loader, ParserDataCursor data) {
+        public void onLoadFinished(Loader<Schedule> loader, Schedule data) {
             Log.d(TAG, "onLoadFinished");
-            mAdapter.swapCursor(data);
-            view.setRefreshing(false);
+            mSchedule = data;
+            UpdateSchedule();
         }
 
         @Override
-        public void onLoaderReset(Loader<ParserDataCursor> loader) {
-
+        public void onLoaderReset(Loader<Schedule> loader) {
+            mSchedule = null;
+            UpdateSchedule();
         }
+    }
+
+    private void UpdateSchedule() {
+        if (mSchedule == null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        } else {
+            FitTabs(mSchedule.Corts);
+            mAdapter.swapCursor(mSchedule.Corts.get(0).Cursor);
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+
+    }
+
+    private void FitTabs(ArrayList<Schedule.Cort> corts) {
+        mTabHost.setOnTabChangedListener(null);
+        mTabHost.setup();
+        mTabHost.clearAllTabs();
+        for (Schedule.Cort cort:corts){
+            TabHost.TabSpec tabSpec = mTabHost.newTabSpec(cort.cortName);
+            tabSpec.setIndicator(cort.cortName);
+            tabSpec.setContent(new TabHost.TabContentFactory() {
+                @Override
+                public View createTabContent(String s) {
+                    return mSwipeRefreshLayout;
+                }
+            });
+            mTabHost.addTab(tabSpec);
+        }
+        mTabHost.setOnTabChangedListener(this);
     }
 
 }

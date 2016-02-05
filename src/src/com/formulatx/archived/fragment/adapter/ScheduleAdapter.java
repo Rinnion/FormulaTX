@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.formulatx.archived.Utils;
+import com.formulatx.archived.fragment.MatchCursor;
 import com.formulatx.archived.network.loaders.cursor.ProgramCursor;
 import com.rinnion.archived.R;
 import com.formulatx.archived.network.loaders.cursor.ParserDataCursor;
@@ -39,11 +40,12 @@ public class ScheduleAdapter extends SimpleCursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        Match match = ((ParserDataCursor)cursor).getItem().getMatch();
-        if (match == null) return;
+        Match match = ((MatchCursor)cursor).getMatch();
 
-        TextView tv = (TextView) view.findViewById(R.id.itl_tv_match);
-        tv.setText(match.header);
+        TextView tvHeader = (TextView) view.findViewById(R.id.itl_tv_header);
+        TextView tvMatch = (TextView) view.findViewById(R.id.itl_tv_match);
+        tvHeader.setText(match.cort);
+        tvMatch.setText(match.header);
 
         View t1 = view.findViewById(R.id.itl_ll_team_1);
         View t2 = view.findViewById(R.id.itl_ll_team_2);
@@ -80,28 +82,37 @@ public class ScheduleAdapter extends SimpleCursorAdapter {
     }
 
     private void fitTeam(View view, Team team) {
-        View g1 = view.findViewById(R.id.td_rl_gamer_1);
-        View g2 = view.findViewById(R.id.td_rl_gamer_2);
+        View gv1 = view.findViewById(R.id.td_rl_gamer_1);
+        View gv2 = view.findViewById(R.id.td_rl_gamer_2);
 
-        fitGamer(g1, team.gamers.get(0));
-        if (team.gamers.size() == 2) {
-            g2.setVisibility(View.VISIBLE);
-            fitGamer(g2, team.gamers.get(1));
-        }
-        else{
-            g2.setVisibility(View.GONE);
-        }
+        Gamer g1 =  (team.gamers.size() >0) ? team.gamers.get(0) : new Gamer("-");
+        Gamer g2 =  (team.gamers.size() >1) ? team.gamers.get(1) : null;
+
+        fitGamer(gv1, g1);
+        fitGamer(gv2, g2);
 
         TextView r11 = (TextView) view.findViewById(R.id.itl_tv_round_1);
         TextView r12 = (TextView) view.findViewById(R.id.itl_tv_round_2);
         TextView r13 = (TextView) view.findViewById(R.id.itl_tv_round_3);
+        TextView c = (TextView) view.findViewById(R.id.itl_tv_count);
+        View iv = view.findViewById(R.id.itl_iv_shot);
 
         r11.setText(team.r1);
         r12.setText(team.r2);
         r13.setText(team.r3);
+        c.setText(team.count == null ? "" : String.valueOf(team.count));
+        c.setVisibility(team.count == null ? View.GONE : View.VISIBLE);
+        iv.setVisibility(team.shot == null || !team.shot ? View.GONE : View.VISIBLE);
+
     }
 
     private void fitGamer(View v1, Gamer gamer) {
+        if (gamer == null){
+            v1.setVisibility(View.GONE);
+            return;
+        }else{
+            v1.setVisibility(View.VISIBLE);
+        }
         TextView name = (TextView) v1.findViewById(R.id.itl_tv_gamer);
         ImageView cc = (ImageView) v1.findViewById(R.id.itl_iv_gamer_cc);
 

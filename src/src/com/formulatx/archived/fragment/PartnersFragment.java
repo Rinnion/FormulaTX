@@ -1,6 +1,7 @@
 package com.formulatx.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ActivityNotFoundException;
@@ -8,11 +9,15 @@ import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.Toast;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.helper.PartnerHelper;
 import com.formulatx.archived.database.model.ApiObjects.Partner;
 import com.formulatx.archived.fragment.adapter.PartnerAdapter;
@@ -28,21 +33,36 @@ import com.formulatx.archived.utils.Log;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class PartnersFragment extends ListFragment implements LoaderManager.LoaderCallbacks<PartnerCursor> {
+public class PartnersFragment extends Fragment implements LoaderManager.LoaderCallbacks<PartnerCursor>, AdapterView.OnItemClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private ResourceCursorAdapter mAdapter;
+    private ListView mListView;
+    private View mEmptyView;
+    private View mProgresView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         mAdapter = new PartnerAdapter(getActivity(), null);
-        setListAdapter(mAdapter);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_layout, container, false);
+
+        mListView = (ListView) view.findViewById(R.id.listView);
+        mListView.setAdapter(mAdapter);
+
+        mEmptyView = view.findViewById(R.id.emptyView);
+        mProgresView = view.findViewById(R.id.progressView);
+
+        mListView.setOnItemClickListener(this);
 
         getLoaderManager().initLoader(R.id.card_loader, Bundle.EMPTY, this);
 
-        super.onCreate(savedInstanceState);
+        return view;
     }
 
     @Override
@@ -53,22 +73,6 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
         super.onResume();
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        try {
-            PartnerHelper ch = new PartnerHelper();
-            Partner card = ch.getPartner(id);
-            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
-            startActivity(myIntent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(), "No application can handle this request."
-                    + " Please install a webbrowser", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-        //TODO: open browser for card
-        //super.onListItemClick(l, v, position, id);
     }
 
     @Override
@@ -92,12 +96,37 @@ public class PartnersFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<PartnerCursor> loader, PartnerCursor data) {
+        if (data == null) {
+            mProgresView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }else{
+            mProgresView.setVisibility(View.GONE);
+            if (data.getCount() == 0){
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else{
+                mEmptyView.setVisibility(View.GONE);
+            }
+        }
         mAdapter.swapCursor(data);
+
     }
 
     @Override
     public void onLoaderReset(Loader<PartnerCursor> loader) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        try {
+            PartnerHelper ch = new PartnerHelper();
+            Partner card = ch.getPartner(l);
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.link));
+            startActivity(myIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_webbrowser), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }
 

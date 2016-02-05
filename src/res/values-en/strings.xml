@@ -40,6 +40,15 @@
     <string name="weather_not_available">Not available</string>
     <string name="string_navigation_partners">Partners</string>
     <string name="string_no_area_found">No areas found.</string>
-    <string name="string_no_installer_map_app">No application can handle this request. Please install a navigation app</string>
+    <string name="string_no_installer_map_app">No application can handle this request. Please install a navigation app.</string>
     <string name="string_connection_error">Network error</string>
+    <string name="string_no_webbrowser">No application can handle this request. Please install a web browser.</string>
+    <string name="string_address">Address:</string>
+    <string name="string_address_content">Saint-Petersburg, Footbalnaya alley, 8</string>
+    <string name="string_phone">Phone:</string>
+    <string name="string_you_comment">Your review</string>
+    <string name="string_what_is_your_email">Your e-mail</string>
+    <string name="string_write_your_comment">Enter your review here</string>
+    <string name="string_send_comment">SEND YOUR REVIEW</string>
+    <string name="string_what_is_you_name">You name</string>
 </resources>

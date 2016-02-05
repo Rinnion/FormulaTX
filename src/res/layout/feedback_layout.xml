@@ -9,39 +9,40 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Адрес:"
+            android:text="@string/string_address"
             android:id="@+id/gd_tv_extra" style="@style/main_text_small"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Санкт-Петербург, Футбольная аллея, дом 8" android:id="@+id/textView4"
+              android:text="@string/string_address_content" android:id="@+id/textView4"
               style="@style/main_text_small"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Телефон:"
+              android:text="@string/string_phone"
               android:id="@+id/textView2" android:layout_marginTop="35dp" style="@style/main_text_small"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="+7 (865) 299-99-82"
+              android:text="@string/string_phone_number"
               android:id="@+id/textView3" style="@style/main_text_small"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="e-mail: info@formulatx.com"
+              android:text="@string/string_email"
               android:id="@+id/textView5" style="@style/main_text_small"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Ваш отзыв"
+              android:text="@string/string_you_comment"
               android:id="@+id/textView6" android:layout_gravity="center_horizontal" android:layout_marginTop="70dp"
               style="@style/main_text_small"/>
     <EditText android:layout_width="match_parent" android:layout_height="45dp" android:id="@+id/fbl_ed_name"
-              android:gravity="top|left" android:layout_marginTop="25dp" android:hint="Как вас зовут?"
+              android:gravity="top|left" android:layout_marginTop="25dp" android:hint="@string/string_what_is_you_name"
               style="@style/main_text_small"/>
     <EditText android:layout_width="match_parent" android:layout_height="45dp" android:id="@+id/fbl_ed_email"
-              android:gravity="top|left" android:hint="Введите ваш e-mail" style="@style/main_text_small"/>
+              android:gravity="top|left" android:hint="@string/string_what_is_your_email" style="@style/main_text_small"
+              android:inputType="textEmailAddress"/>
     <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:id="@+id/fbl_ed_feedback" android:layout_weight="1"
-            android:gravity="top|left" android:layout_marginBottom="25dp" android:hint="Оставьте ваш отзыв"
+            android:gravity="top|left" android:layout_marginBottom="25dp" android:hint="@string/string_write_your_comment"
             style="@style/main_text_small"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
-            android:text="ОСТАВИТЬ ОТЗЫВ"
+            android:text="@string/string_send_comment"
             android:id="@+id/fdl_btn_send" android:gravity="center" style="@style/main_text_small"
             android:background="@drawable/click_view"/>
 </LinearLayout>

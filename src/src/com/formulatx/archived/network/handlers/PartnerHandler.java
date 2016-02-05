@@ -27,6 +27,7 @@ public class PartnerHandler extends FormulaTXArrayResponseHandler {
         @Override
         public Bundle Handle(JSONObject object) throws JSONException {
             try {
+                Bundle handle = super.Handle(object);
                 long id = object.getLong("id");
                 String link = object.getString("link");
                 String status = Utils.getStringOrNull(object, "status");
@@ -35,7 +36,7 @@ public class PartnerHandler extends FormulaTXArrayResponseHandler {
                 p.link = link;
                 p.status = status;
                 mPartnerHelper.merge(p);
-                return super.Handle(object);
+                return handle;
             }catch(Exception ignored){
                 Log.e(TAG, ignored.getMessage());
             }

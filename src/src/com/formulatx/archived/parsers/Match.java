@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class Match {
     public String type; //Тип записи (Live, qualification, etc)
     public String header; //Название записи
+    public String cort; //Название записи
 
     public Team team1 = new Team(); //Команда 1
     public Team team2 = new Team(); //Команда 2
@@ -19,6 +20,7 @@ public class Match {
         JSONObject match = new JSONObject();
         match.put("type", type);
         match.put("header", header);
+        match.put("cort", cort);
         match.put("team1", (team1!= null) ? team1.getJSONObject() : null);
         match.put("team2", (team2!= null) ? team2.getJSONObject() : null);
         match.put("team3", (team3!= null) ? team3.getJSONObject() : null);
@@ -30,6 +32,7 @@ public class Match {
         Match match = new Match();
         match.type = in.has("type") ? in.getString("type") : null;
         match.header = in.has("header") ? in.getString("header") : null;
+        match.cort = in.has("cort") ? in.getString("cort") : null;
         match.team1 = in.has("team1") ? Team.parseJSONObject(in.getJSONObject("team1")) : null;
         match.team2 = in.has("team2") ? Team.parseJSONObject(in.getJSONObject("team2")) : null;
         match.team3 = in.has("team3") ? Team.parseJSONObject(in.getJSONObject("team3")) : null;

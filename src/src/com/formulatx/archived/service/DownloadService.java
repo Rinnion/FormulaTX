@@ -69,7 +69,7 @@ public class DownloadService extends IntentService {
             }
 
 
-
+                                       /**/
             publishProgress(100, null);
         } catch (Exception ex) {
             Log.e(TAG, "Error during handle intent", ex);
@@ -78,7 +78,10 @@ public class DownloadService extends IntentService {
     }
 
     private boolean PreLoadNews(int i, int i1) {
-        return fetchTournamentNews(TournamentHelper.TOURNAMENT_LADIES_TROPHY) && fetchTournamentNews(TournamentHelper.TOURNAMENT_OPEN);
+        fetchTournamentNews(TournamentHelper.TOURNAMENT_LADIES_TROPHY);
+        publishProgress(i+(i1-i)/2, "");
+        fetchTournamentNews(TournamentHelper.TOURNAMENT_OPEN);
+        return true;
     }
 
     private boolean fetchTournamentNews(String tn) {

@@ -2,6 +2,7 @@ package com.formulatx.archived.database.helper;
 
 import android.database.sqlite.SQLiteDatabase;
 import com.formulatx.archived.database.DatabaseOpenHelper;
+import com.formulatx.archived.database.cursor.ApiObjectCursor;
 import com.formulatx.archived.database.cursor.TournamentCursor;
 import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
@@ -23,6 +24,11 @@ public class TournamentHelper extends ApiObjectHelper {
 
     public boolean add(Tournament tournament) {
         return super.add(tournament);
+    }
+
+    @Override
+    public ApiObjectCursor getAll() {
+        return getAllByType(ApiObject.OBJECT);
     }
 
     public Tournament get(long id) {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_color">#14374D</color>
+    <color name="action_bar_color">#2B607F</color>
+    <color name="action_bar_color_ladies">#543460</color>
+    <color name="action_bar_color_open">#14374E</color>
     <color name="white_15a">#30d8d8d8</color>
     <color name="white_10a">#20d8d8d8</color>
     <color name="white_20a">#40d8d8d8</color>

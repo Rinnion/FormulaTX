@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.activity.MainLadiesActivity;
+import com.formulatx.archived.activity.MainOpenActivity;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.AreaCursor;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
@@ -25,8 +27,6 @@ import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.database.model.ApiObjects.Area;
 import com.formulatx.archived.utils.Log;
-
-import java.text.Normalizer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,7 +62,13 @@ public class MainTournamentFragment extends Fragment{
         switch (item.getItemId()) {
             case android.R.id.home:
                 Log.d(TAG, "onOptionsItemSelected: 'home' selected");
-                getActivity().getFragmentManager().popBackStack();
+                if (getActivity().getFragmentManager().getBackStackEntryCount() == 0){
+                    if (getActivity() instanceof MainLadiesActivity || getActivity() instanceof MainOpenActivity){
+                        getActivity().finish();
+                    }
+                }else {
+                    getActivity().getFragmentManager().popBackStack();
+                }
                 return true;
             default:
                 Log.d(TAG, "onOptionsItemSelected: default section");
@@ -90,32 +96,30 @@ public class MainTournamentFragment extends Fragment{
         if (ab != null){
             ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             ab.setIcon(R.drawable.ic_action_previous_item);
+            ab.setTitle(R.string.string_turnir);
         }
 
+        //BackgroundSelector.setProperBackground(view.findViewById(R.id.mtl_ll_background), type);
 
-        if (type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY)) {
-            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_lady_bg);
-            tv.setText(R.string.st_lady_title);
-            if (ab != null) ab.setTitle(R.string.st_lady_title);
-        } else {
-            view.findViewById(R.id.mtl_ll_background).setBackgroundResource(R.drawable.st_open_bg);
-            tv.setText(R.string.st_open_title);
-            if (ab != null) ab.setTitle(R.string.st_open_title);
+        TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
+        Tournament trnmt = th.getByPostName(type);
+        if(trnmt!=null) {
+            tv.setText(trnmt.title);
         }
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
         String[] names = new String[]{"resource", "text", "type"};
         String[] columns = new String[]{"_id", "resource", "text", "type"};
         MatrixCursor mc = new MatrixCursor(columns);
-        mc.addRow(new Object[]{1, android.R.drawable.stat_sys_warning,  getResources().getString(R.string.string_tournament_about), ABOUT});
-        mc.addRow(new Object[]{2, R.drawable.menu_news_icon,  getResources().getString(R.string.string_news), NEWS});
-        mc.addRow(new Object[]{2, R.drawable.menu_other_mutch_icon, getResources().getString(R.string.string_gamers), GAMERS});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_program), PROGRAM});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_schedule), SCHEDULE});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_grids), GRIDS});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_liveScore), LIVESCORE});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_photogallery), VIDEO});
-        mc.addRow(new Object[]{2, R.drawable.ic_action_person,  getResources().getString(R.string.string_tournament_findway), FINDWAY});
+        mc.addRow(new Object[]{1, R.drawable.match_about_icon,  getResources().getString(R.string.string_tournament_about), ABOUT});
+        mc.addRow(new Object[]{2, R.drawable.match_news_icon,  getResources().getString(R.string.string_news), NEWS});
+        mc.addRow(new Object[]{3, R.drawable.match_players_icon, getResources().getString(R.string.string_gamers), GAMERS});
+        mc.addRow(new Object[]{4, R.drawable.match_program_icon,  getResources().getString(R.string.string_tournament_program), PROGRAM});
+        mc.addRow(new Object[]{5, R.drawable.match_table_icon,  getResources().getString(R.string.string_tournament_schedule), SCHEDULE});
+        mc.addRow(new Object[]{6, R.drawable.match_grids_icon,  getResources().getString(R.string.string_tournament_grids), GRIDS});
+        mc.addRow(new Object[]{7, R.drawable.match_livescore_icon,  getResources().getString(R.string.string_tournament_liveScore), LIVESCORE});
+        mc.addRow(new Object[]{8, R.drawable.match_media_icon,  getResources().getString(R.string.string_photogallery), VIDEO});
+        mc.addRow(new Object[]{9, R.drawable.match_map_icon,  getResources().getString(R.string.string_tournament_findway), FINDWAY});
         ListView listView = (ListView) view.findViewById(R.id.mtl_lv_menu);
         SimpleCursorAdapter sca = new SimpleCursorAdapter(getActivity(), R.layout.item_tournament_menu_layout, mc, names, ints, 0){
             @Override
@@ -141,9 +145,9 @@ public class MainTournamentFragment extends Fragment{
                 if (tag.equals(NEWS)) showNewsFragment();
                 if (tag.equals(GAMERS)) showGamersFragment();
                 if (tag.equals(PROGRAM)) showProgramFragment();
-                if (tag.equals(SCHEDULE)) showTablesFragment();
+                if (tag.equals(SCHEDULE)) showScheduleFragment();
                 if (tag.equals(GRIDS)) showGridsFragment();
-                if (tag.equals(LIVESCORE)) showEmptyFragment();
+                if (tag.equals(LIVESCORE)) showLiveScoreFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
                 if (tag.equals(FINDWAY)) showMapFragment();
             }
@@ -207,6 +211,19 @@ public class MainTournamentFragment extends Fragment{
         return view;
     }
 
+    private void showLiveScoreFragment() {
+        LiveScoreFragment mlf = new LiveScoreFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showGalleryFragment() {
         GalleryFragment mlf = new GalleryFragment();
         Bundle bundle = new Bundle();
@@ -220,7 +237,7 @@ public class MainTournamentFragment extends Fragment{
                 .commit();
     }
 
-    public void showTablesFragment() {
+    public void showScheduleFragment() {
         ScheduleFragment mlf = new ScheduleFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ScheduleFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
@@ -328,8 +345,6 @@ public class MainTournamentFragment extends Fragment{
             return;
         }
          Area item = area.getItem();
-
-        //TODO: get additional fields
 
         if (item == null){
             Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();

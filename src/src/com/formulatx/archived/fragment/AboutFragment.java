@@ -63,6 +63,7 @@ public class AboutFragment extends Fragment  {
 
         Bundle args = getArguments();
         String type = args.getString(TYPE);
+        //BackgroundSelector.setProperBackground(view, type);
 
         if(type.equals(TournamentHelper.TOURNAMENT_LADIES_TROPHY))
         {
@@ -78,16 +79,12 @@ public class AboutFragment extends Fragment  {
         String thumb =(mApiObject.thumb.isEmpty())?"":"<div><img src='"+ mApiObject.thumb + "' style=\"width: 100%; height: auto;\"></div>";
 
         Log.d(TAG,String.format("Thumb: %s\n\n",thumb));
-
         String webHTML="<html><style>p {color:#FFF;}</style><body>" + thumb + (((mApiObject==null)||(mApiObject.content==null))?"":mApiObject.content) + "</body></html>";
         String webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2></h2>Нет описания</body></html>";
         if (mApiObject.content.isEmpty())
             webHTMLEmpty="<html><style>body {color:#FFF;}</style><body align='center'><h2>" + mApiObject.title + "</h2>Нет описания</body></html>";
 
-
-
         myWebView.loadDataOrCache(getActivity(),mApiObject,webHTML,webHTMLEmpty);
-
 
         myWebView.setBackgroundColor(Color.TRANSPARENT);
         return view;

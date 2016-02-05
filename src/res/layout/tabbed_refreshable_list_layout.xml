@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent" android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" android:orientation="vertical">
+
+    <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressView"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ничего нет"
+            android:id="@+id/emptyView"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Произошла ошибка. Загляните позже."
+            android:id="@+id/errorView"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
     <TabHost
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/tabHost" android:layout_gravity="center_horizontal">
+            android:layout_height="wrap_content" android:id="@+id/tabHost" android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp">
         <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -28,8 +61,11 @@
         </LinearLayout>
     </TabHost>
     <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/swipeLayout"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent" >
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:layout_alignParentLeft="true"
+                                                  android:layout_marginLeft="0dp"
+                                                  android:layout_below="@+id/tabHost">
         <ListView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent" android:padding="10dp" android:dividerHeight="10dp"
@@ -37,4 +73,5 @@
 
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+</RelativeLayout>

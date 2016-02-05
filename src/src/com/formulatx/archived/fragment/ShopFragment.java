@@ -1,11 +1,17 @@
 package com.formulatx.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.formulatx.archived.database.cursor.ProductCursor;
 import com.rinnion.archived.R;
@@ -20,20 +26,36 @@ import com.formulatx.archived.utils.Log;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class ShopFragment extends ListFragment implements LoaderManager.LoaderCallbacks<ProductCursor> {
+public class ShopFragment extends Fragment implements LoaderManager.LoaderCallbacks<ProductCursor> {
 
     private String TAG = getClass().getCanonicalName();
+    private ListView mListView;
+    private View mEmptyView;
+    private View mProgresView;
+
     private ResourceCursorAdapter mAdapter;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_layout, container, false);
+
+        mListView = (ListView) view.findViewById(R.id.listView);
+        mListView.setAdapter(mAdapter);
+
+        mEmptyView = view.findViewById(R.id.emptyView);
+        mProgresView = view.findViewById(R.id.progressView);
+
+        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
+
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-
         mAdapter = new ProductAdapter(getActivity(), null);
-        setListAdapter(mAdapter);
-
-        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
 
         super.onCreate(savedInstanceState);
     }
@@ -69,6 +91,18 @@ public class ShopFragment extends ListFragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<ProductCursor> loader, ProductCursor data) {
+
+        if (data == null) {
+            mProgresView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }else{
+            mProgresView.setVisibility(View.GONE);
+            if (data.getCount() == 0){
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else{
+                mEmptyView.setVisibility(View.GONE);
+            }
+        }
         mAdapter.swapCursor(data);
     }
 
@@ -76,5 +110,6 @@ public class ShopFragment extends ListFragment implements LoaderManager.LoaderCa
     public void onLoaderReset(Loader<ProductCursor> loader) {
 
     }
+
 }
 

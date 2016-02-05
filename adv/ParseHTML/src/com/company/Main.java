@@ -27,8 +27,34 @@ public class Main {
         //InputStream resource = classLoader.getResourceAsStream(filename);
 
         pf = new ParserFactory();
-        parseFile("parsers-19.json");
-        parseFile("parsers-20.json");
+        parseFile("parsers-48.json");
+
+        Match m = new Match();
+        m.header="header";
+        m.type="type";
+        m.team1=new Team();
+        m.team2=new Team();
+
+        m.team1.count="15";
+        m.team1.extra="WC";
+        m.team1.r1="6";
+        m.team1.r2="3";
+        m.team1.r3="0";
+        m.team1.shot=true;
+        m.team1.gamers.add(new Gamer("Name1", "cc", "link"));
+        m.team1.gamers.add(new Gamer("Name2", "cc", "link"));
+
+        m.team2.count="40";
+        m.team2.extra="";
+        m.team2.r1="3";
+        m.team2.r2="4";
+        m.team2.r3="0";
+        m.team2.shot=false;
+        m.team2.gamers.add(new Gamer("t21", "cc", "link"));
+        m.team2.gamers.add(new Gamer("t22", "cc", "link"));
+
+        System.out.println(m.getJSONObject());
+
         //parseFile("parsers-22.json");
         parseFile("parsers-23.json");
         parseFile("parsers-30.json");
@@ -98,6 +124,7 @@ public class Main {
     }
 
     private static void parseFile(String s) {
+
         Match[] parse = pf.parse(s);
 
         for (Match m :parse){

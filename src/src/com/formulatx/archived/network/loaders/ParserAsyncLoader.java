@@ -93,9 +93,13 @@ public class ParserAsyncLoader extends AsyncTaskLoader<ParserDataCursor> {
         } else {
             int[] ints = getParsersArrayFromTournament();
             ParserMatchHelper pmh = new ParserMatchHelper(doh);
-            ParserDataCursor all = pmh.getAll(ints, type, settings, page);
-            deliverResult(all);
-            return;
+            ParserDataCursor all = getParserDataCursor(ints, pmh);
+            if (all.getCount() == 0) {
+                deliverResult(null);
+                return;
+            } else {
+                deliverResult(all);
+            }
         }
     }
 
@@ -134,13 +138,21 @@ public class ParserAsyncLoader extends AsyncTaskLoader<ParserDataCursor> {
                 parser.parsed = Calendar.getInstance().getTimeInMillis();
                 ph.merge(parser);
                 pc.moveToNext();
-                if (page == null) page = parse[0].header;
             }
-
-            ParserDataCursor all = pmh.getAll(ints, type, settings, page);
+            ParserDataCursor all = getParserDataCursor(ints, pmh);
             return all;
         }
         return null;
+    }
+
+    private ParserDataCursor getParserDataCursor(int[] ints, ParserMatchHelper pmh) {
+        ParserDataCursor openPage = pmh.getAll(ints, type, settings, page);
+        if (openPage.getCount() == 0){
+            ParserDataCursor pages = pmh.getPages(ints, type, settings);
+            page = (pages.getCount()==0) ? page : pages.getPage();
+        }
+
+        return pmh.getAll(ints, type, settings, page);
     }
 
 }

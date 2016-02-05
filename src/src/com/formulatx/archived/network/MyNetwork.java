@@ -2,6 +2,7 @@ package com.formulatx.archived.network;
 
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.fragment.Schedule;
 import com.formulatx.archived.network.handlers.*;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.Settings;
@@ -548,6 +549,131 @@ public final class MyNetwork {
             bundle.putSerializable("EXCEPTION", e);
             return bundle;
         }
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getLadiesSchedule() {
+        Log.d(TAG, String.format("getLadiesSchedule"));
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getLadiesSchedule")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getLadies())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenSchedule() {
+        Log.d(TAG, String.format("getOpenSchedule"));
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getOpenSchedule")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.Schedules.getOpen())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getLadiesLiveScore() {
+        Log.d(TAG, String.format("getLadiesLiveScore"));
+
+        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.LiveScores.getLadies())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenLiveScore() {
+        Log.d(TAG, String.format("getOpenLiveScore"));
+
+        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getOpenLiveScore")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.LiveScores.getOpen())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getLadiesGrids(int i) {
+        Log.d(TAG, "getLadiesGrids");
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        String url;
+        switch (i){
+            case MyNetworkContentContract.FormulaTXApi.Grids.QUALIFICATION:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesQulification();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.MAIN_EVENT:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesMainEvent();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.DOUBLES:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getLadiesDoubles();
+                break;
+            default: return null;
+        }
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(url)
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    public static Bundle getOpenGrids(int i) {
+        Log.d(TAG, "getOpenGrids");
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        String url;
+        switch (i){
+            case MyNetworkContentContract.FormulaTXApi.Grids.QUALIFICATION:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenQulification();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.MAIN_EVENT:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenMainEvent();
+                break;
+            case MyNetworkContentContract.FormulaTXApi.Grids.DOUBLES:
+                url = MyNetworkContentContract.FormulaTXApi.Grids.getOpenDoubles();
+                break;
+            default: return null;
+        }
+
+        fetcher = builder.setName("getLadiesLiveScore")
+                .setGetRequest(url)
+                .setHandler(handler)
+                .create();
 
         return fetcher.execute();
     }

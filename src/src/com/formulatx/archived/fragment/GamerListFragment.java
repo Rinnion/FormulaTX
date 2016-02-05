@@ -1,13 +1,17 @@
 package com.formulatx.archived.fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.parse.ParsePush;
@@ -27,30 +31,41 @@ import com.formulatx.archived.utils.Log;
  * Time: 22:46
  * To change this template use File | Settings | File Templates.
  */
-public class GamerListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<GamerCursor> {
+public class GamerListFragment extends Fragment implements LoaderManager.LoaderCallbacks<GamerCursor>, AdapterView.OnItemClickListener {
+
+
+    private String TAG = getClass().getCanonicalName();
+    private ListView mListView;
+    private View mEmptyView;
+    private View mProgresView;
+    private ResourceCursorAdapter mAdapter;
+
 
     public static final String TYPE = "type";
     public static final String TOURNAMENT_ID = ApiObjectHelper._ID;
-    private String TAG = getClass().getCanonicalName();
-    private ResourceCursorAdapter mAdapter;
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult");
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_layout, container, false);
 
+        mListView = (ListView) view.findViewById(R.id.listView);
+        mListView.setAdapter(mAdapter);
+
+        mEmptyView = view.findViewById(R.id.emptyView);
+        mProgresView = view.findViewById(R.id.progressView);
+
+        mListView.setOnItemClickListener(this);
+
+        getLoaderManager().initLoader(R.id.gamer_loader, getArguments(), this);
+
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         mAdapter = new GamerAdapter(getActivity(), null, null);
-
-
-        setListAdapter(mAdapter);
-
-        getLoaderManager().initLoader(R.id.gamer_loader, getArguments(), this);
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_gamers);
@@ -73,11 +88,40 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
         }
     }
 
+
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public Loader<GamerCursor> onCreateLoader(int id, Bundle args) {
+        long type = args.getLong(TOURNAMENT_ID);
+        return new GamerAsyncLoader(getActivity(), type);
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<GamerCursor> loader, GamerCursor data) {
+        if (data == null) {
+            mProgresView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }else{
+            mProgresView.setVisibility(View.GONE);
+            if (data.getCount() == 0){
+                mEmptyView.setVisibility(View.VISIBLE);
+            }else{
+                mEmptyView.setVisibility(View.GONE);
+            }
+        }
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<GamerCursor> loader) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         GamerHelper gh = new GamerHelper();
 
-        Gamer gamer = gh.getGamer(id);
+        Gamer gamer = gh.getGamer(l);
 
         Log.d(TAG, String.valueOf(gamer.id));
 
@@ -95,26 +139,6 @@ public class GamerListFragment extends ListFragment implements LoaderManager.Loa
         long type = getArguments().getLong(TOURNAMENT_ID);
         GamerCursor allByParent = gh.getAllByParent(type);
         mAdapter.swapCursor(allByParent);
-
-        super.onListItemClick(l, v, position, id);
     }
-
-    @Override
-    public Loader<GamerCursor> onCreateLoader(int id, Bundle args) {
-        long type = args.getLong(TOURNAMENT_ID);
-        return new GamerAsyncLoader(getActivity(), type);
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<GamerCursor> loader, GamerCursor data) {
-        mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<GamerCursor> loader) {
-
-    }
-
 }
 

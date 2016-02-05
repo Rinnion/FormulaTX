@@ -37,16 +37,16 @@ public class Team {
     }
 
     public static Team parseJSONObject(JSONObject in) throws JSONException {
-        Team match = new Team();
-        match.extra = Utils.getStringOrNull(in, "extra");
-        match.gamers = getGamers(in, "gamers");
-        match.shot = Utils.getBooleanOrNull(in, "shot");
-        match.count = Utils.getStringOrNull(in, "count");
-        match.r1 = Utils.getStringOrNull(in, "r1");
-        match.r2 = Utils.getStringOrNull(in, "r3");
-        match.r3 = Utils.getStringOrNull(in, "r3");
+        Team team = new Team();
+        team.extra = Utils.getStringOrNull(in, "extra");
+        team.gamers = getGamers(in, "gamers");
+        team.shot = Utils.getBooleanOrNull(in, "shot");
+        team.count = Utils.getStringOrNull(in, "count");
+        team.r1 = Utils.getStringOrNull(in, "r1");
+        team.r2 = Utils.getStringOrNull(in, "r3");
+        team.r3 = Utils.getStringOrNull(in, "r3");
 
-        return match;
+        return team;
     }
 
     private static ArrayList<Gamer> getGamers(JSONObject in, String key) throws JSONException {

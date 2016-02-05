@@ -60,9 +60,16 @@ public class GamerHelper implements BaseColumns {
 
         //FIXME: Нужно переделать на update/merge
         ApiObject apiObject = aoh.get(gamer.id);
+        if (apiObject== null)
+        {
+            Log.e(TAG, "Api object is null while insert gamer");
+            return false;
+        }
 
         delete(gamer.id);
-        apiObject.thumb = gamer.thumb;
+        if (apiObject.thumb == null) {
+            apiObject.thumb = gamer.thumb;
+        }
         aoh.add(apiObject);
 
         ContentValues map;
@@ -102,7 +109,7 @@ public class GamerHelper implements BaseColumns {
     public Gamer getGamer(long id) {
         Log.v(TAG, "getProduct ("+id+")");
 
-        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ", ao.title title, ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " WHERE " + ApiObjectHelper.COLUMN_DISPLAY_METHOD +"=? AND g._id=?" +
@@ -121,7 +128,7 @@ public class GamerHelper implements BaseColumns {
     public GamerCursor getAllByParent(long parent) {
         Log.v(TAG, "getAllByParent ()");
 
-        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ",ao.title title, ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL + ", ao.title title, ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +

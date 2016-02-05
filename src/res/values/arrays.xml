@@ -5,4 +5,9 @@
         <item>two</item>
         <item>three</item>
     </string-array>
+    <string-array name="grids_menu">
+        <item>Квалификация</item>
+        <item>Главный турнир</item>
+        <item>Парный турнир</item>
+    </string-array>
 </resources>

@@ -30,8 +30,13 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
-        GamerHelper aoh=new GamerHelper();
-        deliverResult(aoh.getAllByParent(parent));
+        GamerHelper aoh = new GamerHelper();
+        GamerCursor all = aoh.getAllByParent(parent);
+        if (all.getCount() == 0) {
+            deliverResult(null);
+            return;
+        }
+        deliverResult(all);
     }
 
     @Override

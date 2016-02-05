@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.hardware.display.DisplayManagerCompat;
 import android.util.TypedValue;
 import android.view.*;
 import android.view.animation.AccelerateInterpolator;
@@ -75,153 +73,9 @@ public class TodayFragment extends Fragment implements LoaderManager.LoaderCallb
         tmpViewWeather=view.findViewById(R.id.weather);
         tmpViewEvents=view.findViewById(R.id.events);
         tmpViewNews=view.findViewById(R.id.tl_lv_news);
-/*
+
         moveTracker=new MoveTracker();
 
-
-        tmpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-
-
-
-                if(mHeight==0) {
-                    mHeight = tmpViewWeather.getMeasuredHeight();
-
-                }
-                LinearLayout linearLayout = (LinearLayout) tmpViewTest;
-                //Animation slideAnimUp=AnimationUtils.loadAnimation(FormulaTXApplication.getAppContext(),R.anim.weather_up);
-                //Animation slideAnimDown=AnimationUtils.loadAnimation(FormulaTXApplication.getAppContext(),R.anim.weather_down);
-
-                TranslateAnimation translateAnimationUp=new TranslateAnimation(0,0,0,-mHeight);
-
-                translateAnimationUp.setDuration(1000);
-                translateAnimationUp.setFillAfter(false);
-                translateAnimationUp.setFillEnabled(true);
-                //translateAnimationUp.setFillBefore(false);
-
-                translateAnimationUp.setInterpolator(new AccelerateInterpolator());
-                translateAnimationUp.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        //tmpViewTest.setEnabled(false);
-                      //  tmpViewTest.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        // tmpViewTest.setEnabled(true)
-                         tmpView.clearAnimation();
-                       //tmpViewTest.setTranslationY(-mHeight);
-
-                       // tmpView.clearAnimation();
-                        //tmpViewTest.requestLayout();
-                        //tmpViewNews.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom() + mHeight);
-
-                        //tmpViewNews.requestLayout();
-
-                        //tmpViewNews.layout(tmpViewEvents.getLeft(), tmpViewEvents.getTop(), tmpViewEvents.getRight(), tmpViewEvents.getBottom() + mHeight);
-
-                       // tmpViewTest.setVisibility(View.VISIBLE);
-                        //tmpViewTest.requestLayout();
-                      //  Point point=new Point();
-
-                      //  DisplayManagerCompat.getInstance(getActivity()).getDisplay(0).getSize(point);
-
-                      //  tmpViewEvents.getLayoutParams().height=point.y;
-
-                        //int specH=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int)(mHeight+tmpView.getMeasuredHeight()), getResources().getDisplayMetrics());
-
-
-                        //tmpViewEvents.invalidate();
-
-                    //Log.d(TAG,"H: " + tmpView.getMeasuredHeight());
-
-                      //  tmpViewTest.getLayoutParams().height=specH;
-                        tmpViewWeather.setVisibility(View.GONE);
-                        isUpped = true;
-                        //tmpViewTest.requestLayout();
-                        //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-
-                TranslateAnimation translateAnimationDown=new TranslateAnimation(0,0,-mHeight,0);
-                translateAnimationDown.setDuration(2000);
-                translateAnimationDown.setFillAfter(false);
-                translateAnimationDown.setFillEnabled(true);
-                translateAnimationDown.setFillBefore(false);
-
-                translateAnimationDown.setInterpolator(new AccelerateInterpolator());
-                translateAnimationDown.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        tmpViewTest.setEnabled(false);
-                        tmpViewTest.setTranslationY(0);
-                        tmpViewTest.setVisibility(View.GONE);
-                        tmpViewWeather.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        tmpViewTest.setEnabled(true);
-                        tmpViewTest.setTranslationY(0);
-                        tmpView.clearAnimation();
-
-                        //tmpViewWeather.setVisibility(View.GONE);
-                        tmpViewTest.setVisibility(View.VISIBLE);
-                        isUpped=false;
-                        // tmpViewTest.requestLayout();
-                        //tmpViewTest.layout(tmpViewTest.getLeft(), tmpViewTest.getTop(), tmpViewTest.getRight(), tmpViewTest.getBottom());
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-
-                ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
-
-
-                switch (event.getAction()) {
-
-
-                    case MotionEvent.ACTION_UP:
-
-                        if (moveTracker.Up(event) == MoveTracker.MoveUp) {
-                            if(!isUpped)
-                            linearLayout.startAnimation(translateAnimationUp);
-
-                            //tmpViewEvents.startAnimation(slideAnimUp);
-
-                        } else {
-                            //linearLayout.startAnimation(slideAnimDown);
-                            //tmpViewEvents.startAnimation(slideAnimDown);
-                            if(isUpped)
-                            linearLayout.startAnimation(translateAnimationDown);
-                        }
-                        Log.d(TAG, "MotionEvent.ACTION_UP");
-                        break;
-
-                    case MotionEvent.ACTION_DOWN:
-                        moveTracker.Down(event);
-
-                        Log.d(TAG, "MotionEvent.ACTION_DOWN");
-                        break;
-                }
-
-                return true;
-            }
-        });
-/**/
 
 
         getActivity().getActionBar().setTitle(R.string.string_today);

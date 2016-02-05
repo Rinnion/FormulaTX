@@ -30,7 +30,12 @@ public class CardAsyncLoader extends AsyncTaskLoader<CardCursor> {
     protected void onForceLoad() {
         super.onForceLoad();
         CardHelper aoh=new CardHelper();
-        deliverResult(aoh.getAll());
+        CardCursor all = aoh.getAll();
+        if (all.getCount() == 0){
+            deliverResult(null);
+            return;
+        }
+        deliverResult(all);
     }
 
     @Override

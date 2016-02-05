@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.formulatx.archived.activity.MainLadiesActivity;
+import com.formulatx.archived.activity.MainOpenActivity;
 import com.rinnion.archived.R;
 import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.helper.TournamentHelper;
@@ -264,9 +266,18 @@ public class NavigationFragment extends Fragment {
     }
 
     public void showMainTournmentFragment(String type) {
-        MainTournamentFragment mlf = new MainTournamentFragment();
         Bundle bundle = new Bundle();
         bundle.putString(MainTournamentFragment.TYPE, type);
+
+        Intent intent = new Intent(getActivity(),
+                type.equals(TournamentHelper.TOURNAMENT_OPEN)
+                        ? MainOpenActivity.class
+                        : MainLadiesActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        /*
+        MainTournamentFragment mlf = new MainTournamentFragment();
         mlf.setArguments(bundle);
         getFragmentManager().popBackStack();
         getFragmentManager()
@@ -275,6 +286,7 @@ public class NavigationFragment extends Fragment {
                 .replace(R.id.fragment_container, mlf)
                 .addToBackStack(null)
                 .commit();
+        */
     }
 
 }
