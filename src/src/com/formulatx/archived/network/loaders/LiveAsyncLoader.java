@@ -7,11 +7,13 @@ import android.os.Parcelable;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.fragment.MatchCursor;
+import com.formulatx.archived.fragment.Schedule;
 import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONArrayHandler;
 import com.formulatx.archived.network.handlers.JSONObjectHandler;
 import com.formulatx.archived.parsers.Match;
+import com.formulatx.archived.utils.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
  * Created by Lenovo on 03.02.2016.
  */
 public class LiveAsyncLoader extends AsyncTaskLoader<MatchCursor> {
+    private static final String TAG = "LiveAsyncLoader";
     private final String string;
 
     public LiveAsyncLoader(Activity activity, String string) {
@@ -57,19 +60,19 @@ public class LiveAsyncLoader extends AsyncTaskLoader<MatchCursor> {
         if (http == null) return new MatchCursor();
         Bundle parse = http.getBundle(HttpRequester.RESULT_HTTP_PARSE);
         if (parse == null) return new MatchCursor();
-        Parcelable[] array = parse.getParcelableArray(JSONArrayHandler.EXTRA_ARRAY);
-        if (array == null) return new MatchCursor();
+        String string = parse.getString(JSONObjectHandler.VALUE);
         try {
+            JSONObject json = new JSONObject(string);
             MatchCursor mc = new MatchCursor();
-            for (int i = 0; i < array.length; i++) {
-                if (isAbandoned()) return new MatchCursor();
-                String string = ((Bundle) array[i]).getString(JSONObjectHandler.VALUE);
-                Match match = Match.parseJSONObject(new JSONObject(string));
+            for (int i =0; i<json.length(); i++) {
+                JSONObject jsonScore = json.getJSONObject(String.valueOf(i));
+                Match match = Match.parseJSONObject(jsonScore);
+                match.cort = jsonScore.getString("courtName");
                 mc.add("", i, match.getJSONObject().toString(), "", "");
             }
             return mc;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error", e);
         }
         return new MatchCursor();
     }

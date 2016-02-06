@@ -106,7 +106,13 @@ public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeLis
     @Override
     public void onTabChanged(String s) {
         if (mSchedule != null){
-            mAdapter.swapCursor(mSchedule.Corts.get(mSchedule.Corts.indexOf(s)).Cursor);
+            for (int i = 0; i<mSchedule.Corts.size(); i++){
+                Schedule.Cort round = mSchedule.Corts.get(i);
+                if (round.cortName != null && round.cortName.equals(s)) {
+                    mAdapter.swapCursor(round.Cursor);
+                    //setOpenedPage(round.cortName);
+                }
+            }
         }
     }
 

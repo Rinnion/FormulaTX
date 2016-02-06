@@ -568,7 +568,7 @@ public final class MyNetwork {
     public static Bundle getLadiesLiveScore() {
         Log.d(TAG, String.format("getLadiesLiveScore"));
 
-        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+        JSONObjectHandler handler = new JSONObjectHandler();
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
@@ -584,7 +584,7 @@ public final class MyNetwork {
     public static Bundle getOpenLiveScore() {
         Log.d(TAG, String.format("getOpenLiveScore"));
 
-        JSONArrayHandler handler = new JSONArrayHandler(new JSONObjectHandler());
+        JSONObjectHandler handler = new JSONObjectHandler();
 
 
         HttpRequester.Builder builder = new HttpRequester.Builder();

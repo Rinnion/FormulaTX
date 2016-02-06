@@ -66,14 +66,14 @@ public class ScheduleAsyncLoader extends AsyncTaskLoader<Schedule> {
         try {
             JSONObject json = new JSONObject(string);
             Schedule schedule = new Schedule();
-            JSONArray corts = json.getJSONArray("corts");
+            JSONObject corts = json.getJSONObject("corts");
             for (int i =0; i<corts.length(); i++) {
-                JSONObject jsonCort = corts.getJSONObject(0);
+                JSONObject jsonCort = corts.getJSONObject(String.valueOf(i));
                 Schedule.Cort cort = schedule.addCort(jsonCort.getString("cortName"));
                 for(int k=0; k<jsonCort.length()-1; k++){
                     JSONObject jsonMatch = jsonCort.getJSONObject(String.valueOf(k));
                     Match match = Match.parseJSONObject(jsonMatch.getJSONObject("teams"));
-                    match.cort=cort.cortName;
+                    //match.cort=cort.cortName;
                     match.header= Utils.getStringOrNull(jsonMatch, "startTime");
                     cort.addMatch(match);
                 }

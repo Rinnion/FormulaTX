@@ -23,9 +23,11 @@ public class Team {
     public JSONObject getJSONObject() throws JSONException {
         JSONObject line = new JSONObject();
         line.put("extra", extra);
-        JSONArray gs = new JSONArray();
-        for (Gamer g: gamers){
-            gs.put(g.getJSONObject());
+        JSONObject gs = new JSONObject();
+
+        for (int i = 0; i < gamers.size(); i++) {
+            Gamer gamer = gamers.get(i);
+            gs.put(String.valueOf(i), gamer.getJSONObject());
         }
         line.put("gamers", gs);
         line.put("shot", shot);
@@ -43,7 +45,7 @@ public class Team {
         team.shot = Utils.getBooleanOrNull(in, "shot");
         team.count = Utils.getStringOrNull(in, "count");
         team.r1 = Utils.getStringOrNull(in, "r1");
-        team.r2 = Utils.getStringOrNull(in, "r3");
+        team.r2 = Utils.getStringOrNull(in, "r2");
         team.r3 = Utils.getStringOrNull(in, "r3");
 
         return team;
@@ -54,9 +56,10 @@ public class Team {
         if (!in.has(key)) {
             return ret;
         }
-        JSONArray arr = in.getJSONArray(key);
+        JSONObject arr = in.getJSONObject(key);
         for (int i = 0; i < arr.length(); i++) {
-            JSONObject o = arr.getJSONObject(i);
+            if (!arr.has(String.valueOf(i))) continue;
+            JSONObject o = arr.getJSONObject(String.valueOf(i));
             ret.add(Gamer.parseJSONObject(o));
         }
         return ret;
