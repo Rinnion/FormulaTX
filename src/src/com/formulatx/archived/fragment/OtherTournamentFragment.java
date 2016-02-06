@@ -84,16 +84,20 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
         if (ab != null) {
             ab.setIcon(R.drawable.ic_action_previous_item);
             ab.setHomeButtonEnabled(true);
-
-            String post_name = getArguments().getString(TOURNAMENT_POST_NAME);
-            TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
-            Tournament t = th.getByPostName(post_name);
-            ab.setTitle(t.title);
+            ab.setTitle(R.string.string_turnir);
         }
+
+        String post_name = getArguments().getString(TOURNAMENT_POST_NAME);
+        TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
+        Tournament t = th.getByPostName(post_name);
+        TextView tvName = (TextView) view.findViewById(R.id.mtl_tv_name);
+        tvName.setText(t.title);
+
+        View ll = view.findViewById(R.id.mtl_ll_partner);
+        ll.setVisibility(View.GONE);
 
         alertDialogDownload=new AlertDialogDownload(getActivity(),"Загрузка данных","Хотите загрузить данные повторно?","Да, загрузить","Нет, открыть существуюший");
         alertDialogDownload.SetListener(this);
-
 
         int[] ints = new int[]{R.id.itml_image, R.id.itml_text};
         String[] names = new String[]{"resource", "text", "type"};
@@ -131,7 +135,7 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
                 if (tag.equals(ABOUT)) showAboutFragment();
                 if (tag.equals(SCHEDULE)) showScheduleFragment();
                 if (tag.equals(GRIDS)) showGridsFragment();
-                if (tag.equals(LIVESCORE)) showEmptyFragment();
+                if (tag.equals(LIVESCORE)) showLiveScoreFragment();
                 if (tag.equals(VIDEO)) showGalleryFragment();
                 if (tag.equals(FINDWAY)) showMapFragment();
             }
@@ -303,8 +307,11 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
                 .commit();
     }
 
-    public void showEmptyFragment() {
-        EmptyFragment mlf = new EmptyFragment();
+    public void showLiveScoreFragment() {
+        LiveScoreOtherFragment mlf = new LiveScoreOtherFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(LiveScoreOtherFragment.TYPE, getArguments().getString(TOURNAMENT_POST_NAME));
+        mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mlf)

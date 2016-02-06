@@ -1,5 +1,7 @@
 package com.formulatx.archived;
 
+import com.formulatx.archived.utils.Log;
+
 /**
  * Created with IntelliJ IDEA.
  * User: tretyakov
@@ -10,6 +12,7 @@ package com.formulatx.archived;
 public final class Settings {
     public static final boolean NETDEBUG =false;
     public static final boolean DEBUG = false;
+    public static final int LogLevel = Log.ASSERT;
 
     public static final int ABOUT_API_OBJECT = 201;
     public static final String ABOUT_API_OBJECT_ALIAS = "about";
@@ -39,8 +42,8 @@ public final class Settings {
     public static final int OUT_DATE_TIME_ASSIGNED_DEFAULT = 24 * 60 * 60 * 1000; // 1 day
     public static final long UPDATE_TIME = 60000; //60 sec
     public static final int REFRESH_AUDION_POSITION_TIME=500;
-    public static final String VERSION_NUMBER = "0.9.0.0201";
-    public static final String VERSION_BUILD_TIME = "2237";
+    public static final String VERSION_NUMBER = "0.9.9";
+    public static final String VERSION_BUILD_TIME = "0602.1853";
     public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
 
