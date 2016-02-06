@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TabHost;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.GalleryDescriptionCursor;
 import com.formulatx.archived.database.cursor.GalleryItemCursor;
@@ -132,13 +133,31 @@ public class GalleryContentFragment extends Fragment {
 
                 Log.d(TAG,String.format("gvPhoto Link1: %s",link1) );
 
-                Uri intentUri= Uri.parse(link1);
+
+                //getActivity().getFragmentManager().
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ImageViewFragment.EN_VAR_URL, link1);
+
+
+                ImageViewFragment mlf = new ImageViewFragment();
+                mlf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, mlf)
+                        .addToBackStack(null)
+                        .commit();
+
+
+
+                /*Uri intentUri= Uri.parse(link1);
 
                 Intent intent=new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
 
                 intent.setData(intentUri);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
 
