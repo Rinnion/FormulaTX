@@ -16,18 +16,18 @@
           android:layout_width="match_parent"
           android:id="@+id/il_v_shadow"
           android:layout_centerVertical="true"
-          android:layout_centerHorizontal="true"/>
+          android:layout_centerHorizontal="true" android:visibility="gone"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:id="@+id/il_tv_text"
               android:layout_centerVertical="true"
-              android:layout_centerHorizontal="true"/>
+              android:layout_centerHorizontal="true" android:visibility="visible"/>
     <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar" android:layout_centerVertical="true" android:layout_centerHorizontal="true"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 </RelativeLayout>

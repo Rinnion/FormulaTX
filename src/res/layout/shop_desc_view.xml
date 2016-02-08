@@ -26,14 +26,16 @@
                       android:layout_height="270dp"
                       android:layout_width="270dp"
                       android:id="@+id/il_v_shadow"
-                      android:layout_alignBottom="@+id/image" android:layout_alignRight="@+id/image"/>
+                      android:layout_alignBottom="@+id/image" android:layout_alignRight="@+id/image"
+                      android:visibility="gone"/>
                 <ProgressBar
                         style="?android:attr/progressBarStyleLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/progressBar"
                         android:layout_alignBottom="@+id/image" android:layout_alignRight="@+id/image"
-                        android:layout_alignTop="@+id/image" android:layout_alignLeft="@+id/image"/>
+                        android:layout_alignTop="@+id/image" android:layout_alignLeft="@+id/image"
+                        android:visibility="gone"/>
             </RelativeLayout>
             <TextView style="@style/main_text" android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:text="Теннисный мяч Wilson us open. Брелок" android:id="@+id/textTitle"

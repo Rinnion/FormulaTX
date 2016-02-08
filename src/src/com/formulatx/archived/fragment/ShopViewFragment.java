@@ -87,6 +87,9 @@ public class ShopViewFragment extends Fragment {
         final View shadow=view.findViewById(R.id.il_v_shadow );
         progress.setTag(R.id.product_tag_img, content.thumb);
 
+        progress.setVisibility(View.VISIBLE);
+        shadow.setVisibility(View.VISIBLE);
+
         try {
 
             Log.d(TAG,String.format("Picasso try load: %s",content.thumb));

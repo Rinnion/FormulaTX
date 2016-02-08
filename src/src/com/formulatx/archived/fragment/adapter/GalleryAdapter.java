@@ -59,9 +59,11 @@ public class GalleryAdapter extends SimpleCursorAdapter {
     public void setViewImage(ImageView v, final String value) {
         View view=(View)v.getParent();
         final View progress=view.findViewById(R.id.progressBar);
-        progress.setTag(R.id.product_tag_img, value);
 
-                progress.setVisibility(View.VISIBLE);
+            progress.setTag(R.id.product_tag_img, value);
+
+            progress.setVisibility(View.VISIBLE);
+
 
         try {
             Picasso.with(mContext)
@@ -74,25 +76,31 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                         @Override
                         public void onSuccess() {
 
-                            String tag= (String)progress.getTag(R.id.product_tag_img);
 
-                            if(tag.equals(value)) {
-                                progress.setVisibility(View.GONE);
-                            }
+                                String tag = (String) progress.getTag(R.id.product_tag_img);
+
+                                if (tag.equals(value)) {
+                                    progress.setVisibility(View.GONE);
+                                }
+
                         }
 
                         @Override
                         public void onError() {
-                            String tag= (String)progress.getTag(R.id.product_tag_img);
 
-                            if(tag.equals(value)) {
-                                progress.setVisibility(View.GONE);
-                            }
+                                String tag = (String) progress.getTag(R.id.product_tag_img);
+
+                                if (tag.equals(value)) {
+                                    progress.setVisibility(View.GONE);
+                                }
+
                     }
                     });
         }catch(Exception ignored){
             Log.e(TAG, ignored.getMessage());
-        progress.setVisibility(View.GONE);
+
+                progress.setVisibility(View.GONE);
+
         }
     }
 
