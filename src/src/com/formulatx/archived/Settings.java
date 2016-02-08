@@ -43,7 +43,7 @@ public final class Settings {
     public static final long UPDATE_TIME = 60000; //60 sec
     public static final int REFRESH_AUDION_POSITION_TIME=500;
     public static final String VERSION_NUMBER = "0.9.9";
-    public static final String VERSION_BUILD_TIME = "0602.1853";
+    public static final String VERSION_BUILD_TIME = "0802.1800";
     public static final String VERSION = "v" + VERSION_NUMBER + "." + VERSION_BUILD_TIME + (NETDEBUG ? "n" : "") + (DEBUG ? "d" : "");
     public static final String LOW_COMMENT_IDENTIFIER = "LOW_COMMENT_IDENTIFIER";
 

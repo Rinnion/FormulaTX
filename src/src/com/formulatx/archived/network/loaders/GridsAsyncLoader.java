@@ -68,13 +68,14 @@ public class GridsAsyncLoader extends AsyncTaskLoader<Grids> {
             Grids grids = new Grids();
             //Schedule schedule = new Schedule();
             for (int i = 0; i<json.length(); i++) {
+                if (!json.has(String.valueOf(i+1))) continue;
                 JSONObject round = json.getJSONObject(String.valueOf(i+1));
                 Grids.Round rnd = grids.addRound("Раунд " + (i+1));
                 for(int k=0; k<round.length()-1; k++){
-                    JSONArray jsonMatch = round.getJSONArray(String.valueOf(k));
+                    JSONObject jsonMatch = round.getJSONObject(String.valueOf(k));
                     JSONObject jsonObject = new JSONObject();
                     for (int j = 0; j<jsonMatch.length(); j++) {
-                        jsonObject.put("team" + (j+1), jsonMatch.getJSONObject(j));
+                        jsonObject.put("team" + (j+1), jsonMatch.getJSONObject(String.valueOf(j)));
                     }
                     Match match = Match.parseJSONObject(jsonObject);
                     match.header = rnd.cortName;

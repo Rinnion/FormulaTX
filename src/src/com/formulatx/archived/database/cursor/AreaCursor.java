@@ -24,12 +24,12 @@ public class AreaCursor extends SQLiteCursor {
 
     public Area getItem() {
         long id = getColId();
-        Area gamer = new Area(id);
-        gamer.address = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_ADDRESS));
-        gamer.map = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_MAP));
-        gamer.content = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_CONTENT));
-        gamer.title = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_TITLE));
-        return gamer;
+        Area area = new Area(id);
+        area.address = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_ADDRESS));
+        area.map = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_MAP));
+        area.content = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_CONTENT));
+        area.title = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_TITLE));
+        return area;
     }
 
     protected long getColId() {
