@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.rinnion.archived.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,7 +60,7 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
             @Override
             public void setViewImage(ImageView v, String value) {
 
-                v.setImageResource(R.drawable.logo_splash_screen);
+                //v.setImageResource(R.drawable.logo_splash_screen);
                 /*Log.d(TAG, String.valueOf(value));
 
                 if (value == null || value.isEmpty()) super.setViewImage(v,value);
@@ -71,6 +72,22 @@ public class OtherTournamentListFragment extends Fragment implements AdapterView
                         .into(v);
 
                 */
+
+                try {
+
+                    Log.d(TAG,String.format("Picasso try load: %s",value));
+                    Picasso.with(getActivity())
+                            .load(value)
+                            .placeholder(R.drawable.logo_splash_screen)
+                            .error(R.drawable.logo_splash_screen)
+                            .resize(75,75)
+                            .into(v);
+                }
+                catch (Exception ex)
+                {
+                    Log.d(TAG,"Picasso",ex);
+                }
+
             }
         };
 

@@ -1,9 +1,11 @@
 package com.formulatx.archived.database.model.ApiObjects;
 
+import java.io.Serializable;
+
 /**
  * Created by tretyakov on 28.12.2015.
  */
-public class Product {
+public class Product implements Serializable {
 
     public long id;
     public String thumb;

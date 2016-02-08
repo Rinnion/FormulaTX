@@ -14,6 +14,7 @@
     <item type="id" name="loader"/>
 
     <item type="id" name="tag_gamer_object"/>
+    <item name="product_tag_img" type="id"/>
 
 
 </resources>

@@ -134,7 +134,7 @@ public class WebViewWithCache extends WebView {
     }
 
 
-    public void loadDataOrCache(Activity activity, String tempFileName, String content, String data, String emptyData) {
+    public void loadDataOrCache(Activity activity, String tempFileName, String content, final String data, String emptyData) {
         setDefaultSettings();
 
         this.activity= activity;
@@ -149,8 +149,7 @@ public class WebViewWithCache extends WebView {
             } else {
                 ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Activity.CONNECTIVITY_SERVICE);
 
-                if (!loadFromCache())
-                    this.loadData(data, "text/html; charset=UTF-8", "UTF-8");
+
 
                 if (cm != null) {
 
@@ -159,16 +158,20 @@ public class WebViewWithCache extends WebView {
 
                     Log.d(TAG, "Online ani == " + String.valueOf(ani));
                     if (ani != null && ani.isConnected()) {
-                        Network network = new Network() {
+                        final Network network = new Network() {
 
                             @Override
                             protected void onPostExecute(Boolean aBoolean) {
                                 super.onPostExecute(aBoolean);
 
                                 //
-                                if (aBoolean)
+                                if (aBoolean) {
                                     loadDataAndSaveToCache();
-                                //else
+                                }
+                                else {
+                                    if (!loadFromCache())
+                                        loadData(data, "text/html; charset=UTF-8", "UTF-8");
+                                }
 
                             }
                         };
@@ -176,8 +179,18 @@ public class WebViewWithCache extends WebView {
                         network.execute();
 
                     }
+                    else
+                    {
+                        if (!loadFromCache())
+                            loadData(data, "text/html; charset=UTF-8", "UTF-8");
+                    }
 
 
+                }
+                else
+                {
+                    if (!loadFromCache())
+                        loadData(data, "text/html; charset=UTF-8", "UTF-8");
                 }
 
 
