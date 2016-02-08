@@ -27,6 +27,8 @@ public class AreaCursor extends SQLiteCursor {
         Area gamer = new Area(id);
         gamer.address = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_ADDRESS));
         gamer.map = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_MAP));
+        gamer.content = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_CONTENT));
+        gamer.title = getString(getColumnIndexOrThrow(AreaHelper.COLUMN_TITLE));
         return gamer;
     }
 

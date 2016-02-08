@@ -8,6 +8,8 @@ public class Area {
     public long id;
     public String address;
     public String map;
+    public String content;
+    public String title;
 
     public Area(long id) {
         this.id = id;

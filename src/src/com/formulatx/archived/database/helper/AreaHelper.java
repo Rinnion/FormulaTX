@@ -20,6 +20,8 @@ public class AreaHelper implements BaseColumns {
 
     public static final String COLUMN_MAP = "map";
     public static final String COLUMN_ADDRESS= "address";
+    public static final String COLUMN_TITLE= "title";
+    public static final String COLUMN_CONTENT= "content";
 
     public static String DATABASE_TABLE_ADDITINAL = "areas";
     private final ApiObjectHelper aoh;
@@ -38,6 +40,8 @@ public class AreaHelper implements BaseColumns {
                 _ID,
                 COLUMN_MAP,
                 COLUMN_ADDRESS,
+                COLUMN_TITLE,
+                COLUMN_CONTENT,
         };
         ALL_COLUMNS_ADDITINAL = TextUtils.join(",", COLS_ADDITIONAL);
     }
@@ -56,6 +60,8 @@ public class AreaHelper implements BaseColumns {
         map.put(_ID, area.id);
         map.put(COLUMN_MAP, area.map);
         map.put(COLUMN_ADDRESS, area.address);
+        map.put(COLUMN_TITLE, area.title);
+        map.put(COLUMN_CONTENT, area.content);
 
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
@@ -83,7 +89,9 @@ public class AreaHelper implements BaseColumns {
     public Area getArea(long id) {
         Log.v(TAG, "getProduct ("+id+")");
 
-        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
+        String join = "g." + TextUtils.join(",g.", COLS_ADDITIONAL);
+
+        String sql = "SELECT " + join +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " WHERE " + ApiObjectHelper.COLUMN_DISPLAY_METHOD +"=? AND g._id=?";
@@ -101,7 +109,9 @@ public class AreaHelper implements BaseColumns {
     public AreaCursor getAllByParent(long parent) {
         Log.v(TAG, "getAllByParent ()");
 
-        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
+        String join = "g." + TextUtils.join(",g.", COLS_ADDITIONAL);
+
+        String sql = "SELECT " + join +
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +

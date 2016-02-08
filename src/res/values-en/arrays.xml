@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="grids_menu"/>
+    <string-array name="grids_menu">
+        <item>Qualification</item>
+        <item>Main event</item>
+        <item>Doubles</item>
+    </string-array>
 </resources>

@@ -2,7 +2,9 @@ package com.formulatx.archived.network.handlers;
 
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.database.helper.AreaHelper;
+import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.database.model.ApiObjects.Area;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +46,11 @@ public class AreaHandler extends JSONObjectHandler {
             }
 
             if (ao == null) return Bundle.EMPTY;
+
+            ApiObjectHelper aoh = new ApiObjectHelper(FormulaTXApplication.getDatabaseOpenHelper());
+            ApiObject apiObject = aoh.get(ao.id);
+            ao.title = apiObject.title;
+            ao.content=apiObject.content;
 
             th.merge(ao);
 

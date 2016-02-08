@@ -18,15 +18,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 15 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/android-support-v4_lib/android-support-v4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="serialized-php-parser" />
     <orderEntry type="module-library">
       <library>
@@ -68,6 +59,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../lib/commons-lang3-3.4/commons-lang3-3.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/android-support-v13_lib/android-support-v13.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

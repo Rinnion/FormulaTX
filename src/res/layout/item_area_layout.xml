@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/nav_mt_about"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              style="@style/menu_item_row">
+
+
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/string_tournament_about"
+            android:id="@+id/itml_text"
+            android:layout_weight="1"
+            android:background="@color/white_10a"
+            style="@style/main_text"/>
+
+    <include layout="@layout/include_next_item"/>
+</LinearLayout>

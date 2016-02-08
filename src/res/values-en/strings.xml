@@ -52,4 +52,7 @@
     <string name="string_send_comment">SEND YOUR REVIEW</string>
     <string name="string_what_is_you_name">You name</string>
     <string name="string_alert_loading_error">Error</string>
+    <string name="string_map">Карта</string>
+    <string name="string_autobus">Рассписание автобусов</string>
+    <string name="no_araes">Нет площадок</string>
 </resources>

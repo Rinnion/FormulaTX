@@ -15,7 +15,7 @@ import com.rinnion.archived.R;
  * To change this template use File | Settings | File Templates.
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
-    public static int DATABASE_VERSION = 32;
+    public static int DATABASE_VERSION = 34;
     private static String DATABASE_NAME = "FormulaTXDb";
     private final Context mContext;
     private final String TAG = "DatabaseOpenHelper";

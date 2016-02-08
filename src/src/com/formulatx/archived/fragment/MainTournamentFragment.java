@@ -344,49 +344,16 @@ public class MainTournamentFragment extends Fragment{
     }
 
     private void showMapFragment() {
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        TournamentHelper th = new TournamentHelper(doh);
-        Tournament trnmt = th.getByPostName(getArguments().getString(MainTournamentFragment.TYPE));
-
-        AreaHelper ah = new AreaHelper(doh);
-        AreaCursor area = ah.getAllByParent(trnmt.id);
-
-        if (area.getCount() == 0) {
-            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_area_found), Toast.LENGTH_LONG).show();
-            return;
-        }
-         Area item = area.getItem();
-
-        if (item == null){
-            Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        try {
-            String[] split = TextUtils.split(String.valueOf(item.map), ",");
-            if (split.length != 2 ){
-                Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
-                return;
-            }
-            Float lat = Float.parseFloat(split[0]);
-            Float lng = Float.parseFloat(split[1]);
-
-            String coords = String.valueOf(lat) + "," + String.valueOf(lng);
-            //String coords = String.valueOf(item.map);
-
-            //String uriString = "geo:"+ coords +"?q=" + coords + "(" + Uri.encode(String.valueOf(item.address)) + ")";
-            String uriString = "geo:"+ coords +"?q=" + Uri.encode(String.valueOf(trnmt.title));
-            //String uriString = "geo:0,0?q=" + Uri.encode(item.address);
-            //String uriString = "geo:" + String.valueOf(item.map);
-            //Toast.makeText(getActivity(), uriString, Toast.LENGTH_LONG).show();
-
-            Uri uri = Uri.parse(uriString);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_installer_map_app), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+        AreaFragment mlf = new AreaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AreaFragment.TOURNAMENT_POST_NAME, getArguments().getString(MainTournamentFragment.TYPE));
+        mlf.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                .replace(R.id.fragment_container, mlf)
+                .addToBackStack(null)
+                .commit();
     }
 }
 
