@@ -3,10 +3,13 @@ package com.formulatx.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +46,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     private SimpleCursorAdapter mAdapter;
     private FrameLayout mViewFlipper;
     private TabHost mTabHost;
+    private View mWebNest;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -57,7 +61,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
             case android.R.id.home:
                 if (mTabHost.getCurrentTabTag().equals(AUTOBUS) && mWebContent.getVisibility() == View.VISIBLE) {
                     mViewFlipper.bringChildToFront(mList);
-                    mWebContent.setVisibility(View.GONE);
+                    mWebNest.setVisibility(View.GONE);
                     mAutobusView.setVisibility(View.VISIBLE);
                 }else{
                     getActivity().getFragmentManager().popBackStack();
@@ -83,6 +87,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
 
         mViewFlipper = (FrameLayout) mTabHost.findViewById(R.id.list_detail);
         mAutobusView = mViewFlipper.findViewById(R.id.autobus);
+        mWebNest = (View) mViewFlipper.findViewById(R.id.al_ll_content);
         mWebContent = (WebViewWithCache) mViewFlipper.findViewById(R.id.al_web_content);
         mWebContent.setBackgroundColor(Color.TRANSPARENT);
         mList = (ListView) mAutobusView.findViewById(R.id.al_schedule);
@@ -97,6 +102,33 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         mList.setOnItemClickListener(this);
 
         UptdateAutobusView();
+
+        View viewById = mWebNest.findViewById(R.id.al_btn_show);
+        viewById.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Area item = (Area) mWebContent.getTag(R.id.view_area);
+                try {
+                    String[] split = TextUtils.split(String.valueOf(item.map), ",");
+                    if (split.length != 2 ){
+                        Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    Float lat = Float.parseFloat(split[0]);
+                    Float lng = Float.parseFloat(split[1]);
+
+                    String coords = String.valueOf(lat) + "," + String.valueOf(lng);
+                    String uriString = "geo:"+ coords +"?q=" + Uri.encode(String.valueOf(item.title));
+
+                    Uri uri = Uri.parse(uriString);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e){
+                    Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_installer_map_app), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         /*
 
@@ -118,25 +150,6 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
             return;
         }
 
-        try {
-            String[] split = TextUtils.split(String.valueOf(item.map), ",");
-            if (split.length != 2 ){
-                Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
-                return;
-            }
-            Float lat = Float.parseFloat(split[0]);
-            Float lng = Float.parseFloat(split[1]);
-
-            String coords = String.valueOf(lat) + "," + String.valueOf(lng);
-            String uriString = "geo:"+ coords +"?q=" + Uri.encode(String.valueOf(trnmt.title));
-
-            Uri uri = Uri.parse(uriString);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e){
-            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_installer_map_app), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
 
         */
 
@@ -180,7 +193,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         }
 
         mViewFlipper.bringChildToFront(mAutobusView);
-        mWebContent.setVisibility(View.INVISIBLE);
+        mWebNest.setVisibility(View.INVISIBLE);
         mAutobusView.setVisibility(View.VISIBLE);
 
     }
@@ -201,8 +214,9 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         Area item = ((AreaCursor) (adapterView.getItemAtPosition(i))).getItem();
         mWebContent.loadData(item.content, "text/html; charset=UTF-8", null);
         mViewFlipper.bringChildToFront(mWebContent);
-        mWebContent.setVisibility(View.VISIBLE);
+        mWebNest.setVisibility(View.VISIBLE);
         mAutobusView.setVisibility(View.INVISIBLE);
+        mWebContent.setTag(R.id.view_area, item);
     }
 
     @Override
