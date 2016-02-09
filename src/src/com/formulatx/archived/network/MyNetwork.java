@@ -356,7 +356,14 @@ public final class MyNetwork {
                 .setHandler(handler)
                 .create();
 
-        return fetcher.execute();
+        Bundle bundle = null;
+        long longParameter = FormulaTXApplication.getLongParameter("object-cache-" + id, 0);
+        if (longParameter +Settings.OUT_OF_DATE_OBJECT < Calendar.getInstance().getTimeInMillis()) {
+            bundle= fetcher.execute();
+            FormulaTXApplication.setParameter("object-cache-" + id, Calendar.getInstance().getTimeInMillis());
+        }
+
+        return bundle;
     }
 
 
@@ -415,9 +422,17 @@ public final class MyNetwork {
     }
 
     public static Bundle queryArea(int id) {
-        Log.d(TAG, String.format("query areas"));
-        AreaHandler handlerGamer = new AreaHandler();
-        return getObjectWithAdditionalFields(id, handlerGamer);
+        Log.d(TAG, "query areas");
+
+        Bundle bundle = null;
+        long longParameter = FormulaTXApplication.getLongParameter("area-cache-" + id, 0);
+        if (longParameter +Settings.OUT_OF_DATE_AREA < Calendar.getInstance().getTimeInMillis()) {
+            AreaHandler handlerGamer = new AreaHandler();
+            bundle= getObjectWithAdditionalFields(id, handlerGamer);
+            FormulaTXApplication.setParameter("area-cache-" + id, Calendar.getInstance().getTimeInMillis());
+        }
+
+        return bundle;
     }
 
     public static Bundle queryProduct(int id) {
@@ -659,18 +674,21 @@ public final class MyNetwork {
     }
 
     public static boolean isRequestSuccess(Bundle bundle) {
-        return bundle.getString(HttpRequester.RESULT).equals(HttpRequester.RESULT_HTTP);
+        if (bundle == null) return true;
+        String result = bundle.getString(HttpRequester.RESULT);
+        return (result != null && result.equals(HttpRequester.RESULT_HTTP));
     }
 
     public static boolean hasException(Bundle bundle) {
-        return bundle.getString(HttpRequester.RESULT).equals(HttpRequester.RESULT_EXCEPTION);
+        if (bundle == null) return false;
+        String result = bundle.getString(HttpRequester.RESULT);
+        return (result != null && result.equals(HttpRequester.RESULT_EXCEPTION));
     }
 
     public static void throwException(Bundle bundle) throws Exception {
         String result = bundle.getString(HttpRequester.RESULT);
         if (result !=null && result.equals(HttpRequester.RESULT_EXCEPTION)){
-            Exception exception = (Exception) bundle.getSerializable(HttpRequester.RESULT_EXCEPTION);
-            throw exception;
+            throw (Exception) bundle.getSerializable(HttpRequester.RESULT_EXCEPTION);
         }
 
     }

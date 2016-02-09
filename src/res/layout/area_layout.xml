@@ -47,8 +47,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/al_schedule"
+                                android:divider="#00000000"
                                 android:dividerHeight="6dp"
-                                android:padding="6dp"/>
+                                android:padding="6dp"
+                        />
 
                         <TextView
                                 android:layout_width="wrap_content"

@@ -55,6 +55,8 @@ public final class Settings {
     public static final long OUT_DATE_TIME_QUERY_PARSER_ID = 24 * 60 * 60 * 1000; //one day
     public static final long OUT_DATE_TIME_QUERY_PARSER_PARSED = 1 * 60 * 60 * 1000; //one hour
     public static final String GRIDS = "grid";
+    public static final long OUT_OF_DATE_AREA = 100 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_OBJECT = 24 * 60 * 60 * 1000;
 
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";
