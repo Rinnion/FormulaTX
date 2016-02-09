@@ -3,9 +3,12 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/nav_mt_about"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              style="@style/menu_item_row">
+              style="@style/menu_item_row"
+              android:background="@drawable/white_rounded_10"
+              android:padding="6dp"
+              android:minHeight="@dimen/person_image_size">
 
 
     <TextView
@@ -14,8 +17,8 @@
             android:text="@string/string_tournament_about"
             android:id="@+id/itml_text"
             android:layout_weight="1"
-            android:background="@color/white_10a"
-            style="@style/main_text"/>
+            style="@style/main_text"
+            android:padding="6dp"/>
 
     <include layout="@layout/include_next_item"/>
 </LinearLayout>
