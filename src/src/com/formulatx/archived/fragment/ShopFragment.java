@@ -14,10 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
 import com.formulatx.archived.database.cursor.ProductCursor;
+import com.formulatx.archived.database.model.ApiObjects.Product;
 import com.rinnion.archived.R;
 import com.formulatx.archived.fragment.adapter.ProductAdapter;
 import com.formulatx.archived.network.loaders.ProductAsyncLoader;
 import com.formulatx.archived.utils.Log;
+
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,6 +48,27 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
 
         mEmptyView = view.findViewById(R.id.emptyView);
         mProgresView = view.findViewById(R.id.progressView);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Product product=((ProductCursor) parent.getItemAtPosition(position)).getItem();
+                Bundle bundle = new Bundle();
+                //bundle.putString(ShopViewFragment.EN_SHOP_ITEM,  product);
+                bundle.putSerializable(ShopViewFragment.EN_SHOP_ITEM,  product);
+
+
+                ShopViewFragment svf = new ShopViewFragment();
+                svf.setArguments(bundle);
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                        .replace(R.id.fragment_container, svf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        /**/
 
         getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
 

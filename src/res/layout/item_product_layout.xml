@@ -6,10 +6,25 @@
               android:layout_height="wrap_content" android:gravity="center_vertical" android:paddingRight="15dp"
               android:paddingLeft="15dp" android:paddingTop="7dp" android:paddingBottom="7dp">
 
-    <ImageView
+    <RelativeLayout
             android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:id="@+id/ipl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
+            android:layout_height="75dp">
+        <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/ipl_iv_thumb" android:src="@drawable/logo_splash_screen"/>
+        <View android:background="@android:color/black" android:alpha="0.6"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/il_v_shadow"
+              android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true" android:visibility="gone"/>
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_centerVertical="true" android:layout_centerHorizontal="true" android:visibility="gone"/>
+    </RelativeLayout>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
