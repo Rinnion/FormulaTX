@@ -80,7 +80,7 @@ public class ShopViewFragment extends Fragment {
         mTitle.setText(content.title);
         //mDesc.setText(content.content);
         //mContentWebView
-        mContentWebView.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>" + content.content + "</body></html>", "text/html; charset=UTF-8", null);
+        mContentWebView.loadData("<html><style>body {color:#FFF;}</style><body style=\"font-size: 11pt; font-face: Roboto-Regular\">" + content.content + "</body></html>", "text/html; charset=UTF-8", null);
         mContentWebView.setBackgroundColor(Color.TRANSPARENT);
 
         final ProgressBar progress=(ProgressBar)view.findViewById(R.id.progressBar);

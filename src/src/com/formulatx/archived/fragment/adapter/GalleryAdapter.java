@@ -7,13 +7,27 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+
 import android.widget.ImageView;
 import com.formulatx.archived.FormulaTXApplication;
+
+import com.formulatx.archived.utils.Files;
 import com.formulatx.archived.utils.Log;
+import com.formulatx.archived.utils.OkHttp3Downloader;
 import com.rinnion.archived.R;
 import com.squareup.picasso.Callback;
+
+import com.squareup.picasso.OkHttpDownloader;
+
+
 import com.squareup.picasso.Picasso;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
+
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Lenovo on 03.02.2016.
@@ -66,7 +80,34 @@ public class GalleryAdapter extends SimpleCursorAdapter {
 
 
         try {
-            Picasso.with(mContext)
+
+            File cache=new File(new File(Files.getCacheDir()),"picasso-gallery");
+            if(!cache.exists())
+                cache.mkdir();
+            //Files combo=new File,"picasso-gallery");
+            /*
+            OkHttpClient okHttpClient =  new OkHttpClient.Builder()
+                    .cache(new okhttp3.Cache(cache, OkHttp3Downloader.calculateDiskCacheSize(cache)))
+                    .build();
+            okHttpClient.networkInterceptors().add(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder().header("Cache-Control", "max-age=" + (60 * 60 * 24 * 365)).build();
+                }
+            });*/
+
+
+            //okHttpClient.setCache(new Cache(Files.getCacheDir(), Integer.MAX_VALUE));
+ //           OkHttpDownloader
+
+
+                Picasso picasso = new Picasso.Builder(this.mContext)
+                .downloader(new OkHttp3Downloader(this.mContext))
+            .build();
+
+
+            picasso.with(mContext)
                     .load(value)
                     .centerCrop()
                     .placeholder(R.drawable.logo_splash_screen)
@@ -97,7 +138,7 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                     }
                     });
         }catch(Exception ignored){
-            Log.e(TAG, ignored.getMessage());
+            Log.e(TAG,"Picasso", ignored);
 
                 progress.setVisibility(View.GONE);
 
