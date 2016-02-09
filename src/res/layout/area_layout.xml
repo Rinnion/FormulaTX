@@ -62,13 +62,6 @@
                             android:layout_height="match_parent"
                             android:id="@+id/al_ll_content"
                             android:orientation="vertical">
-                        <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:id="@+id/al_btn_show"
-                                android:text="Show on map"
-                        />
 
                         <com.formulatx.archived.utils.WebViewWithCache
                                 android:layout_width="match_parent"

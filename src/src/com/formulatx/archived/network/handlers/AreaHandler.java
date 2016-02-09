@@ -69,10 +69,10 @@ public class AreaHandler extends JSONObjectHandler {
         sb.append("body table:first-child strong { font-size:14pt; }");
         sb.append("body table:first-child { font-size:12pt; }");
         sb.append("body table:last-child { width:100%; font-size:12pt;}");
-        sb.append("body table:last-child td { height:2em; }");
-        sb.append("body table:last-child tr.odd td{ background-color:#10FFFFFF; }");
-        sb.append("body table:last-child tr.even td{ background-color:#30FFFFFF; }");
-        sb.append("body table:last-child thead th{ font-size:10pt; background-color:#30FFFFFF; }");
+        sb.append("body table:last-child td, body table:last-child th { height:2em; border-radius:5px; padding:5px; text-align:center;}");
+        sb.append("body table:last-child tr.odd td{ background-color:rgba(255,255,255,0.4); }");
+        sb.append("body table:last-child tr.even td{ background-color:rgba(255,255,255,0.2); }");
+        sb.append("body table:last-child thead th{ font-size:10pt; background-color:rgba(255,255,255,0.4); }");
         sb.append("body table:last-child tbody td{ font-size:12pt; font-weight:bolder; }");
         sb.append("</style></head><body>");
         sb.append(apiObject.content);
