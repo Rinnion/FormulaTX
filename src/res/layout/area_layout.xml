@@ -27,11 +27,10 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:orientation="horizontal">
-                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                              android:id="@+id/map"
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                              android:id="@+id/mapnest"
                               android:layout_width="match_parent"
-                              android:layout_height="match_parent"
-                              class="com.google.android.gms.maps.MapFragment" />
+                              android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <FrameLayout

@@ -5,15 +5,12 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.DisplayMetrics;
+import android.view.*;
 import android.widget.*;
 import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.DatabaseOpenHelper;
@@ -25,6 +22,11 @@ import com.formulatx.archived.database.model.ApiObjects.Area;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.utils.WebViewWithCache;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.rinnion.archived.R;
 
 /**
@@ -47,6 +49,10 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     private FrameLayout mViewFlipper;
     private TabHost mTabHost;
     private View mWebNest;
+    private MapFragment mMapFragment;
+    private AreaCursor area;
+    private GoogleMap mMap;
+    private LatLngBounds llb;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -59,7 +65,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         Log.d(TAG, "onOptionsItemSelected");
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (mTabHost.getCurrentTabTag().equals(AUTOBUS) && mWebContent.getVisibility() == View.VISIBLE) {
+                if (mTabHost.getCurrentTabTag().equals(AUTOBUS) && mWebNest.getVisibility() == View.VISIBLE) {
                     mViewFlipper.bringChildToFront(mList);
                     mWebNest.setVisibility(View.GONE);
                     mAutobusView.setVisibility(View.VISIBLE);
@@ -76,7 +82,25 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
+        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
+        TournamentHelper th = new TournamentHelper(doh);
+        Tournament trnmt = th.getByPostName(getArguments().getString(TOURNAMENT_POST_NAME));
+
+        AreaHelper ah = new AreaHelper(doh);
+        area = ah.getAllByParent(trnmt.id);
+
+        String[] from = new String[]{AreaHelper.COLUMN_TITLE};
+        int[] to = new int[] {R.id.itml_text};
+        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_area_layout, area, from, to, 0);
+
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        area.close();
+        super.onDestroy();
     }
 
     @Override
@@ -86,6 +110,64 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         setupTabHost(mTabHost);
 
         mViewFlipper = (FrameLayout) mTabHost.findViewById(R.id.list_detail);
+        mMapFragment = MapFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.mapnest, mMapFragment)
+                .commit();
+
+        mMapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
+                area.moveToFirst();
+                LatLngBounds.Builder llbb = new LatLngBounds.Builder();
+                while (!area.isAfterLast()){
+                    Area item = area.getItem();
+
+                    String[] split = TextUtils.split(String.valueOf(item.map), ",");
+                    if (split.length != 2 ){
+                        Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    Float lat = Float.parseFloat(split[0]);
+                    Float lng = Float.parseFloat(split[1]);
+
+                    LatLng position = new LatLng(lat, lng);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(item.title));
+
+                    llbb.include(position);
+
+                    area.moveToNext();
+                }
+
+                llb = llbb.build();
+                final int count = area.getCount();
+
+                mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                    @Override
+                    public void onCameraChange(CameraPosition arg0) {
+                        if (count > 1) {
+                            Display display = getActivity().getWindowManager().getDefaultDisplay();
+                            DisplayMetrics metrics = new DisplayMetrics();
+                            display.getMetrics(metrics);
+                            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngBounds(llb, (int) (metrics.widthPixels * 0.33));
+                            mMap.animateCamera(yourLocation);
+                        }
+                        if (count == 1) {
+                            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(llb.getCenter(), 11);
+                            mMap.animateCamera(yourLocation);
+                        }
+                        mMap.setOnCameraChangeListener(null);
+                    }
+                });
+
+            }
+        });
+
+
+
         mAutobusView = mViewFlipper.findViewById(R.id.autobus);
         mWebNest = (View) mViewFlipper.findViewById(R.id.al_ll_content);
         mWebContent = (WebViewWithCache) mViewFlipper.findViewById(R.id.al_web_content);
@@ -94,9 +176,6 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         View v = mViewFlipper.findViewById(R.id.al_tv_empty);
         mList.setEmptyView(v);
 
-        String[] from = new String[]{AreaHelper.COLUMN_TITLE};
-        int[] to = new int[] {R.id.itml_text};
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_area_layout, null, from, to, 0);
         mList.setAdapter(mAdapter);
 
         mList.setOnItemClickListener(this);
@@ -155,20 +234,6 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     private void UptdateAutobusView() {
         if (mAutobusView == null) return;
 
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        TournamentHelper th = new TournamentHelper(doh);
-        Tournament trnmt = th.getByPostName(getArguments().getString(TOURNAMENT_POST_NAME));
-
-        AreaHelper ah = new AreaHelper(doh);
-        AreaCursor area = ah.getAllByParent(trnmt.id);
-
-        Cursor cursor = mAdapter.swapCursor(area);
-        if (cursor != null) cursor.close();
-
-        if (area.getCount() == 0) {
-            return;
-        }
-
         mViewFlipper.bringChildToFront(mAutobusView);
         mWebNest.setVisibility(View.INVISIBLE);
         mAutobusView.setVisibility(View.VISIBLE);
@@ -198,7 +263,8 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onTabChanged(String s) {
-        //mViewFlipper.cle
+        if (s.equals(MAP)){
+        }
     }
 }
 
