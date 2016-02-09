@@ -1,0 +1,2 @@
+10:81:D5:5A:08:A2:FE:42:5B:E9:D5:A8:FC:C9:BE:C6:88:61:9C:28
+<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD1E6RaGlUyV838QST2wrLC0FWb0i80xng"/>
