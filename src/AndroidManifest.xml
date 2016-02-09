@@ -3,7 +3,7 @@
           package="com.rinnion.archived"
           android:versionCode="3"
           android:versionName="0.9.9.0802.1800">
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19"/>
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -17,22 +17,22 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission android:protectionLevel="signature"
-                android:name="com.rinnion.archived.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.rinnion.archived.permission.C2D_MESSAGE" />
+                android:name="com.formulatx.archived.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.formulatx.archived.permission.C2D_MESSAGE" />
 
     <application android:name="com.formulatx.archived.FormulaTXApplication" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher">
         <activity android:name="com.formulatx.archived.activity.MainActivity" android:label="@string/app_name"
-                  android:theme="@style/FormulaTXTheme" android:screenOrientation="sensorPortait">
+                  android:theme="@style/FormulaTXTheme" android:screenOrientation="sensorPortrait">
         </activity>
         <activity android:name="com.formulatx.archived.activity.MainLadiesActivity" android:label="@string/app_name"
-                  android:theme="@style/FormulaTXTheme.Ladies" android:screenOrientation="sensorPortait">
+                  android:theme="@style/FormulaTXTheme.Ladies" android:screenOrientation="sensorPortrait">
         </activity>
         <activity android:name="com.formulatx.archived.activity.MainOpenActivity" android:label="@string/app_name"
-                  android:theme="@style/FormulaTXTheme.Open" android:screenOrientation="sensorPortait">
+                  android:theme="@style/FormulaTXTheme.Open" android:screenOrientation="sensorPortrait">
         </activity>
         <activity android:name="com.formulatx.archived.activity.SplashActivity" android:label="@string/app_name"
-                  android:theme="@style/FormulaTXTheme.NoActionBar" android:screenOrientation="sensorPortait">
+                  android:theme="@style/FormulaTXTheme.NoActionBar" android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -58,8 +58,10 @@
                 <!--
                   IMPORTANT: Change "com.parse.starter" to match your app's package name.
                 -->
-                <category android:name="com.rinnion.archived" />
+                <category android:name="com.formulatx.archived" />
             </intent-filter>
         </receiver>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD1E6RaGlUyV838QST2wrLC0FWb0i80xng"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
     </application>
 </manifest>

@@ -25,7 +25,7 @@ public class DownloadService extends IntentService {
 
     public static final String TYPE = "type";
 
-    public static final String NOTIFICATION = "com.rinnion.archived.service.receiver";
+    public static final String NOTIFICATION = "com.formulatx.archived.service.receiver";
     private String TAG = getClass().getSimpleName();
 
     public DownloadService() {
@@ -47,6 +47,7 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+            /*
 
             publishProgress(5, null);
             MyNetwork.isRequestSuccess(MyNetwork.queryWeather(WeatherCursor.MOSCOW));

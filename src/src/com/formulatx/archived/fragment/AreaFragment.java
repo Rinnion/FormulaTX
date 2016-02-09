@@ -130,29 +130,6 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
             }
         });
 
-        /*
-
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        TournamentHelper th = new TournamentHelper(doh);
-        Tournament trnmt = th.getByPostName(getArguments().getString(AreaFragment.TOURNAMENT_POST_NAME));
-
-        AreaHelper ah = new AreaHelper(doh);
-        AreaCursor area = ah.getAllByParent(trnmt.id);
-
-        if (area.getCount() == 0) {
-            Toast.makeText(getActivity(), FormulaTXApplication.getResourceString(R.string.string_no_area_found), Toast.LENGTH_LONG).show();
-            return;
-        }
-        Area item = area.getItem();
-
-        if (item == null){
-            Toast.makeText(getActivity(), "Area not available...", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-
-        */
-
         return view;
     }
 
@@ -163,7 +140,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
 
         tabSpec = tabHost.newTabSpec(MAP);
         tabSpec.setIndicator(FormulaTXApplication.getResourceString(R.string.string_map));
-        tabSpec.setContent(R.id.map);
+        tabSpec.setContent(R.id.al_ll_map);
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec(AUTOBUS);

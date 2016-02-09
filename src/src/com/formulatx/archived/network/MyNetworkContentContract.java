@@ -5,6 +5,7 @@ import com.formulatx.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
