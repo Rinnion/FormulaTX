@@ -101,11 +101,40 @@ public class GalleryAdapter extends SimpleCursorAdapter {
             //okHttpClient.setCache(new Cache(Files.getCacheDir(), Integer.MAX_VALUE));
  //           OkHttpDownloader
 
+            OkHttp3Downloader okHttp3Downloadernew=new  OkHttp3Downloader(this.mContext);
+
 
                 Picasso picasso = new Picasso.Builder(this.mContext)
-                .downloader(new OkHttp3Downloader(this.mContext))
+                .downloader(okHttp3Downloadernew)
             .build();
 
+            Callback callback =new Callback() {
+                @Override
+                public void onSuccess() {
+
+
+                    String tag = (String) progress.getTag(R.id.product_tag_img);
+
+                    if (tag.equals(value)) {
+                        progress.setVisibility(View.GONE);
+                    }
+
+                }
+
+                @Override
+                public void onError() {
+
+                    String tag = (String) progress.getTag(R.id.product_tag_img);
+
+                    if (tag.equals(value)) {
+                        progress.setVisibility(View.GONE);
+                    }
+
+                }
+            };
+
+
+            okHttp3Downloadernew.SetCallback(callback);
 
             picasso.with(mContext)
                     .load(value)
@@ -113,30 +142,7 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                     .placeholder(R.drawable.logo_splash_screen)
                     .error(R.drawable.logo_splash_screen)
                     .fit()
-                    .into(v, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-
-                                String tag = (String) progress.getTag(R.id.product_tag_img);
-
-                                if (tag.equals(value)) {
-                                    progress.setVisibility(View.GONE);
-                                }
-
-                        }
-
-                        @Override
-                        public void onError() {
-
-                                String tag = (String) progress.getTag(R.id.product_tag_img);
-
-                                if (tag.equals(value)) {
-                                    progress.setVisibility(View.GONE);
-                                }
-
-                    }
-                    });
+                    .into(v, callback);
         }catch(Exception ignored){
             Log.e(TAG,"Picasso", ignored);
 

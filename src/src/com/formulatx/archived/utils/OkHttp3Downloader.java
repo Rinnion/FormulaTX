@@ -3,6 +3,7 @@ package com.formulatx.archived.utils;
 import android.content.Context;
 import android.net.Uri;
 import android.os.StatFs;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import java.io.File;
@@ -61,7 +62,7 @@ public final class OkHttp3Downloader implements Downloader {
 
   private final Call.Factory client;
   private final Cache cache;
-
+  private Callback callback=null;
   /**
    * Create new downloader that uses OkHttp. This will install an image cache into your application
    * cache directory.
@@ -111,6 +112,11 @@ public final class OkHttp3Downloader implements Downloader {
     this.cache = null;
   }
 
+  public void SetCallback(Callback callback)
+  {
+    this.callback=callback;
+  }
+
   @Override public Response load(Uri uri, int networkPolicy) throws IOException {
     CacheControl cacheControl = null;
     if (networkPolicy != 0) {
@@ -137,6 +143,8 @@ public final class OkHttp3Downloader implements Downloader {
     int responseCode = response.code();
     if (responseCode >= 300) {
       response.body().close();
+      if(callback!=null)
+        callback.onError();
       throw new ResponseException(responseCode + " " + response.message(), networkPolicy,
           responseCode);
     }
@@ -144,6 +152,8 @@ public final class OkHttp3Downloader implements Downloader {
     boolean fromCache = response.cacheResponse() != null;
 
     ResponseBody responseBody = response.body();
+    if(callback!=null)
+      callback.onSuccess();
     return new Response(responseBody.byteStream(), fromCache, responseBody.contentLength());
   }
 
