@@ -12,7 +12,7 @@ import com.formulatx.archived.utils.Log;
 public final class Settings {
     public static final boolean NETDEBUG =false;
     public static final boolean DEBUG = false;
-    public static final int LogLevel = Log.DEBUG;
+    public static final int LogLevel = Log.ASSERT;
 
     public static final int ABOUT_API_OBJECT = 201;
     public static final String ABOUT_API_OBJECT_ALIAS = "about";

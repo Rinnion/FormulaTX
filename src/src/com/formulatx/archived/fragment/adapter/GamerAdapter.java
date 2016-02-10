@@ -85,7 +85,7 @@ public class GamerAdapter extends SimpleCursorAdapter {
         }
         tvName.setText(item.title);
         tvCountry.setText(item.country);
-        tvRating.setText(String.valueOf(item.rating));
+        tvRating.setText(String.valueOf((int)item.rating));
 
         tvFavorite.setImageResource(item.favorite ? R.drawable.like_selected_icon : R.drawable.like_noselected_icon);
 

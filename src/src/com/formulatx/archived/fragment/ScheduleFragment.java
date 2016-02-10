@@ -138,6 +138,7 @@ public class ScheduleFragment extends Fragment implements TabHost.OnTabChangeLis
     }
 
     private void UpdateSchedule() {
+        Log.d(TAG, "UpdateSchedule");
         if (mSchedule == null) {
             mSwipeRefreshLayout.setRefreshing(true);
             mEmptyView.setVisibility(View.GONE);

@@ -262,8 +262,8 @@ public class MyNetworkContentContract {
 
         public static class Grids {
 
-            public static final int QUALIFICATION = 0;
-            public static final int MAIN_EVENT = 1;
+            public static final int MAIN_EVENT = 0;
+            public static final int QUALIFICATION = 1;
             public static final int DOUBLES = 2;
 
             private static final String ladies_qualification = "http://parser.formulatx.com/ladies/draw/%s/";
