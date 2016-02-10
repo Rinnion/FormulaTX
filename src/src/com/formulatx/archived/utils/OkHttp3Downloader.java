@@ -139,6 +139,7 @@ public final class OkHttp3Downloader implements Downloader {
       builder.cacheControl(cacheControl);
     }
 
+
     okhttp3.Response response = client.newCall(builder.build()).execute();
     int responseCode = response.code();
     if (responseCode >= 300) {

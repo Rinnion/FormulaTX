@@ -63,4 +63,5 @@
     <string name="string_send_comment">ОСТАВИТЬ ОТЗЫВ</string>
     <string name="string_phone_number" translatable="false">+7 (965) 299–99–82</string>
     <string name="string_add_shortcut">ДОБАВИТЬ В ИЗБРАННОЕ</string>
+    <string name="string_favorits">Избранное</string>
 </resources>

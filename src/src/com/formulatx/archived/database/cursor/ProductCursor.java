@@ -29,6 +29,7 @@ public class ProductCursor extends SQLiteCursor {
         gamer.title = getString(getColumnIndexOrThrow(ProductHelper.COLUMN_TITLE));
         gamer.price = getString(getColumnIndexOrThrow(ProductHelper.COLUMN_PRICE));
         gamer.thumb = getString(getColumnIndexOrThrow(ProductHelper.COLUMN_THUMB));
+        gamer.favorite=getInt(getColumnIndexOrThrow(ProductHelper.COLUMN_FAVORITE))==1;
         //gamer.top = getString(getColumnIndexOrThrow(GamerHelper.COLUMN_TOP));
         return gamer;
     }

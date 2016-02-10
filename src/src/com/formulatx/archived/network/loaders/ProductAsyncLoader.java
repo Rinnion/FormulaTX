@@ -2,6 +2,7 @@ package com.formulatx.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.DatabaseOpenHelper;
 import com.formulatx.archived.database.cursor.ProductCursor;
@@ -17,7 +18,7 @@ public class ProductAsyncLoader extends AsyncTaskLoader<ProductCursor> {
 
     private String TAG = getClass().getSimpleName();
 
-    public ProductAsyncLoader(Context context) {
+    public ProductAsyncLoader(Context context, Bundle args) {
         super(context);
         Log.d(TAG, ".ctor");
     }
