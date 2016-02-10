@@ -45,14 +45,20 @@ public class ProductAsyncLoader extends AsyncTaskLoader<ProductCursor> {
     @Override
     public ProductCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
-        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-        ProductHelper aoh=new ProductHelper(doh);
+
+        /*
         int[] iaProductList = MyNetwork.getIntArray(MyNetwork.queryProductList());
         if (iaProductList != null) {
             for (int i : iaProductList) {
                 MyNetwork.queryProduct(i);
             }
         }
+        */
+
+        MyNetwork.queryProduct();
+
+        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
+        ProductHelper aoh=new ProductHelper(doh);
         return aoh.getAll();
     }
 

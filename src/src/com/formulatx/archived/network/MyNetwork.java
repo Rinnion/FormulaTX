@@ -441,6 +441,20 @@ public final class MyNetwork {
         return getObjectWithAdditionalFields(id, productHandler);
     }
 
+    public static Bundle queryProduct() {
+        Log.d(TAG, "queryProduct");
+
+        ProductHandler mHandler = new ProductHandler();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryProduct")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+                .setHandler(mHandler)
+                .create();
+
+        return fetcher.execute();    }
+
     public static Bundle queryCard(int id) {
         Log.d(TAG, String.format("query card"));
         CardHandler cardHandler = new CardHandler();

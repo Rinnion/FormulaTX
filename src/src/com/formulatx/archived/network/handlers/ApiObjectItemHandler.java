@@ -33,7 +33,6 @@ public class ApiObjectItemHandler extends JSONObjectHandler {
     @Override
     public Bundle Handle(JSONObject object) throws JSONException {
         Bundle bundle = new Bundle();
-        bundle.putString("ApiObject", object.toString());
 
         ApiObject ao = new ApiObject(object);
         if (ao.display_method == null) ao.display_method = defaultMethod;
@@ -42,7 +41,8 @@ public class ApiObjectItemHandler extends JSONObjectHandler {
         aoh.add(ao);
         bundle.putSerializable(OBJECT, ao);
 
-        return super.Handle(object);
+        bundle.putAll(super.Handle(object));
+        return bundle;
     }
 
     protected String changeLinksWithinHtml(ApiObject ao) {

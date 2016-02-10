@@ -50,10 +50,11 @@ public class ProductHelper implements BaseColumns {
 
         //FIXME: Нужно переделать на update/merge
         ApiObject apiObject = aoh.get(product.id);
-
-        delete(product.id);
-        apiObject.thumb = product.thumb;
-        aoh.add(apiObject);
+        if (apiObject != null) {
+            delete(product.id);
+            apiObject.thumb = product.thumb;
+            aoh.add(apiObject);
+        }
 
         ContentValues map;
         map = new ContentValues();
@@ -78,7 +79,7 @@ public class ProductHelper implements BaseColumns {
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {Long.toString(id)};
             db.delete(DATABASE_TABLE_ADDITINAL, _ID + "=?", args);
-            aoh.delete(id);
+            //aoh.delete(id);
         } catch (SQLException ex) {
             Log.e(TAG, "Error delete self location", ex);
         }
