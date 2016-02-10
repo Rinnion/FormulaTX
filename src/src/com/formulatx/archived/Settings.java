@@ -10,7 +10,7 @@ import com.formulatx.archived.utils.Log;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG =false;
+    public static final boolean NETDEBUG =true;
     public static final boolean DEBUG = false;
     public static final int LogLevel = Log.ASSERT;
 

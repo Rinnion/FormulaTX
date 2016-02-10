@@ -6,10 +6,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
@@ -85,6 +82,11 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.favorite_button, menu);
+    }
+
+    @Override
     public void onResume() {
         ActionBar ab = getActivity().getActionBar();
         if (ab != null) {
@@ -101,6 +103,9 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
             case android.R.id.home:
                 Log.d(TAG, "onOptionsItemSelected: 'home' selected");
                 getActivity().getFragmentManager().popBackStack();
+            case R.id.fav:
+                Log.d(TAG, "onOptionsItemSelected: 'home' selected");
+                getLoaderManager().restartLoader(R.id.product_loader, Bundle.EMPTY, this);
                 return true;
             default:
                 Log.d(TAG, "onOptionsItemSelected: default section");
@@ -110,7 +115,7 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<ProductCursor> onCreateLoader(int id, Bundle args) {
-        return new ProductAsyncLoader(getActivity());
+        return new ProductAsyncLoader(getActivity(), args);
     }
 
     @Override
@@ -132,7 +137,7 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoaderReset(Loader<ProductCursor> loader) {
-
+        mAdapter.swapCursor(null);
     }
 
 }

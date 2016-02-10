@@ -20,6 +20,7 @@ public class ProductHelper implements BaseColumns {
 
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_TOP = "top";
+    public static final String COLUMN_FAVORITE = "favorite";
     public static final String COLUMN_THUMB = "ao_" + ApiObjectHelper.COLUMN_THUMB;
     public static final String COLUMN_TITLE = "ao_" + ApiObjectHelper.COLUMN_TITLE;
     public static final String COLUMN_CONTENT = "ao_" + ApiObjectHelper.COLUMN_CONTENT;
@@ -40,7 +41,8 @@ public class ProductHelper implements BaseColumns {
         COLS_ADDITIONAL = new String[]{
                 _ID,
                 COLUMN_PRICE,
-                COLUMN_TOP
+                COLUMN_TOP,
+                COLUMN_FAVORITE
         };
         ALL_COLUMNS_ADDITINAL = TextUtils.join(",", COLS_ADDITIONAL);
     }
@@ -61,7 +63,7 @@ public class ProductHelper implements BaseColumns {
         map.put(_ID, product.id);
         map.put(COLUMN_PRICE, product.price);
         map.put(COLUMN_TOP, product.top);
-
+        map.put(COLUMN_FAVORITE,product.favorite?1:0);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             return (db.insert(DATABASE_TABLE_ADDITINAL, null, map)!=-1);
@@ -149,4 +151,24 @@ public class ProductHelper implements BaseColumns {
         return c;
     }
 
+    public ProductCursor getFavorites() {
+        Log.v(TAG, "getAll ()");
+
+        String sql = "SELECT g." + ALL_COLUMNS_ADDITINAL +
+                ", ao." + ApiObjectHelper.COLUMN_THUMB + " AS " + COLUMN_THUMB +
+                ", ao." + ApiObjectHelper.COLUMN_TITLE + " AS " + COLUMN_TITLE +
+                ", ao." + ApiObjectHelper.COLUMN_CONTENT + " AS " + COLUMN_CONTENT +
+                " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
+                " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
+                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? and g." + COLUMN_FAVORITE + "=1" ;
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        ProductCursor c = (ProductCursor) d.rawQueryWithFactory(
+                new ProductCursor.Factory(),
+                sql,
+                new String[]{String.valueOf(ApiObject.PRODUCT)},
+                null);
+        c.moveToFirst();
+        return c;
+    }
 }

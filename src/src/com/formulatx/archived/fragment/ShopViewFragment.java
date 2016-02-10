@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.ProductHelper;
 import com.formulatx.archived.database.model.ApiObjects.Product;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.utils.WebViewWithCache;
@@ -69,6 +71,10 @@ public class ShopViewFragment extends Fragment {
         TextView mTitle=(TextView)view.findViewById(R.id.textTitle);
         WebViewWithCache mContentWebView=(WebViewWithCache)view.findViewById(R.id.wl_webview);
         ImageView mImage=(ImageView)view.findViewById(R.id.image);
+        TextView mTextButton=(TextView)view.findViewById(R.id.textView);
+
+
+
 
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle(R.string.string_imgwebview);
@@ -77,6 +83,10 @@ public class ShopViewFragment extends Fragment {
        //String url=  (String) getArguments().get(EN_SHOP_ITEM);
 
         final Product content=(Product)getArguments().getSerializable(EN_SHOP_ITEM);
+
+
+
+
         mTitle.setText(content.title);
         //mDesc.setText(content.content);
         //mContentWebView
@@ -89,6 +99,18 @@ public class ShopViewFragment extends Fragment {
 
         progress.setVisibility(View.VISIBLE);
         shadow.setVisibility(View.VISIBLE);
+
+
+        mTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content.favorite=true;
+                ProductHelper prodHelp=new ProductHelper(FormulaTXApplication.getDatabaseOpenHelper());
+                prodHelp.merge(content);
+
+            }
+        });
+
 
         try {
 

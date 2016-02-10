@@ -36,10 +36,18 @@ public class GalleryAdapter extends SimpleCursorAdapter {
     private static final String TAG = "GalleryAdapter";
     private final int mWidth;
     private boolean mShadowed;
-
+    private Picasso picasso;
 
     public GalleryAdapter(Activity activity, String[] names, int[] to, final Cursor cursor, boolean mShadowed) {
         super(activity, R.layout.image_layout, cursor, names, to, 0);
+
+        OkHttp3Downloader okHttp3Downloader=new  OkHttp3Downloader(this.mContext);
+
+
+        picasso = new Picasso.Builder(this.mContext)
+                .downloader(okHttp3Downloader)
+                .build();
+
         this.mShadowed = mShadowed;
         DisplayMetrics dm = FormulaTXApplication.getAppContext().getResources().getDisplayMetrics();
         Log.d(TAG, String.format("[wp:%s] [d:%s] [nc:%s]", dm.widthPixels, dm.density, 2));
@@ -101,22 +109,22 @@ public class GalleryAdapter extends SimpleCursorAdapter {
             //okHttpClient.setCache(new Cache(Files.getCacheDir(), Integer.MAX_VALUE));
  //           OkHttpDownloader
 
-            OkHttp3Downloader okHttp3Downloadernew=new  OkHttp3Downloader(this.mContext);
 
-
-                Picasso picasso = new Picasso.Builder(this.mContext)
-                .downloader(okHttp3Downloadernew)
-            .build();
 
             Callback callback =new Callback() {
                 @Override
                 public void onSuccess() {
+                    try {
+                        String tag = (String) progress.getTag(R.id.product_tag_img);
 
+                        if (tag.equals(value)) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.e(TAG,"Picasso callback",ex);
 
-                    String tag = (String) progress.getTag(R.id.product_tag_img);
-
-                    if (tag.equals(value)) {
-                        progress.setVisibility(View.GONE);
                     }
 
                 }
@@ -124,17 +132,25 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                 @Override
                 public void onError() {
 
-                    String tag = (String) progress.getTag(R.id.product_tag_img);
+                    try {
 
-                    if (tag.equals(value)) {
-                        progress.setVisibility(View.GONE);
+
+                        String tag = (String) progress.getTag(R.id.product_tag_img);
+
+                        if (tag.equals(value)) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.e(TAG,"Picasso callback",ex);
                     }
 
                 }
             };
 
 
-            okHttp3Downloadernew.SetCallback(callback);
+            //okHttp3Downloadernew.SetCallback(callback);
 
             picasso.with(mContext)
                     .load(value)
@@ -144,9 +160,10 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                     .fit()
                     .into(v, callback);
         }catch(Exception ignored){
-            Log.e(TAG,"Picasso", ignored);
+            progress.setVisibility(View.GONE);
+            Log.e(TAG, "Picasso", ignored);
 
-                progress.setVisibility(View.GONE);
+
 
         }
     }

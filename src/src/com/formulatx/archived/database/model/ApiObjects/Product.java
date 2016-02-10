@@ -13,9 +13,11 @@ public class Product implements Serializable {
     public String content;
     public String price;
     public String top;
+    public boolean favorite;
 
     public Product(long id) {
         this.id = id;
+        this.favorite=false;
     }
 
     @Override

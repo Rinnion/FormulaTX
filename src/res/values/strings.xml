@@ -65,6 +65,7 @@
     <string name="string_alert_loading_error">Ошибка</string>
     <string name="string_add_shortcut">ДОБАВИТЬ В ИЗБРАННОЕ</string>
     <string name="string_map">Карта</string>
+    <string name="string_favorits">Избранное</string>
     <string name="string_autobus">Расписание автобусов</string>
     <string name="no_araes">Нет площадок</string>
     <string name="string_no_matches">Нет  матчей</string>
