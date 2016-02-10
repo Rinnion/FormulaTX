@@ -310,7 +310,7 @@ public class OtherTournamentFragment  extends Fragment implements AlertDialogDow
     public void showLiveScoreFragment() {
         LiveScoreOtherFragment mlf = new LiveScoreOtherFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(LiveScoreOtherFragment.TYPE, getArguments().getString(TOURNAMENT_POST_NAME));
+        bundle.putString(LiveScoreOtherFragment.TOURNAMENT_POST_NAME, getArguments().getString(TOURNAMENT_POST_NAME));
         mlf.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()

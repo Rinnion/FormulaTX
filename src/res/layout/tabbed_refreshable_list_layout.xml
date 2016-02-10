@@ -13,20 +13,25 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
 
-    <TextView
+    <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Ничего нет"
             android:id="@+id/emptyView"
-            android:visibility="gone"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:id="@+id/emptyViewText"/>
+    </LinearLayout>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Произошла ошибка. Загляните позже."
+            android:text="@string/string_load_error"
             android:id="@+id/errorView"
             android:visibility="gone"
             android:layout_centerVertical="true"

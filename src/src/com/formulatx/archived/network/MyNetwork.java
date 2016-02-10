@@ -709,4 +709,20 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
+    public static Bundle getLiveOtherScore() {
+        Log.d(TAG, String.format("getOpenLiveScore"));
+
+        JSONObjectHandler handler = new JSONObjectHandler();
+
+
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+        HttpRequester fetcher;
+
+        fetcher = builder.setName("getOpenLiveScore")
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.LiveScores.getOpen())
+                .setHandler(handler)
+                .create();
+
+        return fetcher.execute();
+    }
 }

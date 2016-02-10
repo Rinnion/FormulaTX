@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
 import com.formulatx.archived.network.loaders.LiveAsyncLoader;
@@ -69,6 +70,8 @@ public class LiveScoreFragment extends Fragment {
         View view = inflater.inflate(R.layout.tabbed_refreshable_list_layout, container, false);
         mProgresView = view.findViewById(R.id.progressView);
         mEmptyView = view.findViewById(R.id.emptyView);
+        TextView tvEmpty = (TextView) view.findViewById(R.id.emptyViewText);
+        tvEmpty.setText(R.string.string_no_matches);
         mErrorView = view.findViewById(R.id.errorView);
         mTabHost = (TabHost) view.findViewById(R.id.tabHost);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);

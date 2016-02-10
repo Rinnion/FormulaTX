@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import com.formulatx.archived.FormulaTXApplication;
+import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
 
@@ -22,7 +24,7 @@ import com.rinnion.archived.R;
  */
 public class LiveScoreOtherFragment extends Fragment {
 
-    public static final String TYPE = "TYPE";
+    public static final String TOURNAMENT_POST_NAME = ApiObjectHelper.COLUMN_POST_NAME;
     private String TAG = getClass().getCanonicalName();
     private WebView mTextViewAbout;
 
@@ -61,7 +63,7 @@ public class LiveScoreOtherFragment extends Fragment {
         ab.setTitle(R.string.string_tournament_liveScore);
         ab.setIcon(R.drawable.ic_action_previous_item);
 
-        mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>Раздел подготавливается</h2></body></html>", "text/html; charset=UTF-8", null);
+        mTextViewAbout.loadData("<html><style>body {color:#FFF;}</style><body align='center'><h2>"+ FormulaTXApplication.getResourceString(R.string.string_no_matches)+"</h2></body></html>", "text/html; charset=UTF-8", null);
         mTextViewAbout.setBackgroundColor(Color.TRANSPARENT);
 
         return view;

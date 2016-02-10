@@ -67,4 +67,6 @@
     <string name="string_map">Карта</string>
     <string name="string_autobus">Расписание автобусов</string>
     <string name="no_araes">Нет площадок</string>
+    <string name="string_no_matches">Нет  матчей</string>
+    <string name="string_load_error">Произошла ошибка. Загляните позже.</string>
 </resources>

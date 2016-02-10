@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.rinnion.archived"
-          android:versionCode="4"
+          android:versionCode="5"
           android:versionName="0.9.9.1002.0900">
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23"/>
     <uses-permission android:name="android.permission.INTERNET"/>
