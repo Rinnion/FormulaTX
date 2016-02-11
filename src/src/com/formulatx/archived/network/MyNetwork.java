@@ -409,6 +409,23 @@ public final class MyNetwork {
         return bundle;
     }
 
+    public static Bundle queryAreas(long id) {
+        Log.d(TAG, "query areas");
+
+        Log.d(TAG, "queryProduct");
+
+        AreaHandler mHandler = new AreaHandler();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryProduct")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentarea.getUrl(id))
+                .setHandler(mHandler)
+                .create();
+
+        return fetcher.execute();
+    }
+
     public static Bundle queryProduct() {
         Log.d(TAG, "queryProduct");
 
@@ -439,11 +456,6 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
-    public static Bundle queryPartner(int id) {
-        Log.d(TAG, String.format("query partner"));
-        PartnerHandler cardHandler = new PartnerHandler();
-        return getObjectWithAdditionalFields(id,  cardHandler);
-    }
 
     private static Bundle getObjectWithAdditionalFields(int id, JSONObjectHandler additionalHandler) {
         Log.d(TAG, String.format("query object with additional fields"));

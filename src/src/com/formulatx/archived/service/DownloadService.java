@@ -113,21 +113,21 @@ public class DownloadService extends IntentService {
     private boolean FetchAreasList(int startProgress, int endProgress) throws Exception {
         final int firstStep = 5;
 
-        Bundle areas = MyNetwork.queryAreasList();
-        if (MyNetwork.hasException(areas)) MyNetwork.throwException(areas);
-
-        int[] intArray = MyNetwork.getIntArray(areas);
-        if (intArray == null) {throw new Exception("empty intArray");       }
-
-        startProgress += firstStep;
-        publishProgress(startProgress, null);
-
-        float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
-        for (int i = 0; i < intArray.length; i++) {
-            int id = intArray[i];
-            MyNetwork.queryArea(id);
-            publishProgress((int)(startProgress + pr * i), null);
-        }
+//        Bundle areas = MyNetwork.queryAreasList();
+//        if (MyNetwork.hasException(areas)) MyNetwork.throwException(areas);
+//
+//        int[] intArray = MyNetwork.getIntArray(areas);
+//        if (intArray == null) {throw new Exception("empty intArray");       }
+//
+//        startProgress += firstStep;
+//        publishProgress(startProgress, null);
+//
+//        float pr = (endProgress - startProgress) / ((intArray.length == 0) ? 1 : intArray.length);
+//        for (int i = 0; i < intArray.length; i++) {
+//            int id = intArray[i];
+//            MyNetwork.queryAreas(id);
+//            publishProgress((int)(startProgress + pr * i), null);
+//        }
 
         return true;
     }

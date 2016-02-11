@@ -41,6 +41,7 @@ public class TournamentHandler extends ApiObjectHandler {
             if (!MyLocale.getCurrent().equals(MyLocale.EN_LOCALE_RUS))    {
                 if (ao.lang_id != null && !ao.lang_id.isEmpty()){
                     long l = Long.parseLong(ao.lang_id);
+                    ao.lang_id = String.valueOf(ao.id);
                     ao.id = l;
                 }
             }

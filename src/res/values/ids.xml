@@ -16,6 +16,7 @@
     <item type="id" name="tag_gamer_object"/>
     <item name="view_area" type="id"/>
     <item name="product_tag_img" type="id"/>
+    <item name="loader_area" type="id"/>
 
 
 </resources>

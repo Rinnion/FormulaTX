@@ -2,15 +2,12 @@ package com.formulatx.archived.network.handlers;
 
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
-import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.database.helper.AreaHelper;
-import com.formulatx.archived.database.model.ApiObject;
-import com.formulatx.archived.database.model.ApiObjects.Area;
-import org.json.JSONArray;
+import com.formulatx.archived.database.model.ApiObjects.AreaOnline;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 /**
  * Created by alekseev on 29.12.2015.
@@ -18,6 +15,7 @@ import java.util.regex.Pattern;
 
 public class AreaHandler extends JSONObjectHandler {
 
+    public static final String AREAS_ARRAY = "areas";
     private AreaHelper th;
 
     public AreaHandler(){
@@ -28,40 +26,42 @@ public class AreaHandler extends JSONObjectHandler {
     public Bundle Handle(JSONObject object) throws JSONException {
         boolean status = object.getBoolean("status");
         if (status) {
-            JSONArray message = object.getJSONArray("message");
+            JSONObject message = object.getJSONObject("message");
 
-            Area ao = null;
+            ArrayList<AreaOnline> areas = new ArrayList<AreaOnline>();
             for (int i = 0; i < message.length(); i++) {
-                JSONObject obj = (JSONObject) message.get(i);
-                String id = obj.getString("post_id");
-                String key = obj.getString("key");
-                String value = obj.getString("value");
+                if (!message.has(String.valueOf(i))) continue;
+                JSONObject obj = (JSONObject) message.get(String.valueOf(i));
 
-                if (ao == null) ao = th.getArea(Long.parseLong(id));
-                if (ao == null) ao = new Area(Long.parseLong(id));
-                if (key.equals("Adress")) {
-                    ao.address = value;
-                }
-                if (key.equals("Maps")) {
-                    ao.map = value;
-                }
+
+                JSONObject tables = obj.getJSONObject("tables");
+                String content = obj.getString("content");
+                String address = obj.getString("adress");
+                String title = obj.getString("title");
+                String content_short = obj.getString("content_short");
+                String maps = obj.getString("maps");
+                String nameroute = obj.getString("nameroute");
+
+                AreaOnline ao = new AreaOnline();
+                ao.content = getContent(tables, content);
+                ao.address = address;
+                ao.title = title;
+                ao.content_short = content_short;
+                ao.maps = maps;
+                ao.nameroute = nameroute;
+
+                areas.add(ao);
             }
 
-            if (ao == null) return Bundle.EMPTY;
+            Bundle bundle = super.Handle(object);
+            bundle.putSerializable(AREAS_ARRAY, areas.toArray(new AreaOnline[areas.size()]));
 
-            ApiObjectHelper aoh = new ApiObjectHelper(FormulaTXApplication.getDatabaseOpenHelper());
-            ApiObject apiObject = aoh.get(ao.id);
-            ao.title = apiObject.title;
-            ao.content = getContent(apiObject);
-
-            th.merge(ao);
-
-            return super.Handle(object);
+            return bundle;
         }
         return Bundle.EMPTY;
     }
 
-    private String getContent(ApiObject apiObject) throws JSONException {
+    private String getContent(JSONObject tables, String content) throws JSONException {
         StringBuilder sb = new StringBuilder();
         sb.append("<html><head><style>");
         sb.append("body { color:white; };");
@@ -75,25 +75,24 @@ public class AreaHandler extends JSONObjectHandler {
         sb.append("body table:last-child thead th{ font-size:10pt; background-color:rgba(255,255,255,0.4); }");
         sb.append("body table:last-child tbody td{ font-size:12pt; font-weight:bolder; }");
         sb.append("</style></head><body>");
-        sb.append(apiObject.content);
+        sb.append(content);
 
-        JSONArray table = new JSONArray(apiObject.tables);
+        if (tables.length() > 0) {
 
-        if (table.length() > 0) {
-
-            JSONArray names = table.getJSONArray(0);
+            JSONObject names = tables.getJSONObject("0");
             if (names.length() == 2) {
                 sb.append("<table>");
                 sb.append("<thead><tr><th>");
-                sb.append(names.get(0));
+                sb.append(names.get("0"));
                 sb.append("</th><th>");
-                sb.append(names.get(1));
+                sb.append(names.get("1"));
                 sb.append("</th></tr></thead>");
 
                 sb.append("<tbody>");
 
-                for (int i = 1; i < table.length(); i++) {
-                    JSONObject item = table.getJSONObject(i);
+                for (int i = 1; i < tables.length(); i++) {
+                    if (!tables.has(String.valueOf(i))) continue;
+                    JSONObject item = tables.getJSONObject(String.valueOf(i));
                     sb.append("<tr class='").append((i % 2 == 0) ? "even" : "odd").append("'><td align='left'>");
                     sb.append(item.getString(String.valueOf(i * 2)));
                     sb.append("</td>");

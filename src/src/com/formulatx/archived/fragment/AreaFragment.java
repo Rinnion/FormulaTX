@@ -3,10 +3,10 @@ package com.formulatx.archived.fragment;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.Loader;
 import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -19,6 +19,7 @@ import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.database.helper.AreaHelper;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.database.model.ApiObjects.Area;
+import com.formulatx.archived.database.model.ApiObjects.AreaOnline;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.utils.WebViewWithCache;
@@ -53,6 +54,8 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     private AreaCursor area;
     private GoogleMap mMap;
     private LatLngBounds llb;
+    private AreaOnline[] mAreas;
+    private boolean mCameraReady;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -94,6 +97,10 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         int[] to = new int[] {R.id.itml_text};
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_area_layout, area, from, to, 0);
 
+        Bundle bundle = new Bundle();
+        bundle.putLong(AreaLocaderCallback.TOURNAMENT_ID, trnmt.id);
+        getLoaderManager().initLoader(R.id.loader_area, bundle, new AreaLocaderCallback());
+
         super.onCreate(savedInstanceState);
     }
 
@@ -119,54 +126,17 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
-                area.moveToFirst();
-                LatLngBounds.Builder llbb = new LatLngBounds.Builder();
-                while (!area.isAfterLast()){
-                    Area item = area.getItem();
-
-                    String[] split = TextUtils.split(String.valueOf(item.map), ",");
-                    if (split.length != 2 ){
-                        Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    Float lat = Float.parseFloat(split[0]);
-                    Float lng = Float.parseFloat(split[1]);
-
-                    LatLng position = new LatLng(lat, lng);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(position)
-                            .title(item.title));
-
-                    llbb.include(position);
-
-                    area.moveToNext();
-                }
-
-                llb = llbb.build();
-                final int count = area.getCount();
-
+                fillData();
                 mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                     @Override
-                    public void onCameraChange(CameraPosition arg0) {
-                        if (count > 1) {
-                            Display display = getActivity().getWindowManager().getDefaultDisplay();
-                            DisplayMetrics metrics = new DisplayMetrics();
-                            display.getMetrics(metrics);
-                            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngBounds(llb, (int) (metrics.widthPixels * 0.33));
-                            mMap.animateCamera(yourLocation);
-                        }
-                        if (count == 1) {
-                            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(llb.getCenter(), 11);
-                            mMap.animateCamera(yourLocation);
-                        }
+                    public void onCameraChange(CameraPosition cameraPosition) {
+                        mCameraReady = true;
+                        moveCamera();
                         mMap.setOnCameraChangeListener(null);
                     }
                 });
-
             }
         });
-
-
 
         mAutobusView = mViewFlipper.findViewById(R.id.autobus);
         mWebNest = (View) mViewFlipper.findViewById(R.id.al_ll_content);
@@ -181,6 +151,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         mList.setOnItemClickListener(this);
 
         UptdateAutobusView();
+
 
         return view;
     }
@@ -239,5 +210,77 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         if (s.equals(MAP)){
         }
     }
+
+    private class AreaLocaderCallback implements android.app.LoaderManager.LoaderCallbacks<AreaOnline[]> {
+
+        public static final String TOURNAMENT_ID = ApiObjectHelper._ID;
+
+        @Override
+        public Loader<AreaOnline[]> onCreateLoader(int id, Bundle args) {
+            long aLong = args.getLong(TOURNAMENT_ID);
+            return new AreaAsyncLoader(getActivity(), aLong);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<AreaOnline[]> loader, AreaOnline[] data) {
+            mAreas = data;
+            fillData();
+        }
+
+        @Override
+        public void onLoaderReset(Loader<AreaOnline[]> loader) {
+            mAreas = null;
+        }
+    }
+
+    private void fillData() {
+        if (mMap == null) return;
+
+        LatLngBounds.Builder llbb = new LatLngBounds.Builder();
+        for (int i = 0; i < mAreas.length; i++) {
+            AreaOnline item = mAreas[i];
+
+            String[] split = TextUtils.split(String.valueOf(item.maps), ",");
+            if (split.length != 2 ){
+                Toast.makeText(getActivity(), "Error with lat,lng", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Float lat = Float.parseFloat(split[0]);
+            Float lng = Float.parseFloat(split[1]);
+
+            LatLng position = new LatLng(lat, lng);
+            mMap.addMarker(new MarkerOptions()
+                    .position(position)
+                    .title(item.title));
+
+            llbb.include(position);
+
+        }
+
+        if (mAreas.length == 0){
+            return;
+        }
+
+        llb = llbb.build();
+
+        moveCamera();
+    }
+
+    private void moveCamera() {
+        if (!mCameraReady) return;
+        if (mAreas == null ) return;
+        if (mAreas.length > 1) {
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            DisplayMetrics metrics = new DisplayMetrics();
+            display.getMetrics(metrics);
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngBounds(llb, (int) (metrics.widthPixels * 0.33));
+            mMap.animateCamera(yourLocation);
+        }
+        if (mAreas.length == 1) {
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(llb.getCenter(), 11);
+            mMap.animateCamera(yourLocation);
+        }
+    }
+
 }
 

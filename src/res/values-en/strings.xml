@@ -67,4 +67,5 @@
     <string name="string_round">Round</string>
     <string name="string_photo">Photo</string>
     <string name="string_video">Video</string>
+    <string name="string_rating">Rating:</string>
 </resources>

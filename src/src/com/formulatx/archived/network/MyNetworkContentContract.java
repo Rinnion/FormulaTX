@@ -117,6 +117,13 @@ public class MyNetworkContentContract {
                 }
             }
 
+            public static class getallstaticpagefromparentarea {
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentarea&id=%s&lang=%s";
+                public static String getUrl(long parent) {
+                    return String.format(URL_METHOD, String.valueOf(parent), MyLocale.getCurrent());
+                }
+            }
+
             public static class getallstaticpagefromparentradio {
                 private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentradio&lang=%s";
                 public static String getUrl() {

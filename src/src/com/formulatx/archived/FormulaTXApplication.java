@@ -64,6 +64,11 @@ public class FormulaTXApplication extends Application {
         return sh.getDoubleParameter(parameter, d);
     }
 
+    public static Bundle getBundleParameter(String parameter, Bundle b) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        return sh.getBundleParameter(parameter, b);
+    }
+
     public static void setParameter(String parameter, String value) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
         sh.setParameter(parameter, value);
@@ -80,6 +85,11 @@ public class FormulaTXApplication extends Application {
     }
 
     public static void setParameter(String parameter, long value) {
+        SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
+        sh.setParameter(parameter, value);
+    }
+
+    public static void setParameter(String parameter, Bundle value) {
         SettingsHelper sh = new SettingsHelper(getDatabaseOpenHelper());
         sh.setParameter(parameter, value);
     }

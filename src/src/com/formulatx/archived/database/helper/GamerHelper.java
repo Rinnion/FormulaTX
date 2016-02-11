@@ -82,7 +82,9 @@ public class GamerHelper implements BaseColumns {
 
         if (gamer.favorite == null) {
             Gamer old = getGamer(gamer.id);
-            gamer.favorite = old.favorite;
+            if (old != null) {
+                gamer.favorite = old.favorite;
+            }
         }
 
         delete(gamer.id);
