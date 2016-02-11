@@ -58,4 +58,10 @@
     <string name="no_araes">No areas</string>
     <string name="string_no_matches">No mtches no</string>
     <string name="string_load_error">Sorry an error occurred. Try later.</string>
+    <string name="string_rem_shortcut">REMOVE FROM FAVORITS</string>
+    <string name="string_add_shortcut">ADD TO FAVORITS</string>
+    <string name="string_city_spb">St. Petersburg</string>
+    <string name="string_city_msk">Moscow</string>
+    <string name="string_view">View</string>
+    <string name="string_buy_card">Buy ticket</string>
 </resources>

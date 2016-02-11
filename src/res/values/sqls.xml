@@ -6,7 +6,7 @@
         <item>"CREATE TABLE news (_id INTEGER PRIMARY KEY, parent TEXT );"</item>
         <item>"CREATE TABLE gamers (_id INTEGER PRIMARY KEY, name TEXT, surname TEXT, full_name TEXT, rating REAL, country TEXT, flag TEXT, favorite INTEGER );"</item>
         <item>"CREATE TABLE areas (_id INTEGER PRIMARY KEY, address TEXT, map TEXT, content TEXT, title TEXT );"</item>
-        <item>"CREATE TABLE products (_id INTEGER PRIMARY KEY, price TEXT, top TEXT,favorite NUMBER );"</item>
+        <item>"CREATE TABLE products (_id INTEGER PRIMARY KEY, price TEXT, top TEXT, favorite NUMBER );"</item>
         <item>"CREATE TABLE cards (_id INTEGER PRIMARY KEY, status TEXT, link TEXT );"</item>
         <item>"CREATE TABLE partners (_id INTEGER PRIMARY KEY, status TEXT, link TEXT );"</item>
         <item>"CREATE TABLE parsers (_id INTEGER PRIMARY KEY, title TEXT, date TEXT, data TEXT, system TEXT, settings TEXT, downloaded NUMBER, parsed NUMBER );"</item>

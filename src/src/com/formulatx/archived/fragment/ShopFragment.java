@@ -34,6 +34,8 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
     private View mProgresView;
 
     private ResourceCursorAdapter mAdapter;
+    private Bundle mFavorites;
+    private MenuItem mMenuItem;
 
 
     @Override
@@ -67,7 +69,10 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
         });
         /**/
 
-        getLoaderManager().initLoader(R.id.product_loader, Bundle.EMPTY, this);
+
+         mFavorites = new Bundle();
+        mFavorites.putBoolean("favorites", false);
+        getLoaderManager().initLoader(R.id.product_loader, mFavorites, this);
 
         return view;
     }
@@ -84,6 +89,7 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.favorite_button, menu);
+        mMenuItem = menu.findItem(R.id.fav);
     }
 
     @Override
@@ -105,7 +111,10 @@ public class ShopFragment extends Fragment implements LoaderManager.LoaderCallba
                 getActivity().getFragmentManager().popBackStack();
             case R.id.fav:
                 Log.d(TAG, "onOptionsItemSelected: 'home' selected");
-                getLoaderManager().restartLoader(R.id.product_loader, Bundle.EMPTY, this);
+                boolean favorites = mFavorites.getBoolean("favorites");
+                mFavorites.putBoolean("favorites", !favorites);
+                mMenuItem.setIcon(favorites ? R.drawable.like_selected_icon : R.drawable.like_noselected_icon);
+                getLoaderManager().restartLoader(R.id.product_loader, mFavorites, this);
                 return true;
             default:
                 Log.d(TAG, "onOptionsItemSelected: default section");

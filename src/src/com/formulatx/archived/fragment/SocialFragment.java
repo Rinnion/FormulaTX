@@ -11,6 +11,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import com.formulatx.archived.database.cursor.InstagramItemCursor;
 import com.formulatx.archived.database.helper.InstagramHelper;
+import com.formulatx.archived.database.model.InstagramItem;
 import com.formulatx.archived.database.model.TwitterItem;
 import com.formulatx.archived.network.loaders.InstagramAsyncLoader;
 import com.formulatx.archived.utils.Log;
@@ -160,6 +161,14 @@ public class SocialFragment extends Fragment {
             }
         };
         lvInstagram.setAdapter(mInstagramAdapter);
+        lvInstagram.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                InstagramItem item = ((InstagramItemCursor) parent.getItemAtPosition(position)).getItem();
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.link));
+                startActivity(myIntent);
+            }
+        });
 
 
         Bundle bundle = new Bundle();

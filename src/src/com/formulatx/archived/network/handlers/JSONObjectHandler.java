@@ -1,6 +1,7 @@
 package com.formulatx.archived.network.handlers;
 
 import android.os.Bundle;
+import com.formulatx.archived.utils.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 public class JSONObjectHandler extends JSONHandler {
 
     public static final String VALUE = "VALUE";
+    private String TAG = "JSONObjectHandler";
 
     public Bundle Handle(JSONObject object) throws JSONException {
         Bundle bundle = new Bundle();
@@ -36,6 +38,7 @@ public class JSONObjectHandler extends JSONHandler {
         jsonString = jsonString.replaceAll("^\"|\"$", "");
         JSONObject jsonObject = new JSONObject(jsonString);
         beforeHandle();
+        Log.v(TAG, content);
         Bundle bundle = Handle(jsonObject);
         afterHandle();
         return bundle;

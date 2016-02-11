@@ -40,21 +40,16 @@ public class ProductAdapter extends SimpleCursorAdapter {
         final ImageView imlThumb = (ImageView) view.findViewById(R.id.ipl_iv_thumb);
         final TextView tvTitle = (TextView) view.findViewById(R.id.ipl_tv_title);
         final TextView tvPrice= (TextView) view.findViewById(R.id.ipl_tv_price);
-
+        final TextView tvExtra= (TextView) view.findViewById(R.id.gd_tv_extra);
 
         final View progress=view.findViewById(R.id.progressBar);
         final View shadow=view.findViewById(R.id.il_v_shadow );
         final Product item = ((ProductCursor) cursor).getItem();
         progress.setTag(R.id.product_tag_img, item.thumb);
-
         progress.setVisibility(View.VISIBLE);
         shadow.setVisibility(View.VISIBLE);
 
-
-
-
         //int intBool=Integer.parseInt(item.top);
-
 
         //imlThumb.getScaleX()
 
@@ -92,6 +87,14 @@ public class ProductAdapter extends SimpleCursorAdapter {
             shadow.setVisibility(View.GONE);
         }
         tvTitle.setText(item.title);
-        tvPrice.setText(item.price);
+        if (!item.price.equals("null")){
+            tvPrice.setText(item.price);
+            tvPrice.setVisibility(View.VISIBLE);
+            tvExtra.setVisibility(View.VISIBLE);
+        } else {
+            tvPrice.setVisibility(View.GONE);
+            tvExtra.setVisibility(View.GONE);
+        }
+
     }
 }

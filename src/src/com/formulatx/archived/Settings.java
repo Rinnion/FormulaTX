@@ -10,9 +10,9 @@ import com.formulatx.archived.utils.Log;
  * To change this template use File | Settings | File Templates.
  */
 public final class Settings {
-    public static final boolean NETDEBUG =true;
+    public static final boolean NETDEBUG =false;
     public static final boolean DEBUG = false;
-    public static final int LogLevel = Log.ASSERT;
+    public static final int LogLevel = Log.VERBOSE;
 
     public static final int ABOUT_API_OBJECT = 201;
     public static final String ABOUT_API_OBJECT_ALIAS = "about";
@@ -57,6 +57,7 @@ public final class Settings {
     public static final String GRIDS = "grid";
     public static final long OUT_OF_DATE_AREA = 100 * 60 * 60 * 1000;
     public static final long OUT_OF_DATE_OBJECT = 24 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_LOADER_PRODUCTS = 24 * 60 * 60 * 1000;
 
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";

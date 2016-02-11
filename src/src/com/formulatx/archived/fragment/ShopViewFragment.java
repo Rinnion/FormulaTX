@@ -71,9 +71,7 @@ public class ShopViewFragment extends Fragment {
         TextView mTitle=(TextView)view.findViewById(R.id.textTitle);
         WebViewWithCache mContentWebView=(WebViewWithCache)view.findViewById(R.id.wl_webview);
         ImageView mImage=(ImageView)view.findViewById(R.id.image);
-        TextView mTextButton=(TextView)view.findViewById(R.id.textView);
-
-
+        final TextView mTextButton=(TextView)view.findViewById(R.id.textView);
 
 
         ActionBar ab = getActivity().getActionBar();
@@ -83,6 +81,7 @@ public class ShopViewFragment extends Fragment {
        //String url=  (String) getArguments().get(EN_SHOP_ITEM);
 
         final Product content=(Product)getArguments().getSerializable(EN_SHOP_ITEM);
+        mTextButton.setText(content.favorite ? R.string.string_rem_shortcut:R.string.string_add_shortcut);
 
 
 
@@ -104,9 +103,10 @@ public class ShopViewFragment extends Fragment {
         mTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content.favorite=true;
+                content.favorite=!content.favorite;
                 ProductHelper prodHelp=new ProductHelper(FormulaTXApplication.getDatabaseOpenHelper());
                 prodHelp.merge(content);
+                mTextButton.setText(content.favorite ? R.string.string_rem_shortcut:R.string.string_add_shortcut);
 
             }
         });

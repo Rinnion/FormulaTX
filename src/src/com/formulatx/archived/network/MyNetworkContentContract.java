@@ -82,27 +82,39 @@ public class MyNetworkContentContract {
             }
 
             public static class getallstaticpagefromparentnews {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentnews";
-
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentnews&id=%s&lang=%s";
                 public static String getParent(long parent) {
-                    return URL_METHOD + "&id=" + String.valueOf(parent);
+                    return String.format(URL_METHOD, String.valueOf(parent), MyLocale.getCurrent());
                 }
             }
 
             public static class getallstaticpagefromparentproduct {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentproduct";
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentproduct&lang=%s";
+                public static String getUrl() {
+                    return String.format(URL_METHOD, MyLocale.getCurrent());
+                }
             }
 
             public static class getallstaticpagefromparentcard {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentcard";
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentcard&lang=%s";
+                public static String getUrl() {
+                    return String.format(URL_METHOD, MyLocale.getCurrent());
+                }
             }
 
             public static class getallstaticpagefromparentpartner {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentpartner";
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentpartner&lang=%s";
+                public static String getUrl() {
+                    return String.format(URL_METHOD, MyLocale.getCurrent());
+                }
+
             }
 
             public static class getallstaticpagefromparentradio {
-                public static final String URL_METHOD = URL + "?method=getallstaticpagefromparentradio";
+                private static final String URL_METHOD = URL + "?method=getallstaticpagefromparentradio&lang=%s";
+                public static String getUrl() {
+                    return String.format(URL_METHOD, MyLocale.getCurrent());
+                }
             }
 
             public static class getadditionalfields {
@@ -168,12 +180,14 @@ public class MyNetworkContentContract {
             public static final String URL = URL_API + "gallery";
 
             public static class getgallery {
-                public static final String URL_METHOD = URL + "?method=getgallery";
+                public static final String URL_METHOD = URL + "?method=getgallery&id=%s&lang=%s";
 
-                public static ArrayList<NameValuePair> getUrl(long id) {
-                    ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
+                public static String getUrl(long id) {
+                    return String.format(URL_METHOD, id, MyLocale.getCurrent());
+                    /*ArrayList<NameValuePair> dm_partner = new ArrayList<NameValuePair>(1);
                     dm_partner.add(new BasicNameValuePair("id", String.valueOf(id)));
                     return dm_partner;
+                    */
                 }
             }
 
@@ -217,8 +231,8 @@ public class MyNetworkContentContract {
 
             public static class getreferencebyidapproved {
 
-                public String SYSTEM_TWITTER = "twitter";
-                public String SYSTEM_INSTAGRAM = "instagram";
+                public static String SYSTEM_TWITTER = "twitter";
+                public static String SYSTEM_INSTAGRAM = "instagram";
                 public static final String URL_METHOD = URL + "?method=getReferenceBySystemApproved";
 
                 public static String getUrl(String type, long page) {
@@ -229,6 +243,7 @@ public class MyNetworkContentContract {
                     sb.append("&sort_by=").append("date");
                     sb.append("&sort_method=").append("DESC");
                     sb.append("&field_list=").append("id,date,description,link");
+                    sb.append("&lang=").append(MyLocale.getCurrent());
                     return sb.toString();
                 }
             }

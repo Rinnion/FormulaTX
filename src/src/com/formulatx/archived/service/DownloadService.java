@@ -80,6 +80,7 @@ public class DownloadService extends IntentService {
         Bundle bundle;
         TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
         Tournament ladies = th.getByPostName(tn);
+        if (ladies == null) return;
         bundle = MyNetwork.queryTournamentNewsList(ladies.id, ladies.post_name);
         if (MyNetwork.hasException(bundle)) MyNetwork.throwException(bundle);
     }

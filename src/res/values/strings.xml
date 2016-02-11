@@ -70,4 +70,8 @@
     <string name="no_araes">Нет площадок</string>
     <string name="string_no_matches">Нет  матчей</string>
     <string name="string_load_error">Произошла ошибка. Загляните позже.</string>
+    <string name="string_rem_shortcut">Удалить из избранного</string>
+    <string name="string_city_spb">Санкт-Петербург</string>
+    <string name="string_city_msk">Москва</string>
+    <string name="string_buy_card">Купить билет</string>
 </resources>

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteQuery;
 import com.formulatx.archived.database.helper.CommentHelper;
 import com.formulatx.archived.database.helper.InstagramHelper;
 import com.formulatx.archived.database.helper.TwitterHelper;
+import com.formulatx.archived.database.model.InstagramItem;
 import com.formulatx.archived.database.model.TwitterItem;
 
 /**
@@ -23,13 +24,13 @@ public class InstagramItemCursor extends SQLiteCursor {
         super(db, driver, editTable, query);
     }
 
-    public TwitterItem getItem() {
+    public InstagramItem getItem() {
         long id = getColId();
         long reference_id = getInt(getColumnIndexOrThrow(InstagramHelper.COLUMN_REFERENCE_ID));
         String text = getString(getColumnIndexOrThrow(InstagramHelper.COLUMN_TEXT));
         String link = getString(getColumnIndexOrThrow(InstagramHelper.COLUMN_LINK));
         String date = getString(getColumnIndexOrThrow(InstagramHelper.COLUMN_DATE));
-        TwitterItem ti = new TwitterItem(id, reference_id, text, link, date);
+        InstagramItem ti = new InstagramItem(id, reference_id, text, link, date);
         return ti;
     }
 

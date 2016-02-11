@@ -1,9 +1,11 @@
 package com.formulatx.archived.network.handlers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.helper.TournamentHelper;
 import com.formulatx.archived.database.model.ApiObjects.Tournament;
+import com.formulatx.archived.utils.MyLocale;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +38,12 @@ public class TournamentHandler extends ApiObjectHandler {
             Tournament ao = new Tournament(obj);
 
             ao.content = changeLinksWithinHtml(ao);
+            if (!MyLocale.getCurrent().equals(MyLocale.EN_LOCALE_RUS))    {
+                if (ao.lang_id != null && !ao.lang_id.isEmpty()){
+                    long l = Long.parseLong(ao.lang_id);
+                    ao.id = l;
+                }
+            }
 
             th.add(ao);
 

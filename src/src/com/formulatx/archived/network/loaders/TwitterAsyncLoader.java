@@ -39,7 +39,7 @@ public class TwitterAsyncLoader extends AsyncTaskLoader<TwitterItemCursor> {
     public TwitterItemCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-        MyNetwork.queryTwitter(0);
+        MyNetwork.queryTwitter(1);
 
         TwitterHelper th = new TwitterHelper();
         TwitterItemCursor cursor;

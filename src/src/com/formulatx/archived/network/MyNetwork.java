@@ -118,27 +118,6 @@ public final class MyNetwork {
         return fetcher.execute();
     }
 
-    public static Bundle queryProductList() {
-        Log.d(TAG, String.format("query queryProductList"));
-
-        ApiObjectListHandler handler = new ApiObjectListHandler();
-
-        if (Settings.NETDEBUG) {
-            String fileName = "json/0-product.json";
-            Bundle result = processFile(fileName, handler);
-            return result;
-        }
-
-        HttpRequester.Builder builder = new HttpRequester.Builder();
-
-        HttpRequester fetcher = builder.setName("queryTournamentNewsList")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
-                .setHandler(handler)
-                .create();
-
-        return fetcher.execute();
-    }
-
     public static Bundle queryCardList() {
         Log.d(TAG, String.format("queryCardList"));
 
@@ -153,7 +132,7 @@ public final class MyNetwork {
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = builder.setName("query all cards")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentcard.URL_METHOD)
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentcard.getUrl())
                 .setHandler(handler)
                 .create();
 
@@ -173,7 +152,7 @@ public final class MyNetwork {
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher = builder.setName("queryTournamentNewsList")
-                .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentpartner.URL_METHOD)
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentpartner.getUrl())
                 .setHandler(mHandler)
                 .create();
 
@@ -206,31 +185,22 @@ public final class MyNetwork {
 
     //Загрузка списка новостей турнира
     public static Bundle queryGallery(long id) {
-        Log.d(TAG, String.format("queryGallery"));
+        String tag = "queryGallery-" + String.valueOf(id);
+        Log.d(TAG, tag);
         GalleryHandler handler = new GalleryHandler(id);
 
         if (Settings.NETDEBUG) {
             String fileName = "json/gallery-" + String.valueOf(id) + ".json";
-            Bundle result = processFile(fileName, handler);
-            return result;
+            return processFile(fileName, handler);
         }
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
         HttpRequester fetcher;
-        try {
-            fetcher = builder.setName("queryTournamentNewsList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
-                    .setHandler(handler)
-                    .create();
+        fetcher = builder.setName(tag)
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.Gallery.getgallery.getUrl(id))
+                .setHandler(handler)
+                .create();
 
-        } catch (UnsupportedEncodingException e) {
-            Log.d(TAG, "Error while server request", e);
-            Bundle bundle = new Bundle();
-            bundle.putString("RESULT", "EXCEPTION");
-            bundle.putSerializable("EXCEPTION", e);
-            return bundle;
-        }
 
         return fetcher.execute();
     }
@@ -283,14 +253,34 @@ public final class MyNetwork {
         return getIntArray(execute);
     }
     public static Bundle queryTwitter(int page) {
-        Log.d(TAG, "queryGallery");
+        Log.d(TAG, "queryTwitter");
+
+        String system = MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.SYSTEM_TWITTER;
 
         TwitterHandler mHandler = new TwitterHandler(0);
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
         HttpRequester fetcher;
-        fetcher = builder.setName("queryTournamentNewsList")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl("twitter", page))
+        fetcher = builder.setName("queryTwitter")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl(system, page))
+                .setHandler(mHandler)
+                .create();
+
+        return fetcher.execute();
+    }
+
+    //Загрузка списка новостей турнира
+    public static Bundle queryInstagram(int page) {
+        Log.d(TAG, "queryInstagram");
+
+        String system = MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.SYSTEM_INSTAGRAM;
+
+        InstagramHandler mHandler = new InstagramHandler(1);
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryInstagram")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl(system, page))
                 .setHandler(mHandler)
                 .create();
 
@@ -435,12 +425,6 @@ public final class MyNetwork {
         return bundle;
     }
 
-    public static Bundle queryProduct(int id) {
-        Log.d(TAG, String.format("query product"));
-        ProductHandler productHandler = new ProductHandler();
-        return getObjectWithAdditionalFields(id, productHandler);
-    }
-
     public static Bundle queryProduct() {
         Log.d(TAG, "queryProduct");
 
@@ -449,16 +433,26 @@ public final class MyNetwork {
 
         HttpRequester fetcher;
         fetcher = builder.setName("queryProduct")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.URL_METHOD)
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentproduct.getUrl())
                 .setHandler(mHandler)
                 .create();
 
-        return fetcher.execute();    }
+        return fetcher.execute();
+    }
 
-    public static Bundle queryCard(int id) {
-        Log.d(TAG, String.format("query card"));
-        CardHandler cardHandler = new CardHandler();
-        return getObjectWithAdditionalFields(id,  cardHandler);
+    public static Bundle queryCard() {
+        Log.d(TAG, "queryCard");
+
+        CardHandler mHandler = new CardHandler();
+        HttpRequester.Builder builder = new HttpRequester.Builder();
+
+        HttpRequester fetcher;
+        fetcher = builder.setName("queryCard")
+                .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentcard.getUrl())
+                .setHandler(mHandler)
+                .create();
+
+        return fetcher.execute();
     }
 
     public static Bundle queryPartner(int id) {
@@ -705,22 +699,6 @@ public final class MyNetwork {
             throw (Exception) bundle.getSerializable(HttpRequester.RESULT_EXCEPTION);
         }
 
-    }
-
-    //Загрузка списка новостей турнира
-    public static Bundle queryInstagram(int page) {
-        Log.d(TAG, "queryInstagram");
-
-        InstagramHandler mHandler = new InstagramHandler(1);
-        HttpRequester.Builder builder = new HttpRequester.Builder();
-
-        HttpRequester fetcher;
-        fetcher = builder.setName("queryInstagram")
-                .setPostRequest(MyNetworkContentContract.FormulaTXApi.References.getreferencebyidapproved.getUrl("instagram", page))
-                .setHandler(mHandler)
-                .create();
-
-        return fetcher.execute();
     }
 
     public static Bundle getLiveOtherScore() {

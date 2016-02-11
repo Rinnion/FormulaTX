@@ -9,14 +9,14 @@ import java.io.Serializable;
 public class ApiObject implements Serializable{
 
     public static final String OTHER = "";
-    public static final String NEWS = "";
+    public static final String NEWS = "post";
     public static final String GAMER = "gamer";
     public static final String OBJECT = "object";
     public static final String PRODUCT = "product";
     public static final String PARTNER = "partner";
     public static final String CARD = "card";
     public static final String AREA = "area";
-    public final long id;
+    public long id;
     public String user;
     public String date;
     public String modified;
