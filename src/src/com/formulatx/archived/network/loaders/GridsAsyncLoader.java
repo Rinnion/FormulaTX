@@ -3,6 +3,7 @@ package com.formulatx.archived.network.loaders;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.os.Bundle;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.Settings;
 import com.formulatx.archived.Utils;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
@@ -13,6 +14,7 @@ import com.formulatx.archived.network.HttpRequester;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.network.handlers.JSONObjectHandler;
 import com.formulatx.archived.parsers.Match;
+import com.rinnion.archived.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +72,7 @@ public class GridsAsyncLoader extends AsyncTaskLoader<Grids> {
             for (int i = 0; i<json.length(); i++) {
                 if (!json.has(String.valueOf(i+1))) continue;
                 JSONObject round = json.getJSONObject(String.valueOf(i+1));
-                Grids.Round rnd = grids.addRound("Раунд " + (i+1));
+                Grids.Round rnd = grids.addRound(FormulaTXApplication.getResourceString(R.string.string_round) + (i+1));
                 for(int k=0; k<round.length()-1; k++){
                     JSONObject jsonMatch = round.getJSONObject(String.valueOf(k));
                     JSONObject jsonObject = new JSONObject();

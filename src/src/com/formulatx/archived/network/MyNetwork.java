@@ -86,34 +86,24 @@ public final class MyNetwork {
     }
 
     //Загрузка списка турниров
-    public static Bundle queryGamerList(long id) {
-        Log.d(TAG, String.format("queryGamerList"));
+    public static Bundle queryGamerList(long id, String parent) {
+        String tag = "queryGamerList-" + String.valueOf(id);
+        Log.d(TAG, tag);
 
-        ApiObjectListHandler handler = new ApiObjectListHandler();
+        IResponseHandler mHandler = new GamerHandler(parent);
 
         if (Settings.NETDEBUG) {
-            String fileName = "json/" + String.valueOf(id) + "gamer.json";
-            Bundle result = processFile(fileName, handler);
-            return result;
+            String fileName = "json/0-partners.json";
+            return processFile(fileName, mHandler);
         }
 
         HttpRequester.Builder builder = new HttpRequester.Builder();
 
-        HttpRequester fetcher = null;
-        try {
-            fetcher = builder.setName("queryGamerList")
-                    .setPostRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.URL_METHOD)
-                    .setContent(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentdisplaymethod.getGamer(id))
-                    .setHandler(handler)
-                    .create();
+        HttpRequester fetcher = builder.setName(tag)
+                .setGetRequest(MyNetworkContentContract.FormulaTXApi.StaticPage.getallstaticpagefromparentgamer.getUrl(id))
+                .setHandler(mHandler)
+                .create();
 
-        } catch (UnsupportedEncodingException e) {
-            Log.d(TAG, "Error while server request", e);
-            Bundle bundle = new Bundle();
-            bundle.putString("RESULT", "EXCEPTION");
-            bundle.putSerializable("EXCEPTION", e);
-            return bundle;
-        }
 
         return fetcher.execute();
     }
@@ -403,12 +393,6 @@ public final class MyNetwork {
             }
         }
         return null;
-    }
-
-    public static Bundle queryGamer(int id) {
-        Log.d(TAG, String.format("query gamer"));
-        GamerHandler handlerGamer = new GamerHandler();
-        return getObjectWithAdditionalFields(id,  handlerGamer);
     }
 
     public static Bundle queryArea(int id) {

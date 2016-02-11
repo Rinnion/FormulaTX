@@ -91,12 +91,12 @@ public class GalleryContentFragment extends Fragment {
 
         // создаем вкладку и указываем тег
         tabSpec = tabHost.newTabSpec(GalleryContentFragment.PHOTO);
-        tabSpec.setIndicator("Фото");
+        tabSpec.setIndicator(FormulaTXApplication.getResourceString(R.string.string_photo));
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec(VIDEO);
-        tabSpec.setIndicator("Видео");
+        tabSpec.setIndicator(FormulaTXApplication.getResourceString(R.string.string_video));
         tabSpec.setContent(R.id.tab2);
         tabHost.addTab(tabSpec);
 

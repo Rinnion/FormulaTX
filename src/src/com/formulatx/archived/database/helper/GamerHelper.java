@@ -55,6 +55,20 @@ public class GamerHelper implements BaseColumns {
         ALL_COLUMNS_ADDITINAL = TextUtils.join(",", COLS_ADDITIONAL);
     }
 
+    public boolean setFavorite(long id, boolean favorite){
+        ContentValues map = new ContentValues();
+        map.put(COLUMN_FAVORITE, favorite);
+
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            return (db.update(DATABASE_TABLE_ADDITINAL, map, "_id=?", new String[]{String.valueOf(id)})!=-1);
+
+        } catch (SQLException e) {
+            Log.e(TAG, "Error writing location", e);
+            return false;
+        }
+    }
+
     public boolean merge(Gamer gamer) {
         Log.d(TAG, "merge(" + gamer.toString() + ")");
 
@@ -66,9 +80,17 @@ public class GamerHelper implements BaseColumns {
             return false;
         }
 
+        if (gamer.favorite == null) {
+            Gamer old = getGamer(gamer.id);
+            gamer.favorite = old.favorite;
+        }
+
         delete(gamer.id);
         if (apiObject.thumb == null) {
             apiObject.thumb = gamer.thumb;
+        }
+        if (apiObject.title == null) {
+            apiObject.title = gamer.title;
         }
         aoh.add(apiObject);
 
@@ -125,6 +147,20 @@ public class GamerHelper implements BaseColumns {
         return c.getItem();
     }
 
+    public GamerCursor getAll() {
+        Log.v(TAG, "getAll");
+
+        String sql = "SELECT " + ALL_COLUMNS_ADDITINAL + " FROM " + DATABASE_TABLE_ADDITINAL;
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
+                new GamerCursor.Factory(),
+                sql,
+                null,
+                null);
+        c.moveToFirst();
+        return c;
+    }
+
     public GamerCursor getAllByParent(long parent) {
         Log.v(TAG, "getAllByParent ()");
 
@@ -132,14 +168,14 @@ public class GamerHelper implements BaseColumns {
                 " FROM " + DATABASE_TABLE_ADDITINAL + " AS g " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS ao ON ao._id=g._id " +
                 " LEFT JOIN " + ApiObjectHelper.DATABASE_TABLE + " AS p ON ao.parent = p.post_name " +
-                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? AND p." + _ID + "=? AND ao." + ApiObjectHelper.COLUMN_LANG + "=?" +
+                " WHERE ao." + ApiObjectHelper.COLUMN_DISPLAY_METHOD + "=? AND p." + _ID + "=? " +
                 " ORDER BY g." + COLUMN_RATING + " ASC";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GamerCursor c = (GamerCursor) d.rawQueryWithFactory(
                 new GamerCursor.Factory(),
                 sql,
-                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(parent), MyLocale.getCurrent()},
+                new String[]{String.valueOf(ApiObject.GAMER), String.valueOf(parent)},
                 null);
         c.moveToFirst();
         return c;

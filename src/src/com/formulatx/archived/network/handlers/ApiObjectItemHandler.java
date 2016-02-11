@@ -46,6 +46,7 @@ public class ApiObjectItemHandler extends JSONObjectHandler {
     }
 
     protected String changeLinksWithinHtml(ApiObject ao) {
+        if (ao.content == null) return null;
         Matcher imgs = ptrnImgSrc.matcher(ao.content);
         StringBuffer sb = new StringBuffer();
         while (imgs.find()){

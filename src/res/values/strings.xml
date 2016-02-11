@@ -74,4 +74,7 @@
     <string name="string_city_spb">Санкт-Петербург</string>
     <string name="string_city_msk">Москва</string>
     <string name="string_buy_card">Купить билет</string>
+    <string name="string_round">Раунд</string>
+    <string name="string_photo">Фото</string>
+    <string name="string_video">Видео</string>
 </resources>

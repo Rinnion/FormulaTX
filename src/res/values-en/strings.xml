@@ -64,4 +64,7 @@
     <string name="string_city_msk">Moscow</string>
     <string name="string_view">View</string>
     <string name="string_buy_card">Buy ticket</string>
+    <string name="string_round">Round</string>
+    <string name="string_photo">Photo</string>
+    <string name="string_video">Video</string>
 </resources>

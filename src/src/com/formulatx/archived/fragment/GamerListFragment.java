@@ -135,7 +135,7 @@ public class GamerListFragment extends Fragment implements LoaderManager.LoaderC
         }
 
         gamer.favorite = !gamer.favorite;
-        gh.merge(gamer);
+        gh.setFavorite(gamer.id, gamer.favorite);
         long type = getArguments().getLong(TOURNAMENT_ID);
         GamerCursor allByParent = gh.getAllByParent(type);
         mAdapter.swapCursor(allByParent);

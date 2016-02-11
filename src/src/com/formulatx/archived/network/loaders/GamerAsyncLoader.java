@@ -2,8 +2,12 @@ package com.formulatx.archived.network.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import com.formulatx.archived.FormulaTXApplication;
 import com.formulatx.archived.database.cursor.GamerCursor;
 import com.formulatx.archived.database.helper.GamerHelper;
+import com.formulatx.archived.database.helper.PartnerHelper;
+import com.formulatx.archived.database.helper.TournamentHelper;
+import com.formulatx.archived.database.model.ApiObjects.Tournament;
 import com.formulatx.archived.network.MyNetwork;
 import com.formulatx.archived.utils.Log;
 
@@ -41,6 +45,20 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
 
     @Override
     public GamerCursor loadInBackground() {
+
+
+        TournamentHelper th = new TournamentHelper(FormulaTXApplication.getDatabaseOpenHelper());
+        Tournament trn = th.get(parent);
+
+        Log.d(TAG, "loadInBackground");
+        MyNetwork.queryGamerList(trn.id, trn.post_name);
+
+        GamerHelper aoh=new GamerHelper();
+        return aoh.getAllByParent(parent);
+
+        /*
+
+
         Log.d(TAG, "loadInBackground");
         int[] iaGamerList = MyNetwork.getIntArray(MyNetwork.queryGamerList(parent));
         if (iaGamerList != null) {
@@ -50,6 +68,7 @@ public class GamerAsyncLoader extends AsyncTaskLoader<GamerCursor> {
         }
         GamerHelper aoh=new GamerHelper();
         return aoh.getAllByParent(parent);
+        */
     }
 
 }
