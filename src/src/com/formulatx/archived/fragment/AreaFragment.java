@@ -5,9 +5,11 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.Loader;
+import android.database.MatrixCursor;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.*;
@@ -139,7 +141,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         });
 
         mAutobusView = mViewFlipper.findViewById(R.id.autobus);
-        mWebNest = (View) mViewFlipper.findViewById(R.id.al_ll_content);
+        mWebNest = mViewFlipper.findViewById(R.id.al_ll_content);
         mWebContent = (WebViewWithCache) mViewFlipper.findViewById(R.id.al_web_content);
         mWebContent.setBackgroundColor(Color.TRANSPARENT);
         mList = (ListView) mAutobusView.findViewById(R.id.al_schedule);
@@ -197,7 +199,7 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Area item = ((AreaCursor) (adapterView.getItemAtPosition(i))).getItem();
+        AreaOnline item = mAreas[i];
         mWebContent.loadData(item.content, "text/html; charset=UTF-8", null);
         mViewFlipper.bringChildToFront(mWebContent);
         mWebNest.setVisibility(View.VISIBLE);
@@ -224,16 +226,25 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
         @Override
         public void onLoadFinished(Loader<AreaOnline[]> loader, AreaOnline[] data) {
             mAreas = data;
+            String[] columns = new String[]{BaseColumns._ID, AreaHelper.COLUMN_TITLE};
+            MatrixCursor cur = new MatrixCursor(columns);
+            for (int i = 0; i < mAreas.length; i++) {
+                cur.addRow(new Object[]{i, mAreas[i].title});
+            }
+            mAdapter.swapCursor(cur);
+
             fillData();
         }
 
         @Override
         public void onLoaderReset(Loader<AreaOnline[]> loader) {
             mAreas = null;
+            mAdapter.swapCursor(null);
         }
     }
 
     private void fillData() {
+        if (mAreas == null ) return;
         if (mMap == null) return;
 
         LatLngBounds.Builder llbb = new LatLngBounds.Builder();
@@ -267,8 +278,8 @@ public class AreaFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     private void moveCamera() {
-        if (!mCameraReady) return;
         if (mAreas == null ) return;
+        if (!mCameraReady) return;
         if (mAreas.length > 1) {
             Display display = getActivity().getWindowManager().getDefaultDisplay();
             DisplayMetrics metrics = new DisplayMetrics();
