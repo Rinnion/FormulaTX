@@ -3,6 +3,8 @@ package com.formulatx.archived.fragment.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -28,6 +30,7 @@ import okhttp3.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Target;
 
 /**
  * Created by Lenovo on 03.02.2016.
@@ -36,15 +39,16 @@ public class GalleryAdapter extends SimpleCursorAdapter {
     private static final String TAG = "GalleryAdapter";
     private final int mWidth;
     private boolean mShadowed;
-    private Picasso picasso;
+    private Picasso picasso=null;
 
     public GalleryAdapter(Activity activity, String[] names, int[] to, final Cursor cursor, boolean mShadowed) {
         super(activity, R.layout.image_layout, cursor, names, to, 0);
 
+
         OkHttp3Downloader okHttp3Downloader=new  OkHttp3Downloader(this.mContext);
 
 
-        picasso = new Picasso.Builder(this.mContext)
+         picasso = new Picasso.Builder(this.mContext)
                 .downloader(okHttp3Downloader)
                 .build();
 
@@ -77,10 +81,18 @@ public class GalleryAdapter extends SimpleCursorAdapter {
         super.bindView(view, context, cursor);
     }
 
+
+
+
     @Override
     public void setViewImage(ImageView v, final String value) {
         View view=(View)v.getParent();
+
+
+
+
         final View progress=view.findViewById(R.id.progressBar);
+        Log.d(TAG, "value: " + value);
 
             progress.setTag(R.id.product_tag_img, value);
 
@@ -89,9 +101,9 @@ public class GalleryAdapter extends SimpleCursorAdapter {
 
         try {
 
-            File cache=new File(new File(Files.getCacheDir()),"picasso-gallery");
-            if(!cache.exists())
-                cache.mkdir();
+            //File cache=new File(new File(Files.getCacheDir()),"picasso-gallery");
+            //if(!cache.exists())
+              //  cache.mkdir();
             //Files combo=new File,"picasso-gallery");
             /*
             OkHttpClient okHttpClient =  new OkHttpClient.Builder()
@@ -114,12 +126,20 @@ public class GalleryAdapter extends SimpleCursorAdapter {
             Callback callback =new Callback() {
                 @Override
                 public void onSuccess() {
+                    Log.e(TAG,"Picasso callback onSuccess");
+
                     try {
                         String tag = (String) progress.getTag(R.id.product_tag_img);
 
-                        if (tag.equals(value)) {
+                        //if (tag.equals(value)) {
+
                             progress.setVisibility(View.GONE);
-                        }
+
+                        //}
+                        //else
+
+
+
                     }
                     catch (Exception ex)
                     {
@@ -131,15 +151,18 @@ public class GalleryAdapter extends SimpleCursorAdapter {
 
                 @Override
                 public void onError() {
+                    Log.e(TAG,"Picasso callback onError");
 
                     try {
 
 
                         String tag = (String) progress.getTag(R.id.product_tag_img);
 
-                        if (tag.equals(value)) {
+                     //   if (tag.equals(value)) {
                             progress.setVisibility(View.GONE);
-                        }
+
+                       // }
+
                     }
                     catch (Exception ex)
                     {
@@ -149,18 +172,27 @@ public class GalleryAdapter extends SimpleCursorAdapter {
                 }
             };
 
+//with(this.mContext)
+            //okHttp3Downloader.SetCallback(callback);
+v.setTag(callback);
+if(!value.isEmpty()) {
+    Picasso.with(v.getContext())
+            .load(value)
+            .centerCrop()
+            .placeholder(R.drawable.logo_splash_screen)
+            .error(R.drawable.logo_splash_screen)
+            .fit()
+            .into(v, callback);
+}
+            else
+{
+    progress.setVisibility(View.GONE);
 
-            //okHttp3Downloadernew.SetCallback(callback);
 
-            picasso.with(mContext)
-                    .load(value)
-                    .centerCrop()
-                    .placeholder(R.drawable.logo_splash_screen)
-                    .error(R.drawable.logo_splash_screen)
-                    .fit()
-                    .into(v, callback);
+}
         }catch(Exception ignored){
             progress.setVisibility(View.GONE);
+
             Log.e(TAG, "Picasso", ignored);
 
 

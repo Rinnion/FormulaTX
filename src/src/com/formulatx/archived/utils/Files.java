@@ -99,47 +99,77 @@ public class Files {
         return  mFileCached.getPath();
     }
 
-    public static void WriteToFile(String file,String string)
-    {
-        FileOutputStream outputStream=null;
+    public static void WriteToFile(String file,String string) {
+        synchronized (syncWriteObject) {
+            try {
 
-        try {
-            synchronized (syncWriteObject) {
+                FileOutputStream outputStream = null;
+                File logFile = new File(file);
 
-                outputStream =new FileOutputStream(new File(file),true);  //FormulaTXApplication.getAppContext().openFileOutput(new File(file), Context.MODE_APPEND);
-                outputStream.write(string.getBytes());
-                outputStream.close();
+                try {
+
+
+                    outputStream = new FileOutputStream(logFile, true);  //FormulaTXApplication.getAppContext().openFileOutput(new File(file), Context.MODE_APPEND);
+                    outputStream.write(string.getBytes());
+
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                } finally {
+                    if (outputStream != null)
+                        outputStream.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
 
     public static void WriteToFile(String file,String string,Exception ex)
     {
-        FileOutputStream outputStream=null;
 
-        try {
-            synchronized (syncWriteObject) {
 
-                outputStream =new FileOutputStream(new File(file),true);  //FormulaTXApplication.getAppContext().openFileOutput(new File(file), Context.MODE_APPEND);
-                outputStream.write(string.getBytes());
-                PrintWriter pw=new PrintWriter(outputStream);
-                ex.printStackTrace(pw);
-                pw.flush();
-                outputStream.write("\n".getBytes());
-                outputStream.flush();
-                outputStream.close();
+        synchronized (syncWriteObject) {
+            try {
+
+                FileOutputStream outputStream = null;
+                File logFile = new File(file);
+                PrintWriter pw=null;
+                try {
+                    outputStream = new FileOutputStream(logFile, true);  //FormulaTXApplication.getAppContext().openFileOutput(new File(file), Context.MODE_APPEND);
+                    pw = new PrintWriter(outputStream);
+                    try {
+
+
+                        ex.printStackTrace(pw);
+                        pw.flush();
+
+                    }
+                    finally {
+                        if(pw!=null)
+                        pw.close();
+                    }
+                    outputStream.write("\n".getBytes());
+                    outputStream.flush();
+
+
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                } finally {
+                    if (outputStream != null)
+                        outputStream.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
     }
