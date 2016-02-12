@@ -14,11 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import com.formulatx.archived.Settings;
 import com.formulatx.archived.database.helper.ApiObjectHelper;
 import com.formulatx.archived.fragment.adapter.ScheduleAdapter;
 import com.formulatx.archived.network.loaders.LiveAsyncLoader;
 import com.formulatx.archived.utils.Log;
 import com.rinnion.archived.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +42,7 @@ public class LiveScoreFragment extends Fragment {
     private View mProgresView;
     private View mEmptyView;
     private View mErrorView;
+    private Timer mTimer;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -86,12 +91,16 @@ public class LiveScoreFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getLoaderManager().restartLoader(R.id.tables_loader, Bundle.EMPTY, new LiveScoreLoaderCallBack());
+                update();
             }
         });
 
         return view;
+    }
+
+    private void update() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        getLoaderManager().restartLoader(R.id.tables_loader, Bundle.EMPTY, new LiveScoreLoaderCallBack());
     }
 
     @Override
@@ -102,6 +111,26 @@ public class LiveScoreFragment extends Fragment {
             ab.setTitle(R.string.string_tournament_liveScore);
             ab.setIcon(R.drawable.ic_action_previous_item);
         }
+    }
+
+    @Override
+    public void onResume() {
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        }, 0, Settings.LIVESCORE_UPDATE_PERIOD);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mTimer.purge();
+        mTimer.cancel();
+        mTimer = null;
+        super.onPause();
     }
 
     private class LiveScoreLoaderCallBack implements android.app.LoaderManager.LoaderCallbacks<MatchCursor> {

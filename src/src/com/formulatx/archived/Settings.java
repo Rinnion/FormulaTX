@@ -60,6 +60,7 @@ public final class Settings {
     public static final long OUT_OF_DATE_LOADER_PRODUCTS = 24 * 60 * 60 * 1000;
     public static final long OUT_OF_DATE_LOADER_AREAS = 24 * 60 * 60 * 1000;
     public static final long OUT_OF_DATE_GALLERY = 12 * 60 * 60 * 1000;
+    public static final int LIVESCORE_UPDATE_PERIOD = 15 * 1000;
 
     public static String COLLECT_GPS_DATA = "CollectGPSData";
     public static String SYNC_TO_SERVER = "SyncToServer";
