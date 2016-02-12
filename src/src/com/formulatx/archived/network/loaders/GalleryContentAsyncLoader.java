@@ -50,28 +50,6 @@ public class GalleryContentAsyncLoader extends AsyncTaskLoader<GalleryItemCursor
 
         MyNetwork.queryGallery(gid);
 
-//        DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
-//        TournamentHelper th = new TournamentHelper(doh);
-//        GalleryItemCursor cursor = null;
-//        Tournament tournament = th.get(args);
-//        if (tournament != null) {
-//            GalleryHelper aoh = new GalleryHelper(doh);
-//            try {
-//                String gallery_include = tournament.gallery_include;
-//                SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-//                Map parse = (Map) php.parse();
-//                for (Object item : parse.keySet()) {
-//                    long l = Long.parseLong(parse.get(item).toString());
-//                    MyNetwork.queryGallery(l);
-//                    aoh.attachGallery(args, l);
-//                }
-//            }catch(Exception ignored){
-//                Log.w(TAG, ignored.getMessage());
-//            }
-//            cursor = aoh.getAllByApiObjectAndItemTypeId(args, type);
-//        }
-
-
         DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
         GalleryHelper gh = new GalleryHelper(doh);
         return gh.getAllItemsByGalleryIdAndType(gid, type);

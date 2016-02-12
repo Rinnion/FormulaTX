@@ -2,7 +2,6 @@ package com.formulatx.archived.network;
 
 import android.os.Bundle;
 import com.formulatx.archived.FormulaTXApplication;
-import com.formulatx.archived.fragment.Schedule;
 import com.formulatx.archived.network.handlers.*;
 import com.formulatx.archived.utils.Log;
 import com.formulatx.archived.Settings;
@@ -11,7 +10,6 @@ import com.formulatx.archived.database.model.ApiObject;
 import com.formulatx.archived.utils.MyLocale;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -175,6 +173,7 @@ public final class MyNetwork {
 
     //Загрузка списка новостей турнира
     public static Bundle queryGallery(long id) {
+
         String tag = "queryGallery-" + String.valueOf(id);
         Log.d(TAG, tag);
         GalleryHandler handler = new GalleryHandler(id);
@@ -191,8 +190,14 @@ public final class MyNetwork {
                 .setHandler(handler)
                 .create();
 
+        Bundle bundle = null;
+        long longParameter = FormulaTXApplication.getLongParameter("gallery-cache-" + id, 0);
+        if (longParameter + Settings.OUT_OF_DATE_GALLERY < Calendar.getInstance().getTimeInMillis()) {
+            bundle= fetcher.execute();
+            FormulaTXApplication.setParameter("gallery-cache-" + id, Calendar.getInstance().getTimeInMillis());
+        }
 
-        return fetcher.execute();
+        return bundle;
     }
 
     //Загрузка списка галлерей турнира

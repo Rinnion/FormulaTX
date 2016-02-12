@@ -138,6 +138,7 @@ public class GalleryFragment extends Fragment {
 
         GridView gvVideo = (GridView) tabHost.findViewById(R.id.gtl_gv_video);
 
+        names = new String[]{GalleryHelper.COLUMN_GALLERY_DESCRIPTION_VIDEO, GalleryHelper.COLUMN_GALLERY_DESCRIPTION_TITLE};
         mVideoAdapter = new  GalleryAdapter(getActivity(), names, to, null, true);
 
         gvVideo.setAdapter(mVideoAdapter);
@@ -202,6 +203,7 @@ public class GalleryFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<GalleryDescriptionCursor> loader, GalleryDescriptionCursor data) {
+
             mPhotoAdapter.swapCursor(data);
         }
 
@@ -225,27 +227,7 @@ public class GalleryFragment extends Fragment {
             DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();
             TournamentHelper th = new TournamentHelper(doh);
             Tournament tournament = th.getByPostName(post_name);
-            ArrayList<Long> intArray = new ArrayList<Long>();
-            if (tournament != null) {
-                try {
-                    String gallery_include = tournament.gallery_include;
-                    SerializedPhpParser php = new SerializedPhpParser(gallery_include);
-                    Map parse = (Map) php.parse();
-                    for (Object item : parse.keySet()) {
-                        long l = Long.parseLong(parse.get(item).toString());
-                        intArray.add(l);
-                    }
-                } catch (Exception ignored) {
-                    Log.w(TAG, ignored.getMessage());
-                }
-            }
-
-            int[] ret = new int[intArray.size()];
-            for (int i = 0; i < intArray.size(); i++) {
-                ret[i] = intArray.get(i).intValue();
-            }
-
-            return ret;
+            return Utils.getIntListFromJSONArray(tournament.gallery_include);
         }
 
         @Override

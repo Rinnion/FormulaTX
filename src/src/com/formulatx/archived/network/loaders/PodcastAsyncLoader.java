@@ -9,6 +9,8 @@ import com.formulatx.archived.database.cursor.GalleryDescriptionCursor;
 import com.formulatx.archived.database.helper.GalleryHelper;
 import com.formulatx.archived.utils.Log;
 
+import java.util.Arrays;
+
 /**
  * Created by tretyakov on 08.07.2015.
  */
@@ -38,11 +40,18 @@ public class PodcastAsyncLoader extends AsyncTaskLoader<GalleryDescriptionCursor
     public GalleryDescriptionCursor loadInBackground() {
         Log.d(TAG, "loadInBackground");
 
-
         int[] ints = MyNetwork.queryPodcastList();
 
-        for (int gid : ints) {
-            MyNetwork.queryGallery(gid);
+        Arrays.sort(ints);
+        String sints = Arrays.toString(ints);
+
+        String parameter = "gallery-list-cache-podcast";
+        String gallert_list_cache = FormulaTXApplication.getStringParameter(parameter);
+        if (gallert_list_cache == null || !gallert_list_cache.equals(sints)) {
+            for (int gid : ints) {
+                MyNetwork.queryGallery(gid);
+            }
+            FormulaTXApplication.setParameter(parameter,sints);
         }
 
         DatabaseOpenHelper doh = FormulaTXApplication.getDatabaseOpenHelper();

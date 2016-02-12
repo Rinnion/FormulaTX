@@ -19,7 +19,6 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
     private long mId;
 
     public GalleryHandler(long id) {
-
         mId = id;
     }
 
@@ -28,7 +27,10 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
         GalleryHelper gh = new GalleryHelper(FormulaTXApplication.getDatabaseOpenHelper());
         String title = message.getString("title");
         String type = message.getString("type");
+
         long id = message.getLong("id");
+
+        gh.deleteGallery(id);
 
         JSONObject gallery = message.getJSONObject("gallery");
         JSONArray array;
@@ -39,21 +41,23 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
         array = gallery.getJSONArray(GalleryHelper.TYPE_VIDEO);
         bundle.putLong(GalleryHelper.TYPE_VIDEO, importPictureArray(gh, array));
         array = gallery.getJSONArray(GalleryHelper.TYPE_WATERMARK);
+        bundle.putLong(GalleryHelper.TYPE_WATERMARK, importPictureArray(gh, array));
 
         GalleryDescriptionCursor.GalleryDescription gd = new GalleryDescriptionCursor.GalleryDescription(id, title, type);
         GalleryItemCursor pctPicture = gh.getAllItemsByGalleryIdAndType(id, "picture");
+        gh.mergeGallery(gd);
         if (pctPicture.getCount() > 0) {
             GalleryItem item = pctPicture.getItem();
             gd.picture = item.url;
+            gh.setGalleryPicture(id, gd.picture);
         }
         GalleryItemCursor pctVideo = gh.getAllItemsByGalleryIdAndType(id, "video");
         if (pctVideo.getCount() > 0) {
             GalleryItem item = pctVideo.getItem();
             gd.video = item.url;
+            gh.setGalleryVideo(id, gd.video);
         }
-        gh.mergeGallery(gd);
 
-        bundle.putLong(GalleryHelper.TYPE_WATERMARK, importPictureArray(gh, array));
         return bundle;
     }
 

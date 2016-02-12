@@ -63,21 +63,6 @@ public class GalleryHelper implements BaseColumns {
         this.doh = doh;
     }
 
-    public GalleryItemCursor getAllItems() {
-        Log.v(TAG, "getAllItems ()");
-
-        String sql = "SELECT " + ALL_COLUMNS + " FROM " + DATABASE_TABLE;
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        GalleryItemCursor c = (GalleryItemCursor) d.rawQueryWithFactory(
-                new GalleryItemCursor.Factory(),
-                sql,
-                null,
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
     public GalleryItemCursor getAllItemsByGalleryIdAndType(long gallery_id, String type) {
         Log.v(TAG, "getAllItems ()");
 
@@ -109,42 +94,6 @@ public class GalleryHelper implements BaseColumns {
         c.moveToFirst();
         if (c.getCount() == 0) return null;
         return c.getItem();
-    }
-
-    public CommentCursor getAllByApiObjectId(long api_object_id) {
-        Log.v(TAG, "getAllByApiObjectId (" + String.valueOf(api_object_id) + ")");
-
-        String sql = "SELECT " + ALL_COLUMNS +
-                " FROM " + DATABASE_TABLE + " AS g " +
-                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT_LINK + " AS ao ON ao."+COLUMN_LINK_GALLERY_ID+"=g."+COLUMN_GALLERY_ID +
-                " WHERE " + COLUMN_API_OBJECT_ID + "=?";
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
-                sql,
-                new String[]{String.valueOf(api_object_id)},
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
-    public GalleryItemCursor getAllByApiObjectAndItemTypeId(long api_object_id, String item_type) {
-        Log.v(TAG, "getAllByApiObjectAndItemTypeId (api_object:" + String.valueOf(api_object_id) + ", item_type:"+String.valueOf(item_type) + ")");
-
-        String sql = "SELECT " + ALL_COLUMNS +
-                " FROM " + DATABASE_TABLE + " AS g " +
-                " LEFT JOIN " + DATABASE_TABLE_API_OBJECT_LINK + " AS aol ON aol."+COLUMN_LINK_GALLERY_ID+"=g."+COLUMN_GALLERY_ID +
-                " WHERE aol." + COLUMN_API_OBJECT_ID + "=? AND g." + COLUMN_TYPE + "=?";
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        GalleryItemCursor c = (GalleryItemCursor) d.rawQueryWithFactory(
-                new GalleryItemCursor.Factory(),
-                sql,
-                new String[]{String.valueOf(api_object_id), String.valueOf(item_type)},
-                null);
-        c.moveToFirst();
-        return c;
     }
 
     public GalleryItem getItem(long id) {
@@ -187,12 +136,7 @@ public class GalleryHelper implements BaseColumns {
         }
     }
 
-    public boolean merge(GalleryItem item){
-        if (isItemPresent(item.id)) deleteItem(item.id);
-        return add(item);
-    }
-
-    public boolean add(GalleryItem item) {
+    public boolean merge(GalleryItem item) {
         Log.d(TAG, "add(" + String.valueOf(item) + ")");
 
         ContentValues map;
@@ -204,7 +148,7 @@ public class GalleryHelper implements BaseColumns {
         map.put(COLUMN_LINK, item.link);
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
-            db.insert(DATABASE_TABLE, null, map);
+            db.insertWithOnConflict(DATABASE_TABLE, null, map, SQLiteDatabase.CONFLICT_REPLACE);
             return true;
         } catch (SQLException e) {
             Log.e(TAG, "Error writing location", e);
@@ -212,75 +156,35 @@ public class GalleryHelper implements BaseColumns {
         }
     }
 
-    public Cursor getAttachedGallery(long api_object_id){
-        Log.d(TAG, "getAttachedGallery (" + api_object_id + ")");
-
-        String sql = "SELECT " + COLUMN_API_OBJECT_ID + ", " + COLUMN_LINK_GALLERY_ID + " FROM " + DATABASE_TABLE_API_OBJECT_LINK;
-        SQLiteDatabase d = doh.getReadableDatabase();
-        CommentCursor c = (CommentCursor) d.rawQueryWithFactory(
-                new CommentCursor.Factory(),
-                sql,
-                null,
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
-    public boolean attachGallery(long api_object_id, long gallery_id){
-        Log.d(TAG, "attachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
-
-        detachGallery(api_object_id, gallery_id);
-
-        ContentValues map;
-        map = new ContentValues();
-        map.put(COLUMN_API_OBJECT_ID, api_object_id);
-        map.put(COLUMN_LINK_GALLERY_ID, gallery_id);
-        try {
-            SQLiteDatabase db = doh.getWritableDatabase();
-            long insert = db.insert(DATABASE_TABLE_API_OBJECT_LINK, null, map);
-            return insert != -1;
-        } catch (SQLException e) {
-            Log.e(TAG, "Error writing location", e);
-            return false;
-        }
-    }
-
-    public void detachGallery(long api_object_id, long gallery_id){
-        Log.d(TAG, "detachGallery(api_object:" + String.valueOf(api_object_id) + ", gallery_id:"+String.valueOf(gallery_id) + ")");
-        try {
-            Log.d(TAG, "Delete gallery " + String.valueOf(gallery_id)+ " from apiObject: " + String.valueOf(api_object_id));
-            SQLiteDatabase db = doh.getWritableDatabase();
-            String[] args = {String.valueOf(api_object_id),String.valueOf(gallery_id)};
-            db.delete(DATABASE_TABLE_API_OBJECT_LINK,
-                    COLUMN_API_OBJECT_ID + "=? AND " + COLUMN_LINK_GALLERY_ID + "=?",
-                    args);
-        } catch (SQLException ex) {
-            Log.e(TAG, "Error detaching gallery", ex);
-        }
-    }
-
     public GalleryDescriptionCursor getAllPodcasts() {
         return getAllGalleries("podcast");
     }
 
-    public GalleryDescriptionCursor getAllPodcasts(int[] range) {
-        return getAllGalleries("podcast", range);
-    }
-
-    public GalleryDescriptionCursor getAllGalleries() {
-        return getAllGalleries("gallery");
+    public GalleryDescriptionCursor getAllGalleries(String content_type) {
+        return getAllGalleries("gallery", content_type);
     }
 
     public GalleryDescriptionCursor getAllGalleries(int[] range) {
         return getAllGalleries("gallery", range);
     }
 
-    protected GalleryDescriptionCursor getAllGalleries(String type) {
+    public GalleryDescriptionCursor getAllGalleriesWithContent(int[] range, String content_type) {
+        return getAllGalleries("gallery", range, content_type);
+    }
+
+    protected GalleryDescriptionCursor getAllGalleries(String type, int[] range, String contentType) {
         Log.v(TAG, "getAllGalleries ()");
+
+        if (range == null) range = new int[0];
+        StringBuilder sb = new StringBuilder();
+        for (int i : range) {
+            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
+        }
+        String in = sb.toString();
 
         String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
                 " FROM " + DATABASE_TABLE_DESCRIPTION +
-                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
+                " WHERE " + _ID + " in (" + in + ") AND " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=? AND gd_"+contentType + " is not null";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
@@ -316,18 +220,18 @@ public class GalleryHelper implements BaseColumns {
         return c;
     }
 
-    public GalleryDescriptionCursor getAllGalleriesByContent(String type) {
+    protected GalleryDescriptionCursor getAllGalleries(String type, String contentType) {
         Log.v(TAG, "getAllGalleries ()");
 
         String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
                 " FROM " + DATABASE_TABLE_DESCRIPTION +
-                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
+                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=? AND gd_"+contentType + " is not null";
 
         SQLiteDatabase d = doh.getReadableDatabase();
         GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
                 new GalleryDescriptionCursor.Factory(),
                 sql,
-                new String[] {type},
+                new String[]{type},
                 null);
         c.moveToFirst();
         return c;
@@ -350,34 +254,18 @@ public class GalleryHelper implements BaseColumns {
         return c.getCount() > 0;
     }
 
-    public boolean addGallery(GalleryDescriptionCursor.GalleryDescription gd) {
-        Log.v(TAG, "addGallery (" + gd.toString() +")");
-
-        ContentValues map;
-        map = new ContentValues();
-        map.put(_ID, gd.id);
-        map.put(COLUMN_GALLERY_DESCRIPTION_TITLE, gd.title);
-        map.put(COLUMN_GALLERY_DESCRIPTION_TYPE, gd.type);
-        map.put(COLUMN_GALLERY_DESCRIPTION_PICTURE, gd.picture);
-        map.put(COLUMN_GALLERY_DESCRIPTION_VIDEO, gd.video);
-        try {
-            SQLiteDatabase db = doh.getWritableDatabase();
-            db.insert(DATABASE_TABLE_DESCRIPTION, null, map);
-            return true;
-        } catch (SQLException e) {
-            Log.e(TAG, "Error writing location", e);
-            return false;
-        }
-    }
-
     public void deleteGallery(long id) {
         Log.d(TAG, "deleteGallery(" + String.valueOf(id) + ")");
         try {
             SQLiteDatabase db = doh.getWritableDatabase();
             String[] args = {String.valueOf(id)};
-            db.delete(DATABASE_TABLE_DESCRIPTION,
+            int descs = db.delete(DATABASE_TABLE_DESCRIPTION,
                     _ID + "=?",
                     args);
+            int items = db.delete(DATABASE_TABLE,
+                    COLUMN_GALLERY_ID + "=?",
+                    args);
+            Log.d(TAG, String.format("delete %d galleries with %d items", descs, items));
         } catch (SQLException ex) {
             Log.e(TAG, "Error deleting item", ex);
         }
@@ -385,7 +273,51 @@ public class GalleryHelper implements BaseColumns {
 
     public boolean mergeGallery(GalleryDescriptionCursor.GalleryDescription gd) {
         Log.d(TAG, "mergeGallery(" + String.valueOf(gd) + ")");
-        if (isGalleryExists(gd.id)) deleteGallery(gd.id);
-        return addGallery(gd);
+
+        ContentValues map;
+        map = new ContentValues();
+        map.put(_ID, gd.id);
+        map.put(COLUMN_GALLERY_DESCRIPTION_TITLE, gd.title);
+        map.put(COLUMN_GALLERY_DESCRIPTION_TYPE, gd.type);
+        if (gd.picture!=null) map.put(COLUMN_GALLERY_DESCRIPTION_PICTURE, gd.picture);
+        if (gd.video != null) map.put(COLUMN_GALLERY_DESCRIPTION_VIDEO, gd.video);
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            db.insertWithOnConflict(DATABASE_TABLE_DESCRIPTION, null, map, SQLiteDatabase.CONFLICT_REPLACE);
+            return true;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error writing location", e);
+            return false;
+        }
+    }
+
+    public boolean setGalleryPicture(long id, String picture) {
+        Log.d(TAG, "setGalleryPicture(" + String.valueOf(id) + ", " + String.valueOf(picture)+ ")");
+        ContentValues map;
+        map = new ContentValues();
+        map.put(COLUMN_GALLERY_DESCRIPTION_PICTURE, picture);
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            db.updateWithOnConflict(DATABASE_TABLE_DESCRIPTION, map, "_id=?", new String[]{String.valueOf(id)},SQLiteDatabase.CONFLICT_IGNORE);
+            return true;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error writing location", e);
+            return false;
+        }
+    }
+
+    public boolean setGalleryVideo(long id, String picture) {
+        Log.d(TAG, "setGalleryPicture(" + String.valueOf(id) + ", " + String.valueOf(picture)+ ")");
+        ContentValues map;
+        map = new ContentValues();
+        map.put(COLUMN_GALLERY_DESCRIPTION_VIDEO, picture);
+        try {
+            SQLiteDatabase db = doh.getWritableDatabase();
+            db.updateWithOnConflict(DATABASE_TABLE_DESCRIPTION, map, "_id=?", new String[]{String.valueOf(id)},SQLiteDatabase.CONFLICT_IGNORE);
+            return true;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error writing location", e);
+            return false;
+        }
     }
 }

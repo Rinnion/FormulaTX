@@ -185,7 +185,7 @@ public class GalleryContentFragment extends Fragment {
 
             }
         });
-
+        //String[] names = new String[]{GalleryHelper.COLUMN_PICTURE};
         mVideoAdapter = new GalleryAdapter(getActivity(), names, to, null, false);
 
         gvVideo.setAdapter(mVideoAdapter);

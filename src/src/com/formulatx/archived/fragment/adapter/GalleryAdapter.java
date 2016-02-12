@@ -37,18 +37,15 @@ import java.lang.annotation.Target;
  */
 public class GalleryAdapter extends SimpleCursorAdapter {
     private static final String TAG = "GalleryAdapter";
-    private final int mWidth;
+    private int mWidth;
     private boolean mShadowed;
-    private Picasso picasso=null;
+    private Picasso picasso = null;
 
     public GalleryAdapter(Activity activity, String[] names, int[] to, final Cursor cursor, boolean mShadowed) {
         super(activity, R.layout.image_layout, cursor, names, to, 0);
 
-
-        OkHttp3Downloader okHttp3Downloader=new  OkHttp3Downloader(this.mContext);
-
-
-         picasso = new Picasso.Builder(this.mContext)
+        OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(this.mContext);
+        picasso = new Picasso.Builder(this.mContext)
                 .downloader(okHttp3Downloader)
                 .build();
 
@@ -64,137 +61,78 @@ public class GalleryAdapter extends SimpleCursorAdapter {
         View iv = view.findViewById(R.id.il_iv_image);
 
         ViewGroup.LayoutParams lp = iv.getLayoutParams();
-        lp.height= mWidth;
-        lp.width= mWidth;
+        lp.height = mWidth;
+        lp.width = mWidth;
         if (mShadowed) {
             View v = view.findViewById(R.id.il_v_shadow);
             lp = v.getLayoutParams();
             lp.height = mWidth;
             lp.width = mWidth;
+            v.setVisibility(View.VISIBLE);
         }
         return view;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-
         super.bindView(view, context, cursor);
     }
 
 
-
-
     @Override
     public void setViewImage(ImageView v, final String value) {
-        View view=(View)v.getParent();
+        View view = (View) v.getParent();
 
-
-
-
-        final View progress=view.findViewById(R.id.progressBar);
+        final View progress = view.findViewById(R.id.progressBar);
         Log.d(TAG, "value: " + value);
 
-            progress.setTag(R.id.product_tag_img, value);
+        progress.setTag(R.id.product_tag_img, value);
 
-            progress.setVisibility(View.VISIBLE);
-
-
+        progress.setVisibility(View.VISIBLE);
         try {
 
-            //File cache=new File(new File(Files.getCacheDir()),"picasso-gallery");
-            //if(!cache.exists())
-              //  cache.mkdir();
-            //Files combo=new File,"picasso-gallery");
-            /*
-            OkHttpClient okHttpClient =  new OkHttpClient.Builder()
-                    .cache(new okhttp3.Cache(cache, OkHttp3Downloader.calculateDiskCacheSize(cache)))
-                    .build();
-            okHttpClient.networkInterceptors().add(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder().header("Cache-Control", "max-age=" + (60 * 60 * 24 * 365)).build();
-                }
-            });*/
 
-
-            //okHttpClient.setCache(new Cache(Files.getCacheDir(), Integer.MAX_VALUE));
- //           OkHttpDownloader
-
-
-
-            Callback callback =new Callback() {
+            Callback callback = new Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.e(TAG,"Picasso callback onSuccess");
-
+                    Log.e(TAG, "Picasso callback onSuccess");
                     try {
                         String tag = (String) progress.getTag(R.id.product_tag_img);
-
-                        //if (tag.equals(value)) {
-
-                            progress.setVisibility(View.GONE);
-
-                        //}
-                        //else
-
-
-
+                        progress.setVisibility(View.GONE);
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Picasso callback", ex);
                     }
-                    catch (Exception ex)
-                    {
-                        Log.e(TAG,"Picasso callback",ex);
-
-                    }
-
                 }
 
                 @Override
                 public void onError() {
-                    Log.e(TAG,"Picasso callback onError");
-
+                    Log.e(TAG, "Picasso callback onError");
                     try {
-
-
                         String tag = (String) progress.getTag(R.id.product_tag_img);
-
-                     //   if (tag.equals(value)) {
-                            progress.setVisibility(View.GONE);
-
-                       // }
-
+                        progress.setVisibility(View.GONE);
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Picasso callback", ex);
                     }
-                    catch (Exception ex)
-                    {
-                        Log.e(TAG,"Picasso callback",ex);
-                    }
-
                 }
             };
 
-//with(this.mContext)
-            //okHttp3Downloader.SetCallback(callback);
-v.setTag(callback);
-if(!value.isEmpty()) {
-    Picasso.with(v.getContext())
-            .load(value)
-            .centerCrop()
-            .placeholder(R.drawable.logo_splash_screen)
-            .error(R.drawable.logo_splash_screen)
-            .fit()
-            .into(v, callback);
-}
-            else
-{
-    progress.setVisibility(View.GONE);
+            if (!value.isEmpty()) {
+                Picasso.with(v.getContext())
+                        .load(value)
+                        .resize(200, 200)
+                        .centerCrop()
+                        .placeholder(R.drawable.logo_splash_screen)
+                        .error(R.drawable.logo_splash_screen)
+                        .into(v, callback);
+            } else {
+                progress.setVisibility(View.GONE);
 
 
-}
-        }catch(Exception ignored){
+            }
+        } catch (Exception ignored) {
             progress.setVisibility(View.GONE);
 
             Log.e(TAG, "Picasso", ignored);
-
 
 
         }
