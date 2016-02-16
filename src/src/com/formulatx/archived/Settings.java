@@ -12,7 +12,7 @@ import com.formulatx.archived.utils.Log;
 public final class Settings {
     public static final boolean NETDEBUG =false;
     public static final boolean DEBUG = false;
-    public static final int LogLevel = Log.DEBUG;
+    public static final int LogLevel = Log.ASSERT;
 
     public static final int ABOUT_API_OBJECT = 201;
     public static final String ABOUT_API_OBJECT_ALIAS = "about";
@@ -56,10 +56,10 @@ public final class Settings {
     public static final long OUT_DATE_TIME_QUERY_PARSER_PARSED = 1 * 60 * 60 * 1000; //one hour
     public static final String GRIDS = "grid";
     public static final long OUT_OF_DATE_AREA = 100 * 60 * 60 * 1000;
-    public static final long OUT_OF_DATE_OBJECT = 24 * 60 * 60 * 1000;
-    public static final long OUT_OF_DATE_LOADER_PRODUCTS = 24 * 60 * 60 * 1000;
-    public static final long OUT_OF_DATE_LOADER_AREAS = 24 * 60 * 60 * 1000;
-    public static final long OUT_OF_DATE_GALLERY = 12 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_OBJECT = 45 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_LOADER_PRODUCTS = 23 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_LOADER_AREAS = 50 * 60 * 60 * 1000;
+    public static final long OUT_OF_DATE_GALLERY = 1 * 60 * 60 * 1000;
     public static final int LIVESCORE_UPDATE_PERIOD = 15 * 1000;
 
     public static String COLLECT_GPS_DATA = "CollectGPSData";

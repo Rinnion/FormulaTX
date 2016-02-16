@@ -71,6 +71,7 @@ public class GalleryHandler extends FormulaTXObjectResponseHandler {
             url = Utils.fixUrlWithFullPath(url);
             String link = item.getString("link");
             link = Utils.fixUrlWithFullPath(link);
+            if ((type != null && type.equals("audio")) && (link!=null && link.isEmpty())) continue;
             GalleryItem gi = new GalleryItem(id, mId, type, url, link);
             if (gh.merge(gi)) k++;
         }

@@ -104,12 +104,6 @@ public class GalleryHelper implements BaseColumns {
         return c.getItem();
     }
 
-    public boolean isItemPresent(long id) {
-        Log.d(TAG, "isItemPresent (" + id + ")");
-        GalleryItemCursor c = searchItem(id);
-        return c.getCount() == 1;
-    }
-
     private GalleryItemCursor searchItem(long id) {
         Log.d(TAG, "searchItem (" + id + ")");
 
@@ -121,23 +115,8 @@ public class GalleryHelper implements BaseColumns {
                 new String[]{String.valueOf(id)},
                 null);
     }
-
-    public void deleteItem(long id){
-        Log.d(TAG, "deleteItem(" + String.valueOf(id) + ")");
-        try {
-            Log.d(TAG, "Delete item " + String.valueOf(id) + " from gallery");
-            SQLiteDatabase db = doh.getWritableDatabase();
-            String[] args = {String.valueOf(id)};
-            db.delete(DATABASE_TABLE,
-                    _ID + "=?",
-                    args);
-        } catch (SQLException ex) {
-            Log.e(TAG, "Error deleting item", ex);
-        }
-    }
-
     public boolean merge(GalleryItem item) {
-        Log.d(TAG, "add(" + String.valueOf(item) + ")");
+        Log.d(TAG, "merge(" + String.valueOf(item) + ")");
 
         ContentValues map;
         map = new ContentValues();
@@ -157,17 +136,25 @@ public class GalleryHelper implements BaseColumns {
     }
 
     public GalleryDescriptionCursor getAllPodcasts() {
-        return getAllGalleries("podcast");
+        Log.v(TAG, "getAllGalleries ()");
+
+        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
+                " FROM " + DATABASE_TABLE_DESCRIPTION +
+                " WHERE " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
+
+        SQLiteDatabase d = doh.getReadableDatabase();
+        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
+                new GalleryDescriptionCursor.Factory(),
+                sql,
+                new String[]{"podcast"},
+                null);
+        c.moveToFirst();
+        return c;
     }
 
     public GalleryDescriptionCursor getAllGalleries(String content_type) {
         return getAllGalleries("gallery", content_type);
     }
-
-    public GalleryDescriptionCursor getAllGalleries(int[] range) {
-        return getAllGalleries("gallery", range);
-    }
-
     public GalleryDescriptionCursor getAllGalleriesWithContent(int[] range, String content_type) {
         return getAllGalleries("gallery", range, content_type);
     }
@@ -196,30 +183,6 @@ public class GalleryHelper implements BaseColumns {
         return c;
     }
 
-    protected GalleryDescriptionCursor getAllGalleries(String type, int[] range) {
-        Log.v(TAG, "getAllGalleries ()");
-
-        if (range == null) range = new int[0];
-        StringBuilder sb = new StringBuilder();
-        for (int i : range) {
-            ((sb.length() > 0) ? sb.append(",") : sb).append(i);
-        }
-        String in = sb.toString();
-
-        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE + ", "+ COLUMN_GALLERY_DESCRIPTION_PICTURE + ", "+ COLUMN_GALLERY_DESCRIPTION_VIDEO + ", " + _ID +
-                " FROM " + DATABASE_TABLE_DESCRIPTION +
-                " WHERE " + _ID + " in (" + in + ") AND " + COLUMN_GALLERY_DESCRIPTION_TYPE + "=?";
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
-                new GalleryDescriptionCursor.Factory(),
-                sql,
-                new String[]{type},
-                null);
-        c.moveToFirst();
-        return c;
-    }
-
     protected GalleryDescriptionCursor getAllGalleries(String type, String contentType) {
         Log.v(TAG, "getAllGalleries ()");
 
@@ -235,23 +198,6 @@ public class GalleryHelper implements BaseColumns {
                 null);
         c.moveToFirst();
         return c;
-    }
-
-    public boolean isGalleryExists(long id) {
-        Log.v(TAG, "isGalleryExists ()");
-
-        String sql = "SELECT " + COLUMN_GALLERY_DESCRIPTION_TITLE +
-                " FROM " + DATABASE_TABLE_DESCRIPTION +
-                " WHERE _id=?" ;
-
-        SQLiteDatabase d = doh.getReadableDatabase();
-        GalleryDescriptionCursor c = (GalleryDescriptionCursor) d.rawQueryWithFactory(
-                new GalleryDescriptionCursor.Factory(),
-                sql,
-                new String[] {String.valueOf(id)},
-                null);
-        c.moveToFirst();
-        return c.getCount() > 0;
     }
 
     public void deleteGallery(long id) {
